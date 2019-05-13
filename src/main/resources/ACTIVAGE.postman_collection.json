@@ -1,0 +1,741 @@
+{
+	"info": {
+		"name": "ACTIVAGE",
+		"_postman_id": "3f96b0b4-fd7d-1574-5fb8-2a89e3a0d621",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "IPSM POST alignment",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/xml"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"no\"?>\r\n<!DOCTYPE Alignment\r\n        [\r\n                <!ENTITY sripas \"http://www.inter-iot.eu/sripas#\">\r\n                <!ENTITY sosa \"http://www.w3.org/ns/sosa/\">\r\n                <!ENTITY xsd \"http://www.w3.org/2001/XMLSchema#\">\r\n                <!ENTITY context \"http://ontology.universAAL.org/Context.owl#\">\r\n                <!ENTITY device \"http://ontology.universAAL.org/Device.owl#\">\r\n                <!ENTITY measurement \"http://ontology.universaal.org/Measurement.owl#\">\r\n                <!ENTITY phThing \"http://ontology.universaal.org/PhThing.owl#\">\r\n                <!ENTITY healthMeasurement \"http://ontology.universaal.org/HealthMeasurement.owl#\">\r\n                <!ENTITY iiot \"http://inter-iot.eu/GOIoTP#\">\r\n                <!ENTITY iiotex \"http://inter-iot.eu/GOIoTPex#\">\r\n                <!ENTITY medex \"http://inter-iot.eu/medex#\">\r\n                <!ENTITY time \"http://www.w3.org/2006/time#\">\r\n                <!ENTITY sweet_units \"http://sweet.jpl.nasa.gov/2.3/reprSciUnits.owl#\">\r\n                <!ENTITY profile \"http://ontology.universAAL.org/Profile.owl#\">\r\n                ]\r\n        >\r\n<Alignment\r\n        xmlns:rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\"\r\n        xmlns:sripas=\"http://www.inter-iot.eu/sripas#\"\r\n        xmlns=\"http://www.inter-iot.eu/sripas#\"\r\n        xmlns:sosa=\"http://www.w3.org/ns/sosa/\"\r\n        xmlns:context=\"http://ontology.universAAL.org/Context.owl#\"\r\n        xmlns:iiot=\"http://inter-iot.eu/GOIoTP#\"\r\n        xmlns:time=\"http://www.w3.org/2006/time#\"\r\n        xmlns:device=\"http://ontology.universAAL.org/Device.owl#\"\r\n        xmlns:measurement=\"http://ontology.universaal.org/Measurement.owl#\"\r\n        xmlns:healthMeasurement=\"http://ontology.universaal.org/HealthMeasurement.owl#\"\r\n        xmlns:uaal=\"http://ontology.universAAL.org/uAAL.owl#\"\r\n\r\n        name=\"UniversAAL_CO_align\" version=\"3.0.1\" creator=\"SRIPAS\" description=\"ADDED user data - Alignment between UniversAAL messages with context events and INTER-IoT central ontology.\">\r\n    <onto1>\r\n        <Ontology about=\"http://ontology.universAAL.org/Context.owl#\">\r\n            <formalism>\r\n                <Formalism name=\"OWL2.0\" uri=\"http://www.w3.org/2002/07/owl#\"/>\r\n            </formalism>\r\n        </Ontology>\r\n    </onto1>\r\n    <onto2>\r\n        <Ontology about=\"http://inter-iot.eu/GOIoTPex#\">\r\n            <formalism>\r\n                <Formalism name=\"OWL2.0\" uri=\"http://www.w3.org/2002/07/owl#\"/>\r\n            </formalism>\r\n        </Ontology>\r\n    </onto2>\r\n    <steps>\r\n        <step order=\"1\" cell=\"1_change_type_event\"/>\r\n        <step order=\"2\" cell=\"2_change_type_measurement\"/>\r\n        <step order=\"3\" cell=\"3_change_type_device\"/>\r\n        <step order=\"4\" cell=\"4_change_type_contextProvider\"/>\r\n        <step order=\"5\" cell=\"5_change_obs_properties\"/>\r\n        <step order=\"6\" cell=\"6_change_result_properties_weight\"/>\r\n        <step order=\"7\" cell=\"6_change_result_properties_hr\"/>\r\n        <step order=\"7\" cell=\"6_change_result_properties_bp\"/>\r\n        <step order=\"8\" cell=\"7_change_user\"/>\r\n    </steps>\r\n    <map>\r\n        <Cell id=\"1_change_type_event\"> <!-- change og observation type -->\r\n            <entity1>\r\n                <sripas:node_CTX>\r\n                    <rdf:type rdf:resource=\"&context;ContextEvent\" />\r\n                </sripas:node_CTX>\r\n            </entity1>\r\n            <entity2>\r\n                <sripas:node_CTX>\r\n                    <rdf:type rdf:resource=\"&sosa;Observation\" />\r\n                </sripas:node_CTX>\r\n            </entity2>\r\n            <relation>=</relation>\r\n        </Cell>\r\n        <Cell id=\"2_change_type_measurement\"> <!-- change og observation type -->\r\n            <entity1>\r\n                <sripas:node_CTY>\r\n                    <rdf:type rdf:resource=\"&healthMeasurement;HealthMeasurement\" />\r\n                    <rdf:type rdf:resource=\"&measurement;Measurement\" />\r\n                  </sripas:node_CTY>\r\n            </entity1>\r\n            <entity2>\r\n                <sripas:node_CTY>\r\n                     <rdf:type rdf:resource=\"&sosa;Result\" />\r\n                 </sripas:node_CTY>\r\n            </entity2>\r\n            <relation>=</relation>\r\n        </Cell>\r\n        <Cell id=\"3_change_type_device\"> <!-- change og observation type -->\r\n            <entity1>\r\n                  <sripas:node_CTY>\r\n                      <rdf:type rdf:resource=\"&phThing;Device\" />\r\n                      <rdf:type rdf:resource=\"&phThing;PhysicalThing\" />\r\n                      <device:hasValue>\r\n                          <sripas:node_CTZ/>\r\n                      </device:hasValue>\r\n                  </sripas:node_CTY>\r\n            </entity1>\r\n            <entity2>\r\n                 <sripas:node_CTY>\r\n                     <rdf:type rdf:resource=\"&sosa;Sensor\" />\r\n                     <rdf:type rdf:resource=\"&iiot;IoTDevice\" />\r\n                 </sripas:node_CTY>\r\n            </entity2>\r\n            <relation>=</relation>\r\n        </Cell>\r\n        <Cell id=\"4_change_type_contextProvider\"> <!-- change og observation type -->\r\n            <entity1>\r\n                  <sripas:node_CTZ>\r\n                      <rdf:type rdf:resource=\"&context;ContextProvider\"/>\r\n                  </sripas:node_CTZ>\r\n            </entity1>\r\n            <entity2>\r\n                 <sripas:node_CTZ>\r\n                     <rdf:type rdf:resource=\"&sosa;Platform\" />\r\n                     <rdf:type rdf:resource=\"&medex;Gauge\" />\r\n                 </sripas:node_CTZ>\r\n            </entity2>\r\n            <relation>=</relation>\r\n        </Cell>\r\n        <Cell id=\"5_change_obs_properties\">\r\n            <entity1>\r\n                <sripas:node_CTX>\r\n                    <rdf:predicate>\r\n                        <rdf:Description rdf:about=\"&device;hasValue\" />\r\n                    </rdf:predicate>\r\n                    <rdf:object>\r\n                        <sripas:node_CTZ/>\r\n                    </rdf:object>\r\n                    <rdf:subject>\r\n                        <sripas:node_CTY/>\r\n                    </rdf:subject>\r\n                    <context:hasProvider>\r\n                        <sripas:node_CTP/>\r\n                    </context:hasProvider>\r\n                    <context:hasTimestamp>\r\n                        <sripas:node_time/>\r\n                    </context:hasTimestamp>\r\n                </sripas:node_CTX>\r\n            </entity1>\r\n            <entity2>\r\n                <sripas:node_CTX>\r\n                    <sosa:hasResult>\r\n                        <sripas:node_CTZ/>\r\n                    </sosa:hasResult>\r\n                    <sosa:madeBySensor>\r\n                        <sripas:node_CTY>\r\n                            <sosa:isHostedBy>\r\n                                <sripas:node_CTP/>\r\n                            </sosa:isHostedBy>\r\n                        </sripas:node_CTY>\r\n                    </sosa:madeBySensor>\r\n                    <sosa:phenomenonTime>\r\n                        <rdf:Description>\r\n                            <rdf:type rdf:resource=\"&time;Instant\" />\r\n                            <time:inTimePosition>\r\n                                <rdf:Description>\r\n                                    <rdf:type rdf:resource=\"&time;TimePosition\" />\r\n                                    <time:numericPosition>\r\n                                        <sripas:node_time/>\r\n                                    </time:numericPosition>\r\n                                </rdf:Description>\r\n                            </time:inTimePosition>\r\n                        </rdf:Description>\r\n                    </sosa:phenomenonTime>\r\n                </sripas:node_CTX>\r\n            </entity2>\r\n            <relation>=</relation>\r\n            <typings>\r\n                <typing about=\"&sripas;node_time\" datatype=\"&xsd;decimal\"/>\r\n            </typings>\r\n        </Cell>\r\n        <Cell id=\"6_change_result_properties_weight\">\r\n            <entity1>\r\n                <sripas:node_CTX>\r\n                    <rdf:type rdf:resource=\"&healthMeasurement;PersonWeight\" />\r\n                    <measurement:value>\r\n                        <sripas:node_CTY/>\r\n                    </measurement:value>\r\n                </sripas:node_CTX>\r\n            </entity1>\r\n            <entity2>\r\n                <sripas:node_CTX>\r\n                    <rdf:type rdf:resource=\"&healthMeasurement;PersonWeight\" />\r\n                    <iiot:hasValue>\r\n                        <sripas:node_CTY/>\r\n                    </iiot:hasValue>\r\n                    <iiot:hasUnit>\r\n                        <rdf:Description rdf:about=\"&sweet_units;kilogram\"/>\r\n                    </iiot:hasUnit>\r\n                </sripas:node_CTX>\r\n            </entity2>\r\n            <relation>=</relation>\r\n        </Cell>\r\n        <Cell id=\"6_change_result_properties_hr\">\r\n            <entity1>\r\n                <sripas:node_CTX>\r\n                    <rdf:type rdf:resource=\"&healthMeasurement;HeartRate\" />\r\n                    <measurement:value>\r\n                        <sripas:node_CTY/>\r\n                    </measurement:value>\r\n                </sripas:node_CTX>\r\n            </entity1>\r\n            <entity2>\r\n                <sripas:node_CTX>\r\n                    <rdf:type rdf:resource=\"&healthMeasurement;HeartRate\" />\r\n                    <iiot:hasValue>\r\n                        <sripas:node_CTY/>\r\n                    </iiot:hasValue>\r\n                </sripas:node_CTX>\r\n            </entity2>\r\n            <relation>=</relation>\r\n        </Cell>\r\n        <Cell id=\"6_change_result_properties_bp\">\r\n            <entity1>\r\n                <sripas:node_CTO>\r\n                    <sosa:hasResult>\r\n                        <sripas:node_CTX>\r\n                            <rdf:type rdf:resource=\"&healthMeasurement;BloodPressure\" />\r\n                            <healthMeasurement:diastolicBloodPreassure>\r\n                                <sripas:node_CTY>\r\n                                    <measurement:value>\r\n                                        <sripas:node_dias/>\r\n                                    </measurement:value>\r\n                                </sripas:node_CTY>\r\n                            </healthMeasurement:diastolicBloodPreassure>\r\n                            <healthMeasurement:systolicBloodPreassure>\r\n                                <sripas:node_CTZ>\r\n                                    <measurement:value>\r\n                                        <sripas:node_sys/>\r\n                                    </measurement:value>\r\n                                </sripas:node_CTZ>\r\n                            </healthMeasurement:systolicBloodPreassure>\r\n                        </sripas:node_CTX>\r\n                    </sosa:hasResult>\r\n                </sripas:node_CTO>\r\n            </entity1>\r\n            <entity2>\r\n                <sripas:node_CTO>\r\n                    <sosa:hasResult>\r\n                        <sripas:node_CTY>\r\n                            <rdf:type rdf:resource=\"&medex;DiastolicBloodPressure\" />\r\n                            <rdf:type rdf:resource=\"&sosa;Result\" />\r\n                            <iiot:hasValue>\r\n                                <sripas:node_dias/>\r\n                            </iiot:hasValue>\r\n                        </sripas:node_CTY>\r\n                    </sosa:hasResult>\r\n                    <sosa:hasResult>\r\n                        <sripas:node_CTZ>\r\n                            <rdf:type rdf:resource=\"&medex;SystolicBloodPressure\" />\r\n                            <rdf:type rdf:resource=\"&sosa;Result\" />\r\n                            <iiot:hasValue>\r\n                                <sripas:node_sys/>\r\n                            </iiot:hasValue>\r\n                        </sripas:node_CTZ>\r\n                    </sosa:hasResult>\r\n                </sripas:node_CTO>\r\n            </entity2>\r\n            <relation>=</relation>\r\n        </Cell>\r\n        <Cell id=\"7_change_user\"> <!-- change og observation type -->\r\n            <entity1>\r\n                <sripas:node_CTX>\r\n                    <rdf:type rdf:resource=\"&sosa;Observation\" />\r\n                    <uaal:theInvolvedHumanUser>\r\n                        <sripas:node_CTY>\r\n                            <rdf:type rdf:resource=\"&profile;Caregiver\" />\r\n                        </sripas:node_CTY>\r\n                    </uaal:theInvolvedHumanUser>\r\n                </sripas:node_CTX>\r\n            </entity1>\r\n            <entity2>\r\n                <sripas:node_CTX>\r\n                    <rdf:type rdf:resource=\"&sosa;Observation\" />\r\n                    <iiot:orderedByUser>\r\n                        <sripas:node_CTY>\r\n                            <rdf:type rdf:resource=\"&profile;Caregiver\" />\r\n                            <rdf:type rdf:resource=\"&iiot;User\" />\r\n                        </sripas:node_CTY>\r\n                    </iiot:orderedByUser>\r\n                </sripas:node_CTX>\r\n            </entity2>\r\n            <relation>=</relation>\r\n        </Cell>\r\n    </map>\r\n</Alignment>"
+				},
+				"url": {
+					"raw": "http://localhost:8888/alignments",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8888",
+					"path": [
+						"alignments"
+					]
+				},
+				"description": "Configurar IPSM"
+			},
+			"response": []
+		},
+		{
+			"name": "IPSM GET alignments",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:8888/alignments",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8888",
+					"path": [
+						"alignments"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "IPSM Create Channel 1",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"source\":\"mw-ipsm-platform-format-BodyCloud\", \"sink\":\"ipsm-mw-interiot-format-BodyCloud\", \"inpAlignmentId\": 1, \"outAlignmentId\": 0}"
+				},
+				"url": {
+					"raw": "http://localhost:8888/channels",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8888",
+					"path": [
+						"channels"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "IPSM Create Channel 2",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"source\":\"mw-ipsm-platform-format-UniversAAL\", \"sink\":\"ipsm-mw-interiot-format-UniversAAL\", \"inpAlignmentId\": 2, \"outAlignmentId\": 0}"
+				},
+				"url": {
+					"raw": "http://localhost:8888/channels",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8888",
+					"path": [
+						"channels"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "IPSM GET channels",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:8888/channels",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8888",
+					"path": [
+						"channels"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "IPSM DELETE alignment",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:8888/alignments/3",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8888",
+					"path": [
+						"alignments",
+						"3"
+					]
+				},
+				"description": "IPSM DELETE alignment"
+			},
+			"response": []
+		},
+		{
+			"name": "Inter-MW Test Register Client",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "",
+						"value": ""
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"pullMessagesLimit\":5}"
+				},
+				"url": {
+					"raw": "http://localhost:9080/mw.api.rest/api/intermw/client/pwt001",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9080",
+					"path": [
+						"mw.api.rest",
+						"api",
+						"intermw",
+						"client",
+						"pwt001"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Inter-MW Register Client",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "",
+						"value": ""
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"pullMessagesLimit\":5}"
+				},
+				"url": {
+					"raw": "http://localhost:9080/mw.api.rest/api/intermw/client/test",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9080",
+					"path": [
+						"mw.api.rest",
+						"api",
+						"intermw",
+						"client",
+						"test"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Inter-MW Unregister Client",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "",
+						"value": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:9080/mw.api.rest/api/intermw/client/test",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9080",
+					"path": [
+						"mw.api.rest",
+						"api",
+						"intermw",
+						"client",
+						"test"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Inter-MW Test Register Platform",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"id\":{\"id\":\"http://inter-iot.eu/universaal-emulated\"},\"type\":{\"typeId\":\"UniversAALEmulated\"},\"capabilities\":[],\"baseURL\":\"http://172.17.0.1:4568/platform_emulator\",\"name\":\"UniversAALEmulator platform\"}"
+				},
+				"url": {
+					"raw": "http://localhost:9080/mw.api.rest/api/intermw/platform/pwt001",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9080",
+					"path": [
+						"mw.api.rest",
+						"api",
+						"intermw",
+						"platform",
+						"pwt001"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Inter-MW Register Platform",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"id\":{\"id\":\"http://inter-iot.eu/universaal\"},\"type\":{\"typeId\":\"UniversAAL\"},\"capabilities\":[],\"baseURL\":\"http://158.42.33.219:9000/uaal/\",\"name\":\"UniversAAL Platform\"}"
+				},
+				"url": {
+					"raw": "http://localhost:9080/mw.api.rest/api/intermw/platform/test",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9080",
+					"path": [
+						"mw.api.rest",
+						"api",
+						"intermw",
+						"platform",
+						"test"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Inter-MW Unregister Platform",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:9080/mw.api.rest/api/intermw/platform/test/universaal",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9080",
+					"path": [
+						"mw.api.rest",
+						"api",
+						"intermw",
+						"platform",
+						"test",
+						"universaal"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Inter-MW Test Register Thing",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"attributes\":[],\"platformId\":{\"id\":\"http://inter-iot.eu/universaal-emulated\"},\"thingId\":{\"id\":\"http://www.example.com/UniversAAL-401-Sensor-weight\"}}"
+				},
+				"url": {
+					"raw": "http://localhost:9080/mw.api.rest/api/intermw/thing/pwt001",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9080",
+					"path": [
+						"mw.api.rest",
+						"api",
+						"intermw",
+						"thing",
+						"pwt001"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Inter-MW Register Thing",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"attributes\":[],\"platformId\":{\"id\":\"http://inter-iot.eu/universaal\"},\"thingId\":{\"id\":\"http://example.com/sensor99761296A000\"}}"
+				},
+				"url": {
+					"raw": "http://localhost:9080/mw.api.rest/api/intermw/thing/test",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9080",
+					"path": [
+						"mw.api.rest",
+						"api",
+						"intermw",
+						"thing",
+						"test"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Inter-MW Unregister Thing",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:9080/mw.api.rest/api/intermw/thing/test/sensor99761296A000/universaal",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9080",
+					"path": [
+						"mw.api.rest",
+						"api",
+						"intermw",
+						"thing",
+						"test",
+						"sensor99761296A000",
+						"universaal"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Inter-MW Test Subscribe to a Thing",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"attributes\":[],\"platformId\":{\"id\":\"http://inter-iot.eu/universaal-emulated\"},\"thingId\":{\"id\":\"http://www.example.com/UniversAAL-401-Sensor-weight\"}}"
+				},
+				"url": {
+					"raw": "http://localhost:9080/mw.api.rest/api/intermw/subscribe/pwt001",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9080",
+					"path": [
+						"mw.api.rest",
+						"api",
+						"intermw",
+						"subscribe",
+						"pwt001"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Inter-MW Subscribe to a Thing",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"attributes\":[],\"platformId\":{\"id\":\"http://inter-iot.eu/universaal\"},\"thingId\":{\"id\":\"http://example.com/sensor99761296A000\"}}"
+				},
+				"url": {
+					"raw": "http://localhost:9080/mw.api.rest/api/intermw/subscribe/test",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9080",
+					"path": [
+						"mw.api.rest",
+						"api",
+						"intermw",
+						"subscribe",
+						"test"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Inter-MW Unsubscribe to a Thing",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:9080/mw.api.rest/api/intermw/subscribe/test/convf948a8d2-e5bc-4092-a5d0-96aa6dfb8562",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9080",
+					"path": [
+						"mw.api.rest",
+						"api",
+						"intermw",
+						"subscribe",
+						"test",
+						"convf948a8d2-e5bc-4092-a5d0-96aa6dfb8562"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Inter-MW Test pull observations",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:9080/mw.api.rest/api/intermw/pull/pwt001/5",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9080",
+					"path": [
+						"mw.api.rest",
+						"api",
+						"intermw",
+						"pull",
+						"pwt001",
+						"5"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Inter-MW pull observations",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:9080/mw.api.rest/api/intermw/pull/test/5",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9080",
+					"path": [
+						"mw.api.rest",
+						"api",
+						"intermw",
+						"pull",
+						"test",
+						"5"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Inter-MW List all Platforms",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:9080/mw.api.rest/api/intermw/platform/test/list",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9080",
+					"path": [
+						"mw.api.rest",
+						"api",
+						"intermw",
+						"platform",
+						"test",
+						"list"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Inter-MW List all Things",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:9080/mw.api.rest/api/intermw/thing/test/list",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9080",
+					"path": [
+						"mw.api.rest",
+						"api",
+						"intermw",
+						"thing",
+						"test",
+						"list"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Inter-MW List all Things in a Platform",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:9080/mw.api.rest/api/intermw/thing/test/list/universaal",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9080",
+					"path": [
+						"mw.api.rest",
+						"api",
+						"intermw",
+						"thing",
+						"test",
+						"list",
+						"universaal"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Inter-MW Unregister Client",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:9080/mw.api.rest/api/intermw/client/test",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9080",
+					"path": [
+						"mw.api.rest",
+						"api",
+						"intermw",
+						"client",
+						"test"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Inter-MW Test Unregister Client",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:9080/mw.api.rest/api/intermw/client/pwt001",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9080",
+					"path": [
+						"mw.api.rest",
+						"api",
+						"intermw",
+						"client",
+						"pwt001"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}

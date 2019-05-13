@@ -4,15 +4,15 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>eu.interiot.intermw</groupId>
-    <artifactId>mw.bridge.example</artifactId>
+    <artifactId>mw.bridge.sna</artifactId>
     <version>2.0.0-SNAPSHOT</version>
-    <name>INTER-IoT Bridge Example</name>
+    <name>AIOTES Bridge for sensiNact Platform</name>
 
     <properties>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
-        <intermw.version>2.0.0-SNAPSHOT</intermw.version>
-        <log4j-version>2.7</log4j-version>
+        <intermw.version>2.3.1</intermw.version>
+        <jena.version>3.5.0</jena.version>
     </properties>
 
     <dependencies>
@@ -21,36 +21,37 @@
             <artifactId>mw.bridges.api</artifactId>
             <version>${intermw.version}</version>
         </dependency>
+        <!--         <dependency> -->
+        <!--             <groupId>com.googlecode.json-simple</groupId> -->
+        <!--             <artifactId>json-simple</artifactId> -->
+        <!--             <version>1.1</version> -->
+        <!--         </dependency> -->
+        <dependency>
+            <groupId>org.apache.jena</groupId>
+            <artifactId>apache-jena-libs</artifactId>
+            <type>pom</type>
+            <version>${jena.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>eu.inter-iot.translators</groupId>
+            <artifactId>syntactic-translators</artifactId>
+            <version>1.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+            <version>2.8.2</version>
+        </dependency>
+        <dependency>
+            <groupId>com.googlecode.json-simple</groupId>
+            <artifactId>json-simple</artifactId>
+            <version>1.1</version>
+        </dependency>
 
-        <!-- Test dependencies -->
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <version>4.12</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>eu.interiot.intermw</groupId>
-            <artifactId>mw.commons.impl</artifactId>
-            <version>${intermw.version}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.logging.log4j</groupId>
-            <artifactId>log4j-api</artifactId>
-            <version>${log4j-version}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.logging.log4j</groupId>
-            <artifactId>log4j-core</artifactId>
-            <version>${log4j-version}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.logging.log4j</groupId>
-            <artifactId>log4j-slf4j-impl</artifactId>
-            <version>${log4j-version}</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
@@ -59,11 +60,21 @@
         <repository>
             <id>nexus.inter-iot.eu-releases</id>
             <url>http://nexus.inter-iot.eu/repository/maven-releases/</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
         </repository>
         <repository>
             <id>nexus.inter-iot.eu-snapshots</id>
             <url>http://nexus.inter-iot.eu/repository/maven-snapshots/</url>
+            <releases>
+                <enabled>false</enabled>
+            </releases>
             <snapshots>
+                <enabled>true</enabled>
                 <updatePolicy>always</updatePolicy>
             </snapshots>
         </repository>

@@ -1,0 +1,84 @@
+<rdf:RDF
+    xmlns="http://sensinact.com#"
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    xmlns:owl="http://www.w3.org/2002/07/owl#"
+    xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema#">
+  <owl:Ontology rdf:about="http://sensinact.com"/>
+  <owl:Class rdf:about="http://sensinact.com#Element">
+    <rdfs:comment>
+      <owl:DatatypeProperty rdf:about="http://sensinact.com#name"/>
+    </rdfs:comment>
+  </owl:Class>
+  <owl:Class rdf:about="http://sensinact.com#Resource">
+    <rdfs:comment>
+      <owl:FunctionalProperty rdf:about="http://sensinact.com#value"/>
+    </rdfs:comment>
+    <rdfs:subClassOf>
+      <owl:Restriction>
+        <owl:allValuesFrom>
+          <owl:Class rdf:about="http://sensinact.com#Service"/>
+        </owl:allValuesFrom>
+        <owl:onProperty>
+          <owl:InverseFunctionalProperty rdf:about="http://sensinact.com#isManagedBy"/>
+        </owl:onProperty>
+      </owl:Restriction>
+    </rdfs:subClassOf>
+    <rdfs:subClassOf rdf:resource="http://sensinact.com#Element"/>
+  </owl:Class>
+  <owl:Class rdf:about="http://sensinact.com#Service">
+    <rdfs:subClassOf>
+      <owl:Restriction>
+        <owl:allValuesFrom rdf:resource="http://sensinact.com#Resource"/>
+        <owl:onProperty>
+          <owl:InverseFunctionalProperty rdf:about="http://sensinact.com#manages"/>
+        </owl:onProperty>
+      </owl:Restriction>
+    </rdfs:subClassOf>
+    <rdfs:subClassOf>
+      <owl:Restriction>
+        <owl:allValuesFrom>
+          <owl:Class rdf:about="http://sensinact.com#Provider"/>
+        </owl:allValuesFrom>
+        <owl:onProperty>
+          <owl:InverseFunctionalProperty rdf:about="http://sensinact.com#isManagedBy"/>
+        </owl:onProperty>
+      </owl:Restriction>
+    </rdfs:subClassOf>
+    <rdfs:subClassOf rdf:resource="http://sensinact.com#Element"/>
+  </owl:Class>
+  <owl:Class rdf:about="http://sensinact.com#Provider">
+    <rdfs:subClassOf>
+      <owl:Restriction>
+        <owl:allValuesFrom rdf:resource="http://sensinact.com#Service"/>
+        <owl:onProperty>
+          <owl:InverseFunctionalProperty rdf:about="http://sensinact.com#manages"/>
+        </owl:onProperty>
+      </owl:Restriction>
+    </rdfs:subClassOf>
+    <rdfs:subClassOf rdf:resource="http://sensinact.com#Element"/>
+  </owl:Class>
+  <owl:FunctionalProperty rdf:about="http://sensinact.com#value">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+  </owl:FunctionalProperty>
+  <owl:InverseFunctionalProperty rdf:about="http://sensinact.com#isManagedBy">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+    <owl:inverseOf>
+      <owl:InverseFunctionalProperty rdf:about="http://sensinact.com#manages"/>
+    </owl:inverseOf>
+    <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topObjectProperty"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+  </owl:InverseFunctionalProperty>
+  <owl:InverseFunctionalProperty rdf:about="http://sensinact.com#manages">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+  </owl:InverseFunctionalProperty>
+  <owl:AnnotationProperty rdf:about="http://sensinact.com#contains"/>
+  <owl:AllDisjointClasses>
+    <owl:members rdf:parseType="Collection">
+      <owl:Class rdf:about="http://sensinact.com#Provider"/>
+      <owl:Class rdf:about="http://sensinact.com#Resource"/>
+      <owl:Class rdf:about="http://sensinact.com#Service"/>
+    </owl:members>
+  </owl:AllDisjointClasses>
+</rdf:RDF>

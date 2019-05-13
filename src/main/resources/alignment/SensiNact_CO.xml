@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE Alignment
+        [
+                <!ENTITY sripas "http://www.inter-iot.eu/sripas#">
+                <!ENTITY var "http://www.inter-iot.eu/sripas#node_">
+                <!ENTITY sosa "http://www.w3.org/ns/sosa/">
+                <!ENTITY xsd "http://www.w3.org/2001/XMLSchema#">
+                <!ENTITY ssn "http://purl.oclc.org/NET/ssnx/ssn#">
+                <!ENTITY iiotex "http://inter-iot.eu/GOIoTPex#">
+                <!ENTITY iiot "http://inter-iot.eu/GOIoTP#">
+                <!ENTITY sensinact "http://sensinact.com#">
+                ]
+        >
+<Alignment
+        xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+        xmlns:sripas="http://www.inter-iot.eu/sripas#"
+        xmlns:var="http://www.inter-iot.eu/sripas#node_"
+        xmlns="http://www.inter-iot.eu/sripas#"
+        xmlns:sosa="http://www.w3.org/ns/sosa/"
+        xmlns:iiot="http://inter-iot.eu/GOIoTP#"
+        xmlns:iiotex="http://inter-iot.eu/GOIoTPex#"
+        xmlns:sensinact="http://sensinact.com#"
+
+        name="SensiNact_CO" version="0.1" creator="SRIPAS/CEA" description="Alignment between SensiNact ontology and GIoTPex ontology.">
+
+    <onto1>
+        <Ontology about="http://sensinact.com#">
+            <formalism>
+                <Formalism name="OWL2.0" uri="http://www.w3.org/2002/07/owl#"/>
+            </formalism>
+        </Ontology>
+    </onto1>
+    <onto2>
+        <Ontology about="http://inter-iot.eu/GOIoTPex#">
+            <formalism>
+                <Formalism name="OWL2.0" uri="http://www.w3.org/2002/07/owl#"/>
+            </formalism>
+        </Ontology>
+    </onto2>
+
+    <steps>
+        <step order="1" cell="1_provider"/>
+        <step order="2" cell="2_observation"/>
+        <step order="3" cell="3_resource"/>
+        <step order="4" cell="4_clean"/>
+    </steps>
+    <map>
+        <Cell id="1_provider">
+        <sripas:entity1>
+            <var:provider>
+                <rdf:type rdf:resource="&sensinact;Provider"/>
+                <sensinact:name><var:provider_name/></sensinact:name>
+                <sensinact:manages>
+                    <var:service>
+                        <rdf:type rdf:resource="&sensinact;Service"/>
+                        <sensinact:name><var:service_name/></sensinact:name>
+                    </var:service>
+                </sensinact:manages>
+            </var:provider>
+        </sripas:entity1>
+        <sripas:entity2>
+            <var:provider>
+                <rdf:type rdf:resource="&sosa;IoTDevice"/>
+                <rdf:type rdf:resource="&sosa;Platform"/>
+                <iiot:hasName><var:provider_name/></iiot:hasName>
+                <sosa:hosts>
+                    <var:service>
+                        <rdf:type rdf:resource="&sosa;Sensor"/>
+                        <iiot:hasName><var:service_name/></iiot:hasName>
+                    </var:service>
+                </sosa:hosts>
+            </var:provider>
+        </sripas:entity2>
+        <relation>=</relation>
+    </Cell>
+        <Cell id="2_observation">
+            <sripas:entity1>
+                <var:sensor>
+                    <rdf:type rdf:resource="&sosa;Sensor"/>
+                    <sensinact:manages>
+                        <var:resource>
+                            <rdf:type rdf:resource="&sensinact;Resource"/>
+                            <sensinact:name><var:resource_name/></sensinact:name>
+                            <sensinact:value><var:resource_value/></sensinact:value>
+                        </var:resource>
+                    </sensinact:manages>
+                </var:sensor>
+            </sripas:entity1>
+            <sripas:entity2>
+                <rdf:Description>
+                    <rdf:type rdf:resource="&sosa;Observation"/>
+                    <sosa:madeBySensor>
+                        <var:sensor>
+                            <rdf:type rdf:resource="&sosa;Sensor"/>
+                            <sosa:oberves><var:resource/></sosa:oberves>
+                        </var:sensor>
+                    </sosa:madeBySensor>
+                    <sosa:observedProperty><var:resource/></sosa:observedProperty>
+                    <sosa:hasResult>
+                        <rdf:Description>
+                            <iiot:hasResultValue><var:resource_value/></iiot:hasResultValue>
+                            <rdf:type rdf:resource="&sosa;Result"/>
+                            <iiot:hasName><var:resource_name/></iiot:hasName>
+                        </rdf:Description>
+                    </sosa:hasResult>
+                </rdf:Description>
+            </sripas:entity2>
+            <relation>=</relation>
+        </Cell>
+        <Cell id="3_resource">
+            <sripas:entity1>
+                <var:sensor>
+                    <rdf:type rdf:resource="&sosa;Sensor"/>
+                    <sensinact:manages>
+                        <var:resource>
+                            <rdf:type rdf:resource="&sensinact;Resource"/>
+                        </var:resource>
+                    </sensinact:manages>
+                </var:sensor>
+            </sripas:entity1>
+            <sripas:entity2>
+                <var:sensor>
+                    <rdf:type rdf:resource="&sosa;Sensor"/>
+                    <sosa:observes><var:resource/></sosa:observes>
+                </var:sensor>
+            </sripas:entity2>
+            <relation>=</relation>
+        </Cell>
+        <Cell id="4_clean">
+            <sripas:entity1>
+                <var:sensor>
+                    <rdf:type rdf:resource="&sosa;Sensor"/>
+                    <sensinact:manages>
+                        <var:resource>
+                            <rdf:type rdf:resource="&sensinact;Resource"/>
+                        </var:resource>
+                    </sensinact:manages>
+                </var:sensor>
+            </sripas:entity1>
+            <sripas:entity2>
+                <var:sensor>
+                    <rdf:type rdf:resource="&sosa;Sensor"/>
+                </var:sensor>
+            </sripas:entity2>
+            <relation>=</relation>
+        </Cell>
+    </map>
+</Alignment>

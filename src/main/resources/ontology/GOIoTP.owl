@@ -1,0 +1,836 @@
+<?xml version="1.0"?>
+<rdf:RDF xmlns="http://inter-iot.eu/GOIoTP#"
+     xml:base="http://inter-iot.eu/GOIoTP"
+     xmlns:schema="http://schema.org/"
+     xmlns:owl="http://www.w3.org/2002/07/owl#"
+     xmlns:gml="http://www.opengis.net/ont/gml#"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+     xmlns:skos="http://www.w3.org/2004/02/skos/core#"
+     xmlns:ogc="http://www.opengis.net/"
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+     xmlns:oldssn="http://purl.oclc.org/NET/ssnx/ssn#"
+     xmlns:ssn="http://www.w3.org/ns/ssn/"
+     xmlns:sf="http://www.opengis.net/ont/sf#"
+     xmlns:xml="http://www.w3.org/XML/1998/namespace"
+     xmlns:dcterms="http://purl.org/dc/terms/"
+     xmlns:vann="http://purl.org/vocab/vann/"
+     xmlns:foaf="http://xmlns.com/foaf/0.1/"
+     xmlns:sosa="http://www.w3.org/ns/sosa/"
+     xmlns:voaf="http://purl.org/vocommons/voaf#"
+     xmlns:sweet_units="http://sweet.jpl.nasa.gov/2.3/reprSciUnits.owl#"
+     xmlns:geosparqlf="http://www.opengis.net/def/function/geosparql/"
+     xmlns:geosparql="http://www.opengis.net/ont/geosparql#"
+     xmlns:iiot="http://inter-iot.eu/GOIoTP#"
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+     xmlns:time="http://www.w3.org/2006/time#"
+     xmlns:vs="http://www.w3.org/2003/06/sw-vocab-status/ns#"
+     xmlns:geosparqlr="http://www.opengis.net/def/rule/geosparql/"
+     xmlns:dc="http://purl.org/dc/elements/1.1/">
+    <owl:Ontology rdf:about="http://inter-iot.eu/GOIoTP#">
+        <owl:imports rdf:resource="http://www.w3.org/ns/ssn/"/>
+        <dcterms:modified>2017-12-12</dcterms:modified>
+        <vann:preferredNamespacePrefix>iiot</vann:preferredNamespacePrefix>
+        <rdfs:comment xml:lang="en">INTER-IoT. Interoperability of IoT Platforms.
+ 
+INTER-IoT is a R&amp;D project which has received funding from the European Union&apos;s Horizon 2020 research and innovation programme under grant agreement No 687283.
+
+Copyright (C) 2016-2018, by (Author&apos;s company of this file):
+  - Systems Research Institute Polish Academy of Sciences
+  
+ For more information, contact:
+  - author pawel.szmeja@ibspan.waw.pl
+  - Project coordinator:  coordinator@inter-iot.eu</rdfs:comment>
+        <vann:preferredNamespaceUri>http://inter-iot.eu/GOIoTP#</vann:preferredNamespaceUri>
+        <dc:creator>
+            <rdf:Description>
+                <foaf:name>Paweł Szmeja</foaf:name>
+                <rdf:type rdf:resource="http://xmlns.com/foaf/0.1/Person"/>
+            </rdf:Description>
+        </dc:creator>
+        <dcterms:issued rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2017-01-01</dcterms:issued>
+        <dc:description xml:lang="en">Generic Ontology for IoT Platforms (GOIoTP) is a core ontology for IoT. Developed as part of the INTER-IoT project, it offers modular data structures for description of entities most commonly appearing in IoT in the context of interoperating various different IoT artifacts.
+
+The ontology has the following horizontal modules:
+    Device - (optionally virtualized) hardware connected to IoT
+    Platform - software platforms that host IoT devices
+    Observation (and actuation) - information gathered by IoT entities from the world, or the intention to act upon it
+    Units &amp; measurements - systems of units and values
+    User - human or software that uses, or is a client of IoT entities
+    Geolocation - position within the world, defined by coordinates
+    Service - web services offered by software
+    Provenance - origin, ownership and history of IoT entities
+
+For more information, please refer to INTER-IoT deliverables (specifically D4.2) and GOIoTP documentation available online.</dc:description>
+        <owl:versionInfo rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">0.9</owl:versionInfo>
+        <vs:term_status xml:lang="en">stable</vs:term_status>
+        <dc:title xml:lang="en">Generic Ontology for IoT Platforms</dc:title>
+    </owl:Ontology>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Annotation properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://purl.org/dc/elements/1.1/contributor -->
+
+    <owl:AnnotationProperty rdf:about="http://purl.org/dc/elements/1.1/contributor"/>
+    
+
+
+    <!-- http://purl.org/dc/elements/1.1/creator -->
+
+    <owl:AnnotationProperty rdf:about="http://purl.org/dc/elements/1.1/creator"/>
+    
+
+
+    <!-- http://purl.org/dc/elements/1.1/date -->
+
+    <owl:AnnotationProperty rdf:about="http://purl.org/dc/elements/1.1/date"/>
+    
+
+
+    <!-- http://purl.org/dc/elements/1.1/description -->
+
+    <owl:AnnotationProperty rdf:about="http://purl.org/dc/elements/1.1/description"/>
+    
+
+
+    <!-- http://www.w3.org/2004/02/skos/core#prefLabel -->
+
+    <owl:AnnotationProperty rdf:about="http://www.w3.org/2004/02/skos/core#prefLabel"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Datatypes
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.opengis.net/ont/geosparql#wktLiteral -->
+
+    <rdfs:Datatype rdf:about="http://www.opengis.net/ont/geosparql#wktLiteral">
+        <dc:contributor>Matthew Perry</dc:contributor>
+        <dc:creator>OGC GeoSPARQL 1.0 Standard Working Group</dc:creator>
+        <dc:date rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2011-06-16</dc:date>
+        <dc:description xml:lang="en">
+                  A Well-known Text serialization of a geometry object.
+                </dc:description>
+        <rdfs:comment xml:lang="en">
+                  A Well-known Text serialization of a geometry object.
+                </rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="http://www.opengis.net/ont/geosparql"/>
+        <rdfs:isDefinedBy rdf:resource="http://www.opengis.net/spec/geosparql/1.0"/>
+        <rdfs:label xml:lang="en">Well-known Text Literal</rdfs:label>
+        <skos:definition xml:lang="en">
+                  A Well-known Text serialization of a geometry object.
+                </skos:definition>
+        <skos:prefLabel xml:lang="en">Well-known Text Literal</skos:prefLabel>
+    </rdfs:Datatype>
+    
+
+
+    <!-- http://www.w3.org/2001/XMLSchema#date -->
+
+    <rdfs:Datatype rdf:about="http://www.w3.org/2001/XMLSchema#date"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Object Properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://inter-iot.eu/GOIoTP#hasComponent -->
+
+    <owl:ObjectProperty rdf:about="http://inter-iot.eu/GOIoTP#hasComponent">
+        <rdfs:range rdf:resource="http://inter-iot.eu/GOIoTP#PlatformComponent"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://inter-iot.eu/GOIoTP#hasCoverage -->
+
+    <owl:ObjectProperty rdf:about="http://inter-iot.eu/GOIoTP#hasCoverage">
+        <rdfs:range rdf:resource="http://inter-iot.eu/GOIoTP#Location"/>
+        <rdfs:comment xml:lang="en">Denotes a physical location in which an entity (e.g. IoTDevice, SoftwarePlatform, Sensor) operates. Any functionality or capability of an entity should be restricted to the locations included in its coverage.</rdfs:comment>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://inter-iot.eu/GOIoTP#hasDataFormat -->
+
+    <owl:ObjectProperty rdf:about="http://inter-iot.eu/GOIoTP#hasDataFormat">
+        <rdfs:range rdf:resource="http://inter-iot.eu/GOIoTP#DataFormat"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://inter-iot.eu/GOIoTP#hasDomainOfInterest -->
+
+    <owl:ObjectProperty rdf:about="http://inter-iot.eu/GOIoTP#hasDomainOfInterest">
+        <rdfs:range rdf:resource="http://inter-iot.eu/GOIoTP#DomainOfInterest"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://inter-iot.eu/GOIoTP#hasLocation -->
+
+    <owl:ObjectProperty rdf:about="http://inter-iot.eu/GOIoTP#hasLocation">
+        <rdfs:range rdf:resource="http://inter-iot.eu/GOIoTP#Location"/>
+        <rdfs:comment xml:lang="en">Denotes last known physical location of an entity.</rdfs:comment>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://inter-iot.eu/GOIoTP#hasMeasurementKind -->
+
+    <owl:ObjectProperty rdf:about="http://inter-iot.eu/GOIoTP#hasMeasurementKind">
+        <rdfs:range rdf:resource="http://inter-iot.eu/GOIoTP#MeasurementKind"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://inter-iot.eu/GOIoTP#hasOwner -->
+
+    <owl:ObjectProperty rdf:about="http://inter-iot.eu/GOIoTP#hasOwner">
+        <owl:inverseOf rdf:resource="http://inter-iot.eu/GOIoTP#isOwnerOf"/>
+        <rdfs:comment xml:lang="en">Denotes an ownership relation between two entities.</rdfs:comment>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://inter-iot.eu/GOIoTP#hasSemantics -->
+
+    <owl:ObjectProperty rdf:about="http://inter-iot.eu/GOIoTP#hasSemantics">
+        <rdfs:range rdf:resource="http://inter-iot.eu/GOIoTP#Semantics"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://inter-iot.eu/GOIoTP#hasServiceInput -->
+
+    <owl:ObjectProperty rdf:about="http://inter-iot.eu/GOIoTP#hasServiceInput">
+        <rdfs:domain rdf:resource="http://inter-iot.eu/GOIoTP#ServiceInterface"/>
+        <rdfs:range rdf:resource="http://inter-iot.eu/GOIoTP#ServiceInput"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://inter-iot.eu/GOIoTP#hasServiceInterface -->
+
+    <owl:ObjectProperty rdf:about="http://inter-iot.eu/GOIoTP#hasServiceInterface">
+        <rdfs:domain rdf:resource="http://inter-iot.eu/GOIoTP#Service"/>
+        <rdfs:range rdf:resource="http://inter-iot.eu/GOIoTP#ServiceInterface"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://inter-iot.eu/GOIoTP#hasServiceOutput -->
+
+    <owl:ObjectProperty rdf:about="http://inter-iot.eu/GOIoTP#hasServiceOutput">
+        <rdfs:domain rdf:resource="http://inter-iot.eu/GOIoTP#ServiceInterface"/>
+        <rdfs:range rdf:resource="http://inter-iot.eu/GOIoTP#ServiceOutput"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://inter-iot.eu/GOIoTP#hasUnit -->
+
+    <owl:ObjectProperty rdf:about="http://inter-iot.eu/GOIoTP#hasUnit">
+        <rdfs:range rdf:resource="http://sweet.jpl.nasa.gov/2.3/reprSciUnits.owl#Unit"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://inter-iot.eu/GOIoTP#hasUser -->
+
+    <owl:ObjectProperty rdf:about="http://inter-iot.eu/GOIoTP#hasUser">
+        <owl:inverseOf rdf:resource="http://inter-iot.eu/GOIoTP#isUserOf"/>
+        <rdfs:range rdf:resource="http://inter-iot.eu/GOIoTP#User"/>
+        <rdfs:comment xml:lang="en">Denotes that the subject entity is used by another entity.</rdfs:comment>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://inter-iot.eu/GOIoTP#isOwnerOf -->
+
+    <owl:ObjectProperty rdf:about="http://inter-iot.eu/GOIoTP#isOwnerOf">
+        <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topObjectProperty"/>
+        <rdfs:comment xml:lang="en">Denotes an ownership relation between two entities.</rdfs:comment>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://inter-iot.eu/GOIoTP#isUserOf -->
+
+    <owl:ObjectProperty rdf:about="http://inter-iot.eu/GOIoTP#isUserOf">
+        <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topObjectProperty"/>
+        <rdfs:domain rdf:resource="http://inter-iot.eu/GOIoTP#User"/>
+        <rdfs:comment xml:lang="en">Denotes that the subject entity uses another entity.</rdfs:comment>
+        <skos:example xml:lang="en">A User uses a Device, which means that observations coming from that device may be relevant to the user.</skos:example>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://inter-iot.eu/GOIoTP#offersService -->
+
+    <owl:ObjectProperty rdf:about="http://inter-iot.eu/GOIoTP#offersService">
+        <rdfs:domain rdf:resource="http://www.w3.org/ns/sosa/Platform"/>
+        <rdfs:range rdf:resource="http://inter-iot.eu/GOIoTP#Service"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://inter-iot.eu/GOIoTP#orderedByUser -->
+
+    <owl:ObjectProperty rdf:about="http://inter-iot.eu/GOIoTP#orderedByUser">
+        <rdfs:range rdf:resource="http://inter-iot.eu/GOIoTP#User"/>
+        <rdfs:comment xml:lang="en">An activity (an Observation or an Actuation) can be ordered by a User, in which case the device performing the activity is responsible for carrying it out, but the User is responsible for making the decision to do so. Ordering an activity may involve more than making a decision, i.e. actually using the device to perform an Actuation, or an Observation by handling the device physically, or controlling it remotely.
+
+An anonymous device will not have a User that orderd its activity, itself being responsible for making the decision to perform it.</rdfs:comment>
+        <skos:example xml:lang="en">A port operator that moves a port crane orders an actuation that is then made by the crane device.
+
+A doctor that uses a smart thermometer to measure a patients temperature orders the temperature observation carried out by the thermometer.
+
+A truck driver that sets the preferred fuel usage in a smart car orders it to make an actuation, making the smart truck controller device change the state of the smart truck and recalculate route data (e.g. estimated time of arrival).</skos:example>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Data properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://inter-iot.eu/GOIoTP#hasBaseEndpoint -->
+
+    <owl:DatatypeProperty rdf:about="http://inter-iot.eu/GOIoTP#hasBaseEndpoint">
+        <rdfs:comment xml:lang="en">A primary (default, base) endpoint at which an entity is accessible e.g. a REST URL.</rdfs:comment>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://inter-iot.eu/GOIoTP#hasDescription -->
+
+    <owl:DatatypeProperty rdf:about="http://inter-iot.eu/GOIoTP#hasDescription">
+        <rdfs:comment xml:lang="en">A human-readable description of an IoT entity.</rdfs:comment>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://inter-iot.eu/GOIoTP#hasName -->
+
+    <owl:DatatypeProperty rdf:about="http://inter-iot.eu/GOIoTP#hasName">
+        <rdfs:comment xml:lang="en">A generic property describing a name of any entity in the context of IoT.</rdfs:comment>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://inter-iot.eu/GOIoTP#hasResultValue -->
+
+    <owl:DatatypeProperty rdf:about="http://inter-iot.eu/GOIoTP#hasResultValue">
+        <rdfs:domain rdf:resource="http://www.w3.org/ns/sosa/Result"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://inter-iot.eu/GOIoTP#hasServiceDefinition -->
+
+    <owl:DatatypeProperty rdf:about="http://inter-iot.eu/GOIoTP#hasServiceDefinition">
+        <rdfs:domain rdf:resource="http://inter-iot.eu/GOIoTP#Service"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#anyURI"/>
+        <rdfs:comment xml:lang="en">Specifies an address  under which a technical and formal definition of a Service is accessible.</rdfs:comment>
+        <skos:example xml:lang="en">For webservices: a WSDL file, a WADL file, an OpenAPI specification file.</skos:example>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://inter-iot.eu/GOIoTP#hasURI -->
+
+    <owl:DatatypeProperty rdf:about="http://inter-iot.eu/GOIoTP#hasURI">
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#anyURI"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://inter-iot.eu/GOIoTP#hasVersion -->
+
+    <owl:DatatypeProperty rdf:about="http://inter-iot.eu/GOIoTP#hasVersion"/>
+    
+
+
+    <!-- http://www.opengis.net/ont/geosparql#asWKT -->
+
+    <owl:DatatypeProperty rdf:about="http://www.opengis.net/ont/geosparql#asWKT">
+        <rdfs:domain rdf:resource="http://www.opengis.net/ont/geosparql#Geometry"/>
+        <rdfs:range rdf:resource="http://www.opengis.net/ont/geosparql#wktLiteral"/>
+        <dc:contributor>Matthew Perry</dc:contributor>
+        <dc:creator>OGC GeoSPARQL 1.0 Standard Working Group</dc:creator>
+        <dc:date rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2011-06-16</dc:date>
+        <dc:description xml:lang="en">
+        The WKT serialization of a geometry
+      </dc:description>
+        <rdfs:comment xml:lang="en">
+        The WKT serialization of a geometry
+      </rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="http://www.opengis.net/ont/geosparql"/>
+        <rdfs:isDefinedBy rdf:resource="http://www.opengis.net/spec/geosparql/1.0"/>
+        <rdfs:label xml:lang="en">asWKT</rdfs:label>
+        <skos:definition xml:lang="en">
+        The WKT serialization of a geometry
+      </skos:definition>
+        <skos:prefLabel xml:lang="en">asWKT</skos:prefLabel>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Classes
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://inter-iot.eu/GOIoTP#DataFormat -->
+
+    <owl:Class rdf:about="http://inter-iot.eu/GOIoTP#DataFormat"/>
+    
+
+
+    <!-- http://inter-iot.eu/GOIoTP#DomainOfInterest -->
+
+    <owl:Class rdf:about="http://inter-iot.eu/GOIoTP#DomainOfInterest">
+        <rdfs:comment xml:lang="en">A domain in which an IoT artifact operates.</rdfs:comment>
+        <skos:example xml:lang="en">Healthcare, AAL (ambient assisted living), transportation, smart city.</skos:example>
+    </owl:Class>
+    
+
+
+    <!-- http://inter-iot.eu/GOIoTP#IoTDevice -->
+
+    <owl:Class rdf:about="http://inter-iot.eu/GOIoTP#IoTDevice">
+        <rdfs:subClassOf rdf:resource="http://www.w3.org/ns/sosa/Platform"/>
+        <rdfs:comment xml:lang="en">A physical or virtual entity that is the basic unit of an IoT system. An IoT Device is a Platform, and can serve as a host for multiple Sensors, Actuators, or Samplers.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://inter-iot.eu/GOIoTP#Location -->
+
+    <owl:Class rdf:about="http://inter-iot.eu/GOIoTP#Location">
+        <rdfs:subClassOf rdf:resource="http://www.opengis.net/ont/geosparql#Geometry"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.opengis.net/ont/geosparql#asWKT"/>
+                <owl:allValuesFrom rdf:resource="http://www.opengis.net/ont/geosparql#wktLiteral"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:comment xml:lang="en">Any physical entity that can be thought of as a location that contains other entities. The geoposition of the Location is (optionally) given in Well Known Text by the geosparql:asWKT property.</rdfs:comment>
+        <skos:example xml:lang="en">A room or a floor in a building; a specific point in a city, a city as a whole.</skos:example>
+    </owl:Class>
+    
+
+
+    <!-- http://inter-iot.eu/GOIoTP#MeasurementKind -->
+
+    <owl:Class rdf:about="http://inter-iot.eu/GOIoTP#MeasurementKind">
+        <rdfs:subClassOf rdf:resource="http://www.w3.org/ns/ssn/Property"/>
+        <rdfs:comment xml:lang="en">A kind or class of measurement.</rdfs:comment>
+        <skos:example xml:lang="en">Length, mass, time.</skos:example>
+    </owl:Class>
+    
+
+
+    <!-- http://inter-iot.eu/GOIoTP#Middleware -->
+
+    <owl:Class rdf:about="http://inter-iot.eu/GOIoTP#Middleware">
+        <rdfs:subClassOf rdf:resource="http://inter-iot.eu/GOIoTP#PlatformComponent"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://inter-iot.eu/GOIoTP#hasBaseEndpoint"/>
+                <owl:someValuesFrom rdf:resource="http://www.w3.org/2000/01/rdf-schema#Literal"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+    </owl:Class>
+    
+
+
+    <!-- http://inter-iot.eu/GOIoTP#Ontology -->
+
+    <owl:Class rdf:about="http://inter-iot.eu/GOIoTP#Ontology">
+        <rdfs:subClassOf rdf:resource="http://inter-iot.eu/GOIoTP#Semantics"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://inter-iot.eu/GOIoTP#hasURI"/>
+                <owl:someValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#anyURI"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://inter-iot.eu/GOIoTP#hasVersion"/>
+                <owl:someValuesFrom rdf:resource="http://www.w3.org/2000/01/rdf-schema#Literal"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:comment xml:lang="en">A specific description of concepts, entities, properties and relations between them, expressed in a formalized way.</rdfs:comment>
+        <skos:example xml:lang="en">GOIoTP ontology.</skos:example>
+    </owl:Class>
+    
+
+
+    <!-- http://inter-iot.eu/GOIoTP#PlatformComponent -->
+
+    <owl:Class rdf:about="http://inter-iot.eu/GOIoTP#PlatformComponent">
+        <rdfs:subClassOf rdf:resource="http://www.w3.org/ns/ssn/System"/>
+    </owl:Class>
+    
+
+
+    <!-- http://inter-iot.eu/GOIoTP#Semantics -->
+
+    <owl:Class rdf:about="http://inter-iot.eu/GOIoTP#Semantics">
+        <skos:example xml:lang="en">A description of the meaning of data terms and data structure.</skos:example>
+    </owl:Class>
+    
+
+
+    <!-- http://inter-iot.eu/GOIoTP#Service -->
+
+    <owl:Class rdf:about="http://inter-iot.eu/GOIoTP#Service">
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://inter-iot.eu/GOIoTP#hasServiceInterface"/>
+                <owl:someValuesFrom rdf:resource="http://inter-iot.eu/GOIoTP#ServiceInterface"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.w3.org/ns/ssn/implements"/>
+                <owl:someValuesFrom rdf:resource="http://www.w3.org/ns/sosa/Procedure"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://inter-iot.eu/GOIoTP#hasDescription"/>
+                <owl:someValuesFrom rdf:resource="http://www.w3.org/2000/01/rdf-schema#Literal"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://inter-iot.eu/GOIoTP#hasName"/>
+                <owl:someValuesFrom rdf:resource="http://www.w3.org/2000/01/rdf-schema#Literal"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:comment xml:lang="en">The provision of a function in an IoT ecosystem. note that a Service is not a Procedure, as understood by SOSA ontology.</rdfs:comment>
+        <skos:example xml:lang="en">A webservice.</skos:example>
+    </owl:Class>
+    
+
+
+    <!-- http://inter-iot.eu/GOIoTP#ServiceInput -->
+
+    <owl:Class rdf:about="http://inter-iot.eu/GOIoTP#ServiceInput">
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://inter-iot.eu/GOIoTP#hasDataFormat"/>
+                <owl:someValuesFrom rdf:resource="http://inter-iot.eu/GOIoTP#DataFormat"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://inter-iot.eu/GOIoTP#hasBaseEndpoint"/>
+                <owl:someValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#anyURI"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+    </owl:Class>
+    
+
+
+    <!-- http://inter-iot.eu/GOIoTP#ServiceInterface -->
+
+    <owl:Class rdf:about="http://inter-iot.eu/GOIoTP#ServiceInterface">
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://inter-iot.eu/GOIoTP#hasServiceInput"/>
+                <owl:someValuesFrom rdf:resource="http://inter-iot.eu/GOIoTP#ServiceInput"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://inter-iot.eu/GOIoTP#hasServiceOutput"/>
+                <owl:someValuesFrom rdf:resource="http://inter-iot.eu/GOIoTP#ServiceOutput"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://inter-iot.eu/GOIoTP#hasServiceDefinition"/>
+                <owl:someValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#anyURI"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:comment xml:lang="en">A way of accessing the function offered by the Service.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://inter-iot.eu/GOIoTP#ServiceOutput -->
+
+    <owl:Class rdf:about="http://inter-iot.eu/GOIoTP#ServiceOutput">
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://inter-iot.eu/GOIoTP#hasDataFormat"/>
+                <owl:someValuesFrom rdf:resource="http://inter-iot.eu/GOIoTP#DataFormat"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+    </owl:Class>
+    
+
+
+    <!-- http://inter-iot.eu/GOIoTP#SoftwarePlatform -->
+
+    <owl:Class rdf:about="http://inter-iot.eu/GOIoTP#SoftwarePlatform">
+        <rdfs:subClassOf rdf:resource="http://www.w3.org/ns/sosa/Platform"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://inter-iot.eu/GOIoTP#hasComponent"/>
+                <owl:someValuesFrom rdf:resource="http://inter-iot.eu/GOIoTP#PlatformComponent"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+    </owl:Class>
+    
+
+
+    <!-- http://inter-iot.eu/GOIoTP#User -->
+
+    <owl:Class rdf:about="http://inter-iot.eu/GOIoTP#User">
+        <rdfs:subClassOf rdf:resource="http://www.w3.org/ns/sosa/FeatureOfInterest"/>
+    </owl:Class>
+    
+
+
+    <!-- http://sweet.jpl.nasa.gov/2.3/reprSciUnits.owl#Unit -->
+
+    <owl:Class rdf:about="http://sweet.jpl.nasa.gov/2.3/reprSciUnits.owl#Unit"/>
+    
+
+
+    <!-- http://www.opengis.net/ont/geosparql#Geometry -->
+
+    <owl:Class rdf:about="http://www.opengis.net/ont/geosparql#Geometry">
+        <rdfs:subClassOf rdf:resource="http://www.opengis.net/ont/geosparql#SpatialObject"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.opengis.net/ont/geosparql#SpatialObject -->
+
+    <owl:Class rdf:about="http://www.opengis.net/ont/geosparql#SpatialObject">
+        <dc:contributor>Matthew Perry</dc:contributor>
+        <dc:creator>OGC GeoSPARQL 1.0 Standard Working Group</dc:creator>
+        <dc:date rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2011-06-16</dc:date>
+        <dc:description xml:lang="en">
+      The class spatial-object represents everything that can have
+      a spatial representation. It is superclass of feature and geometry.
+    </dc:description>
+        <rdfs:comment xml:lang="en">
+      The class spatial-object represents everything that can have
+      a spatial representation. It is superclass of feature and geometry.
+    </rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="http://www.opengis.net/ont/geosparql"/>
+        <rdfs:isDefinedBy rdf:resource="http://www.opengis.net/spec/geosparql/1.0"/>
+        <rdfs:label xml:lang="en">SpatialObject</rdfs:label>
+        <skos:definition xml:lang="en">
+      The class spatial-object represents everything that can have
+      a spatial representation. It is superclass of feature and geometry.
+    </skos:definition>
+        <skos:prefLabel xml:lang="en">SpatialObject</skos:prefLabel>
+    </owl:Class>
+    
+
+
+    <!-- http://www.w3.org/ns/sosa/Actuation -->
+
+    <rdf:Description rdf:about="http://www.w3.org/ns/sosa/Actuation">
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://inter-iot.eu/GOIoTP#orderedByUser"/>
+                <owl:someValuesFrom rdf:resource="http://inter-iot.eu/GOIoTP#User"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://inter-iot.eu/GOIoTP#hasLocation"/>
+                <owl:allValuesFrom rdf:resource="http://inter-iot.eu/GOIoTP#Location"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+    </rdf:Description>
+    
+
+
+    <!-- http://www.w3.org/ns/sosa/Observation -->
+
+    <rdf:Description rdf:about="http://www.w3.org/ns/sosa/Observation">
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://inter-iot.eu/GOIoTP#orderedByUser"/>
+                <owl:someValuesFrom rdf:resource="http://inter-iot.eu/GOIoTP#User"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://inter-iot.eu/GOIoTP#hasLocation"/>
+                <owl:allValuesFrom rdf:resource="http://inter-iot.eu/GOIoTP#Location"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.w3.org/ns/sosa/phenomenonTime"/>
+                <owl:allValuesFrom rdf:resource="http://www.w3.org/2006/time#TemporalEntity"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+    </rdf:Description>
+    
+
+
+    <!-- http://www.w3.org/ns/sosa/Platform -->
+
+    <rdf:Description rdf:about="http://www.w3.org/ns/sosa/Platform">
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://inter-iot.eu/GOIoTP#hasCoverage"/>
+                <owl:someValuesFrom rdf:resource="http://inter-iot.eu/GOIoTP#Location"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://inter-iot.eu/GOIoTP#hasSemantics"/>
+                <owl:someValuesFrom rdf:resource="http://inter-iot.eu/GOIoTP#Semantics"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://inter-iot.eu/GOIoTP#offersService"/>
+                <owl:someValuesFrom rdf:resource="http://inter-iot.eu/GOIoTP#Service"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://inter-iot.eu/GOIoTP#hasLocation"/>
+                <owl:allValuesFrom rdf:resource="http://inter-iot.eu/GOIoTP#Location"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+    </rdf:Description>
+    
+
+
+    <!-- http://www.w3.org/ns/sosa/Result -->
+
+    <rdf:Description rdf:about="http://www.w3.org/ns/sosa/Result">
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://inter-iot.eu/GOIoTP#hasUnit"/>
+                <owl:someValuesFrom rdf:resource="http://sweet.jpl.nasa.gov/2.3/reprSciUnits.owl#Unit"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://inter-iot.eu/GOIoTP#hasResultValue"/>
+                <owl:someValuesFrom rdf:resource="http://www.w3.org/2000/01/rdf-schema#Literal"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+    </rdf:Description>
+    
+
+
+    <!-- http://www.w3.org/ns/sosa/Sensor -->
+
+    <rdf:Description rdf:about="http://www.w3.org/ns/sosa/Sensor">
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://inter-iot.eu/GOIoTP#hasUnit"/>
+                <owl:someValuesFrom rdf:resource="http://sweet.jpl.nasa.gov/2.3/reprSciUnits.owl#Unit"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+    </rdf:Description>
+    
+
+
+    <!-- http://www.w3.org/ns/ssn/System -->
+
+    <rdf:Description rdf:about="http://www.w3.org/ns/ssn/System">
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://inter-iot.eu/GOIoTP#hasCoverage"/>
+                <owl:someValuesFrom rdf:resource="http://inter-iot.eu/GOIoTP#Location"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://inter-iot.eu/GOIoTP#hasLocation"/>
+                <owl:allValuesFrom rdf:resource="http://inter-iot.eu/GOIoTP#Location"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+    </rdf:Description>
+    
+
+
+    <!-- http://xmlns.com/foaf/0.1/Person -->
+
+    <owl:Class rdf:about="http://xmlns.com/foaf/0.1/Person"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Individuals
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://inter-iot.eu/GOIoTP# -->
+
+    <owl:NamedIndividual rdf:about="http://inter-iot.eu/GOIoTP#">
+        <rdf:type rdf:resource="http://purl.org/vocommons/voaf#Vocabulary"/>
+    </owl:NamedIndividual>
+    <rdf:Description>
+        <rdf:type rdf:resource="http://xmlns.com/foaf/0.1/Person"/>
+        <foaf:name>Paweł Szmeja</foaf:name>
+    </rdf:Description>
+</rdf:RDF>
+
+
+
+<!-- Generated by the OWL API (version 4.2.8.20170104-2310) https://github.com/owlcs/owlapi -->
+
