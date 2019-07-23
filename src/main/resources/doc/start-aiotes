@@ -38,13 +38,14 @@ KAFKA_PORT=9092
 ZOOKEEPER_PORT=2181
       
     get ip address of your pc
-      > ip address %IP
+      > ip address
 ?: eth0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc pfifo_fast state UP group default qlen 1000
     link/ether 48:4d:7e:b7:92:db brd ff:ff:ff:ff:ff:ff
     inet 132.168.161.246/22 brd 132.168.163.255 scope global dynamic eth0
        valid_lft 469312sec preferred_lft 469312sec
     
-        -> here %IP= 132.168.161.246 
+        -> here SERVER_IP= 132.168.161.246 
+           in DEV server, SERVER_IP="10.255.3.100"
       > SERVER_IP="132.168.161.246"
 
     set ip in kafka configuration
@@ -66,15 +67,35 @@ KAFKA_SSL_TRUSTSTORE_PASSWORD=6HVAwh#u5&zV
 KAFKA_SSL_CLIENT_AUTH=required
 
     give execution permissions to scripts
-      > chmod +x ./*.sh
-      > chmod +x ./*/*.sh
+      > chmod +x ./*
+      > chmod +x ./*/*
     
     create docker volumes
-      > ./initialize-volumes
+      > sudo ./initialize-volumes
+Creating named volumes...
+kafka-data
+kafka-certs
+kafka-scripts
+ipsm-certs
+ipsm-data
+Populating volumes
+Unable to find image 'busybox:latest' locally
+latest: Pulling from library/busybox
+ee153a04d683: Pull complete 
+Digest: sha256:9f1003c480699be56815db0f8146ad2e22efea85129b5b5983d0e0fb52d9ab70
+Status: Downloaded newer image for busybox:latest
+helper
+helper
+helper
+Volumes ready to be used
 
   1.4 Deploy the SIL
       > sudo docker-compose up -d 
     -d option to run in background
+note: 
+    in dev server, docker-compose supported version is 2. 
+    modify docker-compose.yml version: '2' at line 1
+version: '2'
    
   1.5 Check deployment
       > sudo docker container ls
@@ -138,10 +159,20 @@ sensinact.http.port=8082
 sensinact.provider.maxNumber=100
 
       > sudo docker cp ../../bridges/sensiNact/target/mw.bridge.sna-2.0.0-SNAPSHOT.jar $IPSM_CONTAINER_ID:/usr/local/tomcat/webapps/ROOT/WEB-INF/lib
-      > sudo docker cp /nobackup/m2/repository/eu/inter-iot/translators/syntactic-translators/1.0/syntactic-translators-1.0.jar $IPSM_CONTAINER_ID:/usr/local/tomcat/webapps/ROOT/WEB-INF/lib
+      > sudo docker cp ~/.m2/repository/eu/inter-iot/translators/syntactic-translators/1.0/syntactic-translators-1.0.jar $IPSM_CONTAINER_ID:/usr/local/tomcat/webapps/ROOT/WEB-INF/lib
       > sudo docker cp ../../bridges/sensiNact/src/main/resources/intermw.properties $IPSM_CONTAINER_ID:/etc/inter-iot/intermw
       > sudo docker cp ../../bridges/sensiNact/src/main/resources/SensiNactBridge.properties $IPSM_CONTAINER_ID:/etc/inter-iot/intermw
       
+      check installation is ok:
+      > sudo docker exec $IPSM_CONTAINER_ID ls -al /usr/local/tomcat/webapps/ROOT/WEB-INF/lib/mw.bridge.sna-2.0.0-SNAPSHOT.jar
+-rw-rw-r--    1 1000     1000         86586 Jul 23 14:54 /usr/local/tomcat/webapps/ROOT/WEB-INF/lib/mw.bridge.sna-2.0.0-SNAPSHOT.jar
+      > sudo docker exec $IPSM_CONTAINER_ID ls -al /usr/local/tomcat/webapps/ROOT/WEB-INF/lib/syntactic-translators-1.0.jar
+-rw-rw-r--    1 1000     1000         77893 Jul 23 14:51 /usr/local/tomcat/webapps/ROOT/WEB-INF/lib/syntactic-translators-1.0.jar
+      > sudo docker exec $IPSM_CONTAINER_ID ls -al /etc/inter-iot/intermw/intermw.properties
+-rw-rw-r--    1 1000     1000           902 Jul 23 14:50 /etc/inter-iot/intermw/intermw.properties
+      > sudo docker exec $IPSM_CONTAINER_ID ls -al /etc/inter-iot/intermw/SensiNactBridge.properties
+-rw-rw-r--    1 1000     1000           834 Jul 23 15:18 /etc/inter-iot/intermw/SensiNactBridge.properties
+
    1.9 Restart SIL container to include bridges
       > sudo docker-compose restart intermw
       logs bridge registration:
@@ -152,4 +183,320 @@ intermw_1     | 13:03:29.472 [localhost-startStop-1] DEBUG eu.interiot.intermw.b
 intermw_1     | 13:03:29.473 [localhost-startStop-1] DEBUG eu.interiot.intermw.bridge.BridgeContext.registerBridges(BridgeContext.java:190) - Bridge eu.interiot.intermw.bridge.sensinact.SensiNactBridge for platform type http://sensinact.ddns.net/sensinact has been registered.
 intermw_1     | 13:03:29.473 [localhost-startStop-1] DEBUG eu.interiot.intermw.bridge.BridgeContext.registerBridges(BridgeContext.java:190) - Bridge eu.interiot.intermw.bridge.test.MWTestBridge for platform type http://inter-iot.eu/MWTestPlatform has been registered.
 intermw_1     | 13:03:29.473 [localhost-startStop-1] DEBUG eu.interiot.intermw.bridge.BridgeContext.registerBridges(BridgeContext.java:193) - Bridge registration has finished successfully.
+
+2. Run SIL with a registered sensiNact instance
+   
+   2.1 Create IPSM alignments
+      web-browser> http://193.48.18.245:8888/swagger/#!/Alignments/post_alignments
+      web-browser> aligment=
+<?xml version="1.0" encoding="UTF-8"?>
+
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:iiot="http://inter-iot.eu/GOIoTP#" xmlns:iiotex="http://inter-iot.eu/GOIoTPex#" xmlns:exmo="http://exmo.inrialpes.fr/align/ext/1.0/#" xmlns="http://www.inter-iot.eu/sripas#" xmlns:sripas="http://www.inter-iot.eu/sripas#" xmlns:dcelem="http://purl.org/dc/elements/1.1/" xmlns:var="http://www.inter-iot.eu/sripas#node_" xmlns:align="http://knowledgeweb.semanticweb.org/heterogeneity/alignment#" xmlns:sosa="http://www.w3.org/ns/sosa/" xmlns:sensinact="http://sensinact.com#">
+    <align:Alignment>
+        <dcelem:title>SensiNact_CO</dcelem:title>
+        <exmo:version>0.1</exmo:version>
+        <dcelem:creator>SRIPAS/CEA</dcelem:creator>
+        <dcelem:description>Alignment between SensiNact ontology and GIoTPex ontology.</dcelem:description>
+        <dcelem:date>Mon Oct 22 15:02:12 GMT 2018</dcelem:date>
+    <align:onto1>
+      <align:Ontology rdf:about="http://sensinact.com#">
+        <align:formalism>
+          <align:Formalism align:name="OWL2.0" align:uri="http://www.w3.org/2002/07/owl#"/>
+        </align:formalism>
+      </align:Ontology>
+        </align:onto1>
+    <align:onto2>
+      <align:Ontology rdf:about="http://inter-iot.eu/GOIoTPex#">
+        <align:formalism>
+          <align:Formalism align:name="OWL2.0" align:uri="http://www.w3.org/2002/07/owl#"/>
+        </align:formalism>
+      </align:Ontology>
+        </align:onto2>
+    <sripas:steps rdf:parseType="Literal">
+      <sripas:step sripas:order="1" sripas:cell="http://www.inter-iot.eu/sripas#1_provider"/>
+       
+      <sripas:step sripas:order="2" sripas:cell="http://www.inter-iot.eu/sripas#2_observation"/>
+       
+      <sripas:step sripas:order="3" sripas:cell="http://www.inter-iot.eu/sripas#3_resource"/>
+       
+      <sripas:step sripas:order="4" sripas:cell="http://www.inter-iot.eu/sripas#4_clean"/>
+        </sripas:steps>
+        <sripas:cellFormat>
+            <iiot:DataFormat rdf:about="http://inter-iot.eu/sripas#rdfxml"/>
+        </sripas:cellFormat>
+        <align:map>
+      <align:Cell rdf:about="http://www.inter-iot.eu/sripas#1_provider">
+        <align:entity1 rdf:parseType="Literal">
+          <var:provider>
+            <rdf:type rdf:resource="http://sensinact.com#Provider"/>
+             
+                        <sensinact:name>
+                            <var:provider_name/>
+            </sensinact:name>
+             
+            <sensinact:manages>
+              <var:service>
+                <rdf:type rdf:resource="http://sensinact.com#Service"/>
+                 
+                                <sensinact:name>
+                                    <var:service_name/>
+                </sensinact:name>
+              </var:service>
+            </sensinact:manages>
+          </var:provider>
+        </align:entity1>
+         
+        <align:entity2 rdf:parseType="Literal">
+          <var:provider>
+            <rdf:type rdf:resource="http://www.w3.org/ns/sosa/IoTDevice"/>
+             
+            <rdf:type rdf:resource="http://www.w3.org/ns/sosa/Platform"/>
+             
+                        <iiot:hasName>
+                            <var:provider_name/>
+            </iiot:hasName>
+             
+            <sosa:hosts>
+              <var:service>
+                <rdf:type rdf:resource="http://www.w3.org/ns/sosa/Sensor"/>
+                 
+                                <iiot:hasName>
+                                    <var:service_name/>
+                </iiot:hasName>
+              </var:service>
+            </sosa:hosts>
+          </var:provider>
+        </align:entity2>
+         
+        <align:relation>=</align:relation>
+            </align:Cell>
+        </align:map>
+        <align:map>
+      <align:Cell rdf:about="http://www.inter-iot.eu/sripas#2_observation">
+        <align:entity1 rdf:parseType="Literal">
+          <var:sensor>
+            <rdf:type rdf:resource="http://www.w3.org/ns/sosa/Sensor"/>
+             
+            <sensinact:manages>
+              <var:resource>
+                <rdf:type rdf:resource="http://sensinact.com#Resource"/>
+                 
+                                <sensinact:name>
+                                    <var:resource_name/>
+                </sensinact:name>
+                 
+                                <sensinact:value>
+                                    <var:resource_value/>
+                </sensinact:value>
+              </var:resource>
+            </sensinact:manages>
+          </var:sensor>
+        </align:entity1>
+         
+        <align:entity2 rdf:parseType="Literal">
+          <rdf:Description>
+            <rdf:type rdf:resource="http://www.w3.org/ns/sosa/Observation"/>
+             
+            <sosa:madeBySensor>
+              <var:sensor>
+                <rdf:type rdf:resource="http://www.w3.org/ns/sosa/Sensor"/>
+                 
+                                <sosa:oberves>
+                                    <var:resource/>
+                </sosa:oberves>
+              </var:sensor>
+            </sosa:madeBySensor>
+             
+                        <sosa:observedProperty>
+                            <var:resource/>
+            </sosa:observedProperty>
+             
+            <sosa:hasResult>
+              <rdf:Description>
+                                <iiot:hasResultValue>
+                                    <var:resource_value/>
+                </iiot:hasResultValue>
+                 
+                <rdf:type rdf:resource="http://www.w3.org/ns/sosa/Result"/>
+                 
+                                <iiot:hasName>
+                                    <var:resource_name/>
+                </iiot:hasName>
+              </rdf:Description>
+            </sosa:hasResult>
+          </rdf:Description>
+        </align:entity2>
+         
+        <align:relation>=</align:relation>
+            </align:Cell>
+        </align:map>
+        <align:map>
+      <align:Cell rdf:about="http://www.inter-iot.eu/sripas#3_resource">
+        <align:entity1 rdf:parseType="Literal">
+          <var:sensor>
+            <rdf:type rdf:resource="http://www.w3.org/ns/sosa/Sensor"/>
+             
+            <sensinact:manages>
+              <var:resource>
+                <rdf:type rdf:resource="http://sensinact.com#Resource"/>
+              </var:resource>
+            </sensinact:manages>
+          </var:sensor>
+        </align:entity1>
+         
+        <align:entity2 rdf:parseType="Literal">
+          <var:sensor>
+            <rdf:type rdf:resource="http://www.w3.org/ns/sosa/Sensor"/>
+             
+                        <sosa:observes>
+                            <var:resource/>
+            </sosa:observes>
+          </var:sensor>
+        </align:entity2>
+         
+        <align:relation>=</align:relation>
+            </align:Cell>
+        </align:map>
+        <align:map>
+      <align:Cell rdf:about="http://www.inter-iot.eu/sripas#4_clean">
+        <align:entity1 rdf:parseType="Literal">
+          <var:sensor>
+            <rdf:type rdf:resource="http://www.w3.org/ns/sosa/Sensor"/>
+             
+            <sensinact:manages>
+              <var:resource>
+                <rdf:type rdf:resource="http://sensinact.com#Resource"/>
+              </var:resource>
+            </sensinact:manages>
+          </var:sensor>
+        </align:entity1>
+         
+        <align:entity2 rdf:parseType="Literal">
+          <var:sensor>
+            <rdf:type rdf:resource="http://www.w3.org/ns/sosa/Sensor"/>
+          </var:sensor>
+        </align:entity2>
+         
+        <align:relation>=</align:relation>
+            </align:Cell>
+        </align:map>
+    </align:Alignment>
+</rdf:RDF>
+
+      web-browser> Try it out!
+      
+      check result:
+      web-browser> Response Body=
+[
+  {
+    "name": "SensiNact_CO",
+    "sourceOntologyURI": "http://sensinact.com#",
+    "description": "Alignment between SensiNact ontology and GIoTPex ontology.",
+    "creator": "SRIPAS/CEA",
+    "targetOntologyURI": "http://inter-iot.eu/GOIoTPex#",
+    "version": "0.1",
+    "id": 1,
+    "date": 1563896069811,
+    "descId": "[SensiNact_CO] [0.1] : http://sensinact.com# -> http://inter-iot.eu/GOIoTPex#"
+  }
+]
+      web-browser> Response Code=
+201
+
+      check alignments:
+      web-browser> http://193.48.18.245:8888/swagger/#!/Alignments/get_alignments
+      web-browser> Try it out!
+      check result:
+      web-browser> Response Body=
+{
+  "message": "Alignment with AlignmentID(SensiNact_CO,0.1) uploaded successfully"
+}
+      web-browser> Response Code=
+200
+
+   2.2 Register client
+      web-browser> http://193.48.18.245:8083/swagger/#/Clients/registerClient
+      web-browser> Try it out
+      web-browser> Client-ID= toto
+      web-browser> body=
+{
+  "clientId": "toto",
+  "receivingCapacity": 10,
+  "responseFormat": "JSON_LD",
+  "responseDelivery": "CLIENT_PULL"
+}
+      web-browser> Execute
+      check result:
+      web-browser> Server reponse code= 201
+      web-browser> http://193.48.18.245:8083/swagger/#/Clients/listClients
+      web-browser> Client-ID= toto
+      web-browser> Execute
+      check result:
+      web-browser> Server reponse code= 200
+      web-browser> Server reponse Details=
+[
+  {
+    "clientId": "toto",
+    "callbackUrl": null,
+    "receivingCapacity": 10,
+    "responseFormat": "JSON_LD",
+    "responseDelivery": "CLIENT_PULL"
+  }
+]
+
+   2.3 Register platform
+      web-browser> http://193.48.18.245:8083/swagger/#/Platforms/registerPlatform
+      web-browser> Try it out
+      web-browser> Client-ID= toto
+      web-browser> body=
+{
+  "platformId": "http://DS6-PTL-dev-sensinact-1",
+  "type": "http://sensinact.ddns.net/sensinact",
+  "baseEndpoint": "http://172.17.0.1:8081",
+  "location": "http://DS6/PTL",
+  "name": "DS6-PTL-dev-sensinact-1",
+  "downstreamInputAlignmentName": "",
+  "downstreamInputAlignmentVersion": "",
+  "downstreamOutputAlignmentName": "SensiNact_CO",
+  "downstreamOutputAlignmentVersion": "0.1",
+  "upstreamInputAlignmentName": "SensiNact_CO",
+  "upstreamInputAlignmentVersion": "0.1",
+  "upstreamOutputAlignmentName": "",
+  "upstreamOutputAlignmentVersion": ""
+}
+      web-browser> Execute
+      check result:
+      web-browser> Server reponse code= 202
+      web-browser> http://193.48.18.245:8083/swagger/#/Platforms/listPlatforms
+      web-browser> Try it out
+      web-browser> Client-ID= toto
+      web-browser> Execute
+      web-browser> Server reponse code= 200
+      web-browser> Server reponse Details=
+[
+  {
+    "platformId": "http://DS6-PTL-dev-sensinact-1",
+    "type": "http://sensinact.ddns.net/sensinact",
+    "baseEndpoint": "http://172.17.0.1:8081",
+    "location": "http://DS6/PTL",
+    "name": "DS6-PTL-dev-sensinact-1",
+    "clientId": "http://inter-iot.eu/clients#toto",
+    "username": "",
+    "timeCreated": 1563898191609,
+    "platformStatistics": {
+      "deviceCount": 0,
+      "subscribedDeviceCount": 0,
+      "subscriptionCount": 0
+    },
+    "downstreamInputAlignmentName": "",
+    "downstreamInputAlignmentVersion": "",
+    "downstreamOutputAlignmentName": "SensiNact_CO",
+    "downstreamOutputAlignmentVersion": "0.1",
+    "upstreamInputAlignmentName": "SensiNact_CO",
+    "upstreamInputAlignmentVersion": "0.1",
+    "upstreamOutputAlignmentName": "",
+    "upstreamOutputAlignmentVersion": ""
+  }
+]      
+
 
