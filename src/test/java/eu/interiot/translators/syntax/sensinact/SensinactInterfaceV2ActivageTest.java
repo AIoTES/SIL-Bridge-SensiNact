@@ -5,14 +5,13 @@ import eu.interiot.intermw.bridge.sensinact.http.SensinactFactory;
 import eu.interiot.intermw.bridge.sensinact.http.model.SensinactConfig;
 import eu.interiot.intermw.bridge.sensinact.wrapper.SNAResource;
 import eu.interiot.intermw.bridge.sensinact.wrapper.SensinactAPI;
+import java.util.List;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.stream.Stream;
 
 public class SensinactInterfaceV2ActivageTest {
 
@@ -22,79 +21,212 @@ public class SensinactInterfaceV2ActivageTest {
 
     @Before
     public void before() throws Exception {
-        counter=new AtomicInteger();
-        config=new SensinactConfig();
-        config.setHost("http://193.48.18.250:8080");
-        config.setHttpPort("8080");
+        counter = new AtomicInteger();
+        config = new SensinactConfig();
+        config.setHost("localhost");
+        config.setHttpPort("8082");
         config.setProtocol("http");
         config.setMaxDeviceNumber("-1");
         config.setVersion("v2");
-        sensinact=SensinactFactory.createInstance(config);
+        System.out.print("\n creating sensiNact... ");
+        sensinact = SensinactFactory.createInstance(config);
+        System.out.println("created");
+        System.out.print("\n connecting sensiNact... ");
         sensinact.connect();
+        System.out.println("connected");
     }
 
     @After
-    public void after(){
+    public void after() {
         sensinact.disconnect();
     }
 
     @Test
-    public void websocketConnectionTest() throws InterruptedException {
-        sensinact.setListener(new SensinactModelRecoverListener() {
-            @Override
-            public void notify(String provider, String service, String resource, String value) {
-                counter.getAndAdd(1);
+    public void websocketConnectionTest() {
+        System.out.println("\nTesting websocket connection...");
+        try {
+            sensinact.setListener(new SensinactModelRecoverListener() {
+                @Override
+                public void notify(String provider, String service, String resource, String value) {
+                    System.out.println(
+                            String.format(
+                                    " ... received notification from %s/%s/%s: %s",
+                                    provider,
+                                    service,
+                                    resource,
+                                    value
+                            )
+                    );
+                    counter.getAndAdd(1);
+                }
+            });
+            Thread.sleep(15000);
+            System.out.println(
+                    String.format(
+                            "... received %s notifications",
+                            counter.get()
+                    )
+            );
+            Assert.assertTrue("failed to receive any notification", counter.get() > 0);
+        } catch (Exception ex) {
+            Assert.fail("unexpected exception " + ex.getMessage());
+            ex.printStackTrace();
+        }
+    }
+
+    @Test
+    public void deviceCreation() {
+        System.out.println("\nTesting create device...");
+        doCreateProvider("temporaryProvider");
+        Boolean devicePresent = sensinact.listDevices().stream().filter(
+            sNAResource -> sNAResource.getProvider().equals("temporaryProvider")
+        ).toArray().length > 0;
+        System.out.println(devicePresent?"device present":"device absent");
+        Assert.assertTrue("failed to create device", devicePresent );
+    }
+
+    @Test
+    public void serviceCreation() {
+        System.out.println("\nTesting create service...");
+        doCreateService("temporaryProvider", "temporaryService");
+        Boolean devicePresent = sensinact.listDevices().stream().filter(
+            sNAResource -> sNAResource.getProvider().equals("temporaryProvider")
+        ).toArray().length > 0;
+        System.out.println(devicePresent?"device present":"device absent");
+        Boolean servicePresent = sensinact.listDevices().stream().filter(
+            sNAResource -> sNAResource.getService().equals("temporaryService")
+        ).toArray().length > 0;
+        System.out.println(servicePresent?"service present":"service absent");
+        Assert.assertTrue("failed to create service", devicePresent && servicePresent);
+    }
+
+    @Test
+    public void resourceCreation() {
+        System.out.println("\nTesting create resource...");
+        doCreateResource("temporaryProvider", "temporaryService", "temporaryResource", "OK");
+        Boolean devicePresent = sensinact.listDevices().stream().filter(
+            sNAResource -> sNAResource.getProvider().equals("temporaryProvider")
+        ).toArray().length > 0;
+        System.out.println(devicePresent?"device present":"device absent");
+        Boolean servicePresent = sensinact.listDevices().stream().filter(
+            sNAResource -> sNAResource.getService().equals("temporaryService")
+        ).toArray().length > 0;
+        System.out.println(servicePresent?"service present":"service absent");
+        Boolean resourcePresent = sensinact.listDevices().stream().filter(
+            sNAResource -> sNAResource.getResource().equals("temporaryResource")
+        ).toArray().length > 0;
+        System.out.println(resourcePresent?"resource present":"resource absent");
+        Assert.assertTrue("failed to create resource", devicePresent && servicePresent && resourcePresent);
+    }
+    
+    private void doCreateProvider(final String provider) {
+        doCreateResource("temporaryProvider", null, null, null);
+    }
+    
+    private void doCreateService(final String provider, final String service) {
+        doCreateResource("temporaryProvider","temporaryService", null, null);
+    }
+
+    private void doCreateResource(final String provider, final String service, final String resource, final String value) {
+        try {
+            sensinact.createDevice(provider, service, resource, value);
+            System.out.println(
+                    String.format(
+                            "... created %s/%s/%s resource",
+                            provider, service, resource
+                    )
+            );
+            Thread.sleep(1000);
+            List<SNAResource> listDevices = sensinact.listDevices();
+            for (SNAResource snaResource : listDevices) {
+                if (snaResource.getProvider().equals("temporaryProvider")) {
+                    System.out.println(
+                            String.format(
+                                    " ...in device list, found %s",
+                                    snaResource
+                            )
+                    );
+                }
             }
-        });
-        Thread.sleep(3000);
-        Assert.assertTrue(counter.get()>0);
+        } catch (Exception ex) {
+            Assert.fail("unexpected exception " + ex.getMessage());
+            ex.printStackTrace();
+        }
     }
 
     @Test
-    public void deviceCreation() throws Exception {
-        sensinact.createDevice("temporaryProvider","temporaryService","temporaryResource","OK");
-        Thread.sleep(1000);
-        Boolean devicePresent=sensinact.listDevices().stream().filter(sNAResource->sNAResource.getProvider().equals("temporaryProvider")).toArray().length>0;
-        Boolean servicePresent=sensinact.listDevices().stream().filter(sNAResource->sNAResource.getProvider().equals("temporaryProvider")&&sNAResource.getService().equals("temporaryService")).toArray().length>0;
-        Boolean resourceNotPresent=sensinact.listDevices().stream().filter(sNAResource->sNAResource.getProvider().equals("temporaryResource")).toArray().length==0;
-        Assert.assertTrue(devicePresent&&servicePresent&&resourceNotPresent);
+    public void resourceRemoval() {
+        System.out.println("\nTesting remove resource...");
+        try {
+            doCreateResource("temporaryProvider", "temporaryService", "temporaryResource", "OK");
+            sensinact.removeDevice("temporaryProvider", "temporaryService", "temporaryResource");
+            //sensinact.removeDevice("temporaryProvider","temporaryService","temporaryResource");
+            System.out.println(
+                    String.format(
+                            "... removed temporaryProvider/temporaryService/temporaryResource resource"
+                    )
+            );
+            Thread.sleep(1000);
+           
+            Boolean devicePresent = sensinact.listDevices().stream().filter(
+                sNAResource -> sNAResource.getProvider().equals("temporaryProvider")
+            ).toArray().length > 0;
+            System.out.println(devicePresent?"device present":"device absent");
+            Boolean servicePresent = sensinact.listDevices().stream().filter(
+                sNAResource -> sNAResource.getService().equals("temporaryService")
+            ).toArray().length > 0;
+            System.out.println(servicePresent?"service present":"service absent");
+            Boolean resourcePresent = sensinact.listDevices().stream().filter(
+                sNAResource -> sNAResource.getResource().equals("temporaryResource")
+            ).toArray().length > 0;
+            System.out.println(resourcePresent?"resource present":"resource absent");
+            Assert.assertTrue("failed to remove resource", !devicePresent && !servicePresent && !resourcePresent);
+        } catch (Exception ex) {
+            Assert.fail("unexpected exception " + ex.getMessage());
+            ex.printStackTrace();
+        }
     }
 
     @Test
-    @Ignore
-    public void resourceRemoval() throws Exception {
-        deviceCreation();
-        sensinact.removeDevice("temporaryProvider","temporaryService","temporaryResource");
-        //sensinact.removeDevice("temporaryProvider","temporaryService","temporaryResource");
-        Thread.sleep(1000);
-
-        Stream<SNAResource> temporaryProviderStream=sensinact.listDevices().stream().filter(sNAResource->sNAResource.getProvider().equals("temporaryProvider"));
-
-        Boolean devicePresent=temporaryProviderStream.toArray().length>0;
-        Stream<SNAResource> temporaryServiceStream=temporaryProviderStream.filter(sNAResource->sNAResource.getService().equals("temporaryService"));
-        Boolean servicePresent=temporaryServiceStream.toArray().length==0;
-        Boolean resourceNotPresent=temporaryProviderStream.filter(sNAResource->sNAResource.getService().equals("temporaryService")).toArray().length==0;
-        Assert.assertTrue(devicePresent&&servicePresent&&resourceNotPresent);
+    public void providerRemoval() {
+        System.out.println("\nTesting remove device...");
+        try {
+            doCreateProvider("temporaryProvider");
+            sensinact.removeDevice("temporaryProvider", null, null);
+            System.out.println(
+                    String.format(
+                            "... removed temporaryProvider device"
+                    )
+            );
+            Thread.sleep(1000);
+            Boolean devicePresent = sensinact.listDevices().stream().filter(sNAResource -> sNAResource.getProvider().equals("temporaryProvider")).toArray().length > 0;
+            System.out.println(devicePresent?"device present":"device absent");
+            Assert.assertTrue("failed to remove provider", !devicePresent);
+        } catch (Exception ex) {
+            Assert.fail("unexpected exception " + ex.getMessage());
+            ex.printStackTrace();
+        }
     }
 
     @Test
-    public void providerRemoval() throws Exception {
-        deviceCreation();
-        sensinact.removeDevice("temporaryProvider",null,null);
-        Thread.sleep(1000);
-        Boolean deviceNotPresent=sensinact.listDevices().stream().filter(sNAResource->sNAResource.getProvider().equals("temporaryProvider")).toArray().length==0;
-        Assert.assertTrue(deviceNotPresent);
+    public void listDevice() {
+        System.out.println("\nTesting list devices...");
+        List<SNAResource> listDevices = sensinact.listDevices();
+        for (SNAResource snaResource : listDevices) {
+            System.out.println(
+                String.format(
+                        " ...found %s",
+                        snaResource
+                )
+            );
+        }
+        final int size = sensinact.listDevices().size();
+        System.out.println(
+                String.format(
+                        "found %s devices",
+                        size
+                )
+        );
+        Assert.assertTrue("unexpected empty list of devices", size > 0);
     }
-
-    @Test
-    public void listDevice(){
-
-        sensinact.listDevices().forEach((dev)->{
-            System.out.println(String.format("%s/%s/%s found",dev.getProvider(),dev.getService(),dev.getResource()));
-        });
-
-        Assert.assertTrue(sensinact.listDevices().size()>0);
-    }
-
-
 }

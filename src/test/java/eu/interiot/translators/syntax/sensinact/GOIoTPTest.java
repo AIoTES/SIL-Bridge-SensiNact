@@ -17,7 +17,6 @@ import org.junit.Ignore;
 public class GOIoTPTest {
 
     @Test
-    @Ignore
     public void test01() {
 
         /*

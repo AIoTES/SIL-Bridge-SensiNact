@@ -1,1 +1,1 @@
-es
+ {"message":{"notification":{"name":"state","type":"boolean","value":false,"timestamp":1563805692994},"type":"ATTRIBUTE_VALUE_UPDATED","uri":"/PI:watchdog/monitor/state/value"},"uri":"/agent?MID15638032758111200210625","uuid":"edpnt1565014854501"}

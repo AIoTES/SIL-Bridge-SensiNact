@@ -327,7 +327,12 @@ public class SensiNactBridge extends AbstractBridge {
 
         try {
             log.info("Creating/Updating Sensinact device {}/{}/{}/{}",snaResource.getProvider(),snaResource.getService(),snaResource.getResource(),snaResource.getValue());
-            sensinact.createDevice(snaResource.getProvider(),snaResource.getService(),snaResource.getResource(),snaResource.getValue());
+            sensinact.createDevice(
+                    snaResource.getProvider(),
+                    snaResource.getService(),
+                    snaResource.getResource(),
+                    snaResource.getValue()
+            );
             log.info("Sensinact device {}/{}/{}/{} created/updated",snaResource.getProvider(),snaResource.getService(),snaResource.getResource(),snaResource.getValue());
         } catch (Exception e) {
             log.error("Failed to create/update Sensinact device {}/{}/{}/{}",snaResource.getProvider(),snaResource.getService(),snaResource.getResource(),snaResource.getValue());
@@ -386,6 +391,8 @@ public class SensiNactBridge extends AbstractBridge {
 
     @Override
     public Message observe(Message message) throws Exception {
+        String jsonMessage = message.serializeToJSONLD();
+        log.debug("observed message: {}", jsonMessage);
         return platformUpdateDevices(message);
     }
 
