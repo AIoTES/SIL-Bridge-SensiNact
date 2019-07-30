@@ -252,22 +252,27 @@ public class SensiNactBridge extends AbstractBridge {
          */
 
         Message responseMessage = createResponseMessage(message);
+        final List<String> deviceIds = extractDeviceIds(message);
         try {
 
-            log.debug("Subscring to devices {}...", platform.getPlatformId());
+            log.debug("Subscribing to new devices {} from {}...", deviceIds, platform.getPlatformId());
 
             responseMessage.getMetadata().setStatus("OK");
 
-            String conversationId=message.getMetadata().getConversationId().orElse(null);
+            final String conversationId = message.getMetadata().getConversationId().orElse(null);
 
-            if(conversationId!=null){
-                conversation.subscriptionsPut(convertIoTDeviceID(extractDeviceIds(message)),conversationId);
-            }else{
-                log.warn("Conversation id cannot be null");
+            if (conversationId != null) {
+                final List<String> convertedIoTDeviceIDs = convertIoTDeviceID(deviceIds);
+                log.debug("subscribing devices {}...", convertedIoTDeviceIDs);
+                conversation.subscriptionsPut(convertedIoTDeviceIDs, conversationId);
+                log.debug("subscribed devices {} : conversation {}...", convertedIoTDeviceIDs, conversationId);
+            } else {
+                throw new NullPointerException("unexpected null conversation id");
             }
 
         } catch (Exception e) {
-            log.debug("Failed to register platform {}",platform.getPlatformId(), e);
+            log.error("Failed to subscribe devices {} for platform {}: {}", deviceIds, platform.getPlatformId(), e.getMessage());
+            log.debug(e.getMessage(), e);
             responseMessage.getMetadata().addMessageType(URIManagerMessageMetadata.MessageTypesEnum.ERROR);
             responseMessage.getMetadata().asErrorMessageMetadata().setExceptionStackTrace(e);
             responseMessage.getMetadata().setStatus("NOK");
