@@ -26,45 +26,45 @@
         <dcelem:creator>CEA/UPV</dcelem:creator>
         <dcelem:description>Downstream Alignment from AIOTES to SensiNact.</dcelem:description>
         <dcelem:date>18 July 2019</dcelem:date>
-    <align:onto1>
-      <align:Ontology rdf:about="http://inter-iot.eu/GOIoTPex#">
-        <align:formalism>
-          <align:Formalism align:name="OWL2.0" align:uri="http://www.w3.org/2002/07/owl#"/>
-        </align:formalism>
-      </align:Ontology>
+        <align:onto1>
+            <align:Ontology rdf:about="http://inter-iot.eu/GOIoTPex#">
+                <align:formalism>
+                    <align:Formalism align:name="OWL2.0" align:uri="http://www.w3.org/2002/07/owl#"/>
+                </align:formalism>
+            </align:Ontology>
         </align:onto1>
-    <align:onto2>
-      <align:Ontology rdf:about="http://sensinact.com#">
-        <align:formalism>
-              <align:Formalism align:name="OWL2.0" align:uri="http://www.w3.org/2002/07/owl#"/>
-        </align:formalism>
-      </align:Ontology>
-      </align:onto2>
+        <align:onto2>
+            <align:Ontology rdf:about="http://sensinact.com#">
+                <align:formalism>
+                    <align:Formalism align:name="OWL2.0" align:uri="http://www.w3.org/2002/07/owl#"/>
+                </align:formalism>
+            </align:Ontology>
+        </align:onto2>
 
-    <sripas:steps rdf:parseType="Literal">
-      <sripas:step sripas:order="1" sripas:cell="first_step"/>
-     </sripas:steps>
+        <sripas:steps rdf:parseType="Literal">
+            <sripas:step sripas:order="1" sripas:cell="first_step"/>
+        </sripas:steps>
 
 
         <sripas:cellFormat>
             <iiot:DataFormat rdf:about="http://inter-iot.eu/sripas#rdfxml"/>
         </sripas:cellFormat>
 
-            <align:map>
-      <align:Cell rdf:about="first_step"> <!-- to fill-->
-        <align:entity1 rdf:parseType="Literal">
-          <var:sensor>
-            <rdf:type rdf:resource="http://www.w3.org/ns/sosa/Sensor"/>
-          </var:sensor>
-        </align:entity1>
+        <align:map>
+            <align:Cell rdf:about="first_step"> <!-- to fill-->
+                <align:entity1 rdf:parseType="Literal">
+                    <var:sensor>
+                        <rdf:type rdf:resource="http://www.w3.org/ns/sosa/Sensor"/>
+                    </var:sensor>
+                </align:entity1>
 
-        <align:entity2 rdf:parseType="Literal">
-          <var:sensor>
-            <rdf:type rdf:resource="http://www.w3.org/ns/sosa/Sensor"/>
-          </var:sensor>
-        </align:entity2>
+                <align:entity2 rdf:parseType="Literal">
+                    <var:sensor>
+                        <rdf:type rdf:resource="http://www.w3.org/ns/sosa/Sensor"/>
+                    </var:sensor>
+                </align:entity2>
 
-        <align:relation>=</align:relation>
+                <align:relation>=</align:relation>
             </align:Cell>
         </align:map>
     </align:Alignment>
