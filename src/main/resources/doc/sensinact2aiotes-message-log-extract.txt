@@ -1,0 +1,1449 @@
+[36mintermw_1     |[0m 13:45:21.079 [WebSocketClient@2009951334-3840] INFO  eu.interiot.intermw.bridge.sensinact.http.ws.WSObject.onMessage(WSObject.java:94) - Message Received via WebSocket, content: {"type":"CALLBACK","callbackId":"MID1564494028830827238679","messages":[{"notification":{"name":"last-temperature","type":"double","value":24.7,"timestamp":1564494320978},"type":"ATTRIBUTE_VALUE_UPDATED","uri":"/aha-temperature-alert-PTL_RPI3/monitor/last-temperature/value"}]}
+[36mintermw_1     |[0m 13:45:21.082 [WebSocketClient@2009951334-3840] INFO  eu.interiot.intermw.bridge.sensinact.v2.SensinactCommunicationBridgeV2$1.notify(SensinactCommunicationBridgeV2.java:158) - Message received before json parser:{"type":"CALLBACK","callbackId":"MID1564494028830827238679","messages":[{"notification":{"name":"last-temperature","type":"double","value":24.7,"timestamp":1564494320978},"type":"ATTRIBUTE_VALUE_UPDATED","uri":"/aha-temperature-alert-PTL_RPI3/monitor/last-temperature/value"}]}
+[36mintermw_1     |[0m 13:45:21.083 [WebSocketClient@2009951334-3840] INFO  eu.interiot.intermw.bridge.sensinact.SensiNactBridge$1.notify(SensiNactBridge.java:110) - aha-temperature-alert-PTL_RPI3/monitor/last-temperature/24.7
+[36mintermw_1     |[0m 13:45:21.083 [WebSocketClient@2009951334-3840] INFO  eu.interiot.intermw.bridge.sensinact.SensiNactBridge$1.notify(SensiNactBridge.java:119) - Sending notification to conversation id conv213495e9-17b1-4c71-a05c-9b2f7e4e0a55 on device aha-temperature-alert-PTL_RPI3/monitor/last-temperature
+[36mintermw_1     |[0m 13:45:21.247 [WebSocketClient@2009951334-3840] INFO  eu.interiot.intermw.bridge.sensinact.SensiNactBridge$1.notify(SensiNactBridge.java:136) - Sending following observation message to intermw {
+[36mintermw_1     |[0m   "@graph" : [ {
+[36mintermw_1     |[0m     "@graph" : [ {
+[36mintermw_1     |[0m       "@id" : "msg:meta/47cf0733-d528-48bb-8764-9b31f291bb14",
+[36mintermw_1     |[0m       "msg:SenderPlatformId" : {
+[36mintermw_1     |[0m         "@id" : "http://DS6-PTL-dev-sensinact-1"
+[36mintermw_1     |[0m       },
+[36mintermw_1     |[0m       "msg:conversationID" : "conv213495e9-17b1-4c71-a05c-9b2f7e4e0a55",
+[36mintermw_1     |[0m       "msg:dateTimeStamp" : "2019-07-30T13:45:21.085Z",
+[36mintermw_1     |[0m       "msg:messageID" : "msg1fa95a9e-9c11-4ca9-949a-10ec191a7cbf",
+[36mintermw_1     |[0m       "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
+[36mintermw_1     |[0m         "@id" : "msg:Response"
+[36mintermw_1     |[0m       }, {
+[36mintermw_1     |[0m         "@id" : "msg:Observation"
+[36mintermw_1     |[0m       }, {
+[36mintermw_1     |[0m         "@id" : "msg:meta"
+[36mintermw_1     |[0m       } ]
+[36mintermw_1     |[0m     } ],
+[36mintermw_1     |[0m     "@id" : "msg:metadata"
+[36mintermw_1     |[0m   }, {
+[36mintermw_1     |[0m     "@graph" : [ {
+[36mintermw_1     |[0m       "@id" : "_:b0",
+[36mintermw_1     |[0m       "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2002/07/owl#Restriction"
+[36mintermw_1     |[0m       }, {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2000/01/rdf-schema#Class"
+[36mintermw_1     |[0m       }, {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
+[36mintermw_1     |[0m       } ],
+[36mintermw_1     |[0m       "http://www.w3.org/2000/01/rdf-schema#subClassOf" : {
+[36mintermw_1     |[0m         "@id" : "_:b0"
+[36mintermw_1     |[0m       },
+[36mintermw_1     |[0m       "http://www.w3.org/2002/07/owl#allValuesFrom" : {
+[36mintermw_1     |[0m         "@id" : "http://sensinact.com#Service"
+[36mintermw_1     |[0m       },
+[36mintermw_1     |[0m       "http://www.w3.org/2002/07/owl#onProperty" : {
+[36mintermw_1     |[0m         "@id" : "http://sensinact.com#isManagedBy"
+[36mintermw_1     |[0m       }
+[36mintermw_1     |[0m     }, {
+[36mintermw_1     |[0m       "@id" : "_:b1",
+[36mintermw_1     |[0m       "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2002/07/owl#Restriction"
+[36mintermw_1     |[0m       }, {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2000/01/rdf-schema#Class"
+[36mintermw_1     |[0m       }, {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
+[36mintermw_1     |[0m       } ],
+[36mintermw_1     |[0m       "http://www.w3.org/2000/01/rdf-schema#subClassOf" : {
+[36mintermw_1     |[0m         "@id" : "_:b1"
+[36mintermw_1     |[0m       },
+[36mintermw_1     |[0m       "http://www.w3.org/2002/07/owl#allValuesFrom" : {
+[36mintermw_1     |[0m         "@id" : "http://sensinact.com#Provider"
+[36mintermw_1     |[0m       },
+[36mintermw_1     |[0m       "http://www.w3.org/2002/07/owl#onProperty" : {
+[36mintermw_1     |[0m         "@id" : "http://sensinact.com#isManagedBy"
+[36mintermw_1     |[0m       }
+[36mintermw_1     |[0m     }, {
+[36mintermw_1     |[0m       "@id" : "_:b10",
+[36mintermw_1     |[0m       "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2002/07/owl#AllDisjointClasses"
+[36mintermw_1     |[0m       },
+[36mintermw_1     |[0m       "http://www.w3.org/2002/07/owl#members" : {
+[36mintermw_1     |[0m         "@id" : "_:b7"
+[36mintermw_1     |[0m       }
+[36mintermw_1     |[0m     }, {
+[36mintermw_1     |[0m       "@id" : "_:b2",
+[36mintermw_1     |[0m       "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2002/07/owl#Restriction"
+[36mintermw_1     |[0m       }, {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2000/01/rdf-schema#Class"
+[36mintermw_1     |[0m       }, {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
+[36mintermw_1     |[0m       } ],
+[36mintermw_1     |[0m       "http://www.w3.org/2000/01/rdf-schema#subClassOf" : {
+[36mintermw_1     |[0m         "@id" : "_:b2"
+[36mintermw_1     |[0m       },
+[36mintermw_1     |[0m       "http://www.w3.org/2002/07/owl#allValuesFrom" : {
+[36mintermw_1     |[0m         "@id" : "http://sensinact.com#Resource"
+[36mintermw_1     |[0m       },
+[36mintermw_1     |[0m       "http://www.w3.org/2002/07/owl#onProperty" : {
+[36mintermw_1     |[0m         "@id" : "http://sensinact.com#manages"
+[36mintermw_1     |[0m       }
+[36mintermw_1     |[0m     }, {
+[36mintermw_1     |[0m       "@id" : "_:b3",
+[36mintermw_1     |[0m       "http://sensinact.com#name" : "last-temperature",
+[36mintermw_1     |[0m       "http://sensinact.com#value" : "24.7",
+[36mintermw_1     |[0m       "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
+[36mintermw_1     |[0m         "@id" : "http://sensinact.com#Resource"
+[36mintermw_1     |[0m       }, {
+[36mintermw_1     |[0m         "@id" : "http://sensinact.com#Element"
+[36mintermw_1     |[0m       }, {
+[36mintermw_1     |[0m         "@id" : "_:b0"
+[36mintermw_1     |[0m       } ]
+[36mintermw_1     |[0m     }, {
+[36mintermw_1     |[0m       "@id" : "_:b4",
+[36mintermw_1     |[0m       "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2002/07/owl#Restriction"
+[36mintermw_1     |[0m       }, {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2000/01/rdf-schema#Class"
+[36mintermw_1     |[0m       }, {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
+[36mintermw_1     |[0m       } ],
+[36mintermw_1     |[0m       "http://www.w3.org/2000/01/rdf-schema#subClassOf" : {
+[36mintermw_1     |[0m         "@id" : "_:b4"
+[36mintermw_1     |[0m       },
+[36mintermw_1     |[0m       "http://www.w3.org/2002/07/owl#allValuesFrom" : {
+[36mintermw_1     |[0m         "@id" : "http://sensinact.com#Service"
+[36mintermw_1     |[0m       },
+[36mintermw_1     |[0m       "http://www.w3.org/2002/07/owl#onProperty" : {
+[36mintermw_1     |[0m         "@id" : "http://sensinact.com#manages"
+[36mintermw_1     |[0m       }
+[36mintermw_1     |[0m     }, {
+[36mintermw_1     |[0m       "@id" : "_:b5",
+[36mintermw_1     |[0m       "http://sensinact.com#manages" : {
+[36mintermw_1     |[0m         "@id" : "_:b6"
+[36mintermw_1     |[0m       },
+[36mintermw_1     |[0m       "http://sensinact.com#name" : "aha-temperature-alert-PTL_RPI3",
+[36mintermw_1     |[0m       "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
+[36mintermw_1     |[0m         "@id" : "http://sensinact.com#Provider"
+[36mintermw_1     |[0m       }, {
+[36mintermw_1     |[0m         "@id" : "http://sensinact.com#Element"
+[36mintermw_1     |[0m       }, {
+[36mintermw_1     |[0m         "@id" : "_:b4"
+[36mintermw_1     |[0m       } ]
+[36mintermw_1     |[0m     }, {
+[36mintermw_1     |[0m       "@id" : "_:b6",
+[36mintermw_1     |[0m       "http://sensinact.com#manages" : {
+[36mintermw_1     |[0m         "@id" : "_:b3"
+[36mintermw_1     |[0m       },
+[36mintermw_1     |[0m       "http://sensinact.com#name" : "monitor",
+[36mintermw_1     |[0m       "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
+[36mintermw_1     |[0m         "@id" : "http://sensinact.com#Service"
+[36mintermw_1     |[0m       }, {
+[36mintermw_1     |[0m         "@id" : "http://sensinact.com#Element"
+[36mintermw_1     |[0m       }, {
+[36mintermw_1     |[0m         "@id" : "_:b2"
+[36mintermw_1     |[0m       }, {
+[36mintermw_1     |[0m         "@id" : "_:b1"
+[36mintermw_1     |[0m       } ]
+[36mintermw_1     |[0m     }, {
+[36mintermw_1     |[0m       "@id" : "_:b7",
+[36mintermw_1     |[0m       "http://www.w3.org/1999/02/22-rdf-syntax-ns#first" : {
+[36mintermw_1     |[0m         "@id" : "http://sensinact.com#Provider"
+[36mintermw_1     |[0m       },
+[36mintermw_1     |[0m       "http://www.w3.org/1999/02/22-rdf-syntax-ns#rest" : {
+[36mintermw_1     |[0m         "@id" : "_:b8"
+[36mintermw_1     |[0m       },
+[36mintermw_1     |[0m       "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/1999/02/22-rdf-syntax-ns#List"
+[36mintermw_1     |[0m       }, {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
+[36mintermw_1     |[0m       } ]
+[36mintermw_1     |[0m     }, {
+[36mintermw_1     |[0m       "@id" : "_:b8",
+[36mintermw_1     |[0m       "http://www.w3.org/1999/02/22-rdf-syntax-ns#first" : {
+[36mintermw_1     |[0m         "@id" : "http://sensinact.com#Resource"
+[36mintermw_1     |[0m       },
+[36mintermw_1     |[0m       "http://www.w3.org/1999/02/22-rdf-syntax-ns#rest" : {
+[36mintermw_1     |[0m         "@id" : "_:b9"
+[36mintermw_1     |[0m       },
+[36mintermw_1     |[0m       "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/1999/02/22-rdf-syntax-ns#List"
+[36mintermw_1     |[0m       }, {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
+[36mintermw_1     |[0m       } ]
+[36mintermw_1     |[0m     }, {
+[36mintermw_1     |[0m       "@id" : "_:b9",
+[36mintermw_1     |[0m       "http://www.w3.org/1999/02/22-rdf-syntax-ns#first" : {
+[36mintermw_1     |[0m         "@id" : "http://sensinact.com#Service"
+[36mintermw_1     |[0m       },
+[36mintermw_1     |[0m       "http://www.w3.org/1999/02/22-rdf-syntax-ns#rest" : {
+[36mintermw_1     |[0m         "@list" : [ ]
+[36mintermw_1     |[0m       },
+[36mintermw_1     |[0m       "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/1999/02/22-rdf-syntax-ns#List"
+[36mintermw_1     |[0m       }, {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
+[36mintermw_1     |[0m       } ]
+[36mintermw_1     |[0m     }, {
+[36mintermw_1     |[0m       "@id" : "http://sensinact.com",
+[36mintermw_1     |[0m       "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2002/07/owl#Ontology"
+[36mintermw_1     |[0m       }
+[36mintermw_1     |[0m     }, {
+[36mintermw_1     |[0m       "@id" : "http://sensinact.com#Element",
+[36mintermw_1     |[0m       "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2002/07/owl#Class"
+[36mintermw_1     |[0m       }, {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2000/01/rdf-schema#Class"
+[36mintermw_1     |[0m       }, {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
+[36mintermw_1     |[0m       } ],
+[36mintermw_1     |[0m       "http://www.w3.org/2000/01/rdf-schema#comment" : {
+[36mintermw_1     |[0m         "@id" : "http://sensinact.com#name"
+[36mintermw_1     |[0m       },
+[36mintermw_1     |[0m       "http://www.w3.org/2000/01/rdf-schema#subClassOf" : {
+[36mintermw_1     |[0m         "@id" : "http://sensinact.com#Element"
+[36mintermw_1     |[0m       }
+[36mintermw_1     |[0m     }, {
+[36mintermw_1     |[0m       "@id" : "http://sensinact.com#Provider",
+[36mintermw_1     |[0m       "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2002/07/owl#Class"
+[36mintermw_1     |[0m       }, {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2000/01/rdf-schema#Class"
+[36mintermw_1     |[0m       }, {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
+[36mintermw_1     |[0m       } ],
+[36mintermw_1     |[0m       "http://www.w3.org/2000/01/rdf-schema#subClassOf" : [ {
+[36mintermw_1     |[0m         "@id" : "http://sensinact.com#Element"
+[36mintermw_1     |[0m       }, {
+[36mintermw_1     |[0m         "@id" : "_:b4"
+[36mintermw_1     |[0m       }, {
+[36mintermw_1     |[0m         "@id" : "http://sensinact.com#Provider"
+[36mintermw_1     |[0m       } ]
+[36mintermw_1     |[0m     }, {
+[36mintermw_1     |[0m       "@id" : "http://sensinact.com#Resource",
+[36mintermw_1     |[0m       "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2002/07/owl#Class"
+[36mintermw_1     |[0m       }, {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2000/01/rdf-schema#Class"
+[36mintermw_1     |[0m       }, {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
+[36mintermw_1     |[0m       } ],
+[36mintermw_1     |[0m       "http://www.w3.org/2000/01/rdf-schema#comment" : {
+[36mintermw_1     |[0m         "@id" : "http://sensinact.com#value"
+[36mintermw_1     |[0m       },
+[36mintermw_1     |[0m       "http://www.w3.org/2000/01/rdf-schema#subClassOf" : [ {
+[36mintermw_1     |[0m         "@id" : "http://sensinact.com#Element"
+[36mintermw_1     |[0m       }, {
+[36mintermw_1     |[0m         "@id" : "_:b0"
+[36mintermw_1     |[0m       }, {
+[36mintermw_1     |[0m         "@id" : "http://sensinact.com#Resource"
+[36mintermw_1     |[0m       } ]
+[36mintermw_1     |[0m     }, {
+[36mintermw_1     |[0m       "@id" : "http://sensinact.com#Service",
+[36mintermw_1     |[0m       "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2002/07/owl#Class"
+[36mintermw_1     |[0m       }, {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2000/01/rdf-schema#Class"
+[36mintermw_1     |[0m       }, {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
+[36mintermw_1     |[0m       } ],
+[36mintermw_1     |[0m       "http://www.w3.org/2000/01/rdf-schema#subClassOf" : [ {
+[36mintermw_1     |[0m         "@id" : "http://sensinact.com#Element"
+[36mintermw_1     |[0m       }, {
+[36mintermw_1     |[0m         "@id" : "_:b1"
+[36mintermw_1     |[0m       }, {
+[36mintermw_1     |[0m         "@id" : "_:b2"
+[36mintermw_1     |[0m       }, {
+[36mintermw_1     |[0m         "@id" : "http://sensinact.com#Service"
+[36mintermw_1     |[0m       } ]
+[36mintermw_1     |[0m     }, {
+[36mintermw_1     |[0m       "@id" : "http://sensinact.com#contains",
+[36mintermw_1     |[0m       "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2002/07/owl#AnnotationProperty"
+[36mintermw_1     |[0m       }
+[36mintermw_1     |[0m     }, {
+[36mintermw_1     |[0m       "@id" : "http://sensinact.com#isManagedBy",
+[36mintermw_1     |[0m       "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2002/07/owl#ObjectProperty"
+[36mintermw_1     |[0m       }, {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2002/07/owl#FunctionalProperty"
+[36mintermw_1     |[0m       }, {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2002/07/owl#InverseFunctionalProperty"
+[36mintermw_1     |[0m       }, {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+[36mintermw_1     |[0m       }, {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
+[36mintermw_1     |[0m       } ],
+[36mintermw_1     |[0m       "http://www.w3.org/2000/01/rdf-schema#subPropertyOf" : [ {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2002/07/owl#topObjectProperty"
+[36mintermw_1     |[0m       }, {
+[36mintermw_1     |[0m         "@id" : "http://sensinact.com#isManagedBy"
+[36mintermw_1     |[0m       } ],
+[36mintermw_1     |[0m       "http://www.w3.org/2002/07/owl#inverseOf" : {
+[36mintermw_1     |[0m         "@id" : "http://sensinact.com#manages"
+[36mintermw_1     |[0m       }
+[36mintermw_1     |[0m     }, {
+[36mintermw_1     |[0m       "@id" : "http://sensinact.com#manages",
+[36mintermw_1     |[0m       "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2002/07/owl#ObjectProperty"
+[36mintermw_1     |[0m       }, {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2002/07/owl#FunctionalProperty"
+[36mintermw_1     |[0m       }, {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2002/07/owl#InverseFunctionalProperty"
+[36mintermw_1     |[0m       } ]
+[36mintermw_1     |[0m     }, {
+[36mintermw_1     |[0m       "@id" : "http://sensinact.com#name",
+[36mintermw_1     |[0m       "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2002/07/owl#DatatypeProperty"
+[36mintermw_1     |[0m       }, {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2000/01/rdf-schema#Literal"
+[36mintermw_1     |[0m       }, {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
+[36mintermw_1     |[0m       } ]
+[36mintermw_1     |[0m     }, {
+[36mintermw_1     |[0m       "@id" : "http://sensinact.com#value",
+[36mintermw_1     |[0m       "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2002/07/owl#DatatypeProperty"
+[36mintermw_1     |[0m       }, {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2002/07/owl#FunctionalProperty"
+[36mintermw_1     |[0m       }, {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2000/01/rdf-schema#Literal"
+[36mintermw_1     |[0m       }, {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
+[36mintermw_1     |[0m       } ]
+[36mintermw_1     |[0m     }, {
+[36mintermw_1     |[0m       "@id" : "http://www.w3.org/1999/02/22-rdf-syntax-ns#Alt",
+[36mintermw_1     |[0m       "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2000/01/rdf-schema#Class"
+[36mintermw_1     |[0m       }, {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
+[36mintermw_1     |[0m       } ],
+[36mintermw_1     |[0m       "http://www.w3.org/2000/01/rdf-schema#subClassOf" : [ {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/1999/02/22-rdf-syntax-ns#Alt"
+[36mintermw_1     |[0m       }, {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2000/01/rdf-schema#Container"
+[36mintermw_1     |[0m       } ]
+[36mintermw_1     |[0m     }, {
+[36mintermw_1     |[0m       "@id" : "http://www.w3.org/1999/02/22-rdf-syntax-ns#Bag",
+[36mintermw_1     |[0m       "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2000/01/rdf-schema#Class"
+[36mintermw_1     |[0m       }, {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
+[36mintermw_1     |[0m       } ],
+[36mintermw_1     |[0m       "http://www.w3.org/2000/01/rdf-schema#subClassOf" : [ {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/1999/02/22-rdf-syntax-ns#Bag"
+[36mintermw_1     |[0m       }, {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2000/01/rdf-schema#Container"
+[36mintermw_1     |[0m       } ]
+[36mintermw_1     |[0m     }, {
+[36mintermw_1     |[0m       "@id" : "http://www.w3.org/1999/02/22-rdf-syntax-ns#List",
+[36mintermw_1     |[0m       "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2000/01/rdf-schema#Class"
+[36mintermw_1     |[0m       }, {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
+[36mintermw_1     |[0m       } ],
+[36mintermw_1     |[0m       "http://www.w3.org/2000/01/rdf-schema#subClassOf" : {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
+[36mintermw_1     |[0m       }
+[36mintermw_1     |[0m     }, {
+[36mintermw_1     |[0m       "@id" : "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property",
+[36mintermw_1     |[0m       "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2000/01/rdf-schema#Class"
+[36mintermw_1     |[0m       }, {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
+[36mintermw_1     |[0m       } ],
+[36mintermw_1     |[0m       "http://www.w3.org/2000/01/rdf-schema#subClassOf" : [ {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
+[36mintermw_1     |[0m       }, {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+[36mintermw_1     |[0m       } ]
+[36mintermw_1     |[0m     }, {
+[36mintermw_1     |[0m       "@id" : "http://www.w3.org/1999/02/22-rdf-syntax-ns#Seq",
+[36mintermw_1     |[0m       "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2000/01/rdf-schema#Class"
+[36mintermw_1     |[0m       }, {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
+[36mintermw_1     |[0m       } ],
+[36mintermw_1     |[0m       "http://www.w3.org/2000/01/rdf-schema#subClassOf" : [ {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/1999/02/22-rdf-syntax-ns#Seq"
+[36mintermw_1     |[0m       }, {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2000/01/rdf-schema#Container"
+[36mintermw_1     |[0m       } ]
+[36mintermw_1     |[0m     }, {
+[36mintermw_1     |[0m       "@id" : "http://www.w3.org/1999/02/22-rdf-syntax-ns#Statement",
+[36mintermw_1     |[0m       "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2000/01/rdf-schema#Class"
+[36mintermw_1     |[0m       }, {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
+[36mintermw_1     |[0m       } ],
+[36mintermw_1     |[0m       "http://www.w3.org/2000/01/rdf-schema#subClassOf" : {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
+[36mintermw_1     |[0m       }
+[36mintermw_1     |[0m     }, {
+[36mintermw_1     |[0m       "@id" : "http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral",
+[36mintermw_1     |[0m       "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2000/01/rdf-schema#Datatype"
+[36mintermw_1     |[0m       }, {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2000/01/rdf-schema#Class"
+[36mintermw_1     |[0m       }, {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
+[36mintermw_1     |[0m       } ]
+[36mintermw_1     |[0m     }, {
+[36mintermw_1     |[0m       "@id" : "http://www.w3.org/1999/02/22-rdf-syntax-ns#first",
+[36mintermw_1     |[0m       "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+[36mintermw_1     |[0m       }, {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
+[36mintermw_1     |[0m       } ],
+[36mintermw_1     |[0m       "http://www.w3.org/2000/01/rdf-schema#domain" : {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/1999/02/22-rdf-syntax-ns#List"
+[36mintermw_1     |[0m       },
+[36mintermw_1     |[0m       "http://www.w3.org/2000/01/rdf-schema#subPropertyOf" : {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/1999/02/22-rdf-syntax-ns#first"
+[36mintermw_1     |[0m       }
+[36mintermw_1     |[0m     }, {
+[36mintermw_1     |[0m       "@id" : "http://www.w3.org/1999/02/22-rdf-syntax-ns#nil",
+[36mintermw_1     |[0m       "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/1999/02/22-rdf-syntax-ns#List"
+[36mintermw_1     |[0m       }, {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
+[36mintermw_1     |[0m       } ]
+[36mintermw_1     |[0m     }, {
+[36mintermw_1     |[0m       "@id" : "http://www.w3.org/1999/02/22-rdf-syntax-ns#object",
+[36mintermw_1     |[0m       "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+[36mintermw_1     |[0m       }, {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
+[36mintermw_1     |[0m       } ],
+[36mintermw_1     |[0m       "http://www.w3.org/2000/01/rdf-schema#domain" : {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/1999/02/22-rdf-syntax-ns#Statement"
+[36mintermw_1     |[0m       },
+[36mintermw_1     |[0m       "http://www.w3.org/2000/01/rdf-schema#subPropertyOf" : {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/1999/02/22-rdf-syntax-ns#object"
+[36mintermw_1     |[0m       }
+[36mintermw_1     |[0m     }, {
+[36mintermw_1     |[0m       "@id" : "http://www.w3.org/1999/02/22-rdf-syntax-ns#predicate",
+[36mintermw_1     |[0m       "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+[36mintermw_1     |[0m       }, {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
+[36mintermw_1     |[0m       } ],
+[36mintermw_1     |[0m       "http://www.w3.org/2000/01/rdf-schema#domain" : {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/1999/02/22-rdf-syntax-ns#Statement"
+[36mintermw_1     |[0m       },
+[36mintermw_1     |[0m       "http://www.w3.org/2000/01/rdf-schema#subPropertyOf" : {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/1999/02/22-rdf-syntax-ns#predicate"
+[36mintermw_1     |[0m       }
+[36mintermw_1     |[0m     }, {
+[36mintermw_1     |[0m       "@id" : "http://www.w3.org/1999/02/22-rdf-syntax-ns#rest",
+[36mintermw_1     |[0m       "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+[36mintermw_1     |[0m       }, {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
+[36mintermw_1     |[0m       } ],
+[36mintermw_1     |[0m       "http://www.w3.org/2000/01/rdf-schema#domain" : {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/1999/02/22-rdf-syntax-ns#List"
+[36mintermw_1     |[0m       },
+[36mintermw_1     |[0m       "http://www.w3.org/2000/01/rdf-schema#range" : {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/1999/02/22-rdf-syntax-ns#List"
+[36mintermw_1     |[0m       },
+[36mintermw_1     |[0m       "http://www.w3.org/2000/01/rdf-schema#subPropertyOf" : {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/1999/02/22-rdf-syntax-ns#rest"
+[36mintermw_1     |[0m       }
+[36mintermw_1     |[0m     }, {
+[36mintermw_1     |[0m       "@id" : "http://www.w3.org/1999/02/22-rdf-syntax-ns#subject",
+[36mintermw_1     |[0m       "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+[36mintermw_1     |[0m       }, {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
+[36mintermw_1     |[0m       } ],
+[36mintermw_1     |[0m       "http://www.w3.org/2000/01/rdf-schema#domain" : {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/1999/02/22-rdf-syntax-ns#Statement"
+[36mintermw_1     |[0m       },
+[36mintermw_1     |[0m       "http://www.w3.org/2000/01/rdf-schema#subPropertyOf" : {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/1999/02/22-rdf-syntax-ns#subject"
+[36mintermw_1     |[0m       }
+[36mintermw_1     |[0m     }, {
+[36mintermw_1     |[0m       "@id" : "http://www.w3.org/1999/02/22-rdf-syntax-ns#type",
+[36mintermw_1     |[0m       "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+[36mintermw_1     |[0m       }, {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
+[36mintermw_1     |[0m       } ],
+[36mintermw_1     |[0m       "http://www.w3.org/2000/01/rdf-schema#range" : {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2000/01/rdf-schema#Class"
+[36mintermw_1     |[0m       }
+[36mintermw_1     |[0m     }, {
+[36mintermw_1     |[0m       "@id" : "http://www.w3.org/2000/01/rdf-schema#Class",
+[36mintermw_1     |[0m       "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2000/01/rdf-schema#Class"
+[36mintermw_1     |[0m       }, {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
+[36mintermw_1     |[0m       } ],
+[36mintermw_1     |[0m       "http://www.w3.org/2000/01/rdf-schema#subClassOf" : [ {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
+[36mintermw_1     |[0m       }, {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2000/01/rdf-schema#Class"
+[36mintermw_1     |[0m       } ]
+[36mintermw_1     |[0m     }, {
+[36mintermw_1     |[0m       "@id" : "http://www.w3.org/2000/01/rdf-schema#Container",
+[36mintermw_1     |[0m       "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2000/01/rdf-schema#Class"
+[36mintermw_1     |[0m       }, {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
+[36mintermw_1     |[0m       } ],
+[36mintermw_1     |[0m       "http://www.w3.org/2000/01/rdf-schema#subClassOf" : {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2000/01/rdf-schema#Container"
+[36mintermw_1     |[0m       }
+[36mintermw_1     |[0m     }, {
+[36mintermw_1     |[0m       "@id" : "http://www.w3.org/2000/01/rdf-schema#ContainerMembershipProperty",
+[36mintermw_1     |[0m       "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2000/01/rdf-schema#Class"
+[36mintermw_1     |[0m       }, {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
+[36mintermw_1     |[0m       } ],
+[36mintermw_1     |[0m       "http://www.w3.org/2000/01/rdf-schema#subClassOf" : [ {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2000/01/rdf-schema#ContainerMembershipProperty"
+[36mintermw_1     |[0m       }, {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+[36mintermw_1     |[0m       } ]
+[36mintermw_1     |[0m     }, {
+[36mintermw_1     |[0m       "@id" : "http://www.w3.org/2000/01/rdf-schema#Datatype",
+[36mintermw_1     |[0m       "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2000/01/rdf-schema#Class"
+[36mintermw_1     |[0m       }, {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
+[36mintermw_1     |[0m       } ],
+[36mintermw_1     |[0m       "http://www.w3.org/2000/01/rdf-schema#subClassOf" : [ {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2000/01/rdf-schema#Datatype"
+[36mintermw_1     |[0m       }, {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2000/01/rdf-schema#Class"
+[36mintermw_1     |[0m       } ]
+[36mintermw_1     |[0m     }, {
+[36mintermw_1     |[0m       "@id" : "http://www.w3.org/2000/01/rdf-schema#Literal",
+[36mintermw_1     |[0m       "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2000/01/rdf-schema#Class"
+[36mintermw_1     |[0m       }, {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
+[36mintermw_1     |[0m       } ],
+[36mintermw_1     |[0m       "http://www.w3.org/2000/01/rdf-schema#subClassOf" : {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
+[36mintermw_1     |[0m       }
+[36mintermw_1     |[0m     }, {
+[36mintermw_1     |[0m       "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource",
+[36mintermw_1     |[0m       "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2000/01/rdf-schema#Class"
+[36mintermw_1     |[0m       }, {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
+[36mintermw_1     |[0m       } ]
+[36mintermw_1     |[0m     }, {
+[36mintermw_1     |[0m       "@id" : "http://www.w3.org/2000/01/rdf-schema#comment",
+[36mintermw_1     |[0m       "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+[36mintermw_1     |[0m       }, {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
+[36mintermw_1     |[0m       } ],
+[36mintermw_1     |[0m       "http://www.w3.org/2000/01/rdf-schema#range" : {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2000/01/rdf-schema#Literal"
+[36mintermw_1     |[0m       }
+[36mintermw_1     |[0m     }, {
+[36mintermw_1     |[0m       "@id" : "http://www.w3.org/2000/01/rdf-schema#domain",
+[36mintermw_1     |[0m       "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+[36mintermw_1     |[0m       }, {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
+[36mintermw_1     |[0m       } ],
+[36mintermw_1     |[0m       "http://www.w3.org/2000/01/rdf-schema#domain" : {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+[36mintermw_1     |[0m       },
+[36mintermw_1     |[0m       "http://www.w3.org/2000/01/rdf-schema#range" : {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2000/01/rdf-schema#Class"
+[36mintermw_1     |[0m       }
+[36mintermw_1     |[0m     }, {
+[36mintermw_1     |[0m       "@id" : "http://www.w3.org/2000/01/rdf-schema#isDefinedBy",
+[36mintermw_1     |[0m       "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+[36mintermw_1     |[0m       }, {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
+[36mintermw_1     |[0m       } ],
+[36mintermw_1     |[0m       "http://www.w3.org/2000/01/rdf-schema#subPropertyOf" : [ {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2000/01/rdf-schema#isDefinedBy"
+[36mintermw_1     |[0m       }, {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2000/01/rdf-schema#seeAlso"
+[36mintermw_1     |[0m       } ]
+[36mintermw_1     |[0m     }, {
+[36mintermw_1     |[0m       "@id" : "http://www.w3.org/2000/01/rdf-schema#label",
+[36mintermw_1     |[0m       "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+[36mintermw_1     |[0m       }, {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
+[36mintermw_1     |[0m       } ],
+[36mintermw_1     |[0m       "http://www.w3.org/2000/01/rdf-schema#range" : {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2000/01/rdf-schema#Literal"
+[36mintermw_1     |[0m       }
+[36mintermw_1     |[0m     }, {
+[36mintermw_1     |[0m       "@id" : "http://www.w3.org/2000/01/rdf-schema#range",
+[36mintermw_1     |[0m       "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+[36mintermw_1     |[0m       }, {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
+[36mintermw_1     |[0m       } ],
+[36mintermw_1     |[0m       "http://www.w3.org/2000/01/rdf-schema#domain" : {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+[36mintermw_1     |[0m       },
+[36mintermw_1     |[0m       "http://www.w3.org/2000/01/rdf-schema#range" : {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2000/01/rdf-schema#Class"
+[36mintermw_1     |[0m       }
+[36mintermw_1     |[0m     }, {
+[36mintermw_1     |[0m       "@id" : "http://www.w3.org/2000/01/rdf-schema#seeAlso",
+[36mintermw_1     |[0m       "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+[36mintermw_1     |[0m       }, {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
+[36mintermw_1     |[0m       } ],
+[36mintermw_1     |[0m       "http://www.w3.org/2000/01/rdf-schema#subPropertyOf" : {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2000/01/rdf-schema#seeAlso"
+[36mintermw_1     |[0m       }
+[36mintermw_1     |[0m     }, {
+[36mintermw_1     |[0m       "@id" : "http://www.w3.org/2000/01/rdf-schema#subClassOf",
+[36mintermw_1     |[0m       "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+[36mintermw_1     |[0m       }, {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
+[36mintermw_1     |[0m       } ],
+[36mintermw_1     |[0m       "http://www.w3.org/2000/01/rdf-schema#domain" : {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2000/01/rdf-schema#Class"
+[36mintermw_1     |[0m       },
+[36mintermw_1     |[0m       "http://www.w3.org/2000/01/rdf-schema#range" : {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2000/01/rdf-schema#Class"
+[36mintermw_1     |[0m       }
+[36mintermw_1     |[0m     }, {
+[36mintermw_1     |[0m       "@id" : "http://www.w3.org/2000/01/rdf-schema#subPropertyOf",
+[36mintermw_1     |[0m       "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+[36mintermw_1     |[0m       }, {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
+[36mintermw_1     |[0m       } ],
+[36mintermw_1     |[0m       "http://www.w3.org/2000/01/rdf-schema#domain" : {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+[36mintermw_1     |[0m       },
+[36mintermw_1     |[0m       "http://www.w3.org/2000/01/rdf-schema#range" : {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+[36mintermw_1     |[0m       }
+[36mintermw_1     |[0m     }, {
+[36mintermw_1     |[0m       "@id" : "http://www.w3.org/2002/07/owl#AllDisjointClasses",
+[36mintermw_1     |[0m       "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2000/01/rdf-schema#Class"
+[36mintermw_1     |[0m       }, {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
+[36mintermw_1     |[0m       } ]
+[36mintermw_1     |[0m     }, {
+[36mintermw_1     |[0m       "@id" : "http://www.w3.org/2002/07/owl#AnnotationProperty",
+[36mintermw_1     |[0m       "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2000/01/rdf-schema#Class"
+[36mintermw_1     |[0m       }, {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
+[36mintermw_1     |[0m       } ]
+[36mintermw_1     |[0m     }, {
+[36mintermw_1     |[0m       "@id" : "http://www.w3.org/2002/07/owl#Class",
+[36mintermw_1     |[0m       "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2000/01/rdf-schema#Class"
+[36mintermw_1     |[0m       }, {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
+[36mintermw_1     |[0m       } ]
+[36mintermw_1     |[0m     }, {
+[36mintermw_1     |[0m       "@id" : "http://www.w3.org/2002/07/owl#DatatypeProperty",
+[36mintermw_1     |[0m       "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2000/01/rdf-schema#Class"
+[36mintermw_1     |[0m       }, {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
+[36mintermw_1     |[0m       } ]
+[36mintermw_1     |[0m     }, {
+[36mintermw_1     |[0m       "@id" : "http://www.w3.org/2002/07/owl#FunctionalProperty",
+[36mintermw_1     |[0m       "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2000/01/rdf-schema#Class"
+[36mintermw_1     |[0m       }, {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
+[36mintermw_1     |[0m       } ]
+[36mintermw_1     |[0m     }, {
+[36mintermw_1     |[0m       "@id" : "http://www.w3.org/2002/07/owl#InverseFunctionalProperty",
+[36mintermw_1     |[0m       "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2000/01/rdf-schema#Class"
+[36mintermw_1     |[0m       }, {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
+[36mintermw_1     |[0m       } ]
+[36mintermw_1     |[0m     }, {
+[36mintermw_1     |[0m       "@id" : "http://www.w3.org/2002/07/owl#ObjectProperty",
+[36mintermw_1     |[0m       "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2000/01/rdf-schema#Class"
+[36mintermw_1     |[0m       }, {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
+[36mintermw_1     |[0m       } ]
+[36mintermw_1     |[0m     }, {
+[36mintermw_1     |[0m       "@id" : "http://www.w3.org/2002/07/owl#Ontology",
+[36mintermw_1     |[0m       "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2000/01/rdf-schema#Class"
+[36mintermw_1     |[0m       }, {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
+[36mintermw_1     |[0m       } ]
+[36mintermw_1     |[0m     }, {
+[36mintermw_1     |[0m       "@id" : "http://www.w3.org/2002/07/owl#Restriction",
+[36mintermw_1     |[0m       "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2000/01/rdf-schema#Class"
+[36mintermw_1     |[0m       }, {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
+[36mintermw_1     |[0m       } ]
+[36mintermw_1     |[0m     }, {
+[36mintermw_1     |[0m       "@id" : "http://www.w3.org/2002/07/owl#topObjectProperty",
+[36mintermw_1     |[0m       "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+[36mintermw_1     |[0m       }, {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
+[36mintermw_1     |[0m       } ],
+[36mintermw_1     |[0m       "http://www.w3.org/2000/01/rdf-schema#subPropertyOf" : {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2002/07/owl#topObjectProperty"
+[36mintermw_1     |[0m       }
+[36mintermw_1     |[0m     } ],
+[36mintermw_1     |[0m     "@id" : "msg:payload"
+[36mintermw_1     |[0m   } ],
+[36mintermw_1     |[0m   "@context" : {
+[36mintermw_1     |[0m     "msg" : "http://inter-iot.eu/message/",
+[36mintermw_1     |[0m     "iiotex" : "http://inter-iot.eu/GOIoTPex#",
+[36mintermw_1     |[0m     "geosparql" : "http://www.opengis.net/ont/geosparql#",
+[36mintermw_1     |[0m     "iiot" : "http://inter-iot.eu/GOIoTP#",
+[36mintermw_1     |[0m     "InterIoT" : "http://inter-iot.eu/",
+[36mintermw_1     |[0m     "ssn" : "http://www.w3.org/ns/ssn/",
+[36mintermw_1     |[0m     "sosa" : "http://www.w3.org/ns/sosa/"
+[36mintermw_1     |[0m   }
+[36mintermw_1     |[0m }
+[36mintermw_1     |[0m 
+[36mintermw_1     |[0m 13:45:21.267 [WebSocketClient@2009951334-3840] DEBUG eu.interiot.intermw.comm.broker.rabbitmq.PublisherImpl.publish(PublisherImpl.java:90) - Publishing message msg1fa95a9e-9c11-4ca9-949a-10ec191a7cbf of type [http://inter-iot.eu/message/Response, http://inter-iot.eu/message/Observation] to exchange bridge_ipsmrm_http_DS6-PTL-dev-sensinact-1 with routing key #...
+[36mintermw_1     |[0m 13:45:21.453 [SimpleAsyncTaskExecutor-1] DEBUG eu.interiot.intermw.comm.ipsm.DefaultIPSMRequestManager.lambda$registerPlatform$0(DefaultIPSMRequestManager.java:210) - Received upstream message of type [http://inter-iot.eu/message/Response, http://inter-iot.eu/message/Observation] from the bridge (from queue bridge_ipsmrm_http_DS6-PTL-dev-sensinact-1) with ID msg1fa95a9e-9c11-4ca9-949a-10ec191a7cbf and conversationId conv213495e9-17b1-4c71-a05c-9b2f7e4e0a55 from platform http://DS6-PTL-dev-sensinact-1.
+[36mintermw_1     |[0m 13:45:21.455 [SimpleAsyncTaskExecutor-1] DEBUG eu.interiot.intermw.comm.ipsm.DefaultIPSMRequestManager.handleFromBridge(DefaultIPSMRequestManager.java:402) - Message will be forwarde
+...
+[36mintermw_1     |[0m 15:01:12.228 [WebSocketClient@1928662795-4132] INFO  eu.interiot.intermw.bridge.sensinact.v2.SensinactCommunicationBridgeV2$1.notify(SensinactCommunicationBridgeV2.java:158) - Message received before json parser:{"type":"CALLBACK","callbackId":"MID156449863164283143777","messages":[{"notification":{"name":"state","type":"boolean","value":true,"timestamp":1564498872028},"type":"ATTRIBUTE_VALUE_UPDATED","uri":"/aha-night-rising-monitor-bedroom-PTL_RPI3/monitor/state/value"}]}
+[36mintermw_1     |[0m 15:01:12.229 [WebSocketClient@1928662795-4132] INFO  eu.interiot.intermw.bridge.sensinact.SensiNactBridge$1.notify(SensiNactBridge.java:110) - aha-night-rising-monitor-bedroom-PTL_RPI3/monitor/state/true
+[36mintermw_1     |[0m 15:01:12.229 [WebSocketClient@1928662795-4132] INFO  eu.interiot.intermw.bridge.sensinact.SensiNactBridge$1.notify(SensiNactBridge.java:119) - Sending notification to conversation id conv2f4afb86-6318-4135-8dea-de41ef9f1ca4 on device aha-night-rising-monitor-bedroom-PTL_RPI3/monitor/state
+[36mintermw_1     |[0m 15:01:12.324 [WebSocketClient@1928662795-4132] INFO  eu.interiot.intermw.bridge.sensinact.SensiNactBridge$1.notify(SensiNactBridge.java:136) - Sending following observation message to intermw {
+[36mintermw_1     |[0m   "@graph" : [ {
+[36mintermw_1     |[0m     "@graph" : [ {
+[36mintermw_1     |[0m       "@id" : "msg:meta/3e3bdd0f-79b3-4bef-80fa-1d66bd6194e3",
+[36mintermw_1     |[0m       "msg:SenderPlatformId" : {
+[36mintermw_1     |[0m         "@id" : "http://DS6-PTL-dev-sensinact-1"
+[36mintermw_1     |[0m       },
+[36mintermw_1     |[0m       "msg:conversationID" : "conv2f4afb86-6318-4135-8dea-de41ef9f1ca4",
+[36mintermw_1     |[0m       "msg:dateTimeStamp" : "2019-07-30T15:01:12.232Z",
+[36mintermw_1     |[0m       "msg:messageID" : "msg8a1c5f34-22f3-4941-a962-e57901e46c5c",
+[36mintermw_1     |[0m       "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
+[36mintermw_1     |[0m         "@id" : "msg:Response"
+[36mintermw_1     |[0m       }, {
+[36mintermw_1     |[0m         "@id" : "msg:Observation"
+[36mintermw_1     |[0m       }, {
+[36mintermw_1     |[0m         "@id" : "msg:meta"
+[36mintermw_1     |[0m       } ]
+[36mintermw_1     |[0m     } ],
+[36mintermw_1     |[0m     "@id" : "msg:metadata"
+[36mintermw_1     |[0m   }, {
+[36mintermw_1     |[0m     "@graph" : [ {
+[36mintermw_1     |[0m       "@id" : "_:b0",
+[36mintermw_1     |[0m       "http://sensinact.com#name" : "state",
+[36mintermw_1     |[0m       "http://sensinact.com#value" : "true",
+[36mintermw_1     |[0m       "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
+[36mintermw_1     |[0m         "@id" : "http://sensinact.com#Resource"
+[36mintermw_1     |[0m       }, {
+[36mintermw_1     |[0m         "@id" : "http://sensinact.com#Element"
+[36mintermw_1     |[0m       }, {
+[36mintermw_1     |[0m         "@id" : "_:b1"
+[36mintermw_1     |[0m       } ]
+[36mintermw_1     |[0m     }, {
+[36mintermw_1     |[0m       "@id" : "_:b1",
+[36mintermw_1     |[0m       "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2002/07/owl#Restriction"
+[36mintermw_1     |[0m       }, {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2000/01/rdf-schema#Class"
+[36mintermw_1     |[0m       }, {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
+[36mintermw_1     |[0m       } ],
+[36mintermw_1     |[0m       "http://www.w3.org/2000/01/rdf-schema#subClassOf" : {
+[36mintermw_1     |[0m         "@id" : "_:b1"
+[36mintermw_1     |[0m       },
+[36mintermw_1     |[0m       "http://www.w3.org/2002/07/owl#allValuesFrom" : {
+[36mintermw_1     |[0m         "@id" : "http://sensinact.com#Service"
+[36mintermw_1     |[0m       },
+[36mintermw_1     |[0m       "http://www.w3.org/2002/07/owl#onProperty" : {
+[36mintermw_1     |[0m         "@id" : "http://sensinact.com#isManagedBy"
+[36mintermw_1     |[0m       }
+[36mintermw_1     |[0m     }, {
+[36mintermw_1     |[0m       "@id" : "_:b10",
+[36mintermw_1     |[0m       "http://sensinact.com#manages" : {
+[36mintermw_1     |[0m         "@id" : "_:b5"
+[36mintermw_1     |[0m       },
+[36mintermw_1     |[0m       "http://sensinact.com#name" : "aha-night-rising-monitor-bedroom-PTL_RPI3",
+[36mintermw_1     |[0m       "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
+[36mintermw_1     |[0m         "@id" : "http://sensinact.com#Provider"
+[36mintermw_1     |[0m       }, {
+[36mintermw_1     |[0m         "@id" : "_:b9"
+[36mintermw_1     |[0m       }, {
+[36mintermw_1     |[0m         "@id" : "http://sensinact.com#Element"
+[36mintermw_1     |[0m       } ]
+[36mintermw_1     |[0m     }, {
+[36mintermw_1     |[0m       "@id" : "_:b2",
+[36mintermw_1     |[0m       "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2002/07/owl#AllDisjointClasses"
+[36mintermw_1     |[0m       },
+[36mintermw_1     |[0m       "http://www.w3.org/2002/07/owl#members" : {
+[36mintermw_1     |[0m         "@id" : "_:b3"
+[36mintermw_1     |[0m       }
+[36mintermw_1     |[0m     }, {
+[36mintermw_1     |[0m       "@id" : "_:b3",
+[36mintermw_1     |[0m       "http://www.w3.org/1999/02/22-rdf-syntax-ns#first" : {
+[36mintermw_1     |[0m         "@id" : "http://sensinact.com#Provider"
+[36mintermw_1     |[0m       },
+[36mintermw_1     |[0m       "http://www.w3.org/1999/02/22-rdf-syntax-ns#rest" : {
+[36mintermw_1     |[0m         "@id" : "_:b7"
+[36mintermw_1     |[0m       },
+[36mintermw_1     |[0m       "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/1999/02/22-rdf-syntax-ns#List"
+[36mintermw_1     |[0m       }, {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
+[36mintermw_1     |[0m       } ]
+[36mintermw_1     |[0m     }, {
+[36mintermw_1     |[0m       "@id" : "_:b4",
+[36mintermw_1     |[0m       "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2002/07/owl#Restriction"
+[36mintermw_1     |[0m       }, {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2000/01/rdf-schema#Class"
+[36mintermw_1     |[0m       }, {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
+[36mintermw_1     |[0m       } ],
+[36mintermw_1     |[0m       "http://www.w3.org/2000/01/rdf-schema#subClassOf" : {
+[36mintermw_1     |[0m         "@id" : "_:b4"
+[36mintermw_1     |[0m       },
+[36mintermw_1     |[0m       "http://www.w3.org/2002/07/owl#allValuesFrom" : {
+[36mintermw_1     |[0m         "@id" : "http://sensinact.com#Resource"
+[36mintermw_1     |[0m       },
+[36mintermw_1     |[0m       "http://www.w3.org/2002/07/owl#onProperty" : {
+[36mintermw_1     |[0m         "@id" : "http://sensinact.com#manages"
+[36mintermw_1     |[0m       }
+[36mintermw_1     |[0m     }, {
+[36mintermw_1     |[0m       "@id" : "_:b5",
+[36mintermw_1     |[0m       "http://sensinact.com#manages" : {
+[36mintermw_1     |[0m         "@id" : "_:b0"
+[36mintermw_1     |[0m       },
+[36mintermw_1     |[0m       "http://sensinact.com#name" : "monitor",
+[36mintermw_1     |[0m       "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
+[36mintermw_1     |[0m         "@id" : "http://sensinact.com#Service"
+[36mintermw_1     |[0m       }, {
+[36mintermw_1     |[0m         "@id" : "_:b6"
+[36mintermw_1     |[0m       }, {
+[36mintermw_1     |[0m         "@id" : "http://sensinact.com#Element"
+[36mintermw_1     |[0m       }, {
+[36mintermw_1     |[0m         "@id" : "_:b4"
+[36mintermw_1     |[0m       } ]
+[36mintermw_1     |[0m     }, {
+[36mintermw_1     |[0m       "@id" : "_:b6",
+[36mintermw_1     |[0m       "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2002/07/owl#Restriction"
+[36mintermw_1     |[0m       }, {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2000/01/rdf-schema#Class"
+[36mintermw_1     |[0m       }, {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
+[36mintermw_1     |[0m       } ],
+[36mintermw_1     |[0m       "http://www.w3.org/2000/01/rdf-schema#subClassOf" : {
+[36mintermw_1     |[0m         "@id" : "_:b6"
+[36mintermw_1     |[0m       },
+[36mintermw_1     |[0m       "http://www.w3.org/2002/07/owl#allValuesFrom" : {
+[36mintermw_1     |[0m         "@id" : "http://sensinact.com#Provider"
+[36mintermw_1     |[0m       },
+[36mintermw_1     |[0m       "http://www.w3.org/2002/07/owl#onProperty" : {
+[36mintermw_1     |[0m         "@id" : "http://sensinact.com#isManagedBy"
+[36mintermw_1     |[0m       }
+[36mintermw_1     |[0m     }, {
+[36mintermw_1     |[0m       "@id" : "_:b7",
+[36mintermw_1     |[0m       "http://www.w3.org/1999/02/22-rdf-syntax-ns#first" : {
+[36mintermw_1     |[0m         "@id" : "http://sensinact.com#Resource"
+[36mintermw_1     |[0m       },
+[36mintermw_1     |[0m       "http://www.w3.org/1999/02/22-rdf-syntax-ns#rest" : {
+[36mintermw_1     |[0m         "@id" : "_:b8"
+[36mintermw_1     |[0m       },
+[36mintermw_1     |[0m       "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/1999/02/22-rdf-syntax-ns#List"
+[36mintermw_1     |[0m       }, {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
+[36mintermw_1     |[0m       } ]
+[36mintermw_1     |[0m     }, {
+[36mintermw_1     |[0m       "@id" : "_:b8",
+[36mintermw_1     |[0m       "http://www.w3.org/1999/02/22-rdf-syntax-ns#first" : {
+[36mintermw_1     |[0m         "@id" : "http://sensinact.com#Service"
+[36mintermw_1     |[0m       },
+[36mintermw_1     |[0m       "http://www.w3.org/1999/02/22-rdf-syntax-ns#rest" : {
+[36mintermw_1     |[0m         "@list" : [ ]
+[36mintermw_1     |[0m       },
+[36mintermw_1     |[0m       "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/1999/02/22-rdf-syntax-ns#List"
+[36mintermw_1     |[0m       }, {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
+[36mintermw_1     |[0m       } ]
+[36mintermw_1     |[0m     }, {
+[36mintermw_1     |[0m       "@id" : "_:b9",
+[36mintermw_1     |[0m       "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2002/07/owl#Restriction"
+[36mintermw_1     |[0m       }, {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2000/01/rdf-schema#Class"
+[36mintermw_1     |[0m       }, {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
+[36mintermw_1     |[0m       } ],
+[36mintermw_1     |[0m       "http://www.w3.org/2000/01/rdf-schema#subClassOf" : {
+[36mintermw_1     |[0m         "@id" : "_:b9"
+[36mintermw_1     |[0m       },
+[36mintermw_1     |[0m       "http://www.w3.org/2002/07/owl#allValuesFrom" : {
+[36mintermw_1     |[0m         "@id" : "http://sensinact.com#Service"
+[36mintermw_1     |[0m       },
+[36mintermw_1     |[0m       "http://www.w3.org/2002/07/owl#onProperty" : {
+[36mintermw_1     |[0m         "@id" : "http://sensinact.com#manages"
+[36mintermw_1     |[0m       }
+[36mintermw_1     |[0m     }, {
+[36mintermw_1     |[0m       "@id" : "http://sensinact.com",
+[36mintermw_1     |[0m       "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2002/07/owl#Ontology"
+[36mintermw_1     |[0m       }
+[36mintermw_1     |[0m     }, {
+[36mintermw_1     |[0m       "@id" : "http://sensinact.com#Element",
+[36mintermw_1     |[0m       "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2002/07/owl#Class"
+[36mintermw_1     |[0m       }, {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2000/01/rdf-schema#Class"
+[36mintermw_1     |[0m       }, {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
+[36mintermw_1     |[0m       } ],
+[36mintermw_1     |[0m       "http://www.w3.org/2000/01/rdf-schema#comment" : {
+[36mintermw_1     |[0m         "@id" : "http://sensinact.com#name"
+[36mintermw_1     |[0m       },
+[36mintermw_1     |[0m       "http://www.w3.org/2000/01/rdf-schema#subClassOf" : {
+[36mintermw_1     |[0m         "@id" : "http://sensinact.com#Element"
+[36mintermw_1     |[0m       }
+[36mintermw_1     |[0m     }, {
+[36mintermw_1     |[0m       "@id" : "http://sensinact.com#Provider",
+[36mintermw_1     |[0m       "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2002/07/owl#Class"
+[36mintermw_1     |[0m       }, {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2000/01/rdf-schema#Class"
+[36mintermw_1     |[0m       }, {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
+[36mintermw_1     |[0m       } ],
+[36mintermw_1     |[0m       "http://www.w3.org/2000/01/rdf-schema#subClassOf" : [ {
+[36mintermw_1     |[0m         "@id" : "http://sensinact.com#Element"
+[36mintermw_1     |[0m       }, {
+[36mintermw_1     |[0m         "@id" : "_:b9"
+[36mintermw_1     |[0m       }, {
+[36mintermw_1     |[0m         "@id" : "http://sensinact.com#Provider"
+[36mintermw_1     |[0m       } ]
+[36mintermw_1     |[0m     }, {
+[36mintermw_1     |[0m       "@id" : "http://sensinact.com#Resource",
+[36mintermw_1     |[0m       "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2002/07/owl#Class"
+[36mintermw_1     |[0m       }, {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2000/01/rdf-schema#Class"
+[36mintermw_1     |[0m       }, {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
+[36mintermw_1     |[0m       } ],
+[36mintermw_1     |[0m       "http://www.w3.org/2000/01/rdf-schema#comment" : {
+[36mintermw_1     |[0m         "@id" : "http://sensinact.com#value"
+[36mintermw_1     |[0m       },
+[36mintermw_1     |[0m       "http://www.w3.org/2000/01/rdf-schema#subClassOf" : [ {
+[36mintermw_1     |[0m         "@id" : "http://sensinact.com#Element"
+[36mintermw_1     |[0m       }, {
+[36mintermw_1     |[0m         "@id" : "_:b1"
+[36mintermw_1     |[0m       }, {
+[36mintermw_1     |[0m         "@id" : "http://sensinact.com#Resource"
+[36mintermw_1     |[0m       } ]
+[36mintermw_1     |[0m     }, {
+[36mintermw_1     |[0m       "@id" : "http://sensinact.com#Service",
+[36mintermw_1     |[0m       "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2002/07/owl#Class"
+[36mintermw_1     |[0m       }, {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2000/01/rdf-schema#Class"
+[36mintermw_1     |[0m       }, {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
+[36mintermw_1     |[0m       } ],
+[36mintermw_1     |[0m       "http://www.w3.org/2000/01/rdf-schema#subClassOf" : [ {
+[36mintermw_1     |[0m         "@id" : "http://sensinact.com#Element"
+[36mintermw_1     |[0m       }, {
+[36mintermw_1     |[0m         "@id" : "_:b6"
+[36mintermw_1     |[0m       }, {
+[36mintermw_1     |[0m         "@id" : "_:b4"
+[36mintermw_1     |[0m       }, {
+[36mintermw_1     |[0m         "@id" : "http://sensinact.com#Service"
+[36mintermw_1     |[0m       } ]
+[36mintermw_1     |[0m     }, {
+[36mintermw_1     |[0m       "@id" : "http://sensinact.com#contains",
+[36mintermw_1     |[0m       "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2002/07/owl#AnnotationProperty"
+[36mintermw_1     |[0m       }
+[36mintermw_1     |[0m     }, {
+[36mintermw_1     |[0m       "@id" : "http://sensinact.com#isManagedBy",
+[36mintermw_1     |[0m       "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2002/07/owl#ObjectProperty"
+[36mintermw_1     |[0m       }, {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2002/07/owl#FunctionalProperty"
+[36mintermw_1     |[0m       }, {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2002/07/owl#InverseFunctionalProperty"
+[36mintermw_1     |[0m       }, {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+[36mintermw_1     |[0m       }, {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
+[36mintermw_1     |[0m       } ],
+[36mintermw_1     |[0m       "http://www.w3.org/2000/01/rdf-schema#subPropertyOf" : [ {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2002/07/owl#topObjectProperty"
+[36mintermw_1     |[0m       }, {
+[36mintermw_1     |[0m         "@id" : "http://sensinact.com#isManagedBy"
+[36mintermw_1     |[0m       } ],
+[36mintermw_1     |[0m       "http://www.w3.org/2002/07/owl#inverseOf" : {
+[36mintermw_1     |[0m         "@id" : "http://sensinact.com#manages"
+[36mintermw_1     |[0m       }
+[36mintermw_1     |[0m     }, {
+[36mintermw_1     |[0m       "@id" : "http://sensinact.com#manages",
+[36mintermw_1     |[0m       "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2002/07/owl#ObjectProperty"
+[36mintermw_1     |[0m       }, {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2002/07/owl#FunctionalProperty"
+[36mintermw_1     |[0m       }, {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2002/07/owl#InverseFunctionalProperty"
+[36mintermw_1     |[0m       } ]
+[36mintermw_1     |[0m     }, {
+[36mintermw_1     |[0m       "@id" : "http://sensinact.com#name",
+[36mintermw_1     |[0m       "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2002/07/owl#DatatypeProperty"
+[36mintermw_1     |[0m       }, {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2000/01/rdf-schema#Literal"
+[36mintermw_1     |[0m       }, {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
+[36mintermw_1     |[0m       } ]
+[36mintermw_1     |[0m     }, {
+[36mintermw_1     |[0m       "@id" : "http://sensinact.com#value",
+[36mintermw_1     |[0m       "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2002/07/owl#DatatypeProperty"
+[36mintermw_1     |[0m       }, {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2002/07/owl#FunctionalProperty"
+[36mintermw_1     |[0m       }, {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2000/01/rdf-schema#Literal"
+[36mintermw_1     |[0m       }, {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
+[36mintermw_1     |[0m       } ]
+[36mintermw_1     |[0m     }, {
+[36mintermw_1     |[0m       "@id" : "http://www.w3.org/1999/02/22-rdf-syntax-ns#Alt",
+[36mintermw_1     |[0m       "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2000/01/rdf-schema#Class"
+[36mintermw_1     |[0m       }, {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
+[36mintermw_1     |[0m       } ],
+[36mintermw_1     |[0m       "http://www.w3.org/2000/01/rdf-schema#subClassOf" : [ {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/1999/02/22-rdf-syntax-ns#Alt"
+[36mintermw_1     |[0m       }, {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2000/01/rdf-schema#Container"
+[36mintermw_1     |[0m       } ]
+[36mintermw_1     |[0m     }, {
+[36mintermw_1     |[0m       "@id" : "http://www.w3.org/1999/02/22-rdf-syntax-ns#Bag",
+[36mintermw_1     |[0m       "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2000/01/rdf-schema#Class"
+[36mintermw_1     |[0m       }, {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
+[36mintermw_1     |[0m       } ],
+[36mintermw_1     |[0m       "http://www.w3.org/2000/01/rdf-schema#subClassOf" : [ {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/1999/02/22-rdf-syntax-ns#Bag"
+[36mintermw_1     |[0m       }, {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2000/01/rdf-schema#Container"
+[36mintermw_1     |[0m       } ]
+[36mintermw_1     |[0m     }, {
+[36mintermw_1     |[0m       "@id" : "http://www.w3.org/1999/02/22-rdf-syntax-ns#List",
+[36mintermw_1     |[0m       "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2000/01/rdf-schema#Class"
+[36mintermw_1     |[0m       }, {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
+[36mintermw_1     |[0m       } ],
+[36mintermw_1     |[0m       "http://www.w3.org/2000/01/rdf-schema#subClassOf" : {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
+[36mintermw_1     |[0m       }
+[36mintermw_1     |[0m     }, {
+[36mintermw_1     |[0m       "@id" : "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property",
+[36mintermw_1     |[0m       "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2000/01/rdf-schema#Class"
+[36mintermw_1     |[0m       }, {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
+[36mintermw_1     |[0m       } ],
+[36mintermw_1     |[0m       "http://www.w3.org/2000/01/rdf-schema#subClassOf" : [ {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
+[36mintermw_1     |[0m       }, {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+[36mintermw_1     |[0m       } ]
+[36mintermw_1     |[0m     }, {
+[36mintermw_1     |[0m       "@id" : "http://www.w3.org/1999/02/22-rdf-syntax-ns#Seq",
+[36mintermw_1     |[0m       "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2000/01/rdf-schema#Class"
+[36mintermw_1     |[0m       }, {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
+[36mintermw_1     |[0m       } ],
+[36mintermw_1     |[0m       "http://www.w3.org/2000/01/rdf-schema#subClassOf" : [ {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/1999/02/22-rdf-syntax-ns#Seq"
+[36mintermw_1     |[0m       }, {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2000/01/rdf-schema#Container"
+[36mintermw_1     |[0m       } ]
+[36mintermw_1     |[0m     }, {
+[36mintermw_1     |[0m       "@id" : "http://www.w3.org/1999/02/22-rdf-syntax-ns#Statement",
+[36mintermw_1     |[0m       "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2000/01/rdf-schema#Class"
+[36mintermw_1     |[0m       }, {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
+[36mintermw_1     |[0m       } ],
+[36mintermw_1     |[0m       "http://www.w3.org/2000/01/rdf-schema#subClassOf" : {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
+[36mintermw_1     |[0m       }
+[36mintermw_1     |[0m     }, {
+[36mintermw_1     |[0m       "@id" : "http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral",
+[36mintermw_1     |[0m       "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2000/01/rdf-schema#Datatype"
+[36mintermw_1     |[0m       }, {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2000/01/rdf-schema#Class"
+[36mintermw_1     |[0m       }, {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
+[36mintermw_1     |[0m       } ]
+[36mintermw_1     |[0m     }, {
+[36mintermw_1     |[0m       "@id" : "http://www.w3.org/1999/02/22-rdf-syntax-ns#first",
+[36mintermw_1     |[0m       "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+[36mintermw_1     |[0m       }, {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
+[36mintermw_1     |[0m       } ],
+[36mintermw_1     |[0m       "http://www.w3.org/2000/01/rdf-schema#domain" : {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/1999/02/22-rdf-syntax-ns#List"
+[36mintermw_1     |[0m       },
+[36mintermw_1     |[0m       "http://www.w3.org/2000/01/rdf-schema#subPropertyOf" : {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/1999/02/22-rdf-syntax-ns#first"
+[36mintermw_1     |[0m       }
+[36mintermw_1     |[0m     }, {
+[36mintermw_1     |[0m       "@id" : "http://www.w3.org/1999/02/22-rdf-syntax-ns#nil",
+[36mintermw_1     |[0m       "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/1999/02/22-rdf-syntax-ns#List"
+[36mintermw_1     |[0m       }, {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
+[36mintermw_1     |[0m       } ]
+[36mintermw_1     |[0m     }, {
+[36mintermw_1     |[0m       "@id" : "http://www.w3.org/1999/02/22-rdf-syntax-ns#object",
+[36mintermw_1     |[0m       "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+[36mintermw_1     |[0m       }, {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
+[36mintermw_1     |[0m       } ],
+[36mintermw_1     |[0m       "http://www.w3.org/2000/01/rdf-schema#domain" : {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/1999/02/22-rdf-syntax-ns#Statement"
+[36mintermw_1     |[0m       },
+[36mintermw_1     |[0m       "http://www.w3.org/2000/01/rdf-schema#subPropertyOf" : {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/1999/02/22-rdf-syntax-ns#object"
+[36mintermw_1     |[0m       }
+[36mintermw_1     |[0m     }, {
+[36mintermw_1     |[0m       "@id" : "http://www.w3.org/1999/02/22-rdf-syntax-ns#predicate",
+[36mintermw_1     |[0m       "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+[36mintermw_1     |[0m       }, {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
+[36mintermw_1     |[0m       } ],
+[36mintermw_1     |[0m       "http://www.w3.org/2000/01/rdf-schema#domain" : {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/1999/02/22-rdf-syntax-ns#Statement"
+[36mintermw_1     |[0m       },
+[36mintermw_1     |[0m       "http://www.w3.org/2000/01/rdf-schema#subPropertyOf" : {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/1999/02/22-rdf-syntax-ns#predicate"
+[36mintermw_1     |[0m       }
+[36mintermw_1     |[0m     }, {
+[36mintermw_1     |[0m       "@id" : "http://www.w3.org/1999/02/22-rdf-syntax-ns#rest",
+[36mintermw_1     |[0m       "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+[36mintermw_1     |[0m       }, {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
+[36mintermw_1     |[0m       } ],
+[36mintermw_1     |[0m       "http://www.w3.org/2000/01/rdf-schema#domain" : {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/1999/02/22-rdf-syntax-ns#List"
+[36mintermw_1     |[0m       },
+[36mintermw_1     |[0m       "http://www.w3.org/2000/01/rdf-schema#range" : {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/1999/02/22-rdf-syntax-ns#List"
+[36mintermw_1     |[0m       },
+[36mintermw_1     |[0m       "http://www.w3.org/2000/01/rdf-schema#subPropertyOf" : {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/1999/02/22-rdf-syntax-ns#rest"
+[36mintermw_1     |[0m       }
+[36mintermw_1     |[0m     }, {
+[36mintermw_1     |[0m       "@id" : "http://www.w3.org/1999/02/22-rdf-syntax-ns#subject",
+[36mintermw_1     |[0m       "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+[36mintermw_1     |[0m       }, {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
+[36mintermw_1     |[0m       } ],
+[36mintermw_1     |[0m       "http://www.w3.org/2000/01/rdf-schema#domain" : {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/1999/02/22-rdf-syntax-ns#Statement"
+[36mintermw_1     |[0m       },
+[36mintermw_1     |[0m       "http://www.w3.org/2000/01/rdf-schema#subPropertyOf" : {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/1999/02/22-rdf-syntax-ns#subject"
+[36mintermw_1     |[0m       }
+[36mintermw_1     |[0m     }, {
+[36mintermw_1     |[0m       "@id" : "http://www.w3.org/1999/02/22-rdf-syntax-ns#type",
+[36mintermw_1     |[0m       "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+[36mintermw_1     |[0m       }, {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
+[36mintermw_1     |[0m       } ],
+[36mintermw_1     |[0m       "http://www.w3.org/2000/01/rdf-schema#range" : {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2000/01/rdf-schema#Class"
+[36mintermw_1     |[0m       }
+[36mintermw_1     |[0m     }, {
+[36mintermw_1     |[0m       "@id" : "http://www.w3.org/2000/01/rdf-schema#Class",
+[36mintermw_1     |[0m       "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2000/01/rdf-schema#Class"
+[36mintermw_1     |[0m       }, {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
+[36mintermw_1     |[0m       } ],
+[36mintermw_1     |[0m       "http://www.w3.org/2000/01/rdf-schema#subClassOf" : [ {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
+[36mintermw_1     |[0m       }, {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2000/01/rdf-schema#Class"
+[36mintermw_1     |[0m       } ]
+[36mintermw_1     |[0m     }, {
+[36mintermw_1     |[0m       "@id" : "http://www.w3.org/2000/01/rdf-schema#Container",
+[36mintermw_1     |[0m       "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2000/01/rdf-schema#Class"
+[36mintermw_1     |[0m       }, {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
+[36mintermw_1     |[0m       } ],
+[36mintermw_1     |[0m       "http://www.w3.org/2000/01/rdf-schema#subClassOf" : {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2000/01/rdf-schema#Container"
+[36mintermw_1     |[0m       }
+[36mintermw_1     |[0m     }, {
+[36mintermw_1     |[0m       "@id" : "http://www.w3.org/2000/01/rdf-schema#ContainerMembershipProperty",
+[36mintermw_1     |[0m       "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2000/01/rdf-schema#Class"
+[36mintermw_1     |[0m       }, {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
+[36mintermw_1     |[0m       } ],
+[36mintermw_1     |[0m       "http://www.w3.org/2000/01/rdf-schema#subClassOf" : [ {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2000/01/rdf-schema#ContainerMembershipProperty"
+[36mintermw_1     |[0m       }, {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+[36mintermw_1     |[0m       } ]
+[36mintermw_1     |[0m     }, {
+[36mintermw_1     |[0m       "@id" : "http://www.w3.org/2000/01/rdf-schema#Datatype",
+[36mintermw_1     |[0m       "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2000/01/rdf-schema#Class"
+[36mintermw_1     |[0m       }, {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
+[36mintermw_1     |[0m       } ],
+[36mintermw_1     |[0m       "http://www.w3.org/2000/01/rdf-schema#subClassOf" : [ {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2000/01/rdf-schema#Datatype"
+[36mintermw_1     |[0m       }, {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2000/01/rdf-schema#Class"
+[36mintermw_1     |[0m       } ]
+[36mintermw_1     |[0m     }, {
+[36mintermw_1     |[0m       "@id" : "http://www.w3.org/2000/01/rdf-schema#Literal",
+[36mintermw_1     |[0m       "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2000/01/rdf-schema#Class"
+[36mintermw_1     |[0m       }, {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
+[36mintermw_1     |[0m       } ],
+[36mintermw_1     |[0m       "http://www.w3.org/2000/01/rdf-schema#subClassOf" : {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
+[36mintermw_1     |[0m       }
+[36mintermw_1     |[0m     }, {
+[36mintermw_1     |[0m       "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource",
+[36mintermw_1     |[0m       "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2000/01/rdf-schema#Class"
+[36mintermw_1     |[0m       }, {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
+[36mintermw_1     |[0m       } ]
+[36mintermw_1     |[0m     }, {
+[36mintermw_1     |[0m       "@id" : "http://www.w3.org/2000/01/rdf-schema#comment",
+[36mintermw_1     |[0m       "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+[36mintermw_1     |[0m       }, {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
+[36mintermw_1     |[0m       } ],
+[36mintermw_1     |[0m       "http://www.w3.org/2000/01/rdf-schema#range" : {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2000/01/rdf-schema#Literal"
+[36mintermw_1     |[0m       }
+[36mintermw_1     |[0m     }, {
+[36mintermw_1     |[0m       "@id" : "http://www.w3.org/2000/01/rdf-schema#domain",
+[36mintermw_1     |[0m       "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+[36mintermw_1     |[0m       }, {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
+[36mintermw_1     |[0m       } ],
+[36mintermw_1     |[0m       "http://www.w3.org/2000/01/rdf-schema#domain" : {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+[36mintermw_1     |[0m       },
+[36mintermw_1     |[0m       "http://www.w3.org/2000/01/rdf-schema#range" : {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2000/01/rdf-schema#Class"
+[36mintermw_1     |[0m       }
+[36mintermw_1     |[0m     }, {
+[36mintermw_1     |[0m       "@id" : "http://www.w3.org/2000/01/rdf-schema#isDefinedBy",
+[36mintermw_1     |[0m       "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+[36mintermw_1     |[0m       }, {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
+[36mintermw_1     |[0m       } ],
+[36mintermw_1     |[0m       "http://www.w3.org/2000/01/rdf-schema#subPropertyOf" : [ {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2000/01/rdf-schema#isDefinedBy"
+[36mintermw_1     |[0m       }, {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2000/01/rdf-schema#seeAlso"
+[36mintermw_1     |[0m       } ]
+[36mintermw_1     |[0m     }, {
+[36mintermw_1     |[0m       "@id" : "http://www.w3.org/2000/01/rdf-schema#label",
+[36mintermw_1     |[0m       "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+[36mintermw_1     |[0m       }, {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
+[36mintermw_1     |[0m       } ],
+[36mintermw_1     |[0m       "http://www.w3.org/2000/01/rdf-schema#range" : {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2000/01/rdf-schema#Literal"
+[36mintermw_1     |[0m       }
+[36mintermw_1     |[0m     }, {
+[36mintermw_1     |[0m       "@id" : "http://www.w3.org/2000/01/rdf-schema#range",
+[36mintermw_1     |[0m       "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+[36mintermw_1     |[0m       }, {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
+[36mintermw_1     |[0m       } ],
+[36mintermw_1     |[0m       "http://www.w3.org/2000/01/rdf-schema#domain" : {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+[36mintermw_1     |[0m       },
+[36mintermw_1     |[0m       "http://www.w3.org/2000/01/rdf-schema#range" : {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2000/01/rdf-schema#Class"
+[36mintermw_1     |[0m       }
+[36mintermw_1     |[0m     }, {
+[36mintermw_1     |[0m       "@id" : "http://www.w3.org/2000/01/rdf-schema#seeAlso",
+[36mintermw_1     |[0m       "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+[36mintermw_1     |[0m       }, {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
+[36mintermw_1     |[0m       } ],
+[36mintermw_1     |[0m       "http://www.w3.org/2000/01/rdf-schema#subPropertyOf" : {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2000/01/rdf-schema#seeAlso"
+[36mintermw_1     |[0m       }
+[36mintermw_1     |[0m     }, {
+[36mintermw_1     |[0m       "@id" : "http://www.w3.org/2000/01/rdf-schema#subClassOf",
+[36mintermw_1     |[0m       "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+[36mintermw_1     |[0m       }, {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
+[36mintermw_1     |[0m       } ],
+[36mintermw_1     |[0m       "http://www.w3.org/2000/01/rdf-schema#domain" : {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2000/01/rdf-schema#Class"
+[36mintermw_1     |[0m       },
+[36mintermw_1     |[0m       "http://www.w3.org/2000/01/rdf-schema#range" : {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2000/01/rdf-schema#Class"
+[36mintermw_1     |[0m       }
+[36mintermw_1     |[0m     }, {
+[36mintermw_1     |[0m       "@id" : "http://www.w3.org/2000/01/rdf-schema#subPropertyOf",
+[36mintermw_1     |[0m       "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+[36mintermw_1     |[0m       }, {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
+[36mintermw_1     |[0m       } ],
+[36mintermw_1     |[0m       "http://www.w3.org/2000/01/rdf-schema#domain" : {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+[36mintermw_1     |[0m       },
+[36mintermw_1     |[0m       "http://www.w3.org/2000/01/rdf-schema#range" : {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+[36mintermw_1     |[0m       }
+[36mintermw_1     |[0m     }, {
+[36mintermw_1     |[0m       "@id" : "http://www.w3.org/2002/07/owl#AllDisjointClasses",
+[36mintermw_1     |[0m       "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2000/01/rdf-schema#Class"
+[36mintermw_1     |[0m       }, {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
+[36mintermw_1     |[0m       } ]
+[36mintermw_1     |[0m     }, {
+[36mintermw_1     |[0m       "@id" : "http://www.w3.org/2002/07/owl#AnnotationProperty",
+[36mintermw_1     |[0m       "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2000/01/rdf-schema#Class"
+[36mintermw_1     |[0m       }, {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
+[36mintermw_1     |[0m       } ]
+[36mintermw_1     |[0m     }, {
+[36mintermw_1     |[0m       "@id" : "http://www.w3.org/2002/07/owl#Class",
+[36mintermw_1     |[0m       "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2000/01/rdf-schema#Class"
+[36mintermw_1     |[0m       }, {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
+[36mintermw_1     |[0m       } ]
+[36mintermw_1     |[0m     }, {
+[36mintermw_1     |[0m       "@id" : "http://www.w3.org/2002/07/owl#DatatypeProperty",
+[36mintermw_1     |[0m       "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2000/01/rdf-schema#Class"
+[36mintermw_1     |[0m       }, {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
+[36mintermw_1     |[0m       } ]
+[36mintermw_1     |[0m     }, {
+[36mintermw_1     |[0m       "@id" : "http://www.w3.org/2002/07/owl#FunctionalProperty",
+[36mintermw_1     |[0m       "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2000/01/rdf-schema#Class"
+[36mintermw_1     |[0m       }, {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
+[36mintermw_1     |[0m       } ]
+[36mintermw_1     |[0m     }, {
+[36mintermw_1     |[0m       "@id" : "http://www.w3.org/2002/07/owl#InverseFunctionalProperty",
+[36mintermw_1     |[0m       "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2000/01/rdf-schema#Class"
+[36mintermw_1     |[0m       }, {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
+[36mintermw_1     |[0m       } ]
+[36mintermw_1     |[0m     }, {
+[36mintermw_1     |[0m       "@id" : "http://www.w3.org/2002/07/owl#ObjectProperty",
+[36mintermw_1     |[0m       "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2000/01/rdf-schema#Class"
+[36mintermw_1     |[0m       }, {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
+[36mintermw_1     |[0m       } ]
+[36mintermw_1     |[0m     }, {
+[36mintermw_1     |[0m       "@id" : "http://www.w3.org/2002/07/owl#Ontology",
+[36mintermw_1     |[0m       "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2000/01/rdf-schema#Class"
+[36mintermw_1     |[0m       }, {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
+[36mintermw_1     |[0m       } ]
+[36mintermw_1     |[0m     }, {
+[36mintermw_1     |[0m       "@id" : "http://www.w3.org/2002/07/owl#Restriction",
+[36mintermw_1     |[0m       "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2000/01/rdf-schema#Class"
+[36mintermw_1     |[0m       }, {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
+[36mintermw_1     |[0m       } ]
+[36mintermw_1     |[0m     }, {
+[36mintermw_1     |[0m       "@id" : "http://www.w3.org/2002/07/owl#topObjectProperty",
+[36mintermw_1     |[0m       "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+[36mintermw_1     |[0m       }, {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
+[36mintermw_1     |[0m       } ],
+[36mintermw_1     |[0m       "http://www.w3.org/2000/01/rdf-schema#subPropertyOf" : {
+[36mintermw_1     |[0m         "@id" : "http://www.w3.org/2002/07/owl#topObjectProperty"
+[36mintermw_1     |[0m       }
+[36mintermw_1     |[0m     } ],
+[36mintermw_1     |[0m     "@id" : "msg:payload"
+[36mintermw_1     |[0m   } ],
+[36mintermw_1     |[0m   "@context" : {
+[36mintermw_1     |[0m     "msg" : "http://inter-iot.eu/message/",
+[36mintermw_1     |[0m     "iiotex" : "http://inter-iot.eu/GOIoTPex#",
+[36mintermw_1     |[0m     "geosparql" : "http://www.opengis.net/ont/geosparql#",
+[36mintermw_1     |[0m     "iiot" : "http://inter-iot.eu/GOIoTP#",
+[36mintermw_1     |[0m     "InterIoT" : "http://inter-iot.eu/",
+[36mintermw_1     |[0m     "ssn" : "http://www.w3.org/ns/ssn/",
+[36mintermw_1     |[0m     "sosa" : "http://www.w3.org/ns/sosa/"
+[36mintermw_1     |[0m   }
+[36mintermw_1     |[0m }
+[36mintermw_1     |[0m 
+[36mintermw_1     |[0m 15:01:12.339 [WebSocketClient@1928662795-4132] DEBUG eu.interiot.intermw.comm.broker.rabbitmq.PublisherImpl.publish(PublisherImpl.java:90) - Publishing message msg8a1c5f34-22f3-4941-a962-e57901e46c5c of type [http://inter-iot.eu/message/Response, http://inter-iot.eu/message/Observation] to exchange bridge_ipsmrm_http_DS6-PTL-dev-sensinact-1 with routing key #...
+[36mintermw_1     |[0m 15:01:12.516 [SimpleAsyncTaskExecutor-1] DEBUG eu.interiot.intermw.comm.ipsm.DefaultIPSMRequestManager.lambda$registerPlatform$0(DefaultIPSMRequestManager.java:210) - Received upstream message of type [http://inter-iot.eu/message/Response, http://inter-iot.eu/message/Observation] from the bridge (from queue bridge_ipsmrm_http_DS6-PTL-dev-sensinact-1) with ID msg8a1c5f34-22f3-4941-a962-e57901e46c5c and conversationId conv2f4afb86-6318-4135-8dea-de41ef9f1ca4 from platform http://DS6-PTL-dev-sensinact-1.
+[36mintermw_1     |[0m 15:01:12.524 [SimpleAsyncTaskExecutor-1] DEBUG eu.interiot.intermw.comm.ipsm.DefaultIPSMRequestManager.handleFromBridge(DefaultIPSMRequestManager.java:402) - Message will be forwarded to IPSM (if needed).
+[36mintermw_1     |[0m 15:01:12.525 [SimpleAsyncTaskExecutor-1] DEBUG eu.interiot.intermw.comm.ipsm.DefaultIPSMRequestManager.publishToIPSMUpstream(DefaultIPSMRequestManager.java:366) - Publishing message from platform http://DS6-PTL-dev-sensinact-1 to IPSM using kafka broker on topic mw-ipsm-upstream-http_DS6-PTL-dev-sensinact-1...
+[36mintermw_1     |[0m 15:01:13.147 [Thread-20] DEBUG eu.interiot.intermw.comm.ipsm.DefaultIPSMRequestManager.lambda$setupIPSMPublishersSubscribers$2(DefaultIPSMRequestManager.java:281) - Received upstream message from IPSM routing table topic ipsm-mw-upstream-http_DS6-PTL-dev-sensinact-1 with ID msg8a1c5f34-22f3-4941-a962-e57901e46c5c and conversationId conv2f4afb86-6318-4135-8dea-de41ef9f1ca4 coming from platform http://DS6-PTL-dev-sensinact-1.
+[36mintermw_1     |[0m 15:01:13.149 [Thread-20] DEBUG eu.interiot.intermw.comm.broker.rabbitmq.PublisherImpl.publish(PublisherImpl.java:90) - Publishing message msg8a1c5f34-22f3-4941-a962-e57901e46c5c of type [http://inter-iot.eu/message/Response, http://inter-iot.eu/message/Observation] to exchange ipsmrm_prm with routing key #...
+[36mintermw_1     |[0m 15:01:13.176 [SimpleAsyncTaskExecutor-1] DEBUG eu.interiot.intermw.comm.prm.DefaultPlatformRequestManager.lambda$setUpListeners$0(DefaultPlatformRequestManager.java:84) - Received message from the queue ipsmrm_prm of type [http://inter-iot.eu/message/Response, http://inter-iot.eu/message/Observation] with id msg8a1c5f34-22f3-4941-a962-e57901e46c5c and conversationId conv2f4afb86-6318-4135-8dea-de41ef9f1ca4.
+[36mintermw_1     |[0m 15:01:13.177 [SimpleAsyncTaskExecutor-1] DEBUG eu.interiot.intermw.comm.prm.DefaultPlatformRequestManager.handleFromIPSMRM(DefaultPlatformRequestManager.java:292) - Processing message coming from IPSMRM going upstream with ID msg8a1c5f34-22f3-4941-a962-e57901e46c5c and conversationId conv2f4afb86-6318-4135-8dea-de41ef9f1ca4 of type [http://inter-iot.eu/message/Response, http://inter-iot.eu/message/Observation]...
+[36mintermw_1     |[0m 15:01:13.179 [SimpleAsyncTaskExecutor-1] DEBUG eu.interiot.intermw.comm.broker.rabbitmq.PublisherImpl.publish(PublisherImpl.java:90) - Publishing message msg8a1c5f34-22f3-4941-a962-e57901e46c5c of type [http://inter-iot.eu/message/Response, http://inter-iot.eu/message/Observation] to exchange prm_arm with routing key #...
+[36mintermw_1     |[0m 15:01:13.207 [SimpleAsyncTaskExecutor-1] DEBUG eu.interiot.intermw.comm.arm.DefaultApiRequestManager.lambda$setUpListeners$0(DefaultApiRequestManager.java:81) - Received upstream message from the PRM of type [http://inter-iot.eu/message/Response, http://inter-iot.eu/message/Observation] with ID msg8a1c5f34-22f3-4941-a962-e57901e46c5c and conversationId conv2f4afb86-6318-4135-8dea-de41ef9f1ca4.
+[36mintermw_1     |[0m 15:01:13.208 [SimpleAsyncTaskExecutor-1] DEBUG eu.interiot.intermw.comm.arm.DefaultApiRequestManager.handleFromPRM(DefaultApiRequestManager.java:96) - Processing message msg8a1c5f34-22f3-4941-a962-e57901e46c5c...
+[36mintermw_1     |[0m 15:01:13.209 [SimpleAsyncTaskExecutor-1] DEBUG eu.interiot.intermw.comm.arm.DefaultApiRequestManager.handleFromPRM(DefaultApiRequestManager.java:111) - Message will be routed to the client toto.
+[36mintermw_1     |[0m 15:01:13.220 [SimpleAsyncTaskExecutor-1] DEBUG eu.interiot.intermw.comm.broker.rabbitmq.QueueImpl.sendMessage(QueueImpl.java:121) - Message has been published to an exchange with routing key client-toto.
+[36mintermw_1     |[0m 15:01:13.221 [SimpleAsyncTaskExecutor-1] DEBUG eu.interiot.intermw.comm.arm.DefaultApiRequestManager.handleFromPRM(DefaultApiRequestManager.java:120) - Callback has been executed successfully.
