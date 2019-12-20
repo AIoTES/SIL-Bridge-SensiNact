@@ -1,3 +1,21 @@
+/**
+ * /**
+ * INTER-IoT. Interoperability of IoT Platforms.
+ * INTER-IoT is a R&D project which has received funding from the European
+ * Union's Horizon 2020 research and innovation programme under grant
+ * agreement No 687283.
+ * <p>
+ * Copyright (C) 2017-2018, by : - Università degli Studi della Calabria
+ * <p>
+ * <p>
+ * For more information, contact: - @author
+ * <a href="mailto:g.caliciuri@dimes.unical.it">Giuseppe Caliciuri</a>
+ * - Project coordinator:  <a href="mailto:coordinator@inter-iot.eu"></a>
+ * <p>
+ * <p>
+ * This code is licensed under the EPL license, available at the root
+ * application directory.
+ */
 package eu.interiot.translators.syntax.sensinact;
 
 import eu.interiot.intermw.bridge.sensinact.fetcher.SensinactModelRecoverListener;
@@ -47,14 +65,16 @@ public class SensinactInterfaceV2ActivageTest {
         try {
             sensinact.setListener(new SensinactModelRecoverListener() {
                 @Override
-                public void notify(String provider, String service, String resource, String value) {
+                public void notify(String provider, String service, String resource, String type, String value, String timestamp) {
                     System.out.println(
                             String.format(
-                                    " ... received notification from %s/%s/%s: %s",
+                                    " ... received notification from %s/%s/%s: type=%s, value=%s, timestamp=%s",
                                     provider,
                                     service,
                                     resource,
-                                    value
+                                    type,
+                                    value,
+                                    timestamp
                             )
                     );
                     counter.getAndAdd(1);
@@ -103,7 +123,7 @@ public class SensinactInterfaceV2ActivageTest {
     @Test
     public void resourceCreation() {
         System.out.println("\nTesting create resource...");
-        doCreateResource("temporaryProvider", "temporaryService", "temporaryResource", "OK");
+        doCreateResource("temporaryProvider", "temporaryService", "temporaryResource", "temporaryType", "OK");
         Boolean devicePresent = sensinact.listDevices().stream().filter(
             sNAResource -> sNAResource.getProvider().equals("temporaryProvider")
         ).toArray().length > 0;
@@ -120,16 +140,16 @@ public class SensinactInterfaceV2ActivageTest {
     }
     
     private void doCreateProvider(final String provider) {
-        doCreateResource("temporaryProvider", null, null, null);
+        doCreateResource("temporaryProvider", null, null, null, null);
     }
     
     private void doCreateService(final String provider, final String service) {
-        doCreateResource("temporaryProvider","temporaryService", null, null);
+        doCreateResource("temporaryProvider","temporaryService", null, null, null);
     }
 
-    private void doCreateResource(final String provider, final String service, final String resource, final String value) {
+    private void doCreateResource(final String provider, final String service, final String resource, final String type, final String value) {
         try {
-            sensinact.createDevice(provider, service, resource, value);
+            sensinact.createDevice(provider, service, resource, type, value);
             System.out.println(
                     String.format(
                             "... created %s/%s/%s resource",
@@ -158,7 +178,7 @@ public class SensinactInterfaceV2ActivageTest {
     public void resourceRemoval() {
         System.out.println("\nTesting remove resource...");
         try {
-            doCreateResource("temporaryProvider", "temporaryService", "temporaryResource", "OK");
+            doCreateResource("temporaryProvider", "temporaryService", "temporaryResource", "temporaryType", "OK");
             sensinact.removeDevice("temporaryProvider", "temporaryService", "temporaryResource");
             //sensinact.removeDevice("temporaryProvider","temporaryService","temporaryResource");
             System.out.println(

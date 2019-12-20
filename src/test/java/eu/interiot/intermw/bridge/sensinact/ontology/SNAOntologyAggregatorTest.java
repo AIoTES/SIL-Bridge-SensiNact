@@ -1,3 +1,21 @@
+/**
+ * /**
+ * INTER-IoT. Interoperability of IoT Platforms.
+ * INTER-IoT is a R&D project which has received funding from the European
+ * Union's Horizon 2020 research and innovation programme under grant
+ * agreement No 687283.
+ * <p>
+ * Copyright (C) 2017-2018, by : - Università degli Studi della Calabria
+ * <p>
+ * <p>
+ * For more information, contact: - @author
+ * <a href="mailto:g.caliciuri@dimes.unical.it">Giuseppe Caliciuri</a>
+ * - Project coordinator:  <a href="mailto:coordinator@inter-iot.eu"></a>
+ * <p>
+ * <p>
+ * This code is licensed under the EPL license, available at the root
+ * application directory.
+ */
 package eu.interiot.intermw.bridge.sensinact.ontology;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -8,9 +26,6 @@ import eu.interiot.message.MessagePayload;
 import eu.interiot.message.managers.URI.URIManagerMessageMetadata;
 import eu.interiot.message.metadata.PlatformMessageMetadata;
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import junit.framework.Assert;
 import org.apache.jena.ontology.OntModel;
 import org.apache.jena.rdf.model.Model;
 import org.junit.After;
@@ -47,12 +62,12 @@ public class SNAOntologyAggregatorTest {
 
     @Test
     public void testTransformOntology() {
-        testTransformOntology("provider", "service", "resource", "value");
+        testTransformOntology("provider", "service", "resource", "type", "value", "timestamp");
     }
 
-    private void testTransformOntology(final String provider, final String service, final String resource, final String value) {
+    private void testTransformOntology(final String provider, final String service, final String resource, final String type, final String value, final String timestamp) {
         SNAOntologyAggregator aggregator = new SNAOntologyAggregator();
-        OntModel model = aggregator.transformOntology(provider, service, resource, value);
+        OntModel model = aggregator.transformOntology(provider, service, resource, type, value ,timestamp);
         assertNotNull("unexpected null model", model);
         try {
             String observationMessage = createObservationMessage(model);

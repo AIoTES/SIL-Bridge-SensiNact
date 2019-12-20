@@ -1,8 +1,20 @@
-
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * /**
+ * INTER-IoT. Interoperability of IoT Platforms.
+ * INTER-IoT is a R&D project which has received funding from the European
+ * Union's Horizon 2020 research and innovation programme under grant
+ * agreement No 687283.
+ * <p>
+ * Copyright (C) 2017-2018, by : - Università degli Studi della Calabria
+ * <p>
+ * <p>
+ * For more information, contact: - @author
+ * <a href="mailto:g.caliciuri@dimes.unical.it">Giuseppe Caliciuri</a>
+ * - Project coordinator:  <a href="mailto:coordinator@inter-iot.eu"></a>
+ * <p>
+ * <p>
+ * This code is licensed under the EPL license, available at the root
+ * application directory.
  */
 package eu.interiot.translators.syntax.sensinact;
 
@@ -11,7 +23,6 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import eu.interiot.intermw.bridge.sensinact.http.SensinactFactory;
 import eu.interiot.intermw.bridge.sensinact.http.model.SensinactConfig;
 import eu.interiot.intermw.bridge.sensinact.ontology.SNAOntologyAggregator;
-import eu.interiot.intermw.bridge.sensinact.wrapper.SNAResource;
 import eu.interiot.intermw.bridge.sensinact.wrapper.SensinactAPI;
 import eu.interiot.message.ID.EntityID;
 import eu.interiot.message.Message;
@@ -23,10 +34,7 @@ import static eu.interiot.translators.syntax.sensinact.SensinactTranslator.snA;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
 import org.apache.jena.riot.Lang;
@@ -38,7 +46,6 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
-import org.junit.Ignore;
 
 /**
  *
@@ -104,19 +111,21 @@ public class SensinactTranslatorTest {
 
             SensinactAPI sensinact = SensinactFactory.createInstance(sc);
 
-            sensinact.setListener((provider, service, resource, value) -> {
+            sensinact.setListener((provider, service, resource, type, value ,timestamp) -> {
                 System.out.println(
                         String.format(
-                                " ... received notification from %s/%s/%s: %s",
+                                " ... received notification from %s/%s/%s: type=%s, value=%S, timestamp=%s",
                                 provider,
                                 service,
                                 resource,
-                                value
+                                type,
+                                value,
+                                timestamp
                         )
                 );
                 try {
                     System.out.print("\nobservation message= ");
-                    final Model model = aggregator.createModel(provider, service, resource, value);
+                    final Model model = aggregator.createModel(provider, service, resource, type, value ,timestamp);
                     String observationMessage = createObservationMessage(model);
                     System.out.println(observationMessage);
                 } catch (Exception ex) {

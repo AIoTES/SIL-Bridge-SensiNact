@@ -1,3 +1,21 @@
+/**
+ * /**
+ * INTER-IoT. Interoperability of IoT Platforms.
+ * INTER-IoT is a R&D project which has received funding from the European
+ * Union's Horizon 2020 research and innovation programme under grant
+ * agreement No 687283.
+ * <p>
+ * Copyright (C) 2017-2018, by : - Università degli Studi della Calabria
+ * <p>
+ * <p>
+ * For more information, contact: - @author
+ * <a href="mailto:g.caliciuri@dimes.unical.it">Giuseppe Caliciuri</a>
+ * - Project coordinator:  <a href="mailto:coordinator@inter-iot.eu"></a>
+ * <p>
+ * <p>
+ * This code is licensed under the EPL license, available at the root
+ * application directory.
+ */
 package eu.interiot.intermw.bridge.sensinact.http.model;
 
 import com.google.gson.JsonObject;
@@ -9,49 +27,59 @@ public class ProviderJSONPayload {
         Hello;
     }
 
-    public static ProviderJSONPayloadBuilder builder(){
+    public static ProviderJSONPayloadBuilder builder() {
         return new ProviderJSONPayload.ProviderJSONPayloadBuilder();
     }
 
     public static class ProviderJSONPayloadBuilder {
 
-        private JsonObject jsonObject=new JsonObject();
+        private JsonObject jsonObject = new JsonObject();
 
-        private ProviderJSONPayloadBuilder(){
+        private ProviderJSONPayloadBuilder() {
 
         }
 
-        public ProviderJSONPayloadBuilder provider(String provider){
-            jsonObject.addProperty("provider",provider);
+        public ProviderJSONPayloadBuilder provider(String provider) {
+            jsonObject.addProperty("provider", provider);
             return this;
         }
 
-        public ProviderJSONPayloadBuilder service(String service){
-            jsonObject.addProperty("service",service);
+        public ProviderJSONPayloadBuilder service(String service) {
+            jsonObject.addProperty("service", service);
             return this;
         }
 
-        public ProviderJSONPayloadBuilder resource(String resource){
-            jsonObject.addProperty("resource",resource);
+        public ProviderJSONPayloadBuilder resource(String resource) {
+            jsonObject.addProperty("resource", resource);
             return this;
         }
 
-        public ProviderJSONPayloadBuilder value(String value){
-            jsonObject.addProperty("value",value);
+        public ProviderJSONPayloadBuilder type(String type) {
+            jsonObject.addProperty("type", type);
             return this;
         }
 
-        public ProviderJSONPayloadBuilder type(final TYPE value){
+        public ProviderJSONPayloadBuilder value(String value) {
+            jsonObject.addProperty("value", value);
+            return this;
+        }
 
-            switch(value){
+        public ProviderJSONPayloadBuilder timestamp(String timestamp) {
+            jsonObject.addProperty("timestamp", timestamp);
+            return this;
+        }
+
+        public ProviderJSONPayloadBuilder type(final TYPE value) {
+
+            switch (value) {
                 case Goodbye:
-                    jsonObject.addProperty("type","remove");
+                    jsonObject.addProperty("type", "remove");
             }
 
             return this;
         }
 
-        public JsonObject build(){
+        public JsonObject build() {
             return jsonObject;
         }
 

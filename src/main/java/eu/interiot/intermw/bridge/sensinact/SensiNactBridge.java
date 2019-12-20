@@ -2,15 +2,14 @@
  * /**
  * INTER-IoT. Interoperability of IoT Platforms.
  * INTER-IoT is a R&D project which has received funding from the European
- * Union�s Horizon 2020 research and innovation programme under grant
+ * Union's Horizon 2020 research and innovation programme under grant
  * agreement No 687283.
  * <p>
- * Copyright (C) 2017-2018, by :
- * - 	Università degli Studi della Calabria
+ * Copyright (C) 2017-2018, by : - Università degli Studi della Calabria
  * <p>
  * <p>
- * For more information, contact:
- * - @author <a href="mailto:g.caliciuri@dimes.unical.it">Giuseppe Caliciuri</a>
+ * For more information, contact: - @author
+ * <a href="mailto:g.caliciuri@dimes.unical.it">Giuseppe Caliciuri</a>
  * - Project coordinator:  <a href="mailto:coordinator@inter-iot.eu"></a>
  * <p>
  * <p>
@@ -59,31 +58,32 @@ import java.util.concurrent.ScheduledExecutorService;
 
 @eu.interiot.intermw.bridge.annotations.Bridge(platformType = "http://sensinact.ddns.net/sensinact")
 public class SensiNactBridge extends AbstractBridge {
+
     private final Logger log = LoggerFactory.getLogger(SensiNactBridge.class);
-    private final SNAOntologyAggregator ontologyAggregator=new SNAOntologyAggregator();
+    private final SNAOntologyAggregator ontologyAggregator = new SNAOntologyAggregator();
     private SensinactAPI sensinact;
-    private final ConversationMapper conversation=new ConversationMapper();
+    private final ConversationMapper conversation = new ConversationMapper();
 
     public SensiNactBridge(BridgeConfiguration configuration, Platform platform) throws MiddlewareException {
         super(configuration, platform);
         log.debug("SensiNactBridge is initializing...");
         Properties properties = configuration.getProperties();
         try {
-            String sensinactHost = properties.getProperty("sensinact.host","127.0.0.1");
-            String sensinactWebSocketPort = properties.getProperty("sensinact.websocket.port","8092");
-            String sensinactHttpPort = properties.getProperty("sensinact.http.port","80");
-            String sensinactVersion = properties.getProperty("sensinact.version","v1");
-            String sensinactProtocol = properties.getProperty("sensinact.protocol","http");
-            String sensinactMaxDeviceNumber = properties.getProperty("sensinact.provider.maxNumber","100");
+            String sensinactHost = properties.getProperty("sensinact.host", "127.0.0.1");
+            String sensinactWebSocketPort = properties.getProperty("sensinact.websocket.port", "8092");
+            String sensinactHttpPort = properties.getProperty("sensinact.http.port", "80");
+            String sensinactVersion = properties.getProperty("sensinact.version", "v1");
+            String sensinactProtocol = properties.getProperty("sensinact.protocol", "http");
+            String sensinactMaxDeviceNumber = properties.getProperty("sensinact.provider.maxNumber", "100");
 
-            SensinactConfig config=new SensinactConfig();
+            SensinactConfig config = new SensinactConfig();
             config.setHost(sensinactHost);
             config.setProtocol(sensinactProtocol);
             config.setVersion(sensinactVersion);
             config.setHttpPort(sensinactHttpPort);
             config.setWebSocketPort(sensinactWebSocketPort);
             config.setMaxDeviceNumber(sensinactMaxDeviceNumber);
-            sensinact= SensinactFactory.createInstance(config);
+            sensinact = SensinactFactory.createInstance(config);
             log.info("SensiNactBridge has been initialized successfully.");
 
         } catch (Exception e) {
@@ -103,20 +103,21 @@ public class SensiNactBridge extends AbstractBridge {
 
         sensinact.setListener(new SensinactModelRecoverListener() {
             @Override
-            public void notify(String provider, String service, String resource, String value) {
+            public void notify(String provider, String service, String resource, String type, String value, String timestamp) {
 
                 try {
-
-                    log.info(String.format("%s/%s/%s/%s",provider,service,resource,value));
+                    log.info("notified of an update of {]/{}/{} type={}, value={} timestamp={}",
+                            provider, service, resource,
+                            type, value, timestamp
+                    );
 
                     //No reason for keeping track of the whole ontology
                     //ontologyAggregator.updateOntologyWith(provider,service,resource,value);
+                    final String deviceId = String.format("%s/%s/%s", provider, service, resource);
 
-                    final String deviceId=String.format("%s/%s/%s",provider,service,resource);
+                    for (String conversationId : conversation.subscriptionsGet(deviceId)) {
 
-                    for(String conversationId:conversation.subscriptionsGet(deviceId)){
-
-                        log.info("Sending notification to conversation id {} on device {}",conversationId,deviceId);
+                        log.info("Sending notification to conversation id {} on device {}", conversationId, deviceId);
 
                         PlatformMessageMetadata metadata = new MessageMetadata().asPlatformMessageMetadata();
                         metadata.initializeMetadata();
@@ -126,23 +127,29 @@ public class SensiNactBridge extends AbstractBridge {
                         metadata.setSenderPlatformId(new EntityID(platform.getPlatformId()));
                         metadata.setConversationId(conversationId);
 
-                        MessagePayload messagePayload = new MessagePayload(ontologyAggregator.transformOntology(provider,service,resource,value));
+                        MessagePayload messagePayload = 
+                                new MessagePayload(
+                                        ontologyAggregator.transformOntology(
+                                                provider, service, resource, 
+                                                type, value, timestamp
+                                        )
+                                );
 
                         Message observationMessage = new Message();
                         observationMessage.setMetadata(metadata);
                         observationMessage.setPayload(messagePayload);
 
                         try {
-                            log.info("Sending following observation message to intermw {}",observationMessage.serializeToJSONLD());
+                            log.info("Sending following observation message to intermw {}", observationMessage.serializeToJSONLD());
                             publisher.publish(observationMessage);
                         } catch (BrokerException e) {
-                            log.error("Failed to publish message from the conversation id:"+conversationId);
+                            log.error("Failed to publish message from the conversation id:" + conversationId);
                         }
 
                     }
 
-                }catch (Exception e){
-                    log.error("Failed to register platform",e);
+                } catch (Exception e) {
+                    log.error("Failed to register platform", e);
                 }
 
             }
@@ -171,14 +178,13 @@ public class SensiNactBridge extends AbstractBridge {
             sensinact.disconnect();
 
         } catch (Exception e) {
-            log.debug("Failed to register platform {}",platform.getPlatformId(), e);
+            log.debug("Failed to register platform {}", platform.getPlatformId(), e);
             responseMessage.getMetadata().addMessageType(URIManagerMessageMetadata.MessageTypesEnum.ERROR);
             responseMessage.getMetadata().asErrorMessageMetadata().setExceptionStackTrace(e);
             responseMessage.getMetadata().setStatus("NOK");
         } finally {
             return responseMessage;
         }
-
 
     }
 
@@ -230,12 +236,12 @@ public class SensiNactBridge extends AbstractBridge {
         });
     }
 
-    private List<String> convertIoTDeviceID(List<String> deviceIds){
+    private List<String> convertIoTDeviceID(List<String> deviceIds) {
 
-        List<String> neoDeviceIds=new ArrayList<>();
+        List<String> neoDeviceIds = new ArrayList<>();
 
-        for(String deviceId:deviceIds){
-            neoDeviceIds.add(deviceId.replaceFirst("http://sensinact.ddns.net/",""));
+        for (String deviceId : deviceIds) {
+            neoDeviceIds.add(deviceId.replaceFirst("http://sensinact.ddns.net/", ""));
         }
 
         return neoDeviceIds;
@@ -245,9 +251,8 @@ public class SensiNactBridge extends AbstractBridge {
     @Override
     public Message subscribe(Message message) throws Exception {
         /**
-         * @TODO map device and conversation
-         * use conversation id and map with the devices
-         * message.getMetadata().getConversationId()
+         * @TODO map device and conversation use conversation id and map with
+         * the devices message.getMetadata().getConversationId()
          * message.getPayloadAsGOIoTPPayload().asIoTDevicePayload().getIoTDevices()
          */
 
@@ -287,12 +292,12 @@ public class SensiNactBridge extends AbstractBridge {
         UnsubscribeReq req = new UnsubscribeReq(message);
         String conversationId = req.getConversationId();
 
-        Message responseMessage=createResponseMessage(message);
+        Message responseMessage = createResponseMessage(message);
         try {
             conversation.removeConversation(conversationId);
             responseMessage.getMetadata().setStatus("OK");
-        }catch(Exception e){
-            log.error("Failed to unsubscribe device list",e);
+        } catch (Exception e) {
+            log.error("Failed to unsubscribe device list", e);
             responseMessage.getMetadata().setStatus("KO");
         }
 
@@ -308,20 +313,22 @@ public class SensiNactBridge extends AbstractBridge {
     @Override
     public Message listDevices(Message message) throws Exception {
 
-        Message responseMessage=createResponseMessage(message);
+        Message responseMessage = createResponseMessage(message);
         try {
 
             responseMessage.getMetadata().setStatus("OK");
 
-            SNAOntologyAggregator soa=new SNAOntologyAggregator();
+            SNAOntologyAggregator soa = new SNAOntologyAggregator();
 
-            sensinact.listDevices().forEach((snaResource -> {soa.updateOntologyWith(snaResource);}));
+            sensinact.listDevices().forEach((snaResource -> {
+                soa.updateOntologyWith(snaResource);
+            }));
 
-            MessagePayload messagePayload=new MessagePayload(soa.getOntModel());
+            MessagePayload messagePayload = new MessagePayload(soa.getOntModel());
             responseMessage.setPayload(messagePayload);
 
-        }catch(Exception e){
-            log.error("Failed to fetch device list",e);
+        } catch (Exception e) {
+            log.error("Failed to fetch device list", e);
             responseMessage.getMetadata().setStatus("KO");
         }
 
@@ -331,16 +338,29 @@ public class SensiNactBridge extends AbstractBridge {
     private void snaCreateUpdateDevice(SNAResource snaResource) {
 
         try {
-            log.info("Creating/Updating Sensinact device {}/{}/{}/{}",snaResource.getProvider(),snaResource.getService(),snaResource.getResource(),snaResource.getValue());
+            log.info("Creating/Updating Sensinact device {}/{}/{}/{}...", 
+                    snaResource.getProvider(), 
+                    snaResource.getService(), 
+                    snaResource.getResource(), 
+                    snaResource.getValue());
             sensinact.createDevice(
                     snaResource.getProvider(),
                     snaResource.getService(),
                     snaResource.getResource(),
+                    snaResource.getType(),
                     snaResource.getValue()
             );
-            log.info("Sensinact device {}/{}/{}/{} created/updated",snaResource.getProvider(),snaResource.getService(),snaResource.getResource(),snaResource.getValue());
+            log.info("Sensinact device {}/{}/{}/{} created/updated", 
+                    snaResource.getProvider(), 
+                    snaResource.getService(), 
+                    snaResource.getResource(), 
+                    snaResource.getValue());
         } catch (Exception e) {
-            log.error("Failed to create/update Sensinact device {}/{}/{}/{}",snaResource.getProvider(),snaResource.getService(),snaResource.getResource(),snaResource.getValue());
+            log.error("Failed to create/update Sensinact device {}/{}/{}/{}", 
+                    snaResource.getProvider(), 
+                    snaResource.getService(), 
+                    snaResource.getResource(), 
+                    snaResource.getValue());
         }
 
     }
@@ -348,12 +368,12 @@ public class SensiNactBridge extends AbstractBridge {
     @Override
     public Message platformCreateDevices(Message message) throws Exception {
 
-        Message responseMessage=createResponseMessage(message);
+        Message responseMessage = createResponseMessage(message);
         responseMessage.getMetadata().setStatus("OK");
 
-        SNAOntologyAggregator localAggregator=new SNAOntologyAggregator(message.getPayload().getJenaModel());
+        SNAOntologyAggregator localAggregator = new SNAOntologyAggregator(message.getPayload().getJenaModel());
 
-        localAggregator.getResourceList().forEach((snaResource)-> {
+        localAggregator.getResourceList().forEach((snaResource) -> {
             snaCreateUpdateDevice(snaResource);
         });
 
@@ -363,12 +383,12 @@ public class SensiNactBridge extends AbstractBridge {
     @Override
     public Message platformUpdateDevices(Message message) throws Exception {
 
-        Message responseMessage=createResponseMessage(message);
+        Message responseMessage = createResponseMessage(message);
         responseMessage.getMetadata().setStatus("OK");
 
-        SNAOntologyAggregator localAggregator=new SNAOntologyAggregator(message.getPayload().getJenaModel());
+        SNAOntologyAggregator localAggregator = new SNAOntologyAggregator(message.getPayload().getJenaModel());
 
-        localAggregator.getResourceList().forEach((snaResource)-> {
+        localAggregator.getResourceList().forEach((snaResource) -> {
             snaCreateUpdateDevice(snaResource);
         });
         return responseMessage;
@@ -377,18 +397,18 @@ public class SensiNactBridge extends AbstractBridge {
     @Override
     public Message platformDeleteDevices(Message message) throws Exception {
 
-        Message responseMessage=createResponseMessage(message);
+        Message responseMessage = createResponseMessage(message);
         responseMessage.getMetadata().setStatus("OK");
 
-        SNAOntologyAggregator localAggregator=new SNAOntologyAggregator(message.getPayload().getJenaModel());
+        SNAOntologyAggregator localAggregator = new SNAOntologyAggregator(message.getPayload().getJenaModel());
 
-        localAggregator.getResourceList().forEach((snaResource)-> {
+        localAggregator.getResourceList().forEach((snaResource) -> {
             try {
-                log.info("Removing Sensinact device {}/{}/{}/{}",snaResource.getProvider(),snaResource.getService(),snaResource.getResource(),snaResource.getValue());
-                sensinact.removeDevice(snaResource.getProvider(),snaResource.getService(),snaResource.getResource());
-                log.info("Sensinact device {}/{}/{}/{} removed",snaResource.getProvider(),snaResource.getService(),snaResource.getResource(),snaResource.getValue());
+                log.info("Removing Sensinact device {}/{}/{}/{}", snaResource.getProvider(), snaResource.getService(), snaResource.getResource(), snaResource.getValue());
+                sensinact.removeDevice(snaResource.getProvider(), snaResource.getService(), snaResource.getResource());
+                log.info("Sensinact device {}/{}/{}/{} removed", snaResource.getProvider(), snaResource.getService(), snaResource.getResource(), snaResource.getValue());
             } catch (Exception e) {
-                log.error("Failed to remove Sensinact device {}/{}/{}/{}",snaResource.getProvider(),snaResource.getService(),snaResource.getResource(),snaResource.getValue());
+                log.error("Failed to remove Sensinact device {}/{}/{}/{}", snaResource.getProvider(), snaResource.getService(), snaResource.getResource(), snaResource.getValue());
             }
         });
         return responseMessage;
@@ -404,18 +424,18 @@ public class SensiNactBridge extends AbstractBridge {
     @Override
     public Message actuate(Message message) throws Exception {
 
-        Message responseMessage=createResponseMessage(message);
+        Message responseMessage = createResponseMessage(message);
         responseMessage.getMetadata().setStatus("OK");
 
-        SNAOntologyAggregator localAggregator=new SNAOntologyAggregator(message.getPayload().getJenaModel());
+        SNAOntologyAggregator localAggregator = new SNAOntologyAggregator(message.getPayload().getJenaModel());
 
-        localAggregator.getResourceList().forEach((snaResource)-> {
+        localAggregator.getResourceList().forEach((snaResource) -> {
             try {
-                log.info("ACT Sensinact device {}/{}/{}/{}..",snaResource.getProvider(),snaResource.getService(),snaResource.getResource(),snaResource.getValue());
-                sensinact.act(snaResource.getProvider(),snaResource.getService(),snaResource.getResource());
-                log.info("Sensinact device {}/{}/{}/{} ACT sent",snaResource.getProvider(),snaResource.getService(),snaResource.getResource(),snaResource.getValue());
+                log.info("ACT Sensinact device {}/{}/{}/{}..", snaResource.getProvider(), snaResource.getService(), snaResource.getResource(), snaResource.getValue());
+                sensinact.act(snaResource.getProvider(), snaResource.getService(), snaResource.getResource());
+                log.info("Sensinact device {}/{}/{}/{} ACT sent", snaResource.getProvider(), snaResource.getService(), snaResource.getResource(), snaResource.getValue());
             } catch (Exception e) {
-                log.error("Failed to send ACT command to Sensinact device {}/{}/{}/{}",snaResource.getProvider(),snaResource.getService(),snaResource.getResource(),snaResource.getValue());
+                log.error("Failed to send ACT command to Sensinact device {}/{}/{}/{}", snaResource.getProvider(), snaResource.getService(), snaResource.getResource(), snaResource.getValue());
             }
         });
 
@@ -425,17 +445,17 @@ public class SensiNactBridge extends AbstractBridge {
 
     @Override
     public Message error(Message message) throws Exception {
-        Message responseMessage=createResponseMessage(message);
+        Message responseMessage = createResponseMessage(message);
         responseMessage.getMetadata().setStatus("OK");
-        log.warn("Error message received from the framework {}",message.getPayload().toString());
+        log.warn("Error message received from the framework {}", message.getPayload().toString());
         return responseMessage;
     }
 
     @Override
     public Message unrecognized(Message message) throws Exception {
-        Message responseMessage=createResponseMessage(message);
+        Message responseMessage = createResponseMessage(message);
         responseMessage.getMetadata().setStatus("OK");
-        log.warn("Unrecognize signal received from the framework {}",message.getPayload().toString());
+        log.warn("Unrecognize signal received from the framework {}", message.getPayload().toString());
         return responseMessage;
     }
 

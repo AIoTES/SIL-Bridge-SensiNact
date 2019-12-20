@@ -1,3 +1,21 @@
+/**
+ * /**
+ * INTER-IoT. Interoperability of IoT Platforms.
+ * INTER-IoT is a R&D project which has received funding from the European
+ * Union's Horizon 2020 research and innovation programme under grant
+ * agreement No 687283.
+ * <p>
+ * Copyright (C) 2017-2018, by : - Università degli Studi della Calabria
+ * <p>
+ * <p>
+ * For more information, contact: - @author
+ * <a href="mailto:g.caliciuri@dimes.unical.it">Giuseppe Caliciuri</a>
+ * - Project coordinator:  <a href="mailto:coordinator@inter-iot.eu"></a>
+ * <p>
+ * <p>
+ * This code is licensed under the EPL license, available at the root
+ * application directory.
+ */
 package eu.interiot.intermw.bridge.sensinact.ontology;
 
 import eu.interiot.intermw.bridge.sensinact.wrapper.SNAResource;
@@ -11,7 +29,6 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import org.apache.jena.rdf.model.Literal;
 import org.apache.jena.riot.Lang;
 import org.apache.jena.riot.RDFDataMgr;
 
@@ -71,29 +88,37 @@ public class SNAOntologyAggregator {
         return model.getDatatypeProperty("http://sensinact.com#" + property);
     }
 
-    public OntModel transformOntology(String provider, String service, String resource, String value) {
+    public OntModel transformOntology(String provider, String service, String resource, String type, String value, String timestamp) {
         OntModel isolatedModel = ModelFactory.createOntologyModel();
         InputStream is = this.getClass().getResourceAsStream(filepath);
         RDFDataMgr.read(isolatedModel, is, Lang.RDFXML);
-        updateOntologyWith(provider, service, resource, value, isolatedModel);
+        updateOntologyWith(provider, service, resource, type, value, timestamp, isolatedModel);
 
         return isolatedModel;
     }
 
-    public Model createModel(String provider, String service, String resource, String value) {
+    public Model createModel(String provider, String service, String resource, String type, String value, String timestamp) {
         OntModel isolatedModel = ModelFactory.createOntologyModel();
         InputStream is = this.getClass().getResourceAsStream(filepath);
         RDFDataMgr.read(isolatedModel, is, Lang.RDFXML);
-        updateOntologyWith(provider, service, resource, value, isolatedModel);
+        updateOntologyWith(provider, service, resource, type, value, timestamp, isolatedModel);
         return isolatedModel;
     }
 
-    public void updateOntologyWith(String provider, String service, String resource, String value) {
-        updateOntologyWith(provider, service, resource, value, getOntModel());
+    public void updateOntologyWith(String provider, String service, String resource, String type, String value, String timestamp) {
+        updateOntologyWith(provider, service, resource, type, value, timestamp, getOntModel());
     }
 
     public void updateOntologyWith(SNAResource snaResource) {
-        updateOntologyWith(snaResource.getProvider(), snaResource.getService(), snaResource.getResource(), snaResource.getValue(), getOntModel());
+        final long timestamp = System.currentTimeMillis();
+        updateOntologyWith(
+                snaResource.getProvider(), 
+                snaResource.getService(), 
+                snaResource.getResource(), 
+                snaResource.getType(), 
+                snaResource.getValue(),
+                String.valueOf(timestamp)
+        );
     }
 
     /**
@@ -107,7 +132,7 @@ public class SNAOntologyAggregator {
      * @param value the current data stored by the 'resource'
      * @param model the ontology model
      */
-    public void updateOntologyWith(String provider, String service, String resource, String value, OntModel model) {
+    public void updateOntologyWith(String provider, String service, String resource, String type, String value, String timestamp, OntModel model) {
 
         String URLIndividualProvider = String.format("%s", provider);
         String URLIndividualService = String.format("%s/%s", provider, service);
@@ -123,6 +148,8 @@ public class SNAOntologyAggregator {
         Individual individualResource=model.createIndividual(URLIndividualResource,getOntologyClass("Resource"));
          */
         DatatypeProperty nameDataProperty = getDataProperty("name");
+        DatatypeProperty typeDataProperty = getDataProperty("type");
+        DatatypeProperty timestampDataProperty = getDataProperty("timestamp");
         Property managesProperty = getObjectProperty("manages");
         individualProvider.addLiteral(nameDataProperty, provider);
         individualService.addLiteral(nameDataProperty, service);
@@ -130,7 +157,9 @@ public class SNAOntologyAggregator {
         if (value != null) {
             DatatypeProperty valueProperty = getDataProperty("value");
             individualResource.addLiteral(nameDataProperty, resource);
+            individualResource.addLiteral(typeDataProperty, type);
             individualResource.addLiteral(valueProperty, value);
+            individualResource.addLiteral(timestampDataProperty, timestamp);
         }
         model.add(individualProvider, managesProperty, individualService);
         model.add(individualService, managesProperty, individualResource);

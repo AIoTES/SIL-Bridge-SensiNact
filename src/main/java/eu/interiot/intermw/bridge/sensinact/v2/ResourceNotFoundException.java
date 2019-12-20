@@ -16,10 +16,15 @@
  * This code is licensed under the EPL license, available at the root
  * application directory.
  */
-package eu.interiot.intermw.bridge.sensinact.fetcher;
+package eu.interiot.intermw.bridge.sensinact.v2;
 
-public interface SensinactModelRecoverListener {
+/**
+ * Exception when resource is not found with given id for given provider and service.
+ * @author sb252289
+ */
+public class ResourceNotFoundException extends Exception {
 
-    void notify(String provider, String service, String resource, String type, String value, String timestamp);
-
+    public ResourceNotFoundException(String providerId, String serviceId, String resourceId) {
+        super(String.format("resource not found %s/%s/%s", providerId, serviceId, resourceId));
+    }
 }

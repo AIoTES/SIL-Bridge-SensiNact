@@ -1,3 +1,21 @@
+/**
+ * /**
+ * INTER-IoT. Interoperability of IoT Platforms.
+ * INTER-IoT is a R&D project which has received funding from the European
+ * Union's Horizon 2020 research and innovation programme under grant
+ * agreement No 687283.
+ * <p>
+ * Copyright (C) 2017-2018, by : - Università degli Studi della Calabria
+ * <p>
+ * <p>
+ * For more information, contact: - @author
+ * <a href="mailto:g.caliciuri@dimes.unical.it">Giuseppe Caliciuri</a>
+ * - Project coordinator:  <a href="mailto:coordinator@inter-iot.eu"></a>
+ * <p>
+ * <p>
+ * This code is licensed under the EPL license, available at the root
+ * application directory.
+ */
 package eu.interiot.translators.syntax.sensinact;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -47,15 +65,17 @@ public class SensinactOntologyTest {
 
         SensinactAPI sensinact = SensinactFactory.createInstance(sc);
 
-        sensinact.setListener((provider, service, resource, value) -> {
-            aggregator.updateOntologyWith(provider, service, resource, value);
+        sensinact.setListener((provider, service, resource, type, value, timestamp) -> {
+            aggregator.updateOntologyWith(provider, service, resource, type, value, timestamp);
             System.out.println(
                     String.format(
-                            " ... received notification from %s/%s/%s: %s",
+                            " ... received notification from %s/%s/%s: type=%s, value=%s, timestamp=%s",
                             provider,
                             service,
                             resource,
-                            value
+                            type,
+                            value, 
+                            timestamp
                     )
             );
             counter.getAndAdd(1);
@@ -98,10 +118,10 @@ public class SensinactOntologyTest {
     @Test
     public void aggregatorResourceCountTest() throws IOException {
 
-        aggregator.updateOntologyWith("p1", "s1fromp1", "r1froms1fromp1", "value1");
-        aggregator.updateOntologyWith("p1", "s2fromp1", "r1froms2fromp1", "value2");
-        aggregator.updateOntologyWith("p1", "s2fromp1", "r2froms2fromp1", "value3");
-        aggregator.updateOntologyWith("p2", "s2", "r2", "value4");
+        aggregator.updateOntologyWith("p1", "s1fromp1", "r1froms1fromp1", "type1", "value1", "timestamp1");
+        aggregator.updateOntologyWith("p1", "s2fromp1", "r1froms2fromp1", "type2", "value2", "timestamp2");
+        aggregator.updateOntologyWith("p1", "s2fromp1", "r2froms2fromp1", "type3", "value3", "timestamp3");
+        aggregator.updateOntologyWith("p2", "s2", "r2", "type4", "value4", "timestamp4");
         Assert.assertTrue(aggregator.getResourceList().size() == 4);
         Assert.assertTrue(aggregator.getResourceList().stream().filter((resource) -> resource.getProvider().equals("p1") && resource.getService().equals("s2fromp1") && resource.getResource().contains("froms2fromp1")).toArray().length == 2);
         Assert.assertTrue(aggregator.getResourceList().stream().filter((resource) -> resource.getProvider().equals("p1")).toArray().length == 3);

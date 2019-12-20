@@ -1,15 +1,30 @@
+/**
+ * /**
+ * INTER-IoT. Interoperability of IoT Platforms.
+ * INTER-IoT is a R&D project which has received funding from the European
+ * Union's Horizon 2020 research and innovation programme under grant
+ * agreement No 687283.
+ * <p>
+ * Copyright (C) 2017-2018, by : - Università degli Studi della Calabria
+ * <p>
+ * <p>
+ * For more information, contact: - @author
+ * <a href="mailto:g.caliciuri@dimes.unical.it">Giuseppe Caliciuri</a>
+ * - Project coordinator:  <a href="mailto:coordinator@inter-iot.eu"></a>
+ * <p>
+ * <p>
+ * This code is licensed under the EPL license, available at the root
+ * application directory.
+ */
 package eu.interiot.translators.syntax.sensinact;
 
 import eu.interiot.intermw.bridge.sensinact.fetcher.SensinactModelRecoverListener;
 import eu.interiot.intermw.bridge.sensinact.http.SensinactFactory;
 import eu.interiot.intermw.bridge.sensinact.http.model.SensinactConfig;
-import eu.interiot.intermw.bridge.sensinact.http.model.exception.InvalidConfigurationValueException;
-import eu.interiot.intermw.bridge.sensinact.v1.SensinactCommunicationBridgeV1;
 import eu.interiot.intermw.bridge.sensinact.wrapper.SensinactAPI;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.util.concurrent.atomic.AtomicInteger;
@@ -43,7 +58,7 @@ public class SensinactInterfaceV1Test {
     public void websocketConnectionTest() throws Exception {
         sensinact.setListener(new SensinactModelRecoverListener() {
             @Override
-            public void notify(String provider, String service, String resource, String value) {
+            public void notify(String provider, String service, String resource, String type, String value, String timestamp) {
                 counter.getAndAdd(1);
             }
         });
@@ -53,7 +68,7 @@ public class SensinactInterfaceV1Test {
 
     @Test(expected = Exception.class)
     public void createDevice() throws Exception {
-        sensinact.createDevice("","","","");
+        sensinact.createDevice("","","","","");
     }
 
     @Test(expected = Exception.class,timeout = 20000)
