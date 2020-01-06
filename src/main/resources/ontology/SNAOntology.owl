@@ -12,6 +12,12 @@
   </owl:Class>
   <owl:Class rdf:about="http://sensinact.com#Resource">
     <rdfs:comment>
+      <owl:FunctionalProperty rdf:about="http://sensinact.com#type"/>
+    </rdfs:comment>
+    <rdfs:comment>
+      <owl:FunctionalProperty rdf:about="http://sensinact.com#timestamp"/>
+    </rdfs:comment>
+    <rdfs:comment>
       <owl:FunctionalProperty rdf:about="http://sensinact.com#value"/>
     </rdfs:comment>
     <rdfs:subClassOf>
@@ -59,6 +65,12 @@
     <rdfs:subClassOf rdf:resource="http://sensinact.com#Element"/>
   </owl:Class>
   <owl:FunctionalProperty rdf:about="http://sensinact.com#value">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+  </owl:FunctionalProperty>
+  <owl:FunctionalProperty rdf:about="http://sensinact.com#type">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+  </owl:FunctionalProperty>
+  <owl:FunctionalProperty rdf:about="http://sensinact.com#timestamp">
     <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
   </owl:FunctionalProperty>
   <owl:InverseFunctionalProperty rdf:about="http://sensinact.com#isManagedBy">

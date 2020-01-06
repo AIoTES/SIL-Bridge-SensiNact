@@ -31,9 +31,9 @@ public class SNAResource {
 
     public SNAResource(String uri, String value) {
         String[] resourcePath = uri.split("/");
-        this.provider = resourcePath[0];
-        this.service = resourcePath[1];
-        this.resource = resourcePath[2];
+        this.provider = resourcePath[1];
+        this.service = resourcePath[2];
+        this.resource = resourcePath[3];
         this.type = DEFAULT_TYPE;
         this.value = value;
     }

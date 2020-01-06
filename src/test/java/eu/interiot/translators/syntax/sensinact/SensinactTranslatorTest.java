@@ -110,11 +110,12 @@ public class SensinactTranslatorTest {
             SNAOntologyAggregator aggregator = new SNAOntologyAggregator();
 
             SensinactAPI sensinact = SensinactFactory.createInstance(sc);
-
-            sensinact.setListener((provider, service, resource, type, value ,timestamp) -> {
+            //subscribe to all resources
+            sensinact.setListener((String provider, String service, String resource, String type, String value, String timestamp) -> {
+                if ()
                 System.out.println(
                         String.format(
-                                " ... received notification from %s/%s/%s: type=%s, value=%S, timestamp=%s",
+                                " ... received notification from %s/%s/%s: type=%s, value=%s, timestamp=%s",
                                 provider,
                                 service,
                                 resource,
@@ -158,7 +159,7 @@ public class SensinactTranslatorTest {
     }
 
     private void testTranslate(final String message) {
-        System.out.println("\nTranslation =");
+        System.out.println("\nTranslating " + message);
         try {
             SensinactTranslator translator = new SensinactTranslator();
             Message translatedMessage = translator.translate(message, "conversation");

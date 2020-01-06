@@ -57,6 +57,9 @@ public class SensinactCommunicationBridgeV2 implements SensinactAPI {
     private static final String FUNCTION_TYPE_RESOURCE_NAME = "function-type";
     private final Map<String, SNAResource> subscribedResources;
     private static final String RESOURCE_KEY_PATTERN = "%s/%s/%s";
+    private static final String GET_ALL_PROVIDERS_DETAILS_REQUEST_PATTERN = "http://%s:%s/jsonpath:sensinact?jsonpath=$.*";
+    private static final String GET_ONE_PROVIDER_DETAILS_REQUEST_PATTERN = "http://%s:%s/jsonpath:sensinact?jsonpath=[?(@['name'] == '%s')]";
+    private static final String GET_RESOURCE_VALUE_REQUEST_PATTERN = "http://%s:%s/sensinact/%s/%s/%s/GET";
 
     public SensinactCommunicationBridgeV2() {
         subscribedResources = new HashMap<String, SNAResource>();
@@ -128,7 +131,6 @@ public class SensinactCommunicationBridgeV2 implements SensinactAPI {
         String functionType;
         List<SNAResource> snaResourceList = new ArrayList<>();
         List<SNAResource> providerResourceList = new ArrayList<>();
-        String URL = "http://%s:%s/jsonpath:sensinact?jsonpath=$.*";
         try {
             LOG.debug("Starting executing.." + Thread.currentThread().getName());
 
@@ -136,7 +138,7 @@ public class SensinactCommunicationBridgeV2 implements SensinactAPI {
             httpcall.setMethod("GET");
             try {
 
-                String result = httpcall.submit(String.format(URL, config.getHost(), config.getHttpPort()));
+                String result = httpcall.submit(String.format(GET_ALL_PROVIDERS_DETAILS_REQUEST_PATTERN, config.getHost(), config.getHttpPort()));
                 JsonObject jsonPathPayload = (JsonObject) new JsonParser().parse(result);
 
                 JsonArray jsProvider = jsonPathPayload.getAsJsonArray("providers");
@@ -161,7 +163,8 @@ public class SensinactCommunicationBridgeV2 implements SensinactAPI {
                             String resourceName = obResource.get("name").getAsString();
                             if (serviceName.equals(AHA_SERVICE_NAME) 
                             && resourceName.equals(FUNCTION_TYPE_RESOURCE_NAME)) {
-                                functionType = resourceName;
+                                String resourceValue = getResourceValue(providerName, serviceName, resourceName, SNAResource.DEFAULT_TYPE);
+                                functionType = resourceValue;
                             }
                             providerResourceList.add(new SNAResource(providerName, serviceName, resourceName, functionType));
                         }
@@ -181,11 +184,35 @@ public class SensinactCommunicationBridgeV2 implements SensinactAPI {
     }
 
 
+    private String getResourceValue(final String providerId, final String serviceId, final String resourceId, final String defaultValue) {
+        HTTP httpcall = new HTTP();
+        httpcall.setMethod("GET");
+        JsonObject jsonPathPayload;
+        String value = defaultValue;
+        try {
+            String result = httpcall.submit(
+                String.format(
+                    GET_RESOURCE_VALUE_REQUEST_PATTERN, 
+                    config.getHost(), 
+                    config.getHttpPort(),
+                    providerId,
+                    serviceId,
+                    resourceId
+                )
+            );
+            jsonPathPayload = (JsonObject) new JsonParser().parse(result);
+            JsonObject response = jsonPathPayload.getAsJsonObject("response");
+            value = response.get("value").getAsString();
+        } catch (Exception e) {
+            LOG.debug("Failed to execute HTTP call", e);
+        }
+        return value;
+    }
+
     private SNAResource getResource(final String providerId, final String serviceId, final String resourceId) throws ResourceNotFoundException {
-        String functionType;
+        String functionType = SNAResource.DEFAULT_TYPE;
         SNAResource resource = null;
         List<SNAResource> providerResourceList = new ArrayList<>();
-        final String URL = "http://%s:%s/jsonpath:sensinact?jsonpath=$['providers'][?(@['name'] == '%s')]";
         try {
             LOG.debug("Starting executing.." + Thread.currentThread().getName());
 
@@ -193,10 +220,9 @@ public class SensinactCommunicationBridgeV2 implements SensinactAPI {
             httpcall.setMethod("GET");
             try {
 
-                final String result = httpcall.submit(String.format(URL, config.getHost(), config.getHttpPort(), providerId));
+                final String result = httpcall.submit(String.format(GET_ONE_PROVIDER_DETAILS_REQUEST_PATTERN, config.getHost(), config.getHttpPort(), providerId));
                 final JsonObject jsonPathPayload = (JsonObject) new JsonParser().parse(result);
                 providerResourceList.clear();
-                functionType = SNAResource.DEFAULT_TYPE;
                 JsonObject ob = jsonPathPayload;
                 String providerName = ob.get("name").getAsString();
                 LOG.debug("Provider:" + providerName);
@@ -213,7 +239,8 @@ public class SensinactCommunicationBridgeV2 implements SensinactAPI {
                         String resourceName = obResource.get("name").getAsString();
                         if (serviceName.equals(AHA_SERVICE_NAME) 
                         && resourceName.equals(FUNCTION_TYPE_RESOURCE_NAME)) {
-                            functionType = resourceName;
+                                String resourceValue = getResourceValue(providerName, serviceName, resourceName, SNAResource.DEFAULT_TYPE);
+                                functionType = resourceValue;
                         }
                         if (serviceName.equals(serviceId) 
                         && resourceName.equals(resourceId)) {
@@ -229,6 +256,8 @@ public class SensinactCommunicationBridgeV2 implements SensinactAPI {
         }
         if (resource == null) {
             throw new ResourceNotFoundException(providerId, serviceId, resourceId);
+        } else {
+            resource.setType(functionType);
         }
         return resource;
     }
@@ -275,10 +304,12 @@ public class SensinactCommunicationBridgeV2 implements SensinactAPI {
                     String timestamp = messagesJson.get("notification").getAsJsonObject().get("timestamp").getAsString();
                     String resourceURI = messagesJson.get("uri").getAsString();
                     SNAResource snaResource = subscribedResources.get(resourceURI);
-                    if (snaResource== null) {
+                    if (snaResource == null) {
                         snaResource = new SNAResource(resourceURI, value);
                         snaResource.setValue(value);
-                        LOG.warn("notifying with unsubscribed %s: undefined type", snaResource, timestamp);
+                        LOG.warn("notifying at %s with unsubscribed %s: undefined type", timestamp, snaResource);
+                    } else {
+                        LOG.info("notifying at %s with subscribed %s", timestamp, snaResource);
                     }
                     if (listener != null) {
                         final String providerId = snaResource.getProvider();
