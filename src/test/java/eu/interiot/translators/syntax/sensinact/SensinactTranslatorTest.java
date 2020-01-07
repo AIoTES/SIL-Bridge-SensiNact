@@ -20,10 +20,12 @@ package eu.interiot.translators.syntax.sensinact;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import eu.interiot.intermw.bridge.sensinact.fetcher.SensinactModelRecoverListener;
 import eu.interiot.intermw.bridge.sensinact.http.SensinactFactory;
 import eu.interiot.intermw.bridge.sensinact.http.model.SensinactConfig;
 import eu.interiot.intermw.bridge.sensinact.ontology.SNAOntologyAggregator;
 import eu.interiot.intermw.bridge.sensinact.wrapper.SensinactAPI;
+import eu.interiot.intermw.bridge.sensinact.wrapper.SubscriptionResponse;
 import eu.interiot.message.ID.EntityID;
 import eu.interiot.message.Message;
 import eu.interiot.message.MessageMetadata;
@@ -34,7 +36,11 @@ import static eu.interiot.translators.syntax.sensinact.SensinactTranslator.snA;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
 import org.apache.jena.riot.Lang;
@@ -110,48 +116,27 @@ public class SensinactTranslatorTest {
             SNAOntologyAggregator aggregator = new SNAOntologyAggregator();
 
             SensinactAPI sensinact = SensinactFactory.createInstance(sc);
-            //subscribe to all resources
-            sensinact.setListener((String provider, String service, String resource, String type, String value, String timestamp) -> {
-                if ()
-                System.out.println(
-                        String.format(
-                                " ... received notification from %s/%s/%s: type=%s, value=%s, timestamp=%s",
-                                provider,
-                                service,
-                                resource,
-                                type,
-                                value,
-                                timestamp
-                        )
-                );
-                try {
-                    System.out.print("\nobservation message= ");
-                    final Model model = aggregator.createModel(provider, service, resource, type, value ,timestamp);
-                    String observationMessage = createObservationMessage(model);
-                    System.out.println(observationMessage);
-                } catch (Exception ex) {
-                    System.out.println(" -failed: " + ex.getMessage());
-                }
-                counter.getAndAdd(1);
-            });
+            SensinactModelRecoverListener listener = 
+                new TestSensinactModelRecoverListener(sensinact, aggregator, counter);
+            sensinact.setListener(listener);
             System.out.print("\n connecting sensiNact... ");
             sensinact.connect();
             System.out.println("connected");
 
             final int size = sensinact.listDevices().size();
             System.out.println(
-                    String.format(
-                            "found %s devices",
-                            size
-                    )
+                String.format(
+                    "found %s devices",
+                    size
+                )
             );
             Assert.assertTrue("unexpected empty list of devices", size > 0);
             Thread.sleep(300000);
             System.out.println(
-                    String.format(
-                            "... received %s notifications for translation",
-                            counter.get()
-                    )
+                String.format(
+                    "... received %s notifications for translation",
+                    counter.get()
+                )
             );
         } catch (Exception ex) {
             fail("unexpected error " + ex.getMessage());
@@ -204,5 +189,50 @@ public class SensinactTranslatorTest {
         return jsonMessage.toString();
        
     }
-}
+    
+    private class TestSensinactModelRecoverListener implements SensinactModelRecoverListener {
 
+        private final AtomicInteger counter;
+        private final SNAOntologyAggregator aggregator;
+        private final SensinactAPI sensinact;
+        private final Set<String> subscribedResources;
+
+        public TestSensinactModelRecoverListener(final SensinactAPI sensinact, final SNAOntologyAggregator aggregator, final AtomicInteger counter) {
+            this.counter = counter;
+            this.aggregator = aggregator;
+            this.sensinact = sensinact;
+            this.subscribedResources = new HashSet<String>();
+        }
+
+        @Override
+        public void notify(String provider, String service, String resource, String type, String value, String timestamp) {
+            final String resourcePath = String.format("%s/%s/%s", provider, service, resource); 
+            System.out.println(
+                String.format(
+                    " ... received notification from %s: type=%s, value=%s, timestamp=%s",
+                    resourcePath,
+                    type,
+                    value,
+                    timestamp
+                )
+            );
+            try {
+                SubscriptionResponse subscriptionResponse = sensinact.subscribe("test-user", provider, service, resource, "callback");
+                type = subscriptionResponse.getType();
+                System.out.print(String.format("subscribed to %s", resourcePath));
+            } catch (Exception ex) {
+                System.out.println(String.format("failed to subscribe to %s: %s", resourcePath, ex.getMessage()));
+            }
+            try {
+                System.out.print("\nobservation message= ");
+                final Model model = aggregator.createModel(provider, service, resource, type, value, timestamp);
+                String observationMessage = createObservationMessage(model);
+                System.out.println("\n"+ observationMessage);
+            } catch (Exception ex) {
+                System.out.println(" -failed: " + ex.getMessage());
+            }
+            counter.getAndAdd(1);
+        }
+    }
+}
+    

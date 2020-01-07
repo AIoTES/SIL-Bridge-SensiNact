@@ -56,46 +56,69 @@ public class SensinactCommunicationBridgeV2 implements SensinactAPI {
     private static final String AHA_SERVICE_NAME = "aha";
     private static final String FUNCTION_TYPE_RESOURCE_NAME = "function-type";
     private final Map<String, SNAResource> subscribedResources;
-    private static final String RESOURCE_KEY_PATTERN = "%s/%s/%s";
-    private static final String GET_ALL_PROVIDERS_DETAILS_REQUEST_PATTERN = "http://%s:%s/jsonpath:sensinact?jsonpath=$.*";
-    private static final String GET_ONE_PROVIDER_DETAILS_REQUEST_PATTERN = "http://%s:%s/jsonpath:sensinact?jsonpath=[?(@['name'] == '%s')]";
-    private static final String GET_RESOURCE_VALUE_REQUEST_PATTERN = "http://%s:%s/sensinact/%s/%s/%s/GET";
+    private final UserSubscriptionManager userSubscriptions;
+    private static final String RESOURCE_PATH_PATTERN = "%s/%s/%s";
+    private static final String GET_ALL_PROVIDERS_DETAILS_REQUEST_PATTERN = 
+        "http://%s:%s/jsonpath:sensinact?jsonpath=$.*";
+    private static final String GET_ONE_PROVIDER_DETAILS_REQUEST_PATTERN = 
+        "http://%s:%s/jsonpath:sensinact?jsonpath=[?(@['name'] == '%s')]";
+    private static final String GET_RESOURCE_VALUE_REQUEST_PATTERN = 
+        "http://%s:%s/sensinact/%s/%s/%s/GET";
+    private static final String ACT_RESOURCE_REQUEST_PATTERN =
+        "http://%s:%s/sensinact/providers/%s/services/%s/resources/%s/ACT";
+    private static final String LIFECYCLE_SUBSCRIBE_REQUEST = 
+        "{\"uri\":\"sensinact/SUBSCRIBE\",\"rid\":\"webapp\",\"parameters\":[{\"name\":\"sender\",\"type\":\"string\",\"value\":\"/.*\"},{\"name\":\"pattern\",\"type\":\"boolean\",\"value\":true},{\"name\":\"complement\",\"type\":\"boolean\",\"value\":false},{\"name\":\"types\",\"type\":\"array\",\"value\":[\"UPDATE\",\"LIFECYCLE\"]}]}";
 
     public SensinactCommunicationBridgeV2() {
         subscribedResources = new HashMap<String, SNAResource>();
+        userSubscriptions = new UserSubscriptionManager();
     }
     
     @Override
     public SubscriptionResponse subscribe(String userId, String provider, String service, String resource, String callback) throws Exception {
-        LOG.debug("Subscribing V2...");
-        final String key = String.format(RESOURCE_KEY_PATTERN, provider, service, resource);
-        String type = "undefined";
-        try {
-            final SNAResource snaResource = getResource(provider, service, resource);
-            type = snaResource.getType();
-            subscribedResources.put(key, snaResource);
-            LOG.info("successfully subscribed to {}", snaResource);
-        } catch (ResourceNotFoundException e) {
-            LOG.error("failed to subscribe to {}/{}/{}: {}", provider, service, resource, e.getMessage());
-            return new SubscriptionResponse(key);
+        final String resourcePath = String.format(RESOURCE_PATH_PATTERN, provider, service, resource);
+        LOG.debug(String.format("Subscribing to %s for user %s...", resourcePath, userId));
+        String type;
+        SubscriptionResponse response;
+        SNAResource alreadySubscribedResource = subscribedResources.get(resourcePath);
+        if (alreadySubscribedResource != null) {
+            LOG.info("have already subscribed to {} before...", resourcePath);
+            if (userSubscriptions.hasAlreadySubscribedTo(userId, resourcePath)) {
+                response = userSubscriptions.getSubscriptionResponse(userId, resourcePath);
+            } else {
+                response = userSubscriptions.putSubscriptionResponse(userId, alreadySubscribedResource);
+            }
+        } else {
+            try {
+                final SNAResource snaResource = getResource(provider, service, resource);
+                type = snaResource.getType();
+                LOG.info("successfully subscribed to {}", snaResource);
+                response = new SubscriptionResponse(snaResource);
+                subscribedResources.put(resourcePath, snaResource);
+                userSubscriptions.putSubscriptionResponse(userId, snaResource);
+            } catch (ResourceNotFoundException e) {
+                LOG.error("failed to subscribe to {}/{}/{}: {}", provider, service, resource, e.getMessage());
+                response = new SubscriptionResponse(resourcePath);
+            }
         }
-        return new SubscriptionResponse(key, type);
+        return response;
     }
 
     @Override
     public UnsubscriptionResponse unsubscribe(String userId, String provider, String service, String resource, String callback) throws Exception {
-        LOG.debug("Unsubscribing V2...");
-        final String key = String.format(RESOURCE_KEY_PATTERN, provider, service, resource);
-        String type = "undefined";
-        final SNAResource snaResource = subscribedResources.get(key);
+        final String resourcePath = String.format(RESOURCE_PATH_PATTERN, provider, service, resource);
+        LOG.debug(String.format("Unsubscribing to %s for user %s...", resourcePath, userId));
+        String type;
+        final SNAResource subscribedResource = subscribedResources.get(resourcePath);
         final UnsubscriptionResponse response;
-        if (snaResource != null) {
-            type = snaResource.getType();
-            response = new UnsubscriptionResponse(key, type);
-            LOG.info("successfully unsubscribed to {}", snaResource);
+        if (subscribedResource != null) {
+            userSubscriptions.removeSubscriptionResponse(userId, subscribedResource);
+            type = subscribedResource.getType();
+            response = new UnsubscriptionResponse(resourcePath, type);
+            LOG.info("successfully unsubscribed to {}", subscribedResource);
         } else {
-            LOG.error("failed to unsubscribe to {}/{}/{}: {}", provider, service, resource);
-            return new UnsubscriptionResponse(key);
+            LOG.error("failed to unsubscribe to {}", resourcePath);
+            return new UnsubscriptionResponse(resourcePath);
         }
         return response;
     }
@@ -210,55 +233,10 @@ public class SensinactCommunicationBridgeV2 implements SensinactAPI {
     }
 
     private SNAResource getResource(final String providerId, final String serviceId, final String resourceId) throws ResourceNotFoundException {
-        String functionType = SNAResource.DEFAULT_TYPE;
         SNAResource resource = null;
-        List<SNAResource> providerResourceList = new ArrayList<>();
-        try {
-            LOG.debug("Starting executing.." + Thread.currentThread().getName());
-
-            HTTP httpcall = new HTTP();
-            httpcall.setMethod("GET");
-            try {
-
-                final String result = httpcall.submit(String.format(GET_ONE_PROVIDER_DETAILS_REQUEST_PATTERN, config.getHost(), config.getHttpPort(), providerId));
-                final JsonObject jsonPathPayload = (JsonObject) new JsonParser().parse(result);
-                providerResourceList.clear();
-                JsonObject ob = jsonPathPayload;
-                String providerName = ob.get("name").getAsString();
-                LOG.debug("Provider:" + providerName);
-                JsonArray jsServices = ob.getAsJsonArray("services");
-
-                for (Iterator itService = jsServices.iterator(); itService.hasNext();) {
-                    JsonObject obService = (JsonObject) itService.next();
-                    String serviceName = obService.get("name").getAsString();
-                    LOG.debug("Service:" + serviceName);
-                    JsonArray jsResources = obService.getAsJsonArray("resources");
-
-                    for (Iterator itResource = jsResources.iterator(); itResource.hasNext();) {
-                        JsonObject obResource = (JsonObject) itResource.next();
-                        String resourceName = obResource.get("name").getAsString();
-                        if (serviceName.equals(AHA_SERVICE_NAME) 
-                        && resourceName.equals(FUNCTION_TYPE_RESOURCE_NAME)) {
-                                String resourceValue = getResourceValue(providerName, serviceName, resourceName, SNAResource.DEFAULT_TYPE);
-                                functionType = resourceValue;
-                        }
-                        if (serviceName.equals(serviceId) 
-                        && resourceName.equals(resourceId)) {
-                            resource = new SNAResource(providerName, serviceName, resourceName, functionType);
-                        }
-                    }
-                }
-            } catch (Exception e) {
-                LOG.debug("Failed parser jsonpath response", e);
-            }
-        } catch (Exception e) {
-            LOG.debug("Failed to execute HTTP call", e);
-        }
-        if (resource == null) {
-            throw new ResourceNotFoundException(providerId, serviceId, resourceId);
-        } else {
-            resource.setType(functionType);
-        }
+        String functionType = 
+            getResourceValue(providerId, AHA_SERVICE_NAME, FUNCTION_TYPE_RESOURCE_NAME, SNAResource.DEFAULT_TYPE);
+        resource = new SNAResource(providerId, serviceId, resourceId, functionType);
         return resource;
     }
 
@@ -266,7 +244,14 @@ public class SensinactCommunicationBridgeV2 implements SensinactAPI {
     public void act(String provider, String service, String resource) throws Exception {
         HTTP httpcall = new HTTP();
         httpcall.setMethod("POST");
-        String URL = String.format("http://%s:%s/sensinact/providers/%s/services/%s/resources/%s/ACT", config.getHost(), config.getHttpPort(), provider, service, resource);
+        String URL = String.format(
+            ACT_RESOURCE_REQUEST_PATTERN,
+            config.getHost(), 
+            config.getHttpPort(), 
+            provider, 
+            service, 
+            resource
+        );
         httpcall.submit(URL);
     }
 
@@ -307,9 +292,10 @@ public class SensinactCommunicationBridgeV2 implements SensinactAPI {
                     if (snaResource == null) {
                         snaResource = new SNAResource(resourceURI, value);
                         snaResource.setValue(value);
-                        LOG.warn("notifying at %s with unsubscribed %s: undefined type", timestamp, snaResource);
+                        LOG.warn("notifying at {} with unsubscribed {}: undefined type", timestamp, snaResource);
                     } else {
-                        LOG.info("notifying at %s with subscribed %s", timestamp, snaResource);
+                        snaResource.setValue(value);
+                        LOG.info("notifying at {} with subscribed {}", timestamp, snaResource);
                     }
                     if (listener != null) {
                         final String providerId = snaResource.getProvider();
@@ -317,9 +303,9 @@ public class SensinactCommunicationBridgeV2 implements SensinactAPI {
                         final String resourceId = snaResource.getResource();
                         final String type = snaResource.getType();
                         listener.notify(providerId, serviceId, resourceId, type, value, timestamp);
-                        LOG.info("successfully notified %s with %s at %s", listener, snaResource, timestamp);
+                        LOG.info("successfully notified {} with {} at {}", listener, snaResource, timestamp);
                     } else {
-                        LOG.error("failed to notify with %s at %s: unexpected null listener", snaResource, timestamp);
+                        LOG.error("failed to notify with {} at {}: unexpected null listener", snaResource, timestamp);
                     }
                 } catch (Throwable e) {
                     LOG.error("Failed to deliver message", e);
@@ -329,11 +315,11 @@ public class SensinactCommunicationBridgeV2 implements SensinactAPI {
         connectionWebSocket.setTriggerAfterConnection(new WebSocketTrigger() {
             @Override
             public void execute() throws Exception {
-                connectionWebSocket.getSession().get().getRemote().sendString("{\"uri\":\"sensinact/SUBSCRIBE\",\"rid\":\"webapp\",\"parameters\":[{\"name\":\"sender\",\"type\":\"string\",\"value\":\"/.*\"},{\"name\":\"pattern\",\"type\":\"boolean\",\"value\":true},{\"name\":\"complement\",\"type\":\"boolean\",\"value\":false},{\"name\":\"types\",\"type\":\"array\",\"value\":[\"UPDATE\",\"LIFECYCLE\"]}]}");
+                connectionWebSocket.getSession().get().getRemote().sendString(LIFECYCLE_SUBSCRIBE_REQUEST);
             }
         });
 
-        final String deviceCreationURL = String.format("%s://%s:%d/androidws", protocol, config.getHost(), config.getHttpPort()).toString();
+        final String deviceCreationURL = String.format("%s://%s:%d/androidws", protocol, config.getHost(), config.getHttpPort());
 
         deviceCreationEndPoint = new SensinactWebSocketConnectionManager(deviceCreationURL);
 
@@ -351,5 +337,78 @@ public class SensinactCommunicationBridgeV2 implements SensinactAPI {
     public void disconnect() {
         connectionWebSocket.disconnect();
         deviceCreationEndPoint.disconnect();
+    }
+    
+    private static class UserSubscriptionManager extends HashMap<String, Map<String, SubscriptionResponse>> {
+                
+        private UserSubscriptionManager() {
+            super();
+        }
+        
+        private boolean hasAlreadySubscribedTo(final String user, final String resourcePath) {
+            boolean isAlreadySubscribed = false;
+            if (this.containsKey(user)) {
+                final Map<String, SubscriptionResponse> userSubscriptions = get(user);
+                if (userSubscriptions != null) {
+                    isAlreadySubscribed = userSubscriptions.containsKey(resourcePath);
+                } else {
+                    isAlreadySubscribed = false;
+                }
+            } else {
+                isAlreadySubscribed = false;
+            }
+            return isAlreadySubscribed;
+        }
+        
+        private SubscriptionResponse getSubscriptionResponse(final String user, final String resourcePath) {
+            SubscriptionResponse subscriptionResponse = null;
+            if (this.containsKey(user)) {
+                final Map<String, SubscriptionResponse> userSubscriptions = get(user);
+                if (userSubscriptions != null) {
+                    subscriptionResponse = userSubscriptions.get(resourcePath);
+                } else {
+                    subscriptionResponse = null;
+                }
+            } else {
+                subscriptionResponse = null;
+            }
+            return subscriptionResponse;
+        }
+        
+        private SubscriptionResponse putSubscriptionResponse(final String user, final SNAResource resource) throws AlreadySubscribedException {
+            SubscriptionResponse response = null;
+            Map<String, SubscriptionResponse> userSubscriptions = get(user);
+            if (userSubscriptions == null) {
+                userSubscriptions = new HashMap<String, SubscriptionResponse>();
+                put(user, userSubscriptions);
+            }
+            final String key = String.format(
+                    RESOURCE_PATH_PATTERN, 
+                    resource.getProvider(), 
+                    resource.getService(), 
+                    resource.getResource()
+            );
+            if (userSubscriptions.containsKey(key)) {
+                throw new AlreadySubscribedException(resource);
+            }
+            response = new SubscriptionResponse(resource);
+            response = userSubscriptions.put(key, response);
+            return response;
+        }
+        
+        private SubscriptionResponse removeSubscriptionResponse(final String user, final SNAResource resource) {
+            SubscriptionResponse isSubscribed = null;
+            final String key = String.format(
+                    RESOURCE_PATH_PATTERN, 
+                    resource.getProvider(), 
+                    resource.getService(), 
+                    resource.getResource()
+            );
+            Map<String, SubscriptionResponse> userSubscriptions = get(user);
+            if (userSubscriptions != null) {
+                isSubscribed = userSubscriptions.remove(key);
+            }
+            return isSubscribed;
+        }
     }
 }

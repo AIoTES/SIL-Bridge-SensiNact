@@ -20,53 +20,45 @@ package eu.interiot.intermw.bridge.sensinact.wrapper;
 
 public class SubscriptionResponse {
 
-    private SubscriptionResponseSubscriptionId response;
-    private String type;
-    private String uri;
-    private Integer statusCode;
+    private final SubscriptionResponseSubscriptionId id;
+    private final SNAResource resource;
+    private final String type;
+    private final String uri;
+    private final Integer statusCode;
 
     public SubscriptionResponse(final String uri) {
         this.statusCode = 400;
         this.uri = uri;
-        this.response = new SubscriptionResponseSubscriptionId();
+        this.resource = null;
+        this.id = new SubscriptionResponseSubscriptionId();
+        this.type = null;
     }
 
-    public SubscriptionResponse(final String uri, final String type) {
+    public SubscriptionResponse(final SNAResource resource) {
         this.statusCode = 200;
-        this.uri = uri;
-        this.type = type;
-        this.response = new SubscriptionResponseSubscriptionId();
+        this.uri = resource.toString();
+        this.type = resource.getType();
+        this.id = new SubscriptionResponseSubscriptionId();
+        this.resource = resource;
     }
 
     public SubscriptionResponseSubscriptionId getResponse() {
-        return response;
-    }
-
-    public void setResponse(SubscriptionResponseSubscriptionId response) {
-        this.response = response;
+        return id;
     }
 
     public String getType() {
         return type;
     }
 
-    public void setType(String type) {
-        this.type = type;
-    }
-
     public String getUri() {
         return uri;
-    }
-
-    public void setUri(String uri) {
-        this.uri = uri;
     }
 
     public Integer getStatusCode() {
         return statusCode;
     }
-
-    public void setStatusCode(Integer statusCode) {
-        this.statusCode = statusCode;
+    
+    public SNAResource getResource() {
+        return resource;
     }
 }
