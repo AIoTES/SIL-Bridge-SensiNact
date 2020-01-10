@@ -30,7 +30,6 @@ import eu.interiot.intermw.bridge.sensinact.wrapper.SNAResource;
 import eu.interiot.intermw.bridge.sensinact.wrapper.SensinactAPI;
 import eu.interiot.intermw.comm.broker.exceptions.BrokerException;
 import eu.interiot.intermw.commons.exceptions.MiddlewareException;
-import eu.interiot.intermw.commons.interfaces.Configuration;
 import eu.interiot.intermw.commons.model.Platform;
 import eu.interiot.intermw.commons.requests.UnsubscribeReq;
 import eu.interiot.message.ID.EntityID;
@@ -40,7 +39,6 @@ import eu.interiot.message.MessagePayload;
 import eu.interiot.message.managers.URI.URIManagerMessageMetadata;
 import eu.interiot.message.metadata.PlatformMessageMetadata;
 import eu.interiot.message.payload.types.IoTDevicePayload;
-import org.apache.jena.ontology.OntModel;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
 import org.apache.jena.riot.Lang;
@@ -53,8 +51,6 @@ import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.net.URL;
 import java.util.*;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
 
 @eu.interiot.intermw.bridge.annotations.Bridge(platformType = "http://sensinact.ddns.net/sensinact")
 public class SensiNactBridge extends AbstractBridge {
@@ -126,15 +122,13 @@ public class SensiNactBridge extends AbstractBridge {
 
                         metadata.setSenderPlatformId(new EntityID(platform.getPlatformId()));
                         metadata.setConversationId(conversationId);
-
-                        MessagePayload messagePayload = 
-                                new MessagePayload(
-                                        ontologyAggregator.transformOntology(
-                                                provider, service, resource, 
-                                                type, value, timestamp
-                                        )
+                        Model model = 
+                                ontologyAggregator.transformOntology(
+                                    provider, service, resource,
+                                    type, value, timestamp
                                 );
-
+                        MessagePayload messagePayload = 
+                                new MessagePayload(model);
                         Message observationMessage = new Message();
                         observationMessage.setMetadata(metadata);
                         observationMessage.setPayload(messagePayload);

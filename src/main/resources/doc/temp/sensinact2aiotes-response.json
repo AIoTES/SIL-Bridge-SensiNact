@@ -1,13 +1,13 @@
 {
   "@graph" : [ {
     "@graph" : [ {
-      "@id" : "msg:meta/dc970703-ce50-48a3-be41-bde0ff851641",
+      "@id" : "msg:meta/ceb6cce8-21c3-498c-8bb3-5fbe1f98ca54",
       "msg:SenderPlatformId" : {
         "@id" : "http://sna.com/model#"
       },
-      "msg:conversationID" : "conv78409fdd-05fd-4224-94bf-f97cbb9942ae",
-      "msg:dateTimeStamp" : "2020-01-10T15:13:42.626+01:00",
-      "msg:messageID" : "msgc6a5d425-1a61-4602-8b4f-0156cb2e19e9",
+      "msg:conversationID" : "conv8e665759-cfb8-4eea-870c-4d06a1b60749",
+      "msg:dateTimeStamp" : "2020-01-10T15:13:42.638+01:00",
+      "msg:messageID" : "msg4782d2af-8951-41b3-a33b-a597bdc05341",
       "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
         "@id" : "msg:meta"
       }, {
@@ -19,54 +19,6 @@
     "@id" : "msg:metadata"
   }, {
     "@graph" : [ {
-      "@id" : "_:b0",
-      "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : {
-        "@id" : "sosa:Sensor"
-      },
-      "sosa:observes" : "PTL-Temperature-alert-slider"
-    }, {
-      "@id" : "_:b1",
-      "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : {
-        "@id" : "sosa:Observation"
-      },
-      "sosa:ObservableProperty" : {
-        "@id" : "_:b2"
-      },
-      "sosa:madeBySensor" : {
-        "@id" : "_:b0"
-      },
-      "sosa:observedProperty" : "PTL-Temperature-alert-slider",
-      "sosa:phenomenomTime" : {
-        "@id" : "_:b4"
-      },
-      "ssn:hasResult" : {
-        "@id" : "_:b3"
-      }
-    }, {
-      "@id" : "_:b2",
-      "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : {
-        "@id" : "ssn:Property"
-      },
-      "ssn:hasProperty" : "occupied"
-    }, {
-      "@id" : "_:b3",
-      "iiot:hasName" : "last-temperature",
-      "iiot:hasResultValue" : "0",
-      "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : {
-        "@id" : "sosa:Result"
-      }
-    }, {
-      "@id" : "_:b4",
-      "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : {
-        "@id" : "http://www.w3.org/2006/time#Instant"
-      },
-      "http://www.w3.org/2006/time#inTimePosition" : "1578665622239"
-    }, {
-      "@id" : "_:b5",
-      "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : {
-        "@id" : "http://sensinact.com#Resource"
-      }
-    }, {
       "@id" : "http://sensinact.com#Resource",
       "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
         "@id" : "http://www.w3.org/2002/07/owl#Class"

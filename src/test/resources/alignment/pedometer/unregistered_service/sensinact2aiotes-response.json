@@ -1,13 +1,13 @@
 {
   "@graph" : [ {
     "@graph" : [ {
-      "@id" : "msg:meta/dc970703-ce50-48a3-be41-bde0ff851641",
+      "@id" : "msg:meta/43b623ac-ace9-42dd-bbec-f168f64fc495",
       "msg:SenderPlatformId" : {
         "@id" : "http://sna.com/model#"
       },
-      "msg:conversationID" : "conv78409fdd-05fd-4224-94bf-f97cbb9942ae",
-      "msg:dateTimeStamp" : "2020-01-10T15:13:42.626+01:00",
-      "msg:messageID" : "msgc6a5d425-1a61-4602-8b4f-0156cb2e19e9",
+      "msg:conversationID" : "conv893ee0d0-46a8-4187-889e-d534e67bf259",
+      "msg:dateTimeStamp" : "2020-01-10T18:04:26.591+01:00",
+      "msg:messageID" : "msg00403217-1f0e-47b9-9300-8b5a87ca8f72",
       "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
         "@id" : "msg:meta"
       }, {
@@ -19,54 +19,6 @@
     "@id" : "msg:metadata"
   }, {
     "@graph" : [ {
-      "@id" : "_:b0",
-      "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : {
-        "@id" : "sosa:Sensor"
-      },
-      "sosa:observes" : "PTL-Temperature-alert-slider"
-    }, {
-      "@id" : "_:b1",
-      "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : {
-        "@id" : "sosa:Observation"
-      },
-      "sosa:ObservableProperty" : {
-        "@id" : "_:b2"
-      },
-      "sosa:madeBySensor" : {
-        "@id" : "_:b0"
-      },
-      "sosa:observedProperty" : "PTL-Temperature-alert-slider",
-      "sosa:phenomenomTime" : {
-        "@id" : "_:b4"
-      },
-      "ssn:hasResult" : {
-        "@id" : "_:b3"
-      }
-    }, {
-      "@id" : "_:b2",
-      "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : {
-        "@id" : "ssn:Property"
-      },
-      "ssn:hasProperty" : "occupied"
-    }, {
-      "@id" : "_:b3",
-      "iiot:hasName" : "last-temperature",
-      "iiot:hasResultValue" : "0",
-      "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : {
-        "@id" : "sosa:Result"
-      }
-    }, {
-      "@id" : "_:b4",
-      "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : {
-        "@id" : "http://www.w3.org/2006/time#Instant"
-      },
-      "http://www.w3.org/2006/time#inTimePosition" : "1578665622239"
-    }, {
-      "@id" : "_:b5",
-      "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : {
-        "@id" : "http://sensinact.com#Resource"
-      }
-    }, {
       "@id" : "http://sensinact.com#Resource",
       "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
         "@id" : "http://www.w3.org/2002/07/owl#Class"
@@ -92,7 +44,7 @@
         "@id" : "http://sensinact.com#Resource"
       }
     }, {
-      "@id" : "http://sensinact.com#TemperatureMonitorResource",
+      "@id" : "http://sensinact.com#StepNumberResource",
       "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
         "@id" : "http://www.w3.org/2002/07/owl#Class"
       }, {
@@ -103,7 +55,7 @@
       "http://www.w3.org/2000/01/rdf-schema#subClassOf" : [ {
         "@id" : "http://sensinact.com#Resource"
       }, {
-        "@id" : "http://sensinact.com#TemperatureMonitorResource"
+        "@id" : "http://sensinact.com#StepNumberResource"
       } ]
     }, {
       "@id" : "http://sensinact.com#name",
@@ -129,7 +81,7 @@
         "@id" : "http://www.w3.org/2002/07/owl#Ontology"
       },
       "http://www.w3.org/2000/01/rdf-schema#comment" : "sensiNact AHA resource is defined by provider/service/resource path, type, value and timestamp",
-      "http://www.w3.org/2000/01/rdf-schema#label" : "The simple sensiNact AHA temperature alert resource ontology"
+      "http://www.w3.org/2000/01/rdf-schema#label" : "The simple sensiNact AHA pedometer monitor resource ontology"
     }, {
       "@id" : "http://sensinact.com#service",
       "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
@@ -200,4 +152,3 @@
     "sosa" : "http://www.w3.org/ns/sosa/"
   }
 }
-"

@@ -26,7 +26,6 @@ import eu.interiot.message.MessagePayload;
 import eu.interiot.message.managers.URI.URIManagerMessageMetadata;
 import eu.interiot.message.metadata.PlatformMessageMetadata;
 import java.io.IOException;
-import org.apache.jena.ontology.OntModel;
 import org.apache.jena.rdf.model.Model;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -67,7 +66,7 @@ public class SNAOntologyAggregatorTest {
 
     private void testTransformOntology(final String provider, final String service, final String resource, final String type, final String value, final String timestamp) {
         SNAOntologyAggregator aggregator = new SNAOntologyAggregator();
-        OntModel model = aggregator.transformOntology(provider, service, resource, type, value ,timestamp);
+        Model model = aggregator.transformOntology(provider, service, resource, type, value ,timestamp);
         assertNotNull("unexpected null model", model);
         try {
             String observationMessage = createObservationMessage(model);

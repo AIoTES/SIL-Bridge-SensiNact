@@ -224,10 +224,10 @@ public class SensinactTranslatorTest {
                 System.out.println(String.format("failed to subscribe to %s: %s", resourcePath, ex.getMessage()));
             }
             try {
-                System.out.print("\nobservation message= ");
+                System.out.println("\nobservation message= ");
                 final Model model = aggregator.createModel(provider, service, resource, type, value, timestamp);
                 String observationMessage = createObservationMessage(model);
-                System.out.println("\n"+ observationMessage);
+                System.out.println(observationMessage);
             } catch (Exception ex) {
                 System.out.println(" -failed: " + ex.getMessage());
             }

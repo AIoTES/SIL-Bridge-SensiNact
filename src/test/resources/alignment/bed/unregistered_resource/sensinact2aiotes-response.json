@@ -1,13 +1,13 @@
 {
   "@graph" : [ {
     "@graph" : [ {
-      "@id" : "msg:meta/dc970703-ce50-48a3-be41-bde0ff851641",
+      "@id" : "msg:meta/0dd6ed0f-25f0-4ea6-8e4c-9a2336a3d921",
       "msg:SenderPlatformId" : {
         "@id" : "http://sna.com/model#"
       },
-      "msg:conversationID" : "conv78409fdd-05fd-4224-94bf-f97cbb9942ae",
-      "msg:dateTimeStamp" : "2020-01-10T15:13:42.626+01:00",
-      "msg:messageID" : "msgc6a5d425-1a61-4602-8b4f-0156cb2e19e9",
+      "msg:conversationID" : "conv84a2409d-5e4b-4a84-9a46-db64422c3060",
+      "msg:dateTimeStamp" : "2020-01-10T17:57:33.070+01:00",
+      "msg:messageID" : "msg801e7540-6fa6-4a68-a3bf-04c55f3d4c45",
       "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
         "@id" : "msg:meta"
       }, {
@@ -19,53 +19,19 @@
     "@id" : "msg:metadata"
   }, {
     "@graph" : [ {
-      "@id" : "_:b0",
-      "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : {
-        "@id" : "sosa:Sensor"
-      },
-      "sosa:observes" : "PTL-Temperature-alert-slider"
-    }, {
-      "@id" : "_:b1",
-      "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : {
-        "@id" : "sosa:Observation"
-      },
-      "sosa:ObservableProperty" : {
-        "@id" : "_:b2"
-      },
-      "sosa:madeBySensor" : {
-        "@id" : "_:b0"
-      },
-      "sosa:observedProperty" : "PTL-Temperature-alert-slider",
-      "sosa:phenomenomTime" : {
-        "@id" : "_:b4"
-      },
-      "ssn:hasResult" : {
-        "@id" : "_:b3"
-      }
-    }, {
-      "@id" : "_:b2",
-      "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : {
-        "@id" : "ssn:Property"
-      },
-      "ssn:hasProperty" : "occupied"
-    }, {
-      "@id" : "_:b3",
-      "iiot:hasName" : "last-temperature",
-      "iiot:hasResultValue" : "0",
-      "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : {
-        "@id" : "sosa:Result"
-      }
-    }, {
-      "@id" : "_:b4",
-      "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : {
-        "@id" : "http://www.w3.org/2006/time#Instant"
-      },
-      "http://www.w3.org/2006/time#inTimePosition" : "1578665622239"
-    }, {
-      "@id" : "_:b5",
-      "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : {
+      "@id" : "http://sensinact.com#BedOccupancyResource",
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
+        "@id" : "http://www.w3.org/2002/07/owl#Class"
+      }, {
+        "@id" : "http://www.w3.org/2000/01/rdf-schema#Class"
+      }, {
+        "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
+      } ],
+      "http://www.w3.org/2000/01/rdf-schema#subClassOf" : [ {
         "@id" : "http://sensinact.com#Resource"
-      }
+      }, {
+        "@id" : "http://sensinact.com#BedOccupancyResource"
+      } ]
     }, {
       "@id" : "http://sensinact.com#Resource",
       "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
@@ -92,20 +58,6 @@
         "@id" : "http://sensinact.com#Resource"
       }
     }, {
-      "@id" : "http://sensinact.com#TemperatureMonitorResource",
-      "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
-        "@id" : "http://www.w3.org/2002/07/owl#Class"
-      }, {
-        "@id" : "http://www.w3.org/2000/01/rdf-schema#Class"
-      }, {
-        "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
-      } ],
-      "http://www.w3.org/2000/01/rdf-schema#subClassOf" : [ {
-        "@id" : "http://sensinact.com#Resource"
-      }, {
-        "@id" : "http://sensinact.com#TemperatureMonitorResource"
-      } ]
-    }, {
       "@id" : "http://sensinact.com#name",
       "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
         "@id" : "http://www.w3.org/2002/07/owl#FunctionalProperty"
@@ -129,7 +81,7 @@
         "@id" : "http://www.w3.org/2002/07/owl#Ontology"
       },
       "http://www.w3.org/2000/01/rdf-schema#comment" : "sensiNact AHA resource is defined by provider/service/resource path, type, value and timestamp",
-      "http://www.w3.org/2000/01/rdf-schema#label" : "The simple sensiNact AHA temperature alert resource ontology"
+      "http://www.w3.org/2000/01/rdf-schema#label" : "The simple sensiNact AHA day laying resource ontology"
     }, {
       "@id" : "http://sensinact.com#service",
       "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
@@ -200,4 +152,3 @@
     "sosa" : "http://www.w3.org/ns/sosa/"
   }
 }
-"

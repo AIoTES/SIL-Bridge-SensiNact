@@ -14,10 +14,16 @@
 >
 
     <owl:Ontology rdf:about="&sna;sensiNactOntology">
-        <rdfs:label>The simple sensiNact AHA resource ontology</rdfs:label>
+        <rdfs:label>The simple sensiNact AHA pedometer monitor resource ontology</rdfs:label>
         <rdfs:comment>sensiNact AHA resource is defined by provider/service/resource path, type, value and timestamp</rdfs:comment>
     </owl:Ontology>    
     
+    <owl:Class rdf:about="&sna;StepNumberResource">
+        <rdfs:subClassOf>
+            <owl:Class rdf:about="&sna;Resource"/>
+        </rdfs:subClassOf>
+    </owl:Class>
+
     <owl:Class rdf:about="&sna;Resource">
         <rdfs:comment>
             <owl:FunctionalProperty rdf:about="&sna;provider"/>

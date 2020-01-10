@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-    <!DOCTYPE RDF>
-    <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" 
+<!DOCTYPE RDF>
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" 
          xmlns:sripas="http://www.inter-iot.eu/sripas#" 
          xmlns:var="http://www.inter-iot.eu/sripas#node_" 
          xmlns:align="http://knowledgeweb.semanticweb.org/heterogeneity/alignment#" 
@@ -18,14 +18,14 @@
          xmlns:m3="http://purl.org/iot/vocab/m3-lite" 
          xmlns:fw="http://inter-iot.eu/syntax/FIWAREv2#" 
          xmlns:geosparql="http://www.opengis.net/ont/geosparql#" 
-         xmlns:sensinact="http://sensinact.com#">    
+         xmlns:sna="http://sensinact.com#">    
       
     <align:Alignment>
         <dcelem:title>SensiNact2AIoTES</dcelem:title>
-        <exmo:version>0.2.6</exmo:version>
-        <dcelem:creator>CEA/UPV</dcelem:creator>
-        <dcelem:description>Alignment between SensiNact ontology and ACTIVAGE ontology.</dcelem:description>
-        <dcelem:date>18 July 2019</dcelem:date>
+        <exmo:version>0.4.5</exmo:version>
+        <dcelem:creator>CEA Stephane Bergeon</dcelem:creator>
+        <dcelem:description>Alignment between sensiNact AHA ontology and ACTIVAGE ontology.</dcelem:description>
+        <dcelem:date>10 January 2020</dcelem:date>
         
         <align:onto1>
             <align:Ontology rdf:about="http://sensinact.com#">
@@ -44,144 +44,396 @@
         </align:onto2>
         
         <sripas:steps rdf:parseType="Literal">
-            <sripas:step sripas:order="1" sripas:cell="http://www.inter-iot.eu/sripas#1_provider"/>
-          
-            <sripas:step sripas:order="2" sripas:cell="http://www.inter-iot.eu/sripas#2_observation"/>
-          
-            <sripas:step sripas:order="3" sripas:cell="http://www.inter-iot.eu/sripas#3_resource"/>
-          
-            <sripas:step sripas:order="4" sripas:cell="http://www.inter-iot.eu/sripas#4_clean"/>
-          	 
-            <sripas:step sripas:order="5" sripas:cell="http://www.inter-iot.eu/sripas#5_bedsensor"/>
-          	 
-            <sripas:step sripas:order="6" sripas:cell="http://www.inter-iot.eu/sripas#6_eliminate_useless_classes"/>
-          	 
+            <sripas:step sripas:order="1" sripas:cell="http://www.inter-iot.eu/sripas#1_temperature"/>  
+            <sripas:step sripas:order="2" sripas:cell="http://www.inter-iot.eu/sripas#2_weight"/>  
+            <sripas:step sripas:order="3" sripas:cell="http://www.inter-iot.eu/sripas#3_pedometer"/>  
+            <sripas:step sripas:order="4" sripas:cell="http://www.inter-iot.eu/sripas#4_bed"/>  
+            <sripas:step sripas:order="5" sripas:cell="http://www.inter-iot.eu/sripas#5_kpi"/>  
+            <sripas:step sripas:order="6" sripas:cell="http://www.inter-iot.eu/sripas#6_clean_unregistered_resource"/>  
         </sripas:steps>
         		
-        		
         <sripas:cellFormat>
-            <iiot:DataFormat rdf:about="http://inter-iot.eu/sripas#turtle"/>
+            <iiot:DataFormat rdf:about="http://inter-iot.eu/sripas#rdfxml"/>
         </sripas:cellFormat>
-        		
+
         <align:map>
-            <align:Cell rdf:about="http://www.inter-iot.eu/sripas#1_provider">
-                <align:entity1 rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
-                    [ a                  sensinact:Provider , sripas:node_provider ;
-                    sensinact:manages  [ a               sensinact:Service , sripas:node_service ;
-                    sensinact:name  [ a  sripas:node_service_name ]
-                    ] ;
-                    sensinact:name     [ a  sripas:node_provider_name ]
-                    ] .
+            <align:Cell rdf:about="http://www.inter-iot.eu/sripas#1_temperature">
+                <align:entity1 rdf:parseType="Literal">
+                    <sripas:node_1>
+                        <sna:name>
+                            <sripas:name/>
+                        </sna:name>
+                        <sna:provider>
+                            <sripas:provider/>
+                        </sna:provider>
+                        <sna:service>
+                            <sripas:service/>
+                        </sna:service>
+                        <sna:timestamp>
+                            <sripas:timestamp/>
+                        </sna:timestamp>
+                        <sna:type>
+                            <sripas:type/>
+                        </sna:type>
+                        <sna:value>
+                            <sripas:value/>
+                        </sna:value>
+                        <rdf:type rdf:resource="http://sensinact.com#TemperatureMonitorResource"/>
+                    </sripas:node_1>
                 </align:entity1>
-            
-                <align:entity2 rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
-                    [ a             sosa:Platform , sosa:IoTDevice , sripas:node_provider ;
-                    iiot:hasName  [ a  sripas:node_provider_name ] ;
-                    sosa:hosts    [ a             sosa:Sensor , sripas:node_service ;
-                    iiot:hasName  [ a  sripas:node_service_name ]
-                    ]
-                    ] .
+                <align:entity2 rdf:parseType="Literal">
+                    <sosa:Observation>
+                        <sosa:ObservableProperty>
+                            <ssn:Property>
+                                <ssn:hasProperty>occupied</ssn:hasProperty>                            
+                            </ssn:Property>
+                        </sosa:ObservableProperty>
+                        <ssn:hasResult>
+                            <sosa:Result>
+                                <iiot:hasName>
+                                    <sripas:name/>
+                                </iiot:hasName>
+                                <iiot:hasResultValue>
+                                    <sripas:value/>
+                                </iiot:hasResultValue>
+                            </sosa:Result>
+                        </ssn:hasResult>
+                        <sosa:madeBySensor>
+                            <sosa:Sensor>
+                                <sosa:observes>
+                                    <sripas:provider/>
+                                </sosa:observes>
+                            </sosa:Sensor>
+                        </sosa:madeBySensor>
+                        <sosa:observedProperty>
+                            <sripas:provider/>
+                        </sosa:observedProperty>
+                        <sosa:phenomenomTime>
+                            <time:Instant>
+                                <time:inTimePosition>
+                                    <sripas:timestamp/>
+                                </time:inTimePosition>
+                            </time:Instant>
+                        </sosa:phenomenomTime>
+                    </sosa:Observation>
                 </align:entity2>
-            
                 <align:relation>=</align:relation>
+                <sripas:typings rdf:parseType="Literal">
+                    <typing about="http://www.inter-iot.eu/sripas#name" datatype="http://www.w3.org/2001/XMLSchema#string"></typing>
+                    <typing about="http://www.inter-iot.eu/sripas#value" datatype="http://www.w3.org/2001/XMLSchema#string"></typing>
+                    <typing about="http://www.inter-iot.eu/sripas#provider" datatype="http://www.w3.org/2001/XMLSchema#string"></typing>
+                    <typing about="http://www.inter-iot.eu/sripas#timestamp" datatype="http://www.w3.org/2001/XMLSchema#string"></typing>
+                </sripas:typings>
             </align:Cell>
         </align:map>
+      	      	
         <align:map>
-            <align:Cell rdf:about="http://www.inter-iot.eu/sripas#2_observation">
-                <align:entity1 rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
-                    [ a                  sosa:Sensor , sripas:node_sensor ;
-                    sensinact:manages  [ a                sensinact:Resource , sripas:node_resource ;
-                    sensinact:name   [ a  sripas:node_resource_name ] ;
-                    sensinact:value  [ a  sripas:node_resource_value ]
-                    ]
-                    ] .
+            <align:Cell rdf:about="http://www.inter-iot.eu/sripas#2_weight">
+                <align:entity1 rdf:parseType="Literal">
+                    <sripas:node_1>
+                        <sna:name>
+                            <sripas:name/>
+                        </sna:name>
+                        <sna:provider>
+                            <sripas:provider/>
+                        </sna:provider>
+                        <sna:service>
+                            <sripas:service/>
+                        </sna:service>
+                        <sna:timestamp>
+                            <sripas:timestamp/>
+                        </sna:timestamp>
+                        <sna:type>
+                            <sripas:type/>
+                        </sna:type>
+                        <sna:value>
+                            <sripas:value/>
+                        </sna:value>
+                        <rdf:type rdf:resource="http://sensinact.com#TemperatureMonitorResource"/>
+                    </sripas:node_1>
                 </align:entity1>
-            
-                <align:entity2 rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
-                    [ a                        sosa:Observation ;
-                    sosa:ObservableProperty  [ a                ssn:Property , rdf:description ;
-                    ssn:hasProperty  "occupied"
-                    ] ;
-                    sosa:hasResult           [ a                    sosa:Result ;
-                    iiot:hasName         [ a  sripas:node_resource_name ] ;
-                    iiot:hasResultValue  [ a  sripas:node_resource_value ]
-                    ] ;
-                    sosa:madeBySensor        [ a             sosa:Sensor , sripas:node_sensor ;
-                    sosa:oberves  [ a  sripas:node_resource ]
-                    ] ;
-                    sosa:observedProperty    [ a  sripas:node_resource ] ;
-                    sosa:phenomenomTime      [ a                    time:Instant , rdf:description ;
-                    time:inTimePosition  "1562880899012"
-                    ]
-                    ] .
+                <align:entity2 rdf:parseType="Literal">
+                    <sosa:Observation>
+                        <sosa:ObservableProperty>
+                            <ssn:Property>
+                                <ssn:hasProperty>occupied</ssn:hasProperty>                            
+                            </ssn:Property>
+                        </sosa:ObservableProperty>
+                        <ssn:hasResult>
+                            <sosa:Result>
+                                <iiot:hasName>
+                                    <sripas:name/>
+                                </iiot:hasName>
+                                <iiot:hasResultValue>
+                                    <sripas:value/>
+                                </iiot:hasResultValue>
+                            </sosa:Result>
+                        </ssn:hasResult>
+                        <sosa:madeBySensor>
+                            <sosa:Sensor>
+                                <sosa:observes>
+                                    <sripas:provider/>
+                                </sosa:observes>
+                            </sosa:Sensor>
+                        </sosa:madeBySensor>
+                        <sosa:observedProperty>
+                            <sripas:provider/>
+                        </sosa:observedProperty>
+                        <sosa:phenomenomTime>
+                            <time:Instant>
+                                <time:inTimePosition>
+                                    <sripas:timestamp/>
+                                </time:inTimePosition>
+                            </time:Instant>
+                        </sosa:phenomenomTime>
+                    </sosa:Observation>
                 </align:entity2>
-            
                 <align:relation>=</align:relation>
+                <sripas:typings rdf:parseType="Literal">
+                    <typing about="http://www.inter-iot.eu/sripas#name" datatype="http://www.w3.org/2001/XMLSchema#string"></typing>
+                    <typing about="http://www.inter-iot.eu/sripas#value" datatype="http://www.w3.org/2001/XMLSchema#string"></typing>
+                    <typing about="http://www.inter-iot.eu/sripas#provider" datatype="http://www.w3.org/2001/XMLSchema#string"></typing>
+                    <typing about="http://www.inter-iot.eu/sripas#timestamp" datatype="http://www.w3.org/2001/XMLSchema#string"></typing>
+                </sripas:typings>
             </align:Cell>
         </align:map>
+      	      	
         <align:map>
-            <align:Cell rdf:about="http://www.inter-iot.eu/sripas#3_resource">
-                <align:entity1 rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
-                    [ a                  sosa:Sensor , sripas:node_sensor ;
-                    sensinact:manages  [ a  sensinact:Resource , sripas:node_resource ]
-                    ] .
+            <align:Cell rdf:about="http://www.inter-iot.eu/sripas#3_pedometer">
+                <align:entity1 rdf:parseType="Literal">
+                    <sripas:node_1>
+                        <sna:name>
+                            <sripas:name/>
+                        </sna:name>
+                        <sna:provider>
+                            <sripas:provider/>
+                        </sna:provider>
+                        <sna:service>
+                            <sripas:service/>
+                        </sna:service>
+                        <sna:timestamp>
+                            <sripas:timestamp/>
+                        </sna:timestamp>
+                        <sna:type>
+                            <sripas:type/>
+                        </sna:type>
+                        <sna:value>
+                            <sripas:value/>
+                        </sna:value>
+                        <rdf:type rdf:resource="http://sensinact.com#StepNumberResource"/>
+                    </sripas:node_1>
                 </align:entity1>
-            
-                <align:entity2 rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
-                    [ a              sosa:Sensor , sripas:node_sensor ;
-                    sosa:observes  [ a  sripas:node_resource ]
-                    ] .
+                <align:entity2 rdf:parseType="Literal">
+                    <iiotex:hasLocalId>
+                        <sripas:provider/>
+                    </iiotex:hasLocalId>
+                    <sosa:Sensor>
+                        <rdf:type rdf:resource="http://purl.org/iot/vocab/m3-lite#Pedometer"/>
+                        <sosa:madeObservation>
+                            <sosa:Observation>
+                                <sosa:hasResult>
+                                    <sripas:value/>
+                                </sosa:hasResult>
+                                <sosa:observedProperty>
+                                    <sosa:observableProperty>
+                                        <rdf:type rdf:resource="http://purl.org/iot/vocab/m3-lite#Step"/>
+                                    </sosa:observableProperty>
+                                </sosa:observedProperty>
+                                <sosa:resultTime>
+                                    <sripas:timestamp/>
+                                </sosa:resultTime>
+                            </sosa:Observation>
+                        </sosa:madeObservation>
+                    </sosa:Sensor>
                 </align:entity2>
-            
                 <align:relation>=</align:relation>
+                <sripas:typings rdf:parseType="Literal">
+                    <typing about="http://www.inter-iot.eu/sripas#name" datatype="http://www.w3.org/2001/XMLSchema#string"></typing>
+                    <typing about="http://www.inter-iot.eu/sripas#value" datatype="http://www.w3.org/2001/XMLSchema#string"></typing>
+                    <typing about="http://www.inter-iot.eu/sripas#provider" datatype="http://www.w3.org/2001/XMLSchema#string"></typing>
+                    <typing about="http://www.inter-iot.eu/sripas#timestamp" datatype="http://www.w3.org/2001/XMLSchema#string"></typing>
+                </sripas:typings>
             </align:Cell>
         </align:map>
+      	      	
         <align:map>
-            <align:Cell rdf:about="http://www.inter-iot.eu/sripas#4_clean">
-                <align:entity1 rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
-                    [ a                  sosa:Sensor , sripas:node_sensor ;
-                    sensinact:manages  [ a  sensinact:Resource , sripas:node_resource ]
-                    ] .
+            <align:Cell rdf:about="http://www.inter-iot.eu/sripas#4_bed">
+                <align:entity1 rdf:parseType="Literal">
+                    <sripas:node_1>
+                        <sna:name>
+                            <sripas:name/>
+                        </sna:name>
+                        <sna:provider>
+                            <sripas:provider/>
+                        </sna:provider>
+                        <sna:service>
+                            <sripas:service/>
+                        </sna:service>
+                        <sna:timestamp>
+                            <sripas:timestamp/>
+                        </sna:timestamp>
+                        <sna:type>
+                            <sripas:type/>
+                        </sna:type>
+                        <sna:value>
+                            <sripas:value/>
+                        </sna:value>
+                        <rdf:type rdf:resource="http://sensinact.com#BedOccupancyResource"/>
+                    </sripas:node_1>
                 </align:entity1>
-            
-                <align:entity2 rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
-                    [ a       sosa:Sensor , sripas:node_sensor ] .
+                <align:entity2 rdf:parseType="Literal">
+                    <sosa:Observation>
+                        <sosa:ObservableProperty>
+                            <ssn:Property>
+                                <ssn:hasProperty>occupied</ssn:hasProperty>                            
+                            </ssn:Property>
+                        </sosa:ObservableProperty>
+                        <ssn:hasResult>
+                            <sosa:Result>
+                                <iiot:hasName>
+                                    <sripas:name/>
+                                </iiot:hasName>
+                                <iiot:hasResultValue>
+                                    <sripas:value/>
+                                </iiot:hasResultValue>
+                            </sosa:Result>
+                        </ssn:hasResult>
+                        <sosa:madeBySensor>
+                            <sosa:Sensor>
+                                <sosa:observes>
+                                    <sripas:provider/>
+                                </sosa:observes>
+                            </sosa:Sensor>
+                        </sosa:madeBySensor>
+                        <sosa:observedProperty>
+                            <sripas:provider/>
+                        </sosa:observedProperty>
+                        <sosa:phenomenomTime>
+                            <time:Instant>
+                                <time:inTimePosition>
+                                    <sripas:timestamp/>
+                                </time:inTimePosition>
+                            </time:Instant>
+                        </sosa:phenomenomTime>
+                    </sosa:Observation>
                 </align:entity2>
-            
                 <align:relation>=</align:relation>
+                <sripas:typings rdf:parseType="Literal">
+                    <typing about="http://www.inter-iot.eu/sripas#name" datatype="http://www.w3.org/2001/XMLSchema#string"></typing>
+                    <typing about="http://www.inter-iot.eu/sripas#value" datatype="http://www.w3.org/2001/XMLSchema#string"></typing>
+                    <typing about="http://www.inter-iot.eu/sripas#provider" datatype="http://www.w3.org/2001/XMLSchema#string"></typing>
+                    <typing about="http://www.inter-iot.eu/sripas#timestamp" datatype="http://www.w3.org/2001/XMLSchema#string"></typing>
+                </sripas:typings>
             </align:Cell>
         </align:map>
-        		
+      	      	
         <align:map>
-            <align:Cell rdf:about="http://www.inter-iot.eu/sripas#5_bedsensor">
-                <align:entity1 rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
-                    [ a       sosa:Sensor , sripas:node_sensor ] .
+            <align:Cell rdf:about="http://www.inter-iot.eu/sripas#5_kpi">
+                <align:entity1 rdf:parseType="Literal">
+                    <sripas:node_1>
+                        <sna:name>
+                            <sripas:name/>
+                        </sna:name>
+                        <sna:provider>
+                            <sripas:provider/>
+                        </sna:provider>
+                        <sna:service>
+                            <sripas:service/>
+                        </sna:service>
+                        <sna:timestamp>
+                            <sripas:timestamp/>
+                        </sna:timestamp>
+                        <sna:type>
+                            <sripas:type/>
+                        </sna:type>
+                        <sna:value>
+                            <sripas:value/>
+                        </sna:value>
+                        <rdf:type rdf:resource="http://sensinact.com#KPIResource"/>
+                    </sripas:node_1>
                 </align:entity1>
-            
-                <align:entity2 rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
-                    [ a                &lt;http://ontology.universAAL.org/PhThing.owl#Device&gt; , &lt;http://ontology.universAAL.org/PhThing.owl#PhysicalThing&gt; , m3:PressureSensor , sosa:Sensor , sripas:node_sensor ;
-                    sosa:isHostedBy  "originalPlatformSensiNact"
-                    ] .
+                <align:entity2 rdf:parseType="Literal">
+                    <sosa:Observation>
+                        <sosa:ObservableProperty>
+                            <ssn:Property>
+                                <ssn:hasProperty>occupied</ssn:hasProperty>                            
+                            </ssn:Property>
+                        </sosa:ObservableProperty>
+                        <ssn:hasResult>
+                            <sosa:Result>
+                                <iiot:hasName>
+                                    <sripas:name/>
+                                </iiot:hasName>
+                                <iiot:hasResultValue>
+                                    <sripas:value/>
+                                </iiot:hasResultValue>
+                            </sosa:Result>
+                        </ssn:hasResult>
+                        <sosa:madeBySensor>
+                            <sosa:Sensor>
+                                <sosa:observes>
+                                    <sripas:provider/>
+                                </sosa:observes>
+                            </sosa:Sensor>
+                        </sosa:madeBySensor>
+                        <sosa:observedProperty>
+                            <sripas:provider/>
+                        </sosa:observedProperty>
+                        <sosa:phenomenomTime>
+                            <time:Instant>
+                                <time:inTimePosition>
+                                    <sripas:timestamp/>
+                                </time:inTimePosition>
+                            </time:Instant>
+                        </sosa:phenomenomTime>
+                    </sosa:Observation>
                 </align:entity2>
-            
                 <align:relation>=</align:relation>
+                <sripas:typings rdf:parseType="Literal">
+                    <typing about="http://www.inter-iot.eu/sripas#name" datatype="http://www.w3.org/2001/XMLSchema#string"></typing>
+                    <typing about="http://www.inter-iot.eu/sripas#value" datatype="http://www.w3.org/2001/XMLSchema#string"></typing>
+                    <typing about="http://www.inter-iot.eu/sripas#provider" datatype="http://www.w3.org/2001/XMLSchema#string"></typing>
+                    <typing about="http://www.inter-iot.eu/sripas#timestamp" datatype="http://www.w3.org/2001/XMLSchema#string"></typing>
+                </sripas:typings>
             </align:Cell>
         </align:map>
+      	      	
         <align:map>
-            <align:Cell rdf:about="http://www.inter-iot.eu/sripas#6_eliminate_useless_classes">
-                <align:entity1 rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
-                    [ a                  sosa:Sensor , sripas:node_sensor ;
-                    sensinact:manages  [ a  sensinact:Resource , sripas:node_resource ]
-                    ] .
+            <align:Cell rdf:about="http://www.inter-iot.eu/sripas#6_clean_unregistered_resource">
+                <align:entity1 rdf:parseType="Literal">
+                    <sripas:node_1>
+                        <sna:name>
+                            <sripas:name/>
+                        </sna:name>
+                        <sna:provider>
+                            <sripas:provider/>
+                        </sna:provider>
+                        <sna:service>
+                            <sripas:service/>
+                        </sna:service>
+                        <sna:timestamp>
+                            <sripas:timestamp/>
+                        </sna:timestamp>
+                        <sna:type>
+                            <sripas:type/>
+                        </sna:type>
+                        <sna:value>
+                            <sripas:value/>
+                        </sna:value>
+                        <rdf:type rdf:resource="http://sensinact.com#Resource"/>
+                    </sripas:node_1>
                 </align:entity1>
-            
-                <align:entity2 rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
-                    [ a       sosa:Sensor , sripas:node_sensor ] .
+                <align:entity2 rdf:parseType="Literal">
                 </align:entity2>
-            
                 <align:relation>=</align:relation>
+                <sripas:typings rdf:parseType="Literal">
+                    <typing about="http://www.inter-iot.eu/sripas#name" datatype="http://www.w3.org/2001/XMLSchema#string"></typing>
+                    <typing about="http://www.inter-iot.eu/sripas#value" datatype="http://www.w3.org/2001/XMLSchema#string"></typing>
+                    <typing about="http://www.inter-iot.eu/sripas#provider" datatype="http://www.w3.org/2001/XMLSchema#string"></typing>
+                    <typing about="http://www.inter-iot.eu/sripas#timestamp" datatype="http://www.w3.org/2001/XMLSchema#string"></typing>
+                </sripas:typings>
             </align:Cell>
-        </align:map>      		
-      	
+        </align:map>
+      	      	
     </align:Alignment>
 </rdf:RDF>

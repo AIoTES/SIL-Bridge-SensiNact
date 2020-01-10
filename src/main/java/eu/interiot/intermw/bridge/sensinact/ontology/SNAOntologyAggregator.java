@@ -52,7 +52,8 @@ public class SNAOntologyAggregator {
     }
 
     private OntModel model;
-    private final String filepath = "/ontology/SNAOntology.owl";
+    private static final String SNA_ONTOLOGY_FILE_PATH = "/ontology/SNAOntology.owl";
+    private static final String SNA_ONTOLOGY_FILE_PATH_PATTERN = "/ontology/%s/SNAOntology.owl";
 
     public SNAOntologyAggregator(Model rdfmodel) {
         model = ModelFactory.createOntologyModel();
@@ -68,7 +69,7 @@ public class SNAOntologyAggregator {
 
     public SNAOntologyAggregator(JenaWriterType lang) {
         model = ModelFactory.createOntologyModel();
-        InputStream is = this.getClass().getResourceAsStream(filepath);
+        InputStream is = this.getClass().getResourceAsStream(SNA_ONTOLOGY_FILE_PATH);
         model.read(is, null, lang.name);
     }
 
@@ -88,20 +89,25 @@ public class SNAOntologyAggregator {
         return model.getDatatypeProperty("http://sensinact.com#" + property);
     }
 
-    public OntModel transformOntology(String provider, String service, String resource, String type, String value, String timestamp) {
-        OntModel isolatedModel = ModelFactory.createOntologyModel();
-        InputStream is = this.getClass().getResourceAsStream(filepath);
+    public Model transformOntology(String provider, String service, String resource, String type, String value, String timestamp) {
+        final OntModel emptyModel = ModelFactory.createOntologyModel();
+        final OntModel isolatedModel = ModelFactory.createOntologyModel();
+        String ontologyFilePath;
+        InputStream is;
+        ontologyFilePath = String.format(SNA_ONTOLOGY_FILE_PATH_PATTERN, type);
+        is = this.getClass().getResourceAsStream(ontologyFilePath);
+        if (is == null) {
+            ontologyFilePath = SNA_ONTOLOGY_FILE_PATH;
+            is = this.getClass().getResourceAsStream(ontologyFilePath);
+        }
         RDFDataMgr.read(isolatedModel, is, Lang.RDFXML);
         updateOntologyWith(provider, service, resource, type, value, timestamp, isolatedModel);
-
-        return isolatedModel;
+        final Model minimalModel = isolatedModel.difference(emptyModel);
+        return minimalModel;
     }
-
+    
     public Model createModel(String provider, String service, String resource, String type, String value, String timestamp) {
-        OntModel isolatedModel = ModelFactory.createOntologyModel();
-        InputStream is = this.getClass().getResourceAsStream(filepath);
-        RDFDataMgr.read(isolatedModel, is, Lang.RDFXML);
-        updateOntologyWith(provider, service, resource, type, value, timestamp, isolatedModel);
+        final Model isolatedModel = transformOntology(provider, service, resource, type, value, timestamp);
         return isolatedModel;
     }
 
@@ -134,36 +140,107 @@ public class SNAOntologyAggregator {
      */
     public void updateOntologyWith(String provider, String service, String resource, String type, String value, String timestamp, OntModel model) {
 
-        String URLIndividualProvider = String.format("%s", provider);
-        String URLIndividualService = String.format("%s/%s", provider, service);
-        String URLIndividualResource = String.format("%s/%s/%s", provider, service, resource);
+        final SNAAHAOntologyType snaOntologyType = 
+            SNAAHAOntologyType.getSNAAHAOntologyType(type, service, resource);
+        final String ontologyClassName = snaOntologyType.getOntologyClassName();
+        Individual individualResource = 
+            model.createIndividual(getOntologyClass(ontologyClassName));
 
-        Individual individualProvider = model.createIndividual(null, getOntologyClass("Provider"));
-        Individual individualService = model.createIndividual(null, getOntologyClass("Service"));
-        Individual individualResource = model.createIndividual(null, getOntologyClass("Resource"));
-
-        /*
-        Individual individualProvider=model.getIndividual(URLIndividualProvider)!=null?model.getIndividual(URLIndividualProvider):model.createIndividual(URLIndividualProvider,getOntologyClass("Provider"));
-        Individual individualService=model.getIndividual(URLIndividualService)!=null?model.getIndividual(URLIndividualService):model.createIndividual(URLIndividualService,getOntologyClass("Service"));
-        Individual individualResource=model.createIndividual(URLIndividualResource,getOntologyClass("Resource"));
-         */
-        DatatypeProperty nameDataProperty = getDataProperty("name");
-        DatatypeProperty typeDataProperty = getDataProperty("type");
-        DatatypeProperty timestampDataProperty = getDataProperty("timestamp");
-        Property managesProperty = getObjectProperty("manages");
-        individualProvider.addLiteral(nameDataProperty, provider);
-        individualService.addLiteral(nameDataProperty, service);
+        Property providerDataProperty = getObjectProperty("provider");
+        Property serviceDataProperty = getObjectProperty("service");
+        Property nameDataProperty = getObjectProperty("name");
+        Property typeDataProperty = getObjectProperty("type");
+        Property timestampDataProperty = getObjectProperty("timestamp");
 
         if (value != null) {
-            DatatypeProperty valueProperty = getDataProperty("value");
+            String correctedValue = snaOntologyType.computeValue(value);
+            Property valueProperty = getObjectProperty("value");
+            individualResource.addLiteral(providerDataProperty, provider);
+            individualResource.addLiteral(serviceDataProperty, service);
             individualResource.addLiteral(nameDataProperty, resource);
             individualResource.addLiteral(typeDataProperty, type);
-            individualResource.addLiteral(valueProperty, value);
+            individualResource.addLiteral(valueProperty, correctedValue);
             individualResource.addLiteral(timestampDataProperty, timestamp);
         }
-        model.add(individualProvider, managesProperty, individualService);
-        model.add(individualService, managesProperty, individualResource);
+    }
 
+    private static interface ValueComputer {
+        String computeValue(String value);
+    }
+
+    private static enum SNAAHAOntologyType implements ValueComputer {
+        DAY_LAYING("state", "BedOccupancyResource"),
+        KPI("KPIResource"),
+        NIGHT_RISING("state", "BedOccupancyResource") {
+            @Override
+            public String computeValue(String value) {
+                boolean isOutOfBed = Boolean.valueOf(value);
+                boolean isInBed = !isOutOfBed;
+                return String.valueOf(isInBed);
+            }            
+        },
+        PEDOMETER_MONITOR("last-day-step-counter", "StepNumberResource"),
+        TEMPERATURE_ALERT("last-temperature", "TemperatureMonitorResource"),
+        WEIGHT_MONITOR("last-weight", "WeightMonitorResource"),
+        DEFAULT;
+
+        private static final String DEFAULT_ONTOLOGY_CLASS_NAME = "Resource";
+        private static final String DEFAULT_SERVICE = "monitor";
+        private static final String ANY_RESOURCE = "*";
+        private static final String DEFAULT_RESOURCE = ANY_RESOURCE;
+        private final String ontologyClassName;
+        private final String service;
+        private final String resource;
+        
+        SNAAHAOntologyType() {
+            this.ontologyClassName = DEFAULT_ONTOLOGY_CLASS_NAME;
+            this.service = DEFAULT_SERVICE;
+            this.resource = DEFAULT_RESOURCE;
+        }
+        
+        SNAAHAOntologyType(final String ontologyClassName) {
+            this.ontologyClassName = ontologyClassName;
+            this.service = DEFAULT_SERVICE;
+            this.resource = DEFAULT_RESOURCE;
+        }
+
+        SNAAHAOntologyType(final String resource, final String ontologyClassName) {
+            this.ontologyClassName = ontologyClassName;
+            this.service = DEFAULT_SERVICE;
+            this.resource = resource;
+        }
+
+        private String getOntologyClassName() {
+            return ontologyClassName;
+        }
+        
+        private boolean isForService(final String service) {
+            boolean isForService = this.service.equals(service);
+            return isForService;
+        }
+
+        private boolean isForResource(final String resource) {
+            boolean isForResource = this.resource.equals(ANY_RESOURCE) || this.resource.equals(resource);
+            return isForResource;
+        }
+
+        @Override
+        public String computeValue(String value) {
+            return value;
+        }
+        
+        private static SNAAHAOntologyType getSNAAHAOntologyType(final String ahaType, final String serviceId, final String resourceId) {
+            SNAAHAOntologyType ontologyType;
+            try {
+                ontologyType = SNAAHAOntologyType.valueOf(ahaType);
+                if (!ontologyType.isForService(serviceId) || !ontologyType.isForResource(resourceId)) {
+                    ontologyType = DEFAULT;
+                }
+            } catch (Exception e) {
+                ontologyType = DEFAULT;
+            }
+            return ontologyType;
+        }
     }
 
     public OntModel getOntModel() {
@@ -183,7 +260,6 @@ public class SNAOntologyAggregator {
             e.printStackTrace();
             return null;
         }
-
     }
 
     public void saveOntology(String filepath, JenaWriterType writerType) throws IOException {
@@ -214,10 +290,7 @@ public class SNAOntologyAggregator {
                 final String resouceValue = resourceStatement.getProperty(valueDataProperty).getString();
                 resources.add(new SNAResource(providerName, serviceName, resourceName, resouceValue));
             }
-
         }
-
         return resources;
     }
-
 }

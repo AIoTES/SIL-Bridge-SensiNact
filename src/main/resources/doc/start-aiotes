@@ -68,8 +68,8 @@
     KAFKA_SSL_CLIENT_AUTH=required
 
         give execution permissions to scripts
-          > chmod +x ./*
-          > chmod +x ./*/*
+          > chmod 777 ./*
+          > chmod 777 ./*/*
         
         create docker volumes
           > sudo ./initialize-volumes.sh
