@@ -22,6 +22,7 @@ import eu.interiot.intermw.bridge.sensinact.fetcher.SensinactModelRecoverListene
 import eu.interiot.intermw.bridge.sensinact.http.SensinactFactory;
 import eu.interiot.intermw.bridge.sensinact.http.model.SensinactConfig;
 import eu.interiot.intermw.bridge.sensinact.wrapper.SensinactAPI;
+import java.util.Map;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -58,7 +59,7 @@ public class SensinactInterfaceV1Test {
     public void websocketConnectionTest() throws Exception {
         sensinact.setListener(new SensinactModelRecoverListener() {
             @Override
-            public void notify(String provider, String service, String resource, String type, String value, String timestamp) {
+            public void notify(String provider, String service, String resource, String type, String value, String timestamp, Map<String, String> metadata) {
                 counter.getAndAdd(1);
             }
         });

@@ -34,6 +34,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.Executors;
@@ -69,7 +70,7 @@ public class SensinactCommunicationBridgeV1 implements SensinactAPI {
                     String value = payloadJson.getAsJsonObject("notification").get("value").getAsString();
                     String timestamp = payloadJson.getAsJsonObject("notification").get("timestamp").getAsString();
                     if (listener != null) {
-                        listener.notify(updateMessage[1], updateMessage[2], updateMessage[3], type, value, timestamp);
+                        listener.notify(updateMessage[1], updateMessage[2], updateMessage[3], type, value, timestamp, Collections.EMPTY_MAP);
                     }
                 } catch (Exception e) {
                     LOG.error("Failed to deliver message", e);
@@ -231,7 +232,8 @@ public class SensinactCommunicationBridgeV1 implements SensinactAPI {
                             resource.getResource(), 
                             resource.getType(), 
                             null, 
-                            String.valueOf(timestamp)
+                            String.valueOf(timestamp),
+                            resource.getMetadata()
                     );
                 }
             }

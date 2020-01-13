@@ -18,11 +18,14 @@
          xmlns:m3="http://purl.org/iot/vocab/m3-lite" 
          xmlns:fw="http://inter-iot.eu/syntax/FIWAREv2#" 
          xmlns:geosparql="http://www.opengis.net/ont/geosparql#" 
-         xmlns:sna="http://sensinact.com#">    
+         xmlns:sna="http://sensinact.com#"
+         xmlns:kpi="http://www.semanticweb.org/activage/ontologies/2018/4/activage-core#"
+         xmlns:kpiowl="http://khaos.uma.es/ontologies/lucentia/KPIOWL#"
+>    
       
     <align:Alignment>
         <dcelem:title>SensiNact2AIoTES</dcelem:title>
-        <exmo:version>0.4.5</exmo:version>
+        <exmo:version>0.4.6</exmo:version>
         <dcelem:creator>CEA Stephane Bergeon</dcelem:creator>
         <dcelem:description>Alignment between sensiNact AHA ontology and ACTIVAGE ontology.</dcelem:description>
         <dcelem:date>10 January 2020</dcelem:date>
@@ -83,38 +86,29 @@
                 </align:entity1>
                 <align:entity2 rdf:parseType="Literal">
                     <sosa:Observation>
-                        <sosa:ObservableProperty>
-                            <ssn:Property>
-                                <ssn:hasProperty>occupied</ssn:hasProperty>                            
-                            </ssn:Property>
-                        </sosa:ObservableProperty>
-                        <ssn:hasResult>
-                            <sosa:Result>
-                                <iiot:hasName>
-                                    <sripas:name/>
-                                </iiot:hasName>
-                                <iiot:hasResultValue>
-                                    <sripas:value/>
-                                </iiot:hasResultValue>
-                            </sosa:Result>
-                        </ssn:hasResult>
+                        <rdfs:label>
+                            <sripas:name/>
+                        </rdfs:label>
                         <sosa:madeBySensor>
-                            <sosa:Sensor>
-                                <sosa:observes>
+                            <aha:AirTemperatureSensor>
+                                <rdfs:label>
                                     <sripas:provider/>
-                                </sosa:observes>
-                            </sosa:Sensor>
+                                </rdfs:label>
+                            </aha:AirTemperatureSensor>
                         </sosa:madeBySensor>
+                        <ssn:hasSimpleResult>
+                            <sripas:value/>
+                        </ssn:hasResult>
                         <sosa:observedProperty>
-                            <sripas:provider/>
+                            <sosa:ObservableProperty>
+                                <rdfs:label>
+                                    <sripas:name/>
+                                </rdfs:label>
+                            </sosa:ObservableProperty>
                         </sosa:observedProperty>
-                        <sosa:phenomenomTime>
-                            <time:Instant>
-                                <time:inTimePosition>
-                                    <sripas:timestamp/>
-                                </time:inTimePosition>
-                            </time:Instant>
-                        </sosa:phenomenomTime>
+                        <sosa:resultTime>
+                            <sripas:timestamp/>
+                        </sosa:resultTime>
                     </sosa:Observation>
                 </align:entity2>
                 <align:relation>=</align:relation>
@@ -126,7 +120,7 @@
                 </sripas:typings>
             </align:Cell>
         </align:map>
-      	      	
+
         <align:map>
             <align:Cell rdf:about="http://www.inter-iot.eu/sripas#2_weight">
                 <align:entity1 rdf:parseType="Literal">
@@ -149,44 +143,31 @@
                         <sna:value>
                             <sripas:value/>
                         </sna:value>
-                        <rdf:type rdf:resource="http://sensinact.com#TemperatureMonitorResource"/>
+                        <rdf:type rdf:resource="http://sensinact.com#WeightMonitorResource"/>
                     </sripas:node_1>
                 </align:entity1>
                 <align:entity2 rdf:parseType="Literal">
-                    <sosa:Observation>
-                        <sosa:ObservableProperty>
-                            <ssn:Property>
-                                <ssn:hasProperty>occupied</ssn:hasProperty>                            
-                            </ssn:Property>
-                        </sosa:ObservableProperty>
-                        <ssn:hasResult>
-                            <sosa:Result>
-                                <iiot:hasName>
-                                    <sripas:name/>
-                                </iiot:hasName>
-                                <iiot:hasResultValue>
+                    <iiotex:hasLocalId>
+                        <sripas:provider/>
+                    </iiotex:hasLocalId>
+                    <sosa:Sensor>
+                        <rdf:type rdf:resource="http://purl.org/iot/vocab/m3-lite#WeightSensor"/>
+                        <sosa:madeObservation>
+                            <sosa:Observation>
+                                <sosa:hasResult>
                                     <sripas:value/>
-                                </iiot:hasResultValue>
-                            </sosa:Result>
-                        </ssn:hasResult>
-                        <sosa:madeBySensor>
-                            <sosa:Sensor>
-                                <sosa:observes>
-                                    <sripas:provider/>
-                                </sosa:observes>
-                            </sosa:Sensor>
-                        </sosa:madeBySensor>
-                        <sosa:observedProperty>
-                            <sripas:provider/>
-                        </sosa:observedProperty>
-                        <sosa:phenomenomTime>
-                            <time:Instant>
-                                <time:inTimePosition>
+                                </sosa:hasResult>
+                                <sosa:observedProperty>
+                                    <sosa:observableProperty>
+                                        <rdf:type rdf:resource="http://purl.org/iot/vocab/m3-lite#Kilogram"/>
+                                    </sosa:observableProperty>
+                                </sosa:observedProperty>
+                                <sosa:resultTime>
                                     <sripas:timestamp/>
-                                </time:inTimePosition>
-                            </time:Instant>
-                        </sosa:phenomenomTime>
-                    </sosa:Observation>
+                                </sosa:resultTime>
+                            </sosa:Observation>
+                        </sosa:madeObservation>
+                    </sosa:Sensor>
                 </align:entity2>
                 <align:relation>=</align:relation>
                 <sripas:typings rdf:parseType="Literal">
@@ -349,44 +330,27 @@
                         <sna:value>
                             <sripas:value/>
                         </sna:value>
+                        <sna:target>
+                            <sripas:target/>
+                        </sna:target>
                         <rdf:type rdf:resource="http://sensinact.com#KPIResource"/>
                     </sripas:node_1>
                 </align:entity1>
                 <align:entity2 rdf:parseType="Literal">
-                    <sosa:Observation>
-                        <sosa:ObservableProperty>
-                            <ssn:Property>
-                                <ssn:hasProperty>occupied</ssn:hasProperty>                            
-                            </ssn:Property>
-                        </sosa:ObservableProperty>
-                        <ssn:hasResult>
-                            <sosa:Result>
-                                <iiot:hasName>
-                                    <sripas:name/>
-                                </iiot:hasName>
-                                <iiot:hasResultValue>
-                                    <sripas:value/>
-                                </iiot:hasResultValue>
-                            </sosa:Result>
-                        </ssn:hasResult>
-                        <sosa:madeBySensor>
-                            <sosa:Sensor>
-                                <sosa:observes>
-                                    <sripas:provider/>
-                                </sosa:observes>
-                            </sosa:Sensor>
-                        </sosa:madeBySensor>
-                        <sosa:observedProperty>
-                            <sripas:provider/>
-                        </sosa:observedProperty>
-                        <sosa:phenomenomTime>
-                            <time:Instant>
-                                <time:inTimePosition>
-                                    <sripas:timestamp/>
-                                </time:inTimePosition>
-                            </time:Instant>
-                        </sosa:phenomenomTime>
-                    </sosa:Observation>
+                    <kpi:KPI>
+                        <kpi:name>
+                            <sripas:name/>
+                        </sna:name>
+                        <kpi:currentValue>
+                            <sripas:value/>
+                        </kpi:currentValue>
+                        <kpi:targetValue>
+                            <sripas:target/>
+                        </kpi:targetValue>
+                        <kpi:currentTime>
+                            <sripas:timestamp/>
+                        </kpi:currentTime>
+                    </kpi:KPI>
                 </align:entity2>
                 <align:relation>=</align:relation>
                 <sripas:typings rdf:parseType="Literal">

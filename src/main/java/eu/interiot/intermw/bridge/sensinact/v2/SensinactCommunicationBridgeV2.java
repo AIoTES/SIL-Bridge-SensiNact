@@ -19,8 +19,10 @@
 package eu.interiot.intermw.bridge.sensinact.v2;
 
 import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.google.gson.JsonPrimitive;
 import eu.interiot.intermw.bridge.sensinact.fetcher.SensinactModelRecoverListener;
 import eu.interiot.intermw.bridge.sensinact.fetcher.WebSocketModelRecoverListener;
 import eu.interiot.intermw.bridge.sensinact.http.HTTP;
@@ -57,13 +59,15 @@ public class SensinactCommunicationBridgeV2 implements SensinactAPI {
     private static final String FUNCTION_TYPE_RESOURCE_NAME = "function-type";
     private final Map<String, SNAResource> subscribedResources;
     private final UserSubscriptionManager userSubscriptions;
-    private static final String RESOURCE_PATH_PATTERN = "%s/%s/%s";
+    private static final String RESOURCE_PATH_PATTERN = "/%s/%s/%s/value";
     private static final String GET_ALL_PROVIDERS_DETAILS_REQUEST_PATTERN = 
         "http://%s:%s/jsonpath:sensinact?jsonpath=$.*";
     private static final String GET_ONE_PROVIDER_DETAILS_REQUEST_PATTERN = 
         "http://%s:%s/jsonpath:sensinact?jsonpath=[?(@['name'] == '%s')]";
+    private static final String GET_RESOURCE_REQUEST_PATTERN = 
+        "http://%s:%s/sensinact/%s/%s/%s";
     private static final String GET_RESOURCE_VALUE_REQUEST_PATTERN = 
-        "http://%s:%s/sensinact/%s/%s/%s/GET";
+        GET_RESOURCE_REQUEST_PATTERN + "/GET";
     private static final String ACT_RESOURCE_REQUEST_PATTERN =
         "http://%s:%s/sensinact/providers/%s/services/%s/resources/%s/ACT";
     private static final String LIFECYCLE_SUBSCRIBE_REQUEST = 
@@ -232,11 +236,49 @@ public class SensinactCommunicationBridgeV2 implements SensinactAPI {
         return value;
     }
 
+    private Map<String, String> getResourceMetadata(final String providerId, final String serviceId, final String resourceId) {
+        final Map<String, String> metadataMap = new HashMap<String, String>();
+        HTTP httpcall = new HTTP();
+        httpcall.setMethod("GET");
+        JsonObject jsonPathPayload;
+        String value = "";
+        try {
+            String result = httpcall.submit(
+                String.format(
+                    GET_RESOURCE_REQUEST_PATTERN, 
+                    config.getHost(), 
+                    config.getHttpPort(),
+                    providerId,
+                    serviceId,
+                    resourceId
+                )
+            );
+            jsonPathPayload = (JsonObject) new JsonParser().parse(result);
+            JsonObject response = jsonPathPayload.getAsJsonObject("response");
+            JsonArray attributes = response.getAsJsonArray("attributes");
+            JsonArray metadata = attributes.get(0).getAsJsonObject().getAsJsonArray("metadata");
+            String propertyId, propertyValue;
+            for (JsonElement element : metadata) {
+                JsonObject asJsonObject = element.getAsJsonObject();
+                JsonPrimitive asJsonPrimitive = asJsonObject.getAsJsonPrimitive("name");
+                propertyId = asJsonPrimitive.getAsString();
+                JsonPrimitive asJsonObjectValue = asJsonObject.getAsJsonPrimitive("value");
+                propertyValue = asJsonObjectValue.getAsString();
+                metadataMap.put(propertyId, propertyValue);
+            }
+        } catch (Exception e) {
+            LOG.debug("Failed to execute HTTP call", e);
+        }
+        return metadataMap;
+    }
+
     private SNAResource getResource(final String providerId, final String serviceId, final String resourceId) throws ResourceNotFoundException {
         SNAResource resource = null;
         String functionType = 
             getResourceValue(providerId, AHA_SERVICE_NAME, FUNCTION_TYPE_RESOURCE_NAME, SNAResource.DEFAULT_TYPE);
-        resource = new SNAResource(providerId, serviceId, resourceId, functionType);
+        Map<String, String> metadata = 
+            getResourceMetadata(providerId, serviceId, resourceId);
+        resource = new SNAResource(providerId, serviceId, resourceId, functionType, metadata);
         return resource;
     }
 
@@ -302,7 +344,8 @@ public class SensinactCommunicationBridgeV2 implements SensinactAPI {
                         final String serviceId = snaResource.getService();
                         final String resourceId = snaResource.getResource();
                         final String type = snaResource.getType();
-                        listener.notify(providerId, serviceId, resourceId, type, value, timestamp);
+                        final Map<String, String> metadata = snaResource.getMetadata();
+                        listener.notify(providerId, serviceId, resourceId, type, value, timestamp, metadata);
                         LOG.info("successfully notified {} with {} at {}", listener, snaResource, timestamp);
                     } else {
                         LOG.error("failed to notify with {} at {}: unexpected null listener", snaResource, timestamp);

@@ -20,6 +20,7 @@ package eu.interiot.translators.syntax.sensinact;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import eu.interiot.intermw.bridge.sensinact.fetcher.SensinactModelRecoverListener;
 import eu.interiot.intermw.bridge.sensinact.http.SensinactFactory;
 import eu.interiot.intermw.bridge.sensinact.http.model.SensinactConfig;
 import eu.interiot.intermw.bridge.sensinact.ontology.SNAOntologyAggregator;
@@ -37,6 +38,7 @@ import org.junit.Test;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.riot.Lang;
@@ -65,20 +67,24 @@ public class SensinactOntologyTest {
 
         SensinactAPI sensinact = SensinactFactory.createInstance(sc);
 
-        sensinact.setListener((provider, service, resource, type, value, timestamp) -> {
-            aggregator.updateOntologyWith(provider, service, resource, type, value, timestamp);
-            System.out.println(
-                    String.format(
-                            " ... received notification from %s/%s/%s: type=%s, value=%s, timestamp=%s",
-                            provider,
-                            service,
-                            resource,
-                            type,
-                            value, 
-                            timestamp
-                    )
-            );
-            counter.getAndAdd(1);
+        sensinact.setListener(new SensinactModelRecoverListener() {
+            @Override
+            public void notify(String provider, String service, String resource, String type, String value, String timestamp, Map<String, String> metadata) {
+                aggregator.updateOntologyWith(provider, service, resource, type, value, timestamp, metadata);
+                System.out.println(
+                        String.format(
+                                " ... received notification from %s/%s/%s: type=%s, value=%s, timestamp=%s, metadata=%s",
+                                provider,
+                                service,
+                                resource,
+                                type,
+                                value, 
+                                timestamp,
+                                metadata
+                        )
+                );
+                counter.getAndAdd(1);
+            }
         });
         System.out.print("\n connecting sensiNact... ");
         sensinact.connect();

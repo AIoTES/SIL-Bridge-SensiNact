@@ -24,25 +24,4 @@
         </rdfs:subClassOf>
     </owl:Class>
 
-    <owl:Class rdf:about="&sna;Resource">
-        <rdfs:comment>
-            <owl:FunctionalProperty rdf:about="&sna;provider"/>
-        </rdfs:comment>
-        <rdfs:comment>
-            <owl:FunctionalProperty rdf:about="&sna;service"/>
-        </rdfs:comment>
-        <rdfs:comment>
-            <owl:FunctionalProperty rdf:about="&sna;type"/>
-        </rdfs:comment>
-        <rdfs:comment>
-            <owl:FunctionalProperty rdf:about="&sna;name"/>
-        </rdfs:comment>
-        <rdfs:comment>
-            <owl:FunctionalProperty rdf:about="&sna;timestamp"/>
-        </rdfs:comment>
-        <rdfs:comment>
-            <owl:FunctionalProperty rdf:about="&sna;value"/>
-        </rdfs:comment>
-    </owl:Class>
-
 </rdf:RDF>

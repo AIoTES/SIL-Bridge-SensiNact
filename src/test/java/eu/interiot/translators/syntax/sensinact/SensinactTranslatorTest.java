@@ -37,6 +37,7 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.logging.Level;
@@ -59,6 +60,8 @@ import static org.junit.Assert.*;
  */
 public class SensinactTranslatorTest {
    
+    private static final long TEST_DURATION = 900000;
+    
     public SensinactTranslatorTest() {
     }
    
@@ -131,7 +134,7 @@ public class SensinactTranslatorTest {
                 )
             );
             Assert.assertTrue("unexpected empty list of devices", size > 0);
-            Thread.sleep(300000);
+            Thread.sleep(TEST_DURATION);
             System.out.println(
                 String.format(
                     "... received %s notifications for translation",
@@ -205,15 +208,16 @@ public class SensinactTranslatorTest {
         }
 
         @Override
-        public void notify(String provider, String service, String resource, String type, String value, String timestamp) {
+        public void notify(String provider, String service, String resource, String type, String value, String timestamp, Map<String, String> metadata) {
             final String resourcePath = String.format("%s/%s/%s", provider, service, resource); 
             System.out.println(
                 String.format(
-                    " ... received notification from %s: type=%s, value=%s, timestamp=%s",
+                    " ... received notification from %s: type=%s, value=%s, timestamp=%s, metadata=%s",
                     resourcePath,
                     type,
                     value,
-                    timestamp
+                    timestamp,
+                    metadata
                 )
             );
             try {
@@ -225,7 +229,7 @@ public class SensinactTranslatorTest {
             }
             try {
                 System.out.println("\nobservation message= ");
-                final Model model = aggregator.createModel(provider, service, resource, type, value, timestamp);
+                final Model model = aggregator.createModel(provider, service, resource, type, value, timestamp, metadata);
                 String observationMessage = createObservationMessage(model);
                 System.out.println(observationMessage);
             } catch (Exception ex) {

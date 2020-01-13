@@ -63,3 +63,4 @@ target/
 /src/main/resources/alignment/sensinact_alignment_turtle.xml
 /src/main/resources/alignment/sna_aiotes.ttl
 /src/main/java/eu/interiot/intermw/bridge/sensinact/v2/SensinactSubscriptionManagerV2.java
+/src/main/resources/alignment/sensinact2aiotes-alignment_04.rdf

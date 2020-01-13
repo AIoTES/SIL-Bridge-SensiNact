@@ -99,12 +99,12 @@ public class SensiNactBridge extends AbstractBridge {
 
         sensinact.setListener(new SensinactModelRecoverListener() {
             @Override
-            public void notify(String provider, String service, String resource, String type, String value, String timestamp) {
+            public void notify(String provider, String service, String resource, String type, String value, String timestamp, Map<String, String> metadata) {
 
                 try {
-                    log.info("notified of an update of {]/{}/{} type={}, value={} timestamp={}",
+                    log.info("notified of an update of {]/{}/{} type={}, value={}, timestamp={}, metadata={}",
                             provider, service, resource,
-                            type, value, timestamp
+                            type, value, timestamp, metadata
                     );
 
                     //No reason for keeping track of the whole ontology
@@ -115,22 +115,22 @@ public class SensiNactBridge extends AbstractBridge {
 
                         log.info("Sending notification to conversation id {} on device {}", conversationId, deviceId);
 
-                        PlatformMessageMetadata metadata = new MessageMetadata().asPlatformMessageMetadata();
-                        metadata.initializeMetadata();
-                        metadata.addMessageType(URIManagerMessageMetadata.MessageTypesEnum.OBSERVATION);
-                        metadata.addMessageType(URIManagerMessageMetadata.MessageTypesEnum.RESPONSE);
+                        PlatformMessageMetadata platformMetadata = new MessageMetadata().asPlatformMessageMetadata();
+                        platformMetadata.initializeMetadata();
+                        platformMetadata.addMessageType(URIManagerMessageMetadata.MessageTypesEnum.OBSERVATION);
+                        platformMetadata.addMessageType(URIManagerMessageMetadata.MessageTypesEnum.RESPONSE);
 
-                        metadata.setSenderPlatformId(new EntityID(platform.getPlatformId()));
-                        metadata.setConversationId(conversationId);
+                        platformMetadata.setSenderPlatformId(new EntityID(platform.getPlatformId()));
+                        platformMetadata.setConversationId(conversationId);
                         Model model = 
                                 ontologyAggregator.transformOntology(
                                     provider, service, resource,
-                                    type, value, timestamp
+                                    type, value, timestamp, metadata
                                 );
                         MessagePayload messagePayload = 
                                 new MessagePayload(model);
                         Message observationMessage = new Message();
-                        observationMessage.setMetadata(metadata);
+                        observationMessage.setMetadata(platformMetadata);
                         observationMessage.setPayload(messagePayload);
 
                         try {

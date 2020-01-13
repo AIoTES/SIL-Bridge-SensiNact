@@ -18,8 +18,10 @@
  */
 package eu.interiot.intermw.bridge.sensinact.fetcher;
 
+import java.util.Map;
+
 public interface SensinactModelRecoverListener {
 
-    void notify(String provider, String service, String resource, String type, String value, String timestamp);
+    void notify(String provider, String service, String resource, String type, String value, String timestamp, Map<String, String> metadata);
 
 }

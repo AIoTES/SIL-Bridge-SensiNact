@@ -27,8 +27,13 @@ import org.apache.jena.rdf.model.Statement;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.EnumMap;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 import org.apache.jena.riot.Lang;
 import org.apache.jena.riot.RDFDataMgr;
 
@@ -52,8 +57,16 @@ public class SNAOntologyAggregator {
     }
 
     private OntModel model;
+    private static final String SNA_ONTOLOGY_PREFIX = "http://sensinact.com#";
     private static final String SNA_ONTOLOGY_FILE_PATH = "/ontology/SNAOntology.owl";
     private static final String SNA_ONTOLOGY_FILE_PATH_PATTERN = "/ontology/%s/SNAOntology.owl";
+    private static Map<String, String> SNA2AIOTES_KPI = new HashMap<>();
+    static {
+        SNA2AIOTES_KPI.put("device-counter", "KPI_DEVICES");
+        SNA2AIOTES_KPI.put("function-counter", "KPI_APPLI_IN");
+        SNA2AIOTES_KPI.put("gateway-counter", "KPI_BENEFICIARIES");
+        SNA2AIOTES_KPI.put("raw-database-size", "KPI_USAGE_5");
+    };
 
     public SNAOntologyAggregator(Model rdfmodel) {
         model = ModelFactory.createOntologyModel();
@@ -78,15 +91,15 @@ public class SNAOntologyAggregator {
     }
 
     public OntClass getOntologyClass(String clazz) {
-        return model.getOntClass("http://sensinact.com#" + clazz);
+        return model.getOntClass(SNA_ONTOLOGY_PREFIX + clazz);
     }
 
     public Property getObjectProperty(String property) {
-        return model.getProperty("http://sensinact.com#" + property);
+        return model.getProperty(SNA_ONTOLOGY_PREFIX + property);
     }
 
     public DatatypeProperty getDataProperty(String property) {
-        return model.getDatatypeProperty("http://sensinact.com#" + property);
+        return model.getDatatypeProperty(SNA_ONTOLOGY_PREFIX + property);
     }
 
     public Model transformOntology(String provider, String service, String resource, String type, String value, String timestamp) {
@@ -94,14 +107,33 @@ public class SNAOntologyAggregator {
         final OntModel isolatedModel = ModelFactory.createOntologyModel();
         String ontologyFilePath;
         InputStream is;
+        ontologyFilePath = SNA_ONTOLOGY_FILE_PATH;
+        is = this.getClass().getResourceAsStream(ontologyFilePath);
+        RDFDataMgr.read(isolatedModel, is, Lang.RDFXML);
         ontologyFilePath = String.format(SNA_ONTOLOGY_FILE_PATH_PATTERN, type);
         is = this.getClass().getResourceAsStream(ontologyFilePath);
-        if (is == null) {
-            ontologyFilePath = SNA_ONTOLOGY_FILE_PATH;
-            is = this.getClass().getResourceAsStream(ontologyFilePath);
+        if (is != null) {
+            RDFDataMgr.read(isolatedModel, is, Lang.RDFXML);
         }
-        RDFDataMgr.read(isolatedModel, is, Lang.RDFXML);
         updateOntologyWith(provider, service, resource, type, value, timestamp, isolatedModel);
+        final Model minimalModel = isolatedModel.difference(emptyModel);
+        return minimalModel;
+    }
+    
+    public Model transformOntology(String provider, String service, String resource, String type, String value, String timestamp, Map<String, String> metadata) {
+        final OntModel emptyModel = ModelFactory.createOntologyModel();
+        final OntModel isolatedModel = ModelFactory.createOntologyModel();
+        String ontologyFilePath;
+        InputStream is;
+        ontologyFilePath = SNA_ONTOLOGY_FILE_PATH;
+        is = this.getClass().getResourceAsStream(ontologyFilePath);
+        RDFDataMgr.read(isolatedModel, is, Lang.RDFXML);
+        ontologyFilePath = String.format(SNA_ONTOLOGY_FILE_PATH_PATTERN, type);
+        is = this.getClass().getResourceAsStream(ontologyFilePath);
+        if (is != null) {
+            RDFDataMgr.read(isolatedModel, is, Lang.RDFXML);
+        }
+        updateOntologyWith(provider, service, resource, type, value, timestamp, metadata, isolatedModel);
         final Model minimalModel = isolatedModel.difference(emptyModel);
         return minimalModel;
     }
@@ -111,8 +143,17 @@ public class SNAOntologyAggregator {
         return isolatedModel;
     }
 
+    public Model createModel(String provider, String service, String resource, String type, String value, String timestamp, Map<String, String> metadata) {
+        final Model isolatedModel = transformOntology(provider, service, resource, type, value, timestamp, metadata);
+        return isolatedModel;
+    }
+
     public void updateOntologyWith(String provider, String service, String resource, String type, String value, String timestamp) {
         updateOntologyWith(provider, service, resource, type, value, timestamp, getOntModel());
+    }
+
+    public void updateOntologyWith(String provider, String service, String resource, String type, String value, String timestamp, Map<String, String> metadata) {
+        updateOntologyWith(provider, service, resource, type, value, timestamp, metadata, getOntModel());
     }
 
     public void updateOntologyWith(SNAResource snaResource) {
@@ -123,7 +164,8 @@ public class SNAOntologyAggregator {
                 snaResource.getResource(), 
                 snaResource.getType(), 
                 snaResource.getValue(),
-                String.valueOf(timestamp)
+                String.valueOf(timestamp),
+                snaResource.getMetadata()
         );
     }
 
@@ -139,6 +181,23 @@ public class SNAOntologyAggregator {
      * @param model the ontology model
      */
     public void updateOntologyWith(String provider, String service, String resource, String type, String value, String timestamp, OntModel model) {
+        updateOntologyWith(
+                provider, service, resource, type, value, timestamp, 
+                Collections.EMPTY_MAP, model);
+    }
+
+    /**
+     * Create individuals necessary to receive the information passed to this
+     * method and link them in the ontology instance
+     *
+     * @param provider device name in sensinact
+     * @param service group of particular information in sensinact
+     * @param resource the leaf node that contains the metadata of the
+     * information
+     * @param value the current data stored by the 'resource'
+     * @param model the ontology model
+     */
+    public void updateOntologyWith(String provider, String service, String resource, String type, String value, String timestamp, Map<String, String> metadata, OntModel model) {
 
         final SNAAHAOntologyType snaOntologyType = 
             SNAAHAOntologyType.getSNAAHAOntologyType(type, service, resource);
@@ -151,16 +210,21 @@ public class SNAOntologyAggregator {
         Property nameDataProperty = getObjectProperty("name");
         Property typeDataProperty = getObjectProperty("type");
         Property timestampDataProperty = getObjectProperty("timestamp");
-
         if (value != null) {
             String correctedValue = snaOntologyType.computeValue(value);
+            String correctedName = snaOntologyType.mapName(resource);
             Property valueProperty = getObjectProperty("value");
             individualResource.addLiteral(providerDataProperty, provider);
             individualResource.addLiteral(serviceDataProperty, service);
-            individualResource.addLiteral(nameDataProperty, resource);
+            individualResource.addLiteral(nameDataProperty, correctedName);
             individualResource.addLiteral(typeDataProperty, type);
             individualResource.addLiteral(valueProperty, correctedValue);
             individualResource.addLiteral(timestampDataProperty, timestamp);
+            Property metadataProperty;
+            for (Entry<String, String> entry : metadata.entrySet()) {
+                metadataProperty = getObjectProperty(entry.getKey());
+                individualResource.addLiteral(metadataProperty, entry.getValue());
+            }
         }
     }
 
@@ -168,12 +232,25 @@ public class SNAOntologyAggregator {
         String computeValue(String value);
     }
 
-    private static enum SNAAHAOntologyType implements ValueComputer {
+    private static interface NameMapper {
+        String mapName(String name);
+    }
+
+    private static enum SNAAHAOntologyType implements ValueComputer, NameMapper {
         DAY_LAYING("state", "BedOccupancyResource"),
-        KPI("KPIResource"),
+        KPI("KPIResource") {
+            @Override
+            public String mapName(final String snaKpiName) {
+                String aiotesKpiName = SNA2AIOTES_KPI.get(snaKpiName);
+                if (aiotesKpiName == null) {
+                    aiotesKpiName = snaKpiName;
+                }
+                return aiotesKpiName;
+            }
+        },
         NIGHT_RISING("state", "BedOccupancyResource") {
             @Override
-            public String computeValue(String value) {
+            public String computeValue(final String value) {
                 boolean isOutOfBed = Boolean.valueOf(value);
                 boolean isInBed = !isOutOfBed;
                 return String.valueOf(isInBed);
@@ -229,6 +306,11 @@ public class SNAOntologyAggregator {
             return value;
         }
         
+        @Override
+        public String mapName(String name) {
+            return name;
+        }
+
         private static SNAAHAOntologyType getSNAAHAOntologyType(final String ahaType, final String serviceId, final String resourceId) {
             SNAAHAOntologyType ontologyType;
             try {

@@ -18,6 +18,12 @@
  */
 package eu.interiot.intermw.bridge.sensinact.wrapper;
 
+import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.Maps;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
+
 public class SNAResource {
 
     public static final String DEFAULT_VALUE = null;
@@ -28,8 +34,14 @@ public class SNAResource {
     private String resource;
     private String value;
     private String type;
+    private Map<String, String> metadata;
+
+    private SNAResource() {
+        metadata = new HashMap<String, String>();
+    }
 
     public SNAResource(String uri, String value) {
+        this();
         String[] resourcePath = uri.split("/");
         this.provider = resourcePath[1];
         this.service = resourcePath[2];
@@ -39,6 +51,7 @@ public class SNAResource {
     }
 
     public SNAResource(String provider, String service, String resource, String type) {
+        this();
         this.provider = provider;
         this.service = service;
         this.resource = resource;
@@ -46,33 +59,39 @@ public class SNAResource {
         this.value = DEFAULT_VALUE;
     }
 
+    public SNAResource(String provider, String service, String resource, String type, Map<String, String> metadata) {
+        this(provider, service, resource, type);
+        this.metadata = metadata;
+    }
+
     public SNAResource(String provider, String service, String resource, String type, String value) {
         this(provider, service, resource, type);
         this.value = value;
+    }
+
+    public SNAResource(String provider, String service, String resource, String type, String value, Map<String, String> metadata) {
+        this(provider, service, resource, type, value);
+        this.metadata = metadata;
+    }
+
+    public Map<String, String> getMetadata() {
+        return Collections.unmodifiableMap(metadata);
+    }
+
+    public String getMetadata(String metadataId) {
+        return metadata.get(metadataId);
     }
 
     public String getProvider() {
         return provider;
     }
 
-    public void setProvider(String provider) {
-        this.provider = provider;
-    }
-
     public String getService() {
         return service;
     }
 
-    public void setService(String service) {
-        this.service = service;
-    }
-
     public String getResource() {
         return resource;
-    }
-
-    public void setResource(String resource) {
-        this.resource = resource;
     }
 
     public String getValue() {
