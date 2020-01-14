@@ -1,13 +1,13 @@
 {
   "@graph" : [ {
     "@graph" : [ {
-      "@id" : "msg:meta/5d13920d-c7a1-4fce-ad64-c0a07cfb16df",
+      "@id" : "msg:meta/e8a491ed-ef04-4b54-8ef8-619783965378",
       "msg:SenderPlatformId" : {
         "@id" : "http://sna.com/model#"
       },
-      "msg:conversationID" : "conv4c56869c-2948-449c-a31c-b1db11fadaa6",
-      "msg:dateTimeStamp" : "2020-01-14T17:56:36.503+01:00",
-      "msg:messageID" : "msg5551aa10-2d47-4ca6-9f18-30a0cd7bc4b2",
+      "msg:conversationID" : "convecebe39d-08f5-415b-a97d-c72bf0059073",
+      "msg:dateTimeStamp" : "2020-01-14T18:04:02.715+01:00",
+      "msg:messageID" : "msg5735222b-6ffa-49af-a2be-36a706f52aaf",
       "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
         "@id" : "msg:meta"
       }, {
@@ -20,9 +20,10 @@
   }, {
     "@graph" : [ {
       "@id" : "_:b0",
-      "http://sensinact.com#description" : "check if the patient is currently laying on bed and current time is during the day",
+      "http://sensinact.com#description" : "number of steps by days for the last 30 days",
       "http://sensinact.com#modifiable" : "UPDATABLE",
-      "http://sensinact.com#nickname" : "is-day-laying"
+      "http://sensinact.com#nickname" : "last-30-days-step-counters",
+      "http://sensinact.com#unit" : "steps"
     }, {
       "@id" : "http://sensinact.com#BedOccupancyResource",
       "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {

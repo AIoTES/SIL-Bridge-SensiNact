@@ -24,11 +24,11 @@
 >    
       
     <align:Alignment>
-        <dcelem:title>SensiNact2AIoTES</dcelem:title>
-        <exmo:version>0.4.6</exmo:version>
+        <dcelem:title>AIoTES2SensiNact</dcelem:title>
+        <exmo:version>0.4.6.2</exmo:version>
         <dcelem:creator>CEA Stephane Bergeon</dcelem:creator>
-        <dcelem:description>Alignment between sensiNact AHA ontology and ACTIVAGE ontology.</dcelem:description>
-        <dcelem:date>10 January 2020</dcelem:date>
+        <dcelem:description>Downstream Alignment between sensiNact AHA ontology and ACTIVAGE ontology.</dcelem:description>
+        <dcelem:date>14 January 2020</dcelem:date>
         
         <align:onto1>
             <align:Ontology rdf:about="http://sensinact.com#">
@@ -52,7 +52,6 @@
             <sripas:step sripas:order="3" sripas:cell="http://www.inter-iot.eu/sripas#3_pedometer"/>  
             <sripas:step sripas:order="4" sripas:cell="http://www.inter-iot.eu/sripas#4_bed"/>  
             <sripas:step sripas:order="5" sripas:cell="http://www.inter-iot.eu/sripas#5_kpi"/>  
-            <sripas:step sripas:order="6" sripas:cell="http://www.inter-iot.eu/sripas#6_clean_unregistered_resource"/>  
         </sripas:steps>
         		
         <sripas:cellFormat>
@@ -62,29 +61,6 @@
         <align:map>
             <align:Cell rdf:about="http://www.inter-iot.eu/sripas#1_temperature">
                 <align:entity1 rdf:parseType="Literal">
-                    <sripas:node_1>
-                        <sna:name>
-                            <sripas:name/>
-                        </sna:name>
-                        <sna:provider>
-                            <sripas:provider/>
-                        </sna:provider>
-                        <sna:service>
-                            <sripas:service/>
-                        </sna:service>
-                        <sna:timestamp>
-                            <sripas:timestamp/>
-                        </sna:timestamp>
-                        <sna:type>
-                            <sripas:type/>
-                        </sna:type>
-                        <sna:value>
-                            <sripas:value/>
-                        </sna:value>
-                        <rdf:type rdf:resource="http://sensinact.com#TemperatureMonitorResource"/>
-                    </sripas:node_1>
-                </align:entity1>
-                <align:entity2 rdf:parseType="Literal">
                     <sosa:Observation>
                         <rdf:label>
                             <sripas:name/>
@@ -110,6 +86,22 @@
                             <sripas:timestamp/>
                         </sosa:resultTime>
                     </sosa:Observation>
+                </align:entity1>
+                <align:entity2 rdf:parseType="Literal">
+                    <sripas:node_1>
+                        <sna:name>last-temperature</sna:name>
+                        <sna:provider>
+                            <sripas:provider/>
+                        </sna:provider>
+                        <sna:service>monitor</sna:service>
+                        <sna:timestamp>
+                            <sripas:timestamp/>
+                        </sna:timestamp>
+                        <sna:type>TEMPERATURE_ALERT</sna:type>
+                        <sna:value>
+                            <sripas:value/>
+                        </sna:value>
+                    </sripas:node_1>
                 </align:entity2>
                 <align:relation>=</align:relation>
                 <sripas:typings rdf:parseType="Literal">
@@ -124,29 +116,6 @@
         <align:map>
             <align:Cell rdf:about="http://www.inter-iot.eu/sripas#2_weight">
                 <align:entity1 rdf:parseType="Literal">
-                    <sripas:node_1>
-                        <sna:name>
-                            <sripas:name/>
-                        </sna:name>
-                        <sna:provider>
-                            <sripas:provider/>
-                        </sna:provider>
-                        <sna:service>
-                            <sripas:service/>
-                        </sna:service>
-                        <sna:timestamp>
-                            <sripas:timestamp/>
-                        </sna:timestamp>
-                        <sna:type>
-                            <sripas:type/>
-                        </sna:type>
-                        <sna:value>
-                            <sripas:value/>
-                        </sna:value>
-                        <rdf:type rdf:resource="http://sensinact.com#WeightMonitorResource"/>
-                    </sripas:node_1>
-                </align:entity1>
-                <align:entity2 rdf:parseType="Literal">
                     <iiotex:hasLocalId>
                         <sripas:provider/>
                     </iiotex:hasLocalId>
@@ -168,6 +137,22 @@
                             </sosa:Observation>
                         </sosa:madeObservation>
                     </sosa:Sensor>
+                </align:entity1>
+                <align:entity2 rdf:parseType="Literal">
+                    <sripas:node_1>
+                        <sna:name>last-weight</sna:name>
+                        <sna:provider>
+                            <sripas:provider/>
+                        </sna:provider>
+                        <sna:service>monitor</sna:service>
+                        <sna:timestamp>
+                            <sripas:timestamp/>
+                        </sna:timestamp>
+                        <sna:type>WEIGHT_MONITOR</sna:type>
+                        <sna:value>
+                            <sripas:value/>
+                        </sna:value>
+                    </sripas:node_1>
                 </align:entity2>
                 <align:relation>=</align:relation>
                 <sripas:typings rdf:parseType="Literal">
@@ -182,29 +167,6 @@
         <align:map>
             <align:Cell rdf:about="http://www.inter-iot.eu/sripas#3_pedometer">
                 <align:entity1 rdf:parseType="Literal">
-                    <sripas:node_1>
-                        <sna:name>
-                            <sripas:name/>
-                        </sna:name>
-                        <sna:provider>
-                            <sripas:provider/>
-                        </sna:provider>
-                        <sna:service>
-                            <sripas:service/>
-                        </sna:service>
-                        <sna:timestamp>
-                            <sripas:timestamp/>
-                        </sna:timestamp>
-                        <sna:type>
-                            <sripas:type/>
-                        </sna:type>
-                        <sna:value>
-                            <sripas:value/>
-                        </sna:value>
-                        <rdf:type rdf:resource="http://sensinact.com#StepNumberResource"/>
-                    </sripas:node_1>
-                </align:entity1>
-                <align:entity2 rdf:parseType="Literal">
                     <iiotex:hasLocalId>
                         <sripas:provider/>
                     </iiotex:hasLocalId>
@@ -226,6 +188,22 @@
                             </sosa:Observation>
                         </sosa:madeObservation>
                     </sosa:Sensor>
+                </align:entity1>
+                <align:entity2 rdf:parseType="Literal">
+                    <sripas:node_1>
+                        <sna:name>last-day-step-number</sna:name>
+                        <sna:provider>
+                            <sripas:provider/>
+                        </sna:provider>
+                        <sna:service>monitor</sna:service>
+                        <sna:timestamp>
+                            <sripas:timestamp/>
+                        </sna:timestamp>
+                        <sna:type>PEDOMETER_MONITOR</sna:type>
+                        <sna:value>
+                            <sripas:value/>
+                        </sna:value>
+                    </sripas:node_1>
                 </align:entity2>
                 <align:relation>=</align:relation>
                 <sripas:typings rdf:parseType="Literal">
@@ -240,29 +218,6 @@
         <align:map>
             <align:Cell rdf:about="http://www.inter-iot.eu/sripas#4_bed">
                 <align:entity1 rdf:parseType="Literal">
-                    <sripas:node_1>
-                        <sna:name>
-                            <sripas:name/>
-                        </sna:name>
-                        <sna:provider>
-                            <sripas:provider/>
-                        </sna:provider>
-                        <sna:service>
-                            <sripas:service/>
-                        </sna:service>
-                        <sna:timestamp>
-                            <sripas:timestamp/>
-                        </sna:timestamp>
-                        <sna:type>
-                            <sripas:type/>
-                        </sna:type>
-                        <sna:value>
-                            <sripas:value/>
-                        </sna:value>
-                        <rdf:type rdf:resource="http://sensinact.com#BedOccupancyResource"/>
-                    </sripas:node_1>
-                </align:entity1>
-                <align:entity2 rdf:parseType="Literal">
                     <sosa:Observation>
                         <sosa:ObservableProperty>
                             <ssn:Property>
@@ -297,6 +252,22 @@
                             </time:Instant>
                         </sosa:phenomenomTime>
                     </sosa:Observation>
+                </align:entity1>
+                <align:entity2 rdf:parseType="Literal">
+                    <sripas:node_1>
+                        <sna:name>state</sna:name>
+                        <sna:provider>
+                            <sripas:provider/>
+                        </sna:provider>
+                        <sna:service>monitor</sna:service>
+                        <sna:timestamp>
+                            <sripas:timestamp/>
+                        </sna:timestamp>
+                        <sna:type>DAY_LAYING</sna:type>
+                        <sna:value>
+                            <sripas:value/>
+                        </sna:value>
+                    </sripas:node_1>
                 </align:entity2>
                 <align:relation>=</align:relation>
                 <sripas:typings rdf:parseType="Literal">
@@ -311,32 +282,6 @@
         <align:map>
             <align:Cell rdf:about="http://www.inter-iot.eu/sripas#5_kpi">
                 <align:entity1 rdf:parseType="Literal">
-                    <sripas:node_1>
-                        <sna:name>
-                            <sripas:name/>
-                        </sna:name>
-                        <sna:provider>
-                            <sripas:provider/>
-                        </sna:provider>
-                        <sna:service>
-                            <sripas:service/>
-                        </sna:service>
-                        <sna:timestamp>
-                            <sripas:timestamp/>
-                        </sna:timestamp>
-                        <sna:type>
-                            <sripas:type/>
-                        </sna:type>
-                        <sna:value>
-                            <sripas:value/>
-                        </sna:value>
-                        <sna:target>
-                            <sripas:target/>
-                        </sna:target>
-                        <rdf:type rdf:resource="http://sensinact.com#KPIResource"/>
-                    </sripas:node_1>
-                </align:entity1>
-                <align:entity2 rdf:parseType="Literal">
                     <kpi:KPI>
                         <kpi:name>
                             <sripas:name/>
@@ -351,20 +296,8 @@
                             <sripas:timestamp/>
                         </kpi:currentTime>
                     </kpi:KPI>
-                </align:entity2>
-                <align:relation>=</align:relation>
-                <sripas:typings rdf:parseType="Literal">
-                    <typing about="http://www.inter-iot.eu/sripas#name" datatype="http://www.w3.org/2001/XMLSchema#string"></typing>
-                    <typing about="http://www.inter-iot.eu/sripas#value" datatype="http://www.w3.org/2001/XMLSchema#string"></typing>
-                    <typing about="http://www.inter-iot.eu/sripas#provider" datatype="http://www.w3.org/2001/XMLSchema#string"></typing>
-                    <typing about="http://www.inter-iot.eu/sripas#timestamp" datatype="http://www.w3.org/2001/XMLSchema#string"></typing>
-                </sripas:typings>
-            </align:Cell>
-        </align:map>
-      	      	
-        <align:map>
-            <align:Cell rdf:about="http://www.inter-iot.eu/sripas#6_clean_unregistered_resource">
-                <align:entity1 rdf:parseType="Literal">
+                </align:entity1>
+                <align:entity2 rdf:parseType="Literal">
                     <sripas:node_1>
                         <sna:name>
                             <sripas:name/>
@@ -372,22 +305,18 @@
                         <sna:provider>
                             <sripas:provider/>
                         </sna:provider>
-                        <sna:service>
-                            <sripas:service/>
-                        </sna:service>
+                        <sna:service>monitor</sna:service>
                         <sna:timestamp>
                             <sripas:timestamp/>
                         </sna:timestamp>
-                        <sna:type>
-                            <sripas:type/>
-                        </sna:type>
+                        <sna:type>KPI</sna:type>
                         <sna:value>
                             <sripas:value/>
                         </sna:value>
-                        <rdf:type rdf:resource="http://sensinact.com#Resource"/>
+                        <sna:target>
+                            <sripas:target/>
+                        </sna:target>
                     </sripas:node_1>
-                </align:entity1>
-                <align:entity2 rdf:parseType="Literal">
                 </align:entity2>
                 <align:relation>=</align:relation>
                 <sripas:typings rdf:parseType="Literal">

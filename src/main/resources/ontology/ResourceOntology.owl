@@ -18,40 +18,7 @@
         <rdfs:comment>sensiNact AHA resource is defined by provider/service/resource path, type, value and timestamp</rdfs:comment>
     </owl:Ontology>    
     
-    <owl:Class rdf:about="&sna;BedOccupancyResource">
-        <rdfs:subClassOf>
-            <owl:Class rdf:about="&sna;Resource"/>
-        </rdfs:subClassOf>
-   </owl:Class>
-
-    <owl:Class rdf:about="&sna;KPIResource">
-        <rdfs:subClassOf>
-            <owl:Class rdf:about="&sna;Resource"/>
-        </rdfs:subClassOf>
-        <rdfs:comment>
-            <owl:FunctionalProperty rdf:about="&sna;target"/>
-        </rdfs:comment>
-   </owl:Class>
-
-    <owl:Class rdf:about="&sna;StepNumberResource">
-        <rdfs:subClassOf>
-            <owl:Class rdf:about="&sna;Resource"/>
-        </rdfs:subClassOf>
-    </owl:Class>
-
-    <owl:Class rdf:about="&sna;TemperatureMonitorResource">
-        <rdfs:subClassOf>
-            <owl:Class rdf:about="&sna;Resource"/>
-        </rdfs:subClassOf>
-    </owl:Class>
-
-    <owl:Class rdf:about="&sna;WeightMonitorResource">
-        <rdfs:subClassOf>
-            <owl:Class rdf:about="&sna;Resource"/>
-        </rdfs:subClassOf>
-    </owl:Class>
-
-    <owl:Class rdf:about="&sna;Resource">
+    <owl:Class rdf:about="http://sensinact.com#Resource">
         <rdfs:comment>
             <owl:FunctionalProperty rdf:about="&sna;provider"/>
         </rdfs:comment>

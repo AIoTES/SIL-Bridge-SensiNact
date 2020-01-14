@@ -3,13 +3,13 @@
     {
       "@graph": [
         {
-          "@id": "msg:meta/6acfa099-a49d-4cc1-876d-6c4e18d85c04",
+          "@id": "msg:meta/e8a491ed-ef04-4b54-8ef8-619783965378",
           "msg:SenderPlatformId": {
             "@id": "http://sna.com/model#"
           },
-          "msg:conversationID": "conv838d18c7-6581-4de5-8857-c103374b6847",
-          "msg:dateTimeStamp": "2020-01-14T18:03:59.545+01:00",
-          "msg:messageID": "msg8029ed20-bf74-4888-8d8b-a88a0af88820",
+          "msg:conversationID": "convecebe39d-08f5-415b-a97d-c72bf0059073",
+          "msg:dateTimeStamp": "2020-01-14T18:04:02.715+01:00",
+          "msg:messageID": "msg5735222b-6ffa-49af-a2be-36a706f52aaf",
           "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": [
             {
               "@id": "msg:Response"
@@ -29,24 +29,19 @@
       "@graph": [
         {
           "@id": "_:b0",
-          "http://sensinact.com#description": "number of steps in current day",
-          "http://sensinact.com#modifiable": "MODIFIABLE",
-          "http://sensinact.com#name": "last-day-step-counter",
-          "http://sensinact.com#nickname": "last-day-step-counter",
+          "http://sensinact.com#description": "number of steps by days for the last 30 days",
+          "http://sensinact.com#modifiable": "UPDATABLE",
+          "http://sensinact.com#name": "last-30-days-step-counters",
+          "http://sensinact.com#nickname": "last-30-days-step-counters",
           "http://sensinact.com#provider": "PTL-Pedometer",
-          "http://sensinact.com#service": "monitor",
-          "http://sensinact.com#timestamp": "1579021435540",
+          "http://sensinact.com#service": "history",
+          "http://sensinact.com#timestamp": "1579021435541",
           "http://sensinact.com#type": "PEDOMETER_MONITOR",
           "http://sensinact.com#unit": "steps",
-          "http://sensinact.com#value": "198",
-          "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": [
-            {
-              "@id": "http://sensinact.com#Resource"
-            },
-            {
-              "@id": "http://sensinact.com#StepNumberResource"
-            }
-          ]
+          "http://sensinact.com#value": "[198, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1]",
+          "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": {
+            "@id": "http://sensinact.com#Resource"
+          }
         },
         {
           "@id": "http://sensinact.com#BedOccupancyResource",

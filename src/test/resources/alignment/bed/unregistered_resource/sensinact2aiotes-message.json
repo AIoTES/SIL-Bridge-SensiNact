@@ -3,13 +3,13 @@
     {
       "@graph": [
         {
-          "@id": "msg:meta/0dd6ed0f-25f0-4ea6-8e4c-9a2336a3d921",
+          "@id": "msg:meta/5d13920d-c7a1-4fce-ad64-c0a07cfb16df",
           "msg:SenderPlatformId": {
             "@id": "http://sna.com/model#"
           },
-          "msg:conversationID": "conv84a2409d-5e4b-4a84-9a46-db64422c3060",
-          "msg:dateTimeStamp": "2020-01-10T17:57:33.070+01:00",
-          "msg:messageID": "msg801e7540-6fa6-4a68-a3bf-04c55f3d4c45",
+          "msg:conversationID": "conv4c56869c-2948-449c-a31c-b1db11fadaa6",
+          "msg:dateTimeStamp": "2020-01-14T17:56:36.503+01:00",
+          "msg:messageID": "msg5551aa10-2d47-4ca6-9f18-30a0cd7bc4b2",
           "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": [
             {
               "@id": "msg:Response"
@@ -29,10 +29,13 @@
       "@graph": [
         {
           "@id": "_:b0",
+          "http://sensinact.com#description": "check if the patient is currently laying on bed and current time is during the day",
+          "http://sensinact.com#modifiable": "UPDATABLE",
           "http://sensinact.com#name": "is-day-laying",
+          "http://sensinact.com#nickname": "is-day-laying",
           "http://sensinact.com#provider": "PTL-Day-laying-monitor",
           "http://sensinact.com#service": "monitor",
-          "http://sensinact.com#timestamp": "1578675452738",
+          "http://sensinact.com#timestamp": "1579020991663",
           "http://sensinact.com#type": "DAY_LAYING",
           "http://sensinact.com#value": "false",
           "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": {
@@ -55,6 +58,31 @@
           "http://www.w3.org/2000/01/rdf-schema#subClassOf": [
             {
               "@id": "http://sensinact.com#BedOccupancyResource"
+            },
+            {
+              "@id": "http://sensinact.com#Resource"
+            }
+          ]
+        },
+        {
+          "@id": "http://sensinact.com#KPIResource",
+          "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": [
+            {
+              "@id": "http://www.w3.org/2000/01/rdf-schema#Resource"
+            },
+            {
+              "@id": "http://www.w3.org/2000/01/rdf-schema#Class"
+            },
+            {
+              "@id": "http://www.w3.org/2002/07/owl#Class"
+            }
+          ],
+          "http://www.w3.org/2000/01/rdf-schema#comment": {
+            "@id": "http://sensinact.com#target"
+          },
+          "http://www.w3.org/2000/01/rdf-schema#subClassOf": [
+            {
+              "@id": "http://sensinact.com#KPIResource"
             },
             {
               "@id": "http://sensinact.com#Resource"
@@ -99,6 +127,72 @@
           }
         },
         {
+          "@id": "http://sensinact.com#StepNumberResource",
+          "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": [
+            {
+              "@id": "http://www.w3.org/2000/01/rdf-schema#Resource"
+            },
+            {
+              "@id": "http://www.w3.org/2000/01/rdf-schema#Class"
+            },
+            {
+              "@id": "http://www.w3.org/2002/07/owl#Class"
+            }
+          ],
+          "http://www.w3.org/2000/01/rdf-schema#subClassOf": [
+            {
+              "@id": "http://sensinact.com#StepNumberResource"
+            },
+            {
+              "@id": "http://sensinact.com#Resource"
+            }
+          ]
+        },
+        {
+          "@id": "http://sensinact.com#TemperatureMonitorResource",
+          "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": [
+            {
+              "@id": "http://www.w3.org/2000/01/rdf-schema#Resource"
+            },
+            {
+              "@id": "http://www.w3.org/2000/01/rdf-schema#Class"
+            },
+            {
+              "@id": "http://www.w3.org/2002/07/owl#Class"
+            }
+          ],
+          "http://www.w3.org/2000/01/rdf-schema#subClassOf": [
+            {
+              "@id": "http://sensinact.com#TemperatureMonitorResource"
+            },
+            {
+              "@id": "http://sensinact.com#Resource"
+            }
+          ]
+        },
+        {
+          "@id": "http://sensinact.com#WeightMonitorResource",
+          "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": [
+            {
+              "@id": "http://www.w3.org/2000/01/rdf-schema#Resource"
+            },
+            {
+              "@id": "http://www.w3.org/2000/01/rdf-schema#Class"
+            },
+            {
+              "@id": "http://www.w3.org/2002/07/owl#Class"
+            }
+          ],
+          "http://www.w3.org/2000/01/rdf-schema#subClassOf": [
+            {
+              "@id": "http://sensinact.com#WeightMonitorResource"
+            },
+            {
+              "@id": "http://sensinact.com#Resource"
+            }
+          ]
+        },
+        {
           "@id": "http://sensinact.com#name",
           "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": [
             {
@@ -132,10 +226,24 @@
             "@id": "http://www.w3.org/2002/07/owl#Ontology"
           },
           "http://www.w3.org/2000/01/rdf-schema#comment": "sensiNact AHA resource is defined by provider/service/resource path, type, value and timestamp",
-          "http://www.w3.org/2000/01/rdf-schema#label": "The simple sensiNact AHA day laying resource ontology"
+          "http://www.w3.org/2000/01/rdf-schema#label": "The simple sensiNact AHA resource ontology"
         },
         {
           "@id": "http://sensinact.com#service",
+          "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": [
+            {
+              "@id": "http://www.w3.org/2000/01/rdf-schema#Resource"
+            },
+            {
+              "@id": "http://www.w3.org/2000/01/rdf-schema#Literal"
+            },
+            {
+              "@id": "http://www.w3.org/2002/07/owl#FunctionalProperty"
+            }
+          ]
+        },
+        {
+          "@id": "http://sensinact.com#target",
           "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": [
             {
               "@id": "http://www.w3.org/2000/01/rdf-schema#Resource"

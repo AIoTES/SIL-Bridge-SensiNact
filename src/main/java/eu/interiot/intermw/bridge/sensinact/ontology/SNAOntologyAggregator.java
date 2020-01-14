@@ -28,7 +28,6 @@ import org.apache.jena.rdf.model.Statement;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -43,6 +42,7 @@ import org.apache.jena.riot.RDFDataMgr;
  */
 public class SNAOntologyAggregator {
 
+    private static final OntModel EMPTY_MODEL = ModelFactory.createOntologyModel();
     public enum JenaWriterType {
         rdf("RDF/XML"),
         n3("N3"),
@@ -103,38 +103,36 @@ public class SNAOntologyAggregator {
     }
 
     public Model transformOntology(String provider, String service, String resource, String type, String value, String timestamp) {
-        final OntModel emptyModel = ModelFactory.createOntologyModel();
         final OntModel isolatedModel = ModelFactory.createOntologyModel();
         String ontologyFilePath;
         InputStream is;
         ontologyFilePath = SNA_ONTOLOGY_FILE_PATH;
         is = this.getClass().getResourceAsStream(ontologyFilePath);
         RDFDataMgr.read(isolatedModel, is, Lang.RDFXML);
-        ontologyFilePath = String.format(SNA_ONTOLOGY_FILE_PATH_PATTERN, type);
-        is = this.getClass().getResourceAsStream(ontologyFilePath);
-        if (is != null) {
-            RDFDataMgr.read(isolatedModel, is, Lang.RDFXML);
-        }
+//        ontologyFilePath = String.format(SNA_ONTOLOGY_FILE_PATH_PATTERN, type);
+//        is = this.getClass().getResourceAsStream(ontologyFilePath);
+//        if (is != null) {
+//            RDFDataMgr..read(isolatedModel, is, Lang.RDFXML);
+//        }
         updateOntologyWith(provider, service, resource, type, value, timestamp, isolatedModel);
-        final Model minimalModel = isolatedModel.difference(emptyModel);
+        final Model minimalModel = isolatedModel.difference(EMPTY_MODEL);
         return minimalModel;
     }
     
     public Model transformOntology(String provider, String service, String resource, String type, String value, String timestamp, Map<String, String> metadata) {
-        final OntModel emptyModel = ModelFactory.createOntologyModel();
         final OntModel isolatedModel = ModelFactory.createOntologyModel();
         String ontologyFilePath;
         InputStream is;
         ontologyFilePath = SNA_ONTOLOGY_FILE_PATH;
         is = this.getClass().getResourceAsStream(ontologyFilePath);
         RDFDataMgr.read(isolatedModel, is, Lang.RDFXML);
-        ontologyFilePath = String.format(SNA_ONTOLOGY_FILE_PATH_PATTERN, type);
-        is = this.getClass().getResourceAsStream(ontologyFilePath);
-        if (is != null) {
-            RDFDataMgr.read(isolatedModel, is, Lang.RDFXML);
-        }
+//        ontologyFilePath = String.format(SNA_ONTOLOGY_FILE_PATH_PATTERN, type);
+//        is = this.getClass().getResourceAsStream(ontologyFilePath);
+//        if (is != null) {
+//            RDFDataMgr.read(isolatedModel, is, Lang.RDFXML);
+//        }
         updateOntologyWith(provider, service, resource, type, value, timestamp, metadata, isolatedModel);
-        final Model minimalModel = isolatedModel.difference(emptyModel);
+        final Model minimalModel = isolatedModel.difference(EMPTY_MODEL);
         return minimalModel;
     }
     
@@ -202,8 +200,8 @@ public class SNAOntologyAggregator {
         final SNAAHAOntologyType snaOntologyType = 
             SNAAHAOntologyType.getSNAAHAOntologyType(type, service, resource);
         final String ontologyClassName = snaOntologyType.getOntologyClassName();
-        Individual individualResource = 
-            model.createIndividual(getOntologyClass(ontologyClassName));
+        OntClass ontologyClass = getOntologyClass(ontologyClassName);
+        Individual individualResource = model.createIndividual(ontologyClass);
 
         Property providerDataProperty = getObjectProperty("provider");
         Property serviceDataProperty = getObjectProperty("service");

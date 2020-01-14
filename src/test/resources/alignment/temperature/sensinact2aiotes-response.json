@@ -1,13 +1,13 @@
 {
   "@graph" : [ {
     "@graph" : [ {
-      "@id" : "msg:meta/5d13920d-c7a1-4fce-ad64-c0a07cfb16df",
+      "@id" : "msg:meta/18d2ce94-5e53-4505-bd34-600c3f28b4af",
       "msg:SenderPlatformId" : {
         "@id" : "http://sna.com/model#"
       },
-      "msg:conversationID" : "conv4c56869c-2948-449c-a31c-b1db11fadaa6",
-      "msg:dateTimeStamp" : "2020-01-14T17:56:36.503+01:00",
-      "msg:messageID" : "msg5551aa10-2d47-4ca6-9f18-30a0cd7bc4b2",
+      "msg:conversationID" : "convd689b063-ceb5-4696-bb30-4284863e00fd",
+      "msg:dateTimeStamp" : "2020-01-14T18:03:58.405+01:00",
+      "msg:messageID" : "msgd2706cd1-2729-4fc9-8231-f016d6c5b557",
       "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
         "@id" : "msg:meta"
       }, {
@@ -20,9 +20,68 @@
   }, {
     "@graph" : [ {
       "@id" : "_:b0",
-      "http://sensinact.com#description" : "check if the patient is currently laying on bed and current time is during the day",
-      "http://sensinact.com#modifiable" : "UPDATABLE",
-      "http://sensinact.com#nickname" : "is-day-laying"
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#label" : "last-temperature",
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : {
+        "@id" : "sosa:ObservableProperty"
+      }
+    }, {
+      "@id" : "_:b1",
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#label" : "last-temperature",
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : {
+        "@id" : "sosa:Observation"
+      },
+      "sosa:madeBySensor" : {
+        "@id" : "_:b2"
+      },
+      "sosa:observedProperty" : {
+        "@id" : "_:b0"
+      },
+      "sosa:resultTime" : "1579021435469",
+      "ssn:hasSimpleResult" : "198"
+    }, {
+      "@id" : "_:b2",
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#label" : "PTL-Temperature",
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : {
+        "@id" : "http://ontologies.activageproject.eu/aha-ontology#AirTemperatureSensor"
+      }
+    }, {
+      "@id" : "_:b3",
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#label" : "PTL-Temperature",
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : {
+        "@id" : "http://ontologies.activageproject.eu/aha-ontology#AirTemperatureSensor"
+      }
+    }, {
+      "@id" : "_:b4",
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#label" : "last-temperature",
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : {
+        "@id" : "sosa:Observation"
+      },
+      "sosa:madeBySensor" : {
+        "@id" : "_:b3"
+      },
+      "sosa:observedProperty" : {
+        "@id" : "_:b5"
+      },
+      "sosa:resultTime" : "1579021435469",
+      "ssn:hasSimpleResult" : "198"
+    }, {
+      "@id" : "_:b5",
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#label" : "last-temperature",
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : {
+        "@id" : "sosa:ObservableProperty"
+      }
+    }, {
+      "@id" : "_:b6",
+      "http://sensinact.com#default" : "20",
+      "http://sensinact.com#description" : "measured temperature",
+      "http://sensinact.com#lower-bound" : "-50",
+      "http://sensinact.com#modifiable" : "MODIFIABLE",
+      "http://sensinact.com#nickname" : "last-temperature",
+      "http://sensinact.com#unit" : "°C",
+      "http://sensinact.com#upper-bound" : "50",
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : {
+        "@id" : "http://sensinact.com#Resource"
+      }
     }, {
       "@id" : "http://sensinact.com#BedOccupancyResource",
       "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {

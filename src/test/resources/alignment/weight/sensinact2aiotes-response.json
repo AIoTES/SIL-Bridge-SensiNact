@@ -1,13 +1,13 @@
 {
   "@graph" : [ {
     "@graph" : [ {
-      "@id" : "msg:meta/5d13920d-c7a1-4fce-ad64-c0a07cfb16df",
+      "@id" : "msg:meta/881ca7f6-48ea-44b6-b6e2-50d2e92338ef",
       "msg:SenderPlatformId" : {
         "@id" : "http://sna.com/model#"
       },
-      "msg:conversationID" : "conv4c56869c-2948-449c-a31c-b1db11fadaa6",
-      "msg:dateTimeStamp" : "2020-01-14T17:56:36.503+01:00",
-      "msg:messageID" : "msg5551aa10-2d47-4ca6-9f18-30a0cd7bc4b2",
+      "msg:conversationID" : "conv90f09a06-363b-4625-b9fc-0372b17e7f9e",
+      "msg:dateTimeStamp" : "2020-01-14T18:04:03.714+01:00",
+      "msg:messageID" : "msg47645a63-9383-4af9-ad6d-41eea848cfb4",
       "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
         "@id" : "msg:meta"
       }, {
@@ -20,9 +20,82 @@
   }, {
     "@graph" : [ {
       "@id" : "_:b0",
-      "http://sensinact.com#description" : "check if the patient is currently laying on bed and current time is during the day",
-      "http://sensinact.com#modifiable" : "UPDATABLE",
-      "http://sensinact.com#nickname" : "is-day-laying"
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : {
+        "@id" : "sosa:Observation"
+      },
+      "sosa:hasResult" : "198",
+      "sosa:observedProperty" : {
+        "@id" : "_:b1"
+      },
+      "sosa:resultTime" : "1579021440552"
+    }, {
+      "@id" : "_:b1",
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
+        "@id" : "sosa:observableProperty"
+      }, {
+        "@id" : "http://purl.org/iot/vocab/m3-lite#Kilogram"
+      } ]
+    }, {
+      "@id" : "_:b2",
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
+        "@id" : "sosa:observableProperty"
+      }, {
+        "@id" : "http://purl.org/iot/vocab/m3-lite#Kilogram"
+      } ]
+    }, {
+      "@id" : "_:b3",
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
+        "@id" : "sosa:Sensor"
+      }, {
+        "@id" : "http://purl.org/iot/vocab/m3-lite#WeightSensor"
+      } ],
+      "sosa:madeObservation" : {
+        "@id" : "_:b4"
+      }
+    }, {
+      "@id" : "_:b4",
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : {
+        "@id" : "sosa:Observation"
+      },
+      "sosa:hasResult" : "198",
+      "sosa:observedProperty" : {
+        "@id" : "_:b2"
+      },
+      "sosa:resultTime" : "1579021440552"
+    }, {
+      "@id" : "_:b5",
+      "http://www.inter-iot.eu/sripas#provider" : "",
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : {
+        "@id" : "iiotex:hasLocalId"
+      }
+    }, {
+      "@id" : "_:b6",
+      "http://sensinact.com#default" : "0",
+      "http://sensinact.com#description" : "last measured weight in kg",
+      "http://sensinact.com#lower-bound" : "0",
+      "http://sensinact.com#modifiable" : "MODIFIABLE",
+      "http://sensinact.com#nickname" : "last-weight",
+      "http://sensinact.com#unit" : "kg",
+      "http://sensinact.com#upper-bound" : "99999",
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : {
+        "@id" : "http://sensinact.com#Resource"
+      }
+    }, {
+      "@id" : "_:b7",
+      "http://www.inter-iot.eu/sripas#provider" : "",
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : {
+        "@id" : "iiotex:hasLocalId"
+      }
+    }, {
+      "@id" : "_:b8",
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
+        "@id" : "sosa:Sensor"
+      }, {
+        "@id" : "http://purl.org/iot/vocab/m3-lite#WeightSensor"
+      } ],
+      "sosa:madeObservation" : {
+        "@id" : "_:b0"
+      }
     }, {
       "@id" : "http://sensinact.com#BedOccupancyResource",
       "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
