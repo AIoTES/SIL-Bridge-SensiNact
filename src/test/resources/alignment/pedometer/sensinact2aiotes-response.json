@@ -1,13 +1,13 @@
 {
   "@graph" : [ {
     "@graph" : [ {
-      "@id" : "msg:meta/6acfa099-a49d-4cc1-876d-6c4e18d85c04",
+      "@id" : "msg:meta/07417357-730a-4011-86fb-ef3e5d941192",
       "msg:SenderPlatformId" : {
         "@id" : "http://sna.com/model#"
       },
-      "msg:conversationID" : "conv838d18c7-6581-4de5-8857-c103374b6847",
-      "msg:dateTimeStamp" : "2020-01-14T18:03:59.545+01:00",
-      "msg:messageID" : "msg8029ed20-bf74-4888-8d8b-a88a0af88820",
+      "msg:conversationID" : "conva213ed95-83f5-4f34-aa03-d40a6960e5d8",
+      "msg:dateTimeStamp" : "2020-01-15T17:03:48.063+01:00",
+      "msg:messageID" : "msg4e43d1fb-b896-4edf-82f6-4f86b37aa3e5",
       "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
         "@id" : "msg:meta"
       }, {
@@ -20,43 +20,41 @@
   }, {
     "@graph" : [ {
       "@id" : "_:b0",
-      "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
-        "@id" : "sosa:Sensor"
-      }, {
-        "@id" : "http://purl.org/iot/vocab/m3-lite#Pedometer"
-      } ],
-      "sosa:madeObservation" : {
-        "@id" : "_:b1"
+      "http://www.inter-iot.eu/sripas#provider" : "",
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : {
+        "@id" : "iiotex:hasLocalId"
       }
     }, {
       "@id" : "_:b1",
-      "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : {
-        "@id" : "sosa:Observation"
-      },
-      "sosa:hasResult" : "198",
-      "sosa:observedProperty" : {
-        "@id" : "_:b2"
-      },
-      "sosa:resultTime" : "1579021435540"
-    }, {
-      "@id" : "_:b2",
       "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
         "@id" : "sosa:observableProperty"
       }, {
         "@id" : "http://purl.org/iot/vocab/m3-lite#Step"
       } ]
     }, {
-      "@id" : "_:b3",
-      "http://www.inter-iot.eu/sripas#provider" : "",
-      "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : {
-        "@id" : "iiotex:hasLocalId"
+      "@id" : "_:b2",
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
+        "@id" : "sosa:Sensor"
+      }, {
+        "@id" : "http://purl.org/iot/vocab/m3-lite#Pedometer"
+      } ],
+      "sosa:madeObservation" : {
+        "@id" : "_:b3"
       }
     }, {
+      "@id" : "_:b3",
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : {
+        "@id" : "sosa:Observation"
+      },
+      "sosa:hasResult" : "85",
+      "sosa:observedProperty" : {
+        "@id" : "_:b1"
+      },
+      "sosa:observes" : "PTL-Pedometer",
+      "sosa:resultTime" : "2020-01-15T17:03:47.807+01:00"
+    }, {
       "@id" : "_:b4",
-      "http://sensinact.com#description" : "number of steps in current day",
-      "http://sensinact.com#modifiable" : "MODIFIABLE",
-      "http://sensinact.com#nickname" : "last-day-step-counter",
-      "http://sensinact.com#unit" : "steps",
+      "http://sensinact.com#timestamp" : "1579104227807",
       "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : {
         "@id" : "http://sensinact.com#Resource"
       }
@@ -101,6 +99,8 @@
         "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
       } ],
       "http://www.w3.org/2000/01/rdf-schema#comment" : [ {
+        "@id" : "http://sensinact.com#dateTimestamp"
+      }, {
         "@id" : "http://sensinact.com#provider"
       }, {
         "@id" : "http://sensinact.com#value"
@@ -157,6 +157,15 @@
         "@id" : "http://sensinact.com#Resource"
       }, {
         "@id" : "http://sensinact.com#WeightMonitorResource"
+      } ]
+    }, {
+      "@id" : "http://sensinact.com#dateTimestamp",
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
+        "@id" : "http://www.w3.org/2002/07/owl#FunctionalProperty"
+      }, {
+        "@id" : "http://www.w3.org/2000/01/rdf-schema#Literal"
+      }, {
+        "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
       } ]
     }, {
       "@id" : "http://sensinact.com#name",

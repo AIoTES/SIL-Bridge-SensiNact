@@ -1,13 +1,13 @@
 {
   "@graph" : [ {
     "@graph" : [ {
-      "@id" : "msg:meta/84551f24-d3b8-4a2f-91ec-2f7b9275e279",
+      "@id" : "msg:meta/4dc3e75a-28f7-4c7f-894c-7f1ece96ca93",
       "msg:SenderPlatformId" : {
         "@id" : "http://sna.com/model#"
       },
-      "msg:conversationID" : "conv64dfa945-08c1-4c64-bd5e-aa31fdcda2ab",
-      "msg:dateTimeStamp" : "2020-01-14T17:56:35.207+01:00",
-      "msg:messageID" : "msgb3d3db5e-6ac2-430f-a566-723a837c9c7e",
+      "msg:conversationID" : "conve58a195e-2da5-435e-8f02-ee14f0aab29f",
+      "msg:dateTimeStamp" : "2020-01-15T17:00:04.435+01:00",
+      "msg:messageID" : "msge2b19c25-b270-4ffa-8c44-da5838120ee4",
       "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
         "@id" : "msg:meta"
       }, {
@@ -23,27 +23,20 @@
       "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : {
         "@id" : "http://www.w3.org/2006/time#Instant"
       },
-      "http://www.w3.org/2006/time#inTimePosition" : "1579020991663"
+      "http://www.w3.org/2006/time#inTimePosition" : "2020-01-15T17:00:04.215+01:00"
     }, {
       "@id" : "_:b1",
-      "iiot:hasName" : "state",
-      "iiot:hasResultValue" : "false",
-      "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : {
-        "@id" : "sosa:Result"
-      }
-    }, {
-      "@id" : "_:b2",
       "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : {
         "@id" : "ssn:Property"
       },
       "ssn:hasProperty" : "occupied"
     }, {
-      "@id" : "_:b3",
+      "@id" : "_:b2",
       "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : {
         "@id" : "sosa:Observation"
       },
       "sosa:ObservableProperty" : {
-        "@id" : "_:b2"
+        "@id" : "_:b1"
       },
       "sosa:madeBySensor" : {
         "@id" : "_:b4"
@@ -53,19 +46,26 @@
         "@id" : "_:b0"
       },
       "ssn:hasResult" : {
-        "@id" : "_:b1"
+        "@id" : "_:b3"
+      }
+    }, {
+      "@id" : "_:b3",
+      "iiot:hasName" : "state",
+      "iiot:hasResultValue" : "true",
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : {
+        "@id" : "sosa:Result"
       }
     }, {
       "@id" : "_:b4",
-      "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : {
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
         "@id" : "sosa:Sensor"
-      },
+      }, {
+        "@id" : "http://purl.org/iot/vocab/m3-lite#PressureSensor"
+      } ],
       "sosa:observes" : "PTL-Day-laying-monitor"
     }, {
       "@id" : "_:b5",
-      "http://sensinact.com#description" : "check if the patient is currently laying on bed whatever current time is (day and night)",
-      "http://sensinact.com#modifiable" : "MODIFIABLE",
-      "http://sensinact.com#nickname" : "state",
+      "http://sensinact.com#timestamp" : "1579104004215",
       "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : {
         "@id" : "http://sensinact.com#Resource"
       }
@@ -110,6 +110,8 @@
         "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
       } ],
       "http://www.w3.org/2000/01/rdf-schema#comment" : [ {
+        "@id" : "http://sensinact.com#dateTimestamp"
+      }, {
         "@id" : "http://sensinact.com#provider"
       }, {
         "@id" : "http://sensinact.com#value"
@@ -166,6 +168,15 @@
         "@id" : "http://sensinact.com#Resource"
       }, {
         "@id" : "http://sensinact.com#WeightMonitorResource"
+      } ]
+    }, {
+      "@id" : "http://sensinact.com#dateTimestamp",
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
+        "@id" : "http://www.w3.org/2002/07/owl#FunctionalProperty"
+      }, {
+        "@id" : "http://www.w3.org/2000/01/rdf-schema#Literal"
+      }, {
+        "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
       } ]
     }, {
       "@id" : "http://sensinact.com#name",

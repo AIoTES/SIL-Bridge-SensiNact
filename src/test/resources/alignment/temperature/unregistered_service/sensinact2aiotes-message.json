@@ -3,13 +3,13 @@
     {
       "@graph": [
         {
-          "@id": "msg:meta/879c27af-8267-4543-9455-bf9c851554ff",
+          "@id": "msg:meta/68f90c35-4fdd-4386-ac01-87dc7d505652",
           "msg:SenderPlatformId": {
             "@id": "http://sna.com/model#"
           },
-          "msg:conversationID": "conv4069742e-7add-4377-b738-d8b24420c0af",
-          "msg:dateTimeStamp": "2020-01-15T17:05:16.141+01:00",
-          "msg:messageID": "msg470bf608-e32c-425a-9299-8222d26fc867",
+          "msg:conversationID": "conv00af2b9e-ee7a-4ae3-a10f-d115ca3c64e5",
+          "msg:dateTimeStamp": "2020-01-15T17:05:21.115+01:00",
+          "msg:messageID": "msg3106660a-30f6-4d75-910a-579fc89a1029",
           "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": [
             {
               "@id": "msg:Response"
@@ -29,31 +29,16 @@
       "@graph": [
         {
           "@id": "_:b0",
-          "http://sensinact.com#dateTimestamp": "2020-01-15T17:05:15.885+01:00",
-          "http://sensinact.com#default": "0",
-          "http://sensinact.com#description": "last measured weight in kg",
-          "http://sensinact.com#lower-bound": "0",
-          "http://sensinact.com#modifiable": "MODIFIABLE",
-          "http://sensinact.com#name": "last-weight",
-          "http://sensinact.com#nickname": "last-weight",
-          "http://sensinact.com#provider": "PTL-Weight",
-          "http://sensinact.com#service": "monitor",
-          "http://sensinact.com#timestamp": "1579104315885",
-          "http://sensinact.com#type": [
-            "WEIGHT",
-            "WEIGHT_MONITOR"
-          ],
-          "http://sensinact.com#unit": "kg",
-          "http://sensinact.com#upper-bound": "99999",
-          "http://sensinact.com#value": "26",
-          "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": [
-            {
-              "@id": "http://sensinact.com#WeightMonitorResource"
-            },
-            {
-              "@id": "http://sensinact.com#Resource"
-            }
-          ]
+          "http://sensinact.com#dateTimestamp": "2020-01-15T17:05:20.913+01:00",
+          "http://sensinact.com#name": "temperature-out-of-bounds",
+          "http://sensinact.com#provider": "PTL-Temperature",
+          "http://sensinact.com#service": "control",
+          "http://sensinact.com#timestamp": "1579104320913",
+          "http://sensinact.com#type": "TEMPERATURE_ALERT",
+          "http://sensinact.com#value": "OK",
+          "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": {
+            "@id": "http://sensinact.com#Resource"
+          }
         },
         {
           "@id": "http://sensinact.com#BedOccupancyResource",

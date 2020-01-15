@@ -3,13 +3,13 @@
     {
       "@graph": [
         {
-          "@id": "msg:meta/43b623ac-ace9-42dd-bbec-f168f64fc495",
+          "@id": "msg:meta/20c67cf3-38a7-4da1-baab-9415e344ed3d",
           "msg:SenderPlatformId": {
             "@id": "http://sna.com/model#"
           },
-          "msg:conversationID": "conv893ee0d0-46a8-4187-889e-d534e67bf259",
-          "msg:dateTimeStamp": "2020-01-10T18:04:26.591+01:00",
-          "msg:messageID": "msg00403217-1f0e-47b9-9300-8b5a87ca8f72",
+          "msg:conversationID": "conv0ed29b13-1d21-4176-99fe-1cd39d163333",
+          "msg:dateTimeStamp": "2020-01-15T17:05:21.137+01:00",
+          "msg:messageID": "msgbb6b957e-48fc-479d-9ccc-8b901b9ec001",
           "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": [
             {
               "@id": "msg:Response"
@@ -29,15 +29,67 @@
       "@graph": [
         {
           "@id": "_:b0",
+          "http://sensinact.com#dateTimestamp": "2020-01-15T17:05:15.897+01:00",
+          "http://sensinact.com#description": "number of steps by days for the last 30 days",
+          "http://sensinact.com#modifiable": "UPDATABLE",
           "http://sensinact.com#name": "last-30-days-step-counters",
+          "http://sensinact.com#nickname": "last-30-days-step-counters",
           "http://sensinact.com#provider": "PTL-Pedometer",
           "http://sensinact.com#service": "history",
-          "http://sensinact.com#timestamp": "1578675861353",
+          "http://sensinact.com#timestamp": "1579104315897",
           "http://sensinact.com#type": "PEDOMETER_MONITOR",
-          "http://sensinact.com#value": "[146, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1]",
+          "http://sensinact.com#unit": "steps",
+          "http://sensinact.com#value": "[22, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1]",
           "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": {
             "@id": "http://sensinact.com#Resource"
           }
+        },
+        {
+          "@id": "http://sensinact.com#BedOccupancyResource",
+          "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": [
+            {
+              "@id": "http://www.w3.org/2000/01/rdf-schema#Resource"
+            },
+            {
+              "@id": "http://www.w3.org/2000/01/rdf-schema#Class"
+            },
+            {
+              "@id": "http://www.w3.org/2002/07/owl#Class"
+            }
+          ],
+          "http://www.w3.org/2000/01/rdf-schema#subClassOf": [
+            {
+              "@id": "http://sensinact.com#BedOccupancyResource"
+            },
+            {
+              "@id": "http://sensinact.com#Resource"
+            }
+          ]
+        },
+        {
+          "@id": "http://sensinact.com#KPIResource",
+          "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": [
+            {
+              "@id": "http://www.w3.org/2000/01/rdf-schema#Resource"
+            },
+            {
+              "@id": "http://www.w3.org/2000/01/rdf-schema#Class"
+            },
+            {
+              "@id": "http://www.w3.org/2002/07/owl#Class"
+            }
+          ],
+          "http://www.w3.org/2000/01/rdf-schema#comment": {
+            "@id": "http://sensinact.com#target"
+          },
+          "http://www.w3.org/2000/01/rdf-schema#subClassOf": [
+            {
+              "@id": "http://sensinact.com#KPIResource"
+            },
+            {
+              "@id": "http://sensinact.com#Resource"
+            }
+          ]
         },
         {
           "@id": "http://sensinact.com#Resource",
@@ -53,6 +105,9 @@
             }
           ],
           "http://www.w3.org/2000/01/rdf-schema#comment": [
+            {
+              "@id": "http://sensinact.com#dateTimestamp"
+            },
             {
               "@id": "http://sensinact.com#provider"
             },
@@ -99,6 +154,64 @@
           ]
         },
         {
+          "@id": "http://sensinact.com#TemperatureMonitorResource",
+          "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": [
+            {
+              "@id": "http://www.w3.org/2000/01/rdf-schema#Resource"
+            },
+            {
+              "@id": "http://www.w3.org/2000/01/rdf-schema#Class"
+            },
+            {
+              "@id": "http://www.w3.org/2002/07/owl#Class"
+            }
+          ],
+          "http://www.w3.org/2000/01/rdf-schema#subClassOf": [
+            {
+              "@id": "http://sensinact.com#TemperatureMonitorResource"
+            },
+            {
+              "@id": "http://sensinact.com#Resource"
+            }
+          ]
+        },
+        {
+          "@id": "http://sensinact.com#WeightMonitorResource",
+          "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": [
+            {
+              "@id": "http://www.w3.org/2000/01/rdf-schema#Resource"
+            },
+            {
+              "@id": "http://www.w3.org/2000/01/rdf-schema#Class"
+            },
+            {
+              "@id": "http://www.w3.org/2002/07/owl#Class"
+            }
+          ],
+          "http://www.w3.org/2000/01/rdf-schema#subClassOf": [
+            {
+              "@id": "http://sensinact.com#WeightMonitorResource"
+            },
+            {
+              "@id": "http://sensinact.com#Resource"
+            }
+          ]
+        },
+        {
+          "@id": "http://sensinact.com#dateTimestamp",
+          "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": [
+            {
+              "@id": "http://www.w3.org/2000/01/rdf-schema#Resource"
+            },
+            {
+              "@id": "http://www.w3.org/2000/01/rdf-schema#Literal"
+            },
+            {
+              "@id": "http://www.w3.org/2002/07/owl#FunctionalProperty"
+            }
+          ]
+        },
+        {
           "@id": "http://sensinact.com#name",
           "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": [
             {
@@ -132,10 +245,24 @@
             "@id": "http://www.w3.org/2002/07/owl#Ontology"
           },
           "http://www.w3.org/2000/01/rdf-schema#comment": "sensiNact AHA resource is defined by provider/service/resource path, type, value and timestamp",
-          "http://www.w3.org/2000/01/rdf-schema#label": "The simple sensiNact AHA pedometer monitor resource ontology"
+          "http://www.w3.org/2000/01/rdf-schema#label": "The simple sensiNact AHA resource ontology"
         },
         {
           "@id": "http://sensinact.com#service",
+          "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": [
+            {
+              "@id": "http://www.w3.org/2000/01/rdf-schema#Resource"
+            },
+            {
+              "@id": "http://www.w3.org/2000/01/rdf-schema#Literal"
+            },
+            {
+              "@id": "http://www.w3.org/2002/07/owl#FunctionalProperty"
+            }
+          ]
+        },
+        {
+          "@id": "http://sensinact.com#target",
           "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": [
             {
               "@id": "http://www.w3.org/2000/01/rdf-schema#Resource"

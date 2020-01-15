@@ -1,13 +1,13 @@
 {
   "@graph" : [ {
     "@graph" : [ {
-      "@id" : "msg:meta/5d13920d-c7a1-4fce-ad64-c0a07cfb16df",
+      "@id" : "msg:meta/d9e5d832-88cc-49b1-a1d5-b456a5f263bf",
       "msg:SenderPlatformId" : {
         "@id" : "http://sna.com/model#"
       },
-      "msg:conversationID" : "conv4c56869c-2948-449c-a31c-b1db11fadaa6",
-      "msg:dateTimeStamp" : "2020-01-14T17:56:36.503+01:00",
-      "msg:messageID" : "msg5551aa10-2d47-4ca6-9f18-30a0cd7bc4b2",
+      "msg:conversationID" : "conva9f359ab-980b-4086-b442-9796679f36d9",
+      "msg:dateTimeStamp" : "2020-01-15T17:00:04.477+01:00",
+      "msg:messageID" : "msgd9b11cca-f05a-461b-a65b-a5b15dac3759",
       "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
         "@id" : "msg:meta"
       }, {
@@ -20,9 +20,7 @@
   }, {
     "@graph" : [ {
       "@id" : "_:b0",
-      "http://sensinact.com#description" : "check if the patient is currently laying on bed and current time is during the day",
-      "http://sensinact.com#modifiable" : "UPDATABLE",
-      "http://sensinact.com#nickname" : "is-day-laying"
+      "http://sensinact.com#timestamp" : "1579104004215"
     }, {
       "@id" : "http://sensinact.com#BedOccupancyResource",
       "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
@@ -64,6 +62,8 @@
         "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
       } ],
       "http://www.w3.org/2000/01/rdf-schema#comment" : [ {
+        "@id" : "http://sensinact.com#dateTimestamp"
+      }, {
         "@id" : "http://sensinact.com#provider"
       }, {
         "@id" : "http://sensinact.com#value"
@@ -120,6 +120,15 @@
         "@id" : "http://sensinact.com#Resource"
       }, {
         "@id" : "http://sensinact.com#WeightMonitorResource"
+      } ]
+    }, {
+      "@id" : "http://sensinact.com#dateTimestamp",
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
+        "@id" : "http://www.w3.org/2002/07/owl#FunctionalProperty"
+      }, {
+        "@id" : "http://www.w3.org/2000/01/rdf-schema#Literal"
+      }, {
+        "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
       } ]
     }, {
       "@id" : "http://sensinact.com#name",

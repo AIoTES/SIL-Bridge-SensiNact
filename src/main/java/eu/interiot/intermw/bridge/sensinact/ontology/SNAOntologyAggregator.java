@@ -26,6 +26,10 @@ import org.apache.jena.rdf.model.Property;
 import org.apache.jena.rdf.model.Statement;
 
 import java.io.*;
+import java.time.DateTimeException;
+import java.time.Instant;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -33,6 +37,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.TimeZone;
 import org.apache.jena.riot.Lang;
 import org.apache.jena.riot.RDFDataMgr;
 
@@ -42,6 +47,9 @@ import org.apache.jena.riot.RDFDataMgr;
  */
 public class SNAOntologyAggregator {
 
+    private static final DateTimeFormatter DATE_TIMESTAMP_FORMATTER = 
+        DateTimeFormatter.ISO_OFFSET_DATE_TIME;
+    
     private static final OntModel EMPTY_MODEL = ModelFactory.createOntologyModel();
     public enum JenaWriterType {
         rdf("RDF/XML"),
@@ -208,6 +216,7 @@ public class SNAOntologyAggregator {
         Property nameDataProperty = getObjectProperty("name");
         Property typeDataProperty = getObjectProperty("type");
         Property timestampDataProperty = getObjectProperty("timestamp");
+        Property dateTimestampDataProperty = getObjectProperty("dateTimestamp");
         if (value != null) {
             String correctedValue = snaOntologyType.computeValue(value);
             String correctedName = snaOntologyType.mapName(resource);
@@ -218,6 +227,8 @@ public class SNAOntologyAggregator {
             individualResource.addLiteral(typeDataProperty, type);
             individualResource.addLiteral(valueProperty, correctedValue);
             individualResource.addLiteral(timestampDataProperty, timestamp);
+            String dateTimestamp = toLocaDateTime(timestamp);
+            individualResource.addLiteral(dateTimestampDataProperty, dateTimestamp);
             Property metadataProperty;
             for (Entry<String, String> entry : metadata.entrySet()) {
                 metadataProperty = getObjectProperty(entry.getKey());
@@ -226,6 +237,27 @@ public class SNAOntologyAggregator {
         }
     }
 
+    private static String toLocaDateTime(String timestamp$) {
+        String date = timestamp$;
+        ZonedDateTime dateTime = null;
+        try {
+            final long timestamp = Long.parseLong(timestamp$);
+            dateTime =
+                ZonedDateTime.ofInstant(
+                    Instant.ofEpochMilli(timestamp), 
+                    TimeZone.getDefault().toZoneId()
+                );
+            date = dateTime.format(DATE_TIMESTAMP_FORMATTER);
+        } catch (NumberFormatException e) {
+            //nothing to do
+        } catch (DateTimeException e) {
+            date = e.getMessage();
+//            if (localDateTime != null) {
+//                date = localDateTime.toString();
+//            }
+        }
+        return date;
+    }
     private static interface ValueComputer {
         String computeValue(String value);
     }

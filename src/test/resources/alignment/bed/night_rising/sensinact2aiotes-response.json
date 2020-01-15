@@ -1,13 +1,13 @@
 {
   "@graph" : [ {
     "@graph" : [ {
-      "@id" : "msg:meta/3ca4441e-ff92-4e7e-a99d-422a97cd8701",
+      "@id" : "msg:meta/579e7113-02f2-4305-b65f-4c2b0ae52bdb",
       "msg:SenderPlatformId" : {
         "@id" : "http://sna.com/model#"
       },
-      "msg:conversationID" : "convf5b48b47-dad9-4cac-b931-8e106c43176a",
-      "msg:dateTimeStamp" : "2020-01-14T17:56:39.337+01:00",
-      "msg:messageID" : "msg64de5fe7-43e5-415f-81ec-20989cdf57bb",
+      "msg:conversationID" : "conv1f274446-cd64-4ddf-ac8b-96465609cece",
+      "msg:dateTimeStamp" : "2020-01-15T17:00:04.397+01:00",
+      "msg:messageID" : "msgbfe9c5b3-6b22-41ec-8b2a-86237c0cc152",
       "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
         "@id" : "msg:meta"
       }, {
@@ -20,55 +20,55 @@
   }, {
     "@graph" : [ {
       "@id" : "_:b0",
-      "http://sensinact.com#description" : "check if the patient is currently rising and whateer current time is (night and day)",
-      "http://sensinact.com#modifiable" : "MODIFIABLE",
-      "http://sensinact.com#nickname" : "state",
       "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : {
-        "@id" : "http://sensinact.com#Resource"
-      }
+        "@id" : "http://www.w3.org/2006/time#Instant"
+      },
+      "http://www.w3.org/2006/time#inTimePosition" : "2020-01-15T17:00:04.159+01:00"
     }, {
       "@id" : "_:b1",
-      "iiot:hasName" : "state",
-      "iiot:hasResultValue" : "false",
-      "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : {
-        "@id" : "sosa:Result"
-      }
-    }, {
-      "@id" : "_:b2",
-      "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : {
-        "@id" : "sosa:Sensor"
-      },
-      "sosa:observes" : "PTL-Night-rising-monitor"
-    }, {
-      "@id" : "_:b3",
       "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : {
         "@id" : "sosa:Observation"
       },
       "sosa:ObservableProperty" : {
-        "@id" : "_:b4"
+        "@id" : "_:b2"
       },
       "sosa:madeBySensor" : {
-        "@id" : "_:b2"
+        "@id" : "_:b4"
       },
       "sosa:observedProperty" : "PTL-Night-rising-monitor",
       "sosa:phenomenomTime" : {
-        "@id" : "_:b5"
+        "@id" : "_:b0"
       },
       "ssn:hasResult" : {
-        "@id" : "_:b1"
+        "@id" : "_:b3"
       }
     }, {
-      "@id" : "_:b4",
+      "@id" : "_:b2",
       "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : {
         "@id" : "ssn:Property"
       },
       "ssn:hasProperty" : "occupied"
     }, {
-      "@id" : "_:b5",
+      "@id" : "_:b3",
+      "iiot:hasName" : "state",
+      "iiot:hasResultValue" : "true",
       "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : {
-        "@id" : "http://www.w3.org/2006/time#Instant"
-      },
-      "http://www.w3.org/2006/time#inTimePosition" : "1579020991662"
+        "@id" : "sosa:Result"
+      }
+    }, {
+      "@id" : "_:b4",
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
+        "@id" : "sosa:Sensor"
+      }, {
+        "@id" : "http://purl.org/iot/vocab/m3-lite#PressureSensor"
+      } ],
+      "sosa:observes" : "PTL-Night-rising-monitor"
+    }, {
+      "@id" : "_:b5",
+      "http://sensinact.com#timestamp" : "1579104004159",
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : {
+        "@id" : "http://sensinact.com#Resource"
+      }
     }, {
       "@id" : "http://sensinact.com#BedOccupancyResource",
       "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
@@ -110,6 +110,8 @@
         "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
       } ],
       "http://www.w3.org/2000/01/rdf-schema#comment" : [ {
+        "@id" : "http://sensinact.com#dateTimestamp"
+      }, {
         "@id" : "http://sensinact.com#provider"
       }, {
         "@id" : "http://sensinact.com#value"
@@ -166,6 +168,15 @@
         "@id" : "http://sensinact.com#Resource"
       }, {
         "@id" : "http://sensinact.com#WeightMonitorResource"
+      } ]
+    }, {
+      "@id" : "http://sensinact.com#dateTimestamp",
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
+        "@id" : "http://www.w3.org/2002/07/owl#FunctionalProperty"
+      }, {
+        "@id" : "http://www.w3.org/2000/01/rdf-schema#Literal"
+      }, {
+        "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
       } ]
     }, {
       "@id" : "http://sensinact.com#name",

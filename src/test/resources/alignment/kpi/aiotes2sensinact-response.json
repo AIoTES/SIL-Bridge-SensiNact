@@ -9,17 +9,28 @@
       "msg:dateTimeStamp" : "2020-01-15T17:13:08.738+01:00",
       "msg:messageID" : "msg61c67304-8cb3-42be-a4dc-e3c6c28b3552",
       "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
-        "@id" : "msg:meta"
+        "@id" : "msg:Response"
       }, {
         "@id" : "msg:Observation"
       }, {
-        "@id" : "msg:Response"
+        "@id" : "msg:meta"
       } ]
     } ],
     "@id" : "msg:metadata"
   }, {
     "@graph" : [ {
       "@id" : "_:b0",
+      "http://sensinact.com#dateTimestamp" : "2020-01-15T17:13:08.392+01:00",
+      "http://sensinact.com#name" : "KPI_APPLI_IN",
+      "http://sensinact.com#service" : "monitor",
+      "http://sensinact.com#target" : "2000",
+      "http://sensinact.com#type" : "KPI",
+      "http://sensinact.com#value" : "5",
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : {
+        "@id" : "http://sensinact.com#KPIResource"
+      }
+    }, {
+      "@id" : "_:b1",
       "http://sensinact.com#default" : "0",
       "http://sensinact.com#description" : "number of current AHA installed functions (active and inactive)",
       "http://sensinact.com#lower-bound" : "0",
@@ -32,44 +43,35 @@
         "@id" : "http://sensinact.com#Resource"
       }
     }, {
-      "@id" : "_:b1",
-      "http://www.semanticweb.org/activage/ontologies/2018/4/activage-core#currentTime" : "2020-01-15T17:13:08.392+01:00",
-      "http://www.semanticweb.org/activage/ontologies/2018/4/activage-core#currentValue" : "5",
-      "http://www.semanticweb.org/activage/ontologies/2018/4/activage-core#name" : "KPI_APPLI_IN",
-      "http://www.semanticweb.org/activage/ontologies/2018/4/activage-core#targetValue" : "2000",
-      "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : {
-        "@id" : "http://www.semanticweb.org/activage/ontologies/2018/4/activage-core#KPI"
-      }
-    }, {
       "@id" : "http://sensinact.com#BedOccupancyResource",
       "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
-        "@id" : "http://www.w3.org/2002/07/owl#Class"
+        "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
       }, {
         "@id" : "http://www.w3.org/2000/01/rdf-schema#Class"
       }, {
-        "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
+        "@id" : "http://www.w3.org/2002/07/owl#Class"
       } ],
       "http://www.w3.org/2000/01/rdf-schema#subClassOf" : [ {
-        "@id" : "http://sensinact.com#Resource"
-      }, {
         "@id" : "http://sensinact.com#BedOccupancyResource"
+      }, {
+        "@id" : "http://sensinact.com#Resource"
       } ]
     }, {
       "@id" : "http://sensinact.com#KPIResource",
       "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
-        "@id" : "http://www.w3.org/2002/07/owl#Class"
+        "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
       }, {
         "@id" : "http://www.w3.org/2000/01/rdf-schema#Class"
       }, {
-        "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
+        "@id" : "http://www.w3.org/2002/07/owl#Class"
       } ],
       "http://www.w3.org/2000/01/rdf-schema#comment" : {
         "@id" : "http://sensinact.com#target"
       },
       "http://www.w3.org/2000/01/rdf-schema#subClassOf" : [ {
-        "@id" : "http://sensinact.com#Resource"
-      }, {
         "@id" : "http://sensinact.com#KPIResource"
+      }, {
+        "@id" : "http://sensinact.com#Resource"
       } ]
     }, {
       "@id" : "http://sensinact.com#Resource",
@@ -101,71 +103,71 @@
     }, {
       "@id" : "http://sensinact.com#StepNumberResource",
       "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
-        "@id" : "http://www.w3.org/2002/07/owl#Class"
+        "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
       }, {
         "@id" : "http://www.w3.org/2000/01/rdf-schema#Class"
       }, {
-        "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
+        "@id" : "http://www.w3.org/2002/07/owl#Class"
       } ],
       "http://www.w3.org/2000/01/rdf-schema#subClassOf" : [ {
-        "@id" : "http://sensinact.com#Resource"
-      }, {
         "@id" : "http://sensinact.com#StepNumberResource"
+      }, {
+        "@id" : "http://sensinact.com#Resource"
       } ]
     }, {
       "@id" : "http://sensinact.com#TemperatureMonitorResource",
       "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
-        "@id" : "http://www.w3.org/2002/07/owl#Class"
+        "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
       }, {
         "@id" : "http://www.w3.org/2000/01/rdf-schema#Class"
       }, {
-        "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
+        "@id" : "http://www.w3.org/2002/07/owl#Class"
       } ],
       "http://www.w3.org/2000/01/rdf-schema#subClassOf" : [ {
-        "@id" : "http://sensinact.com#Resource"
-      }, {
         "@id" : "http://sensinact.com#TemperatureMonitorResource"
+      }, {
+        "@id" : "http://sensinact.com#Resource"
       } ]
     }, {
       "@id" : "http://sensinact.com#WeightMonitorResource",
       "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
-        "@id" : "http://www.w3.org/2002/07/owl#Class"
+        "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
       }, {
         "@id" : "http://www.w3.org/2000/01/rdf-schema#Class"
       }, {
-        "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
+        "@id" : "http://www.w3.org/2002/07/owl#Class"
       } ],
       "http://www.w3.org/2000/01/rdf-schema#subClassOf" : [ {
-        "@id" : "http://sensinact.com#Resource"
-      }, {
         "@id" : "http://sensinact.com#WeightMonitorResource"
+      }, {
+        "@id" : "http://sensinact.com#Resource"
       } ]
     }, {
       "@id" : "http://sensinact.com#dateTimestamp",
       "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
-        "@id" : "http://www.w3.org/2002/07/owl#FunctionalProperty"
+        "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
       }, {
         "@id" : "http://www.w3.org/2000/01/rdf-schema#Literal"
       }, {
-        "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
+        "@id" : "http://www.w3.org/2002/07/owl#FunctionalProperty"
       } ]
     }, {
       "@id" : "http://sensinact.com#name",
       "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
-        "@id" : "http://www.w3.org/2002/07/owl#FunctionalProperty"
+        "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
       }, {
         "@id" : "http://www.w3.org/2000/01/rdf-schema#Literal"
       }, {
-        "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
+        "@id" : "http://www.w3.org/2002/07/owl#FunctionalProperty"
       } ]
     }, {
       "@id" : "http://sensinact.com#provider",
       "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
-        "@id" : "http://www.w3.org/2002/07/owl#FunctionalProperty"
+        "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
       }, {
         "@id" : "http://www.w3.org/2000/01/rdf-schema#Literal"
       }, {
-        "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
+        "@id" : "http://www.w3.org/2002/07/owl#FunctionalProperty"
       } ]
     }, {
       "@id" : "http://sensinact.com#sensiNactOntology",
@@ -177,68 +179,68 @@
     }, {
       "@id" : "http://sensinact.com#service",
       "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
-        "@id" : "http://www.w3.org/2002/07/owl#FunctionalProperty"
+        "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
       }, {
         "@id" : "http://www.w3.org/2000/01/rdf-schema#Literal"
       }, {
-        "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
+        "@id" : "http://www.w3.org/2002/07/owl#FunctionalProperty"
       } ]
     }, {
       "@id" : "http://sensinact.com#target",
       "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
-        "@id" : "http://www.w3.org/2002/07/owl#FunctionalProperty"
+        "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
       }, {
         "@id" : "http://www.w3.org/2000/01/rdf-schema#Literal"
       }, {
-        "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
+        "@id" : "http://www.w3.org/2002/07/owl#FunctionalProperty"
       } ]
     }, {
       "@id" : "http://sensinact.com#timestamp",
       "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
-        "@id" : "http://www.w3.org/2002/07/owl#FunctionalProperty"
+        "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
       }, {
         "@id" : "http://www.w3.org/2000/01/rdf-schema#Literal"
       }, {
-        "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
+        "@id" : "http://www.w3.org/2002/07/owl#FunctionalProperty"
       } ]
     }, {
       "@id" : "http://sensinact.com#type",
       "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
-        "@id" : "http://www.w3.org/2002/07/owl#FunctionalProperty"
+        "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
       }, {
         "@id" : "http://www.w3.org/2000/01/rdf-schema#Literal"
       }, {
-        "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
+        "@id" : "http://www.w3.org/2002/07/owl#FunctionalProperty"
       } ]
     }, {
       "@id" : "http://sensinact.com#value",
       "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
-        "@id" : "http://www.w3.org/2002/07/owl#FunctionalProperty"
+        "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
       }, {
         "@id" : "http://www.w3.org/2000/01/rdf-schema#Literal"
       }, {
-        "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
+        "@id" : "http://www.w3.org/2002/07/owl#FunctionalProperty"
       } ]
     }, {
       "@id" : "http://www.w3.org/2002/07/owl#Class",
       "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
-        "@id" : "http://www.w3.org/2000/01/rdf-schema#Class"
-      }, {
         "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
+      }, {
+        "@id" : "http://www.w3.org/2000/01/rdf-schema#Class"
       } ]
     }, {
       "@id" : "http://www.w3.org/2002/07/owl#FunctionalProperty",
       "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
-        "@id" : "http://www.w3.org/2000/01/rdf-schema#Class"
-      }, {
         "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
+      }, {
+        "@id" : "http://www.w3.org/2000/01/rdf-schema#Class"
       } ]
     }, {
       "@id" : "http://www.w3.org/2002/07/owl#Ontology",
       "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
-        "@id" : "http://www.w3.org/2000/01/rdf-schema#Class"
-      }, {
         "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
+      }, {
+        "@id" : "http://www.w3.org/2000/01/rdf-schema#Class"
       } ]
     } ],
     "@id" : "msg:payload"

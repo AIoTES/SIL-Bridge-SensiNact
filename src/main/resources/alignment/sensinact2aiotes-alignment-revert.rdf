@@ -25,7 +25,7 @@
       
     <align:Alignment>
         <dcelem:title>AIoTES2SensiNact</dcelem:title>
-        <exmo:version>0.4.6.2</exmo:version>
+        <exmo:version>0.4.9.1</exmo:version>
         <dcelem:creator>CEA Stephane Bergeon</dcelem:creator>
         <dcelem:description>Downstream Alignment between sensiNact AHA ontology and ACTIVAGE ontology.</dcelem:description>
         <dcelem:date>14 January 2020</dcelem:date>
@@ -78,7 +78,7 @@
                         <sosa:observedProperty>
                             <sosa:ObservableProperty>
                                 <rdf:label>
-                                    <sripas:name/>
+                                    <sripas:name1/>
                                 </rdf:label>
                             </sosa:ObservableProperty>
                         </sosa:observedProperty>
@@ -88,20 +88,20 @@
                     </sosa:Observation>
                 </align:entity1>
                 <align:entity2 rdf:parseType="Literal">
-                    <sripas:node_1>
+                    <sna:TemperatureMonitorResource>
                         <sna:name>last-temperature</sna:name>
                         <sna:provider>
                             <sripas:provider/>
                         </sna:provider>
                         <sna:service>monitor</sna:service>
-                        <sna:timestamp>
+                        <sna:dateTimestamp>
                             <sripas:timestamp/>
-                        </sna:timestamp>
+                        </sna:dateTimestamp>
                         <sna:type>TEMPERATURE_ALERT</sna:type>
                         <sna:value>
                             <sripas:value/>
                         </sna:value>
-                    </sripas:node_1>
+                    </sna:TemperatureMonitorResource>
                 </align:entity2>
                 <align:relation>=</align:relation>
                 <sripas:typings rdf:parseType="Literal">
@@ -139,20 +139,20 @@
                     </sosa:Sensor>
                 </align:entity1>
                 <align:entity2 rdf:parseType="Literal">
-                    <sripas:node_1>
+                    <sna:WeightMonitorResource>
                         <sna:name>last-weight</sna:name>
                         <sna:provider>
                             <sripas:provider/>
                         </sna:provider>
                         <sna:service>monitor</sna:service>
-                        <sna:timestamp>
+                        <sna:dateTimestamp>
                             <sripas:timestamp/>
-                        </sna:timestamp>
+                        </sna:dateTimestamp>
                         <sna:type>WEIGHT_MONITOR</sna:type>
                         <sna:value>
                             <sripas:value/>
                         </sna:value>
-                    </sripas:node_1>
+                    </sna:WeightMonitorResource>
                 </align:entity2>
                 <align:relation>=</align:relation>
                 <sripas:typings rdf:parseType="Literal">
@@ -167,13 +167,16 @@
         <align:map>
             <align:Cell rdf:about="http://www.inter-iot.eu/sripas#3_pedometer">
                 <align:entity1 rdf:parseType="Literal">
-                    <iiotex:hasLocalId>
-                        <sripas:provider/>
-                    </iiotex:hasLocalId>
                     <sosa:Sensor>
                         <rdf:type rdf:resource="http://purl.org/iot/vocab/m3-lite#Pedometer"/>
                         <sosa:madeObservation>
                             <sosa:Observation>
+                                <iiotex:hasLocalId>
+                                    <sripas:provider/>
+                                </iiotex:hasLocalId>
+                                <iiot:hasUnit>
+                                    <sripas:unit/>
+                                </iiot:hasUnit>
                                 <sosa:hasResult>
                                     <sripas:value/>
                                 </sosa:hasResult>
@@ -190,20 +193,20 @@
                     </sosa:Sensor>
                 </align:entity1>
                 <align:entity2 rdf:parseType="Literal">
-                    <sripas:node_1>
-                        <sna:name>last-day-step-number</sna:name>
+                    <sna:StepNumberResource>
+                        <sna:name>last-day-step-counter</sna:name>
                         <sna:provider>
                             <sripas:provider/>
                         </sna:provider>
                         <sna:service>monitor</sna:service>
-                        <sna:timestamp>
+                        <sna:dateTimestamp>
                             <sripas:timestamp/>
-                        </sna:timestamp>
+                        </sna:dateTimestamp>
                         <sna:type>PEDOMETER_MONITOR</sna:type>
                         <sna:value>
                             <sripas:value/>
                         </sna:value>
-                    </sripas:node_1>
+                    </sna:StepNumberResource>
                 </align:entity2>
                 <align:relation>=</align:relation>
                 <sripas:typings rdf:parseType="Literal">
@@ -236,8 +239,9 @@
                         </ssn:hasResult>
                         <sosa:madeBySensor>
                             <sosa:Sensor>
+                                <rdf:type rdf:resource="http://purl.org/iot/vocab/m3-lite#PressureSensor"/>
                                 <sosa:observes>
-                                    <sripas:provider/>
+                                    <sripas:provider1/>
                                 </sosa:observes>
                             </sosa:Sensor>
                         </sosa:madeBySensor>
@@ -254,20 +258,20 @@
                     </sosa:Observation>
                 </align:entity1>
                 <align:entity2 rdf:parseType="Literal">
-                    <sripas:node_1>
+                    <sna:BedOccupancyResource>
                         <sna:name>state</sna:name>
                         <sna:provider>
                             <sripas:provider/>
                         </sna:provider>
                         <sna:service>monitor</sna:service>
-                        <sna:timestamp>
+                        <sna:dateTimestamp>
                             <sripas:timestamp/>
-                        </sna:timestamp>
+                        </sna:dateTimestamp>
                         <sna:type>DAY_LAYING</sna:type>
                         <sna:value>
                             <sripas:value/>
                         </sna:value>
-                    </sripas:node_1>
+                    </sna:BedOccupancyResource>
                 </align:entity2>
                 <align:relation>=</align:relation>
                 <sripas:typings rdf:parseType="Literal">
@@ -298,7 +302,7 @@
                     </kpi:KPI>
                 </align:entity1>
                 <align:entity2 rdf:parseType="Literal">
-                    <sripas:node_1>
+                    <sna:KPIResource>
                         <sna:name>
                             <sripas:name/>
                         </sna:name>
@@ -306,9 +310,9 @@
                             <sripas:provider/>
                         </sna:provider>
                         <sna:service>monitor</sna:service>
-                        <sna:timestamp>
+                        <sna:dateTimestamp>
                             <sripas:timestamp/>
-                        </sna:timestamp>
+                        </sna:dateTimestamp>
                         <sna:type>KPI</sna:type>
                         <sna:value>
                             <sripas:value/>
@@ -316,7 +320,7 @@
                         <sna:target>
                             <sripas:target/>
                         </sna:target>
-                    </sripas:node_1>
+                    </sna:KPIResource>
                 </align:entity2>
                 <align:relation>=</align:relation>
                 <sripas:typings rdf:parseType="Literal">

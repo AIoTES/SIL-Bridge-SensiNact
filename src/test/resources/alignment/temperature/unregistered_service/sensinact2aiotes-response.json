@@ -1,13 +1,13 @@
 {
   "@graph" : [ {
     "@graph" : [ {
-      "@id" : "msg:meta/25374ebb-60a9-448a-b1e0-8d2be21e4f03",
+      "@id" : "msg:meta/68f90c35-4fdd-4386-ac01-87dc7d505652",
       "msg:SenderPlatformId" : {
         "@id" : "http://sna.com/model#"
       },
-      "msg:conversationID" : "conve2822e65-296e-4db2-9ea7-03570601d15c",
-      "msg:dateTimeStamp" : "2020-01-15T17:13:08.738+01:00",
-      "msg:messageID" : "msg61c67304-8cb3-42be-a4dc-e3c6c28b3552",
+      "msg:conversationID" : "conv00af2b9e-ee7a-4ae3-a10f-d115ca3c64e5",
+      "msg:dateTimeStamp" : "2020-01-15T17:05:21.115+01:00",
+      "msg:messageID" : "msg3106660a-30f6-4d75-910a-579fc89a1029",
       "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
         "@id" : "msg:meta"
       }, {
@@ -20,26 +20,7 @@
   }, {
     "@graph" : [ {
       "@id" : "_:b0",
-      "http://sensinact.com#default" : "0",
-      "http://sensinact.com#description" : "number of current AHA installed functions (active and inactive)",
-      "http://sensinact.com#lower-bound" : "0",
-      "http://sensinact.com#modifiable" : "UPDATABLE",
-      "http://sensinact.com#nickname" : "function-counter",
-      "http://sensinact.com#timestamp" : "1579104788392",
-      "http://sensinact.com#unit" : "aha functions",
-      "http://sensinact.com#upper-bound" : "10000",
-      "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : {
-        "@id" : "http://sensinact.com#Resource"
-      }
-    }, {
-      "@id" : "_:b1",
-      "http://www.semanticweb.org/activage/ontologies/2018/4/activage-core#currentTime" : "2020-01-15T17:13:08.392+01:00",
-      "http://www.semanticweb.org/activage/ontologies/2018/4/activage-core#currentValue" : "5",
-      "http://www.semanticweb.org/activage/ontologies/2018/4/activage-core#name" : "KPI_APPLI_IN",
-      "http://www.semanticweb.org/activage/ontologies/2018/4/activage-core#targetValue" : "2000",
-      "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : {
-        "@id" : "http://www.semanticweb.org/activage/ontologies/2018/4/activage-core#KPI"
-      }
+      "http://sensinact.com#timestamp" : "1579104320913"
     }, {
       "@id" : "http://sensinact.com#BedOccupancyResource",
       "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {

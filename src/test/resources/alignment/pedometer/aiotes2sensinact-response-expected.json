@@ -1,0 +1,88 @@
+{
+  "@graph" : [ {
+    "@graph" : [ {
+      "@id" : "msg:meta/ae9237e9-ed28-4199-8754-192a31c6a256",
+      "msg:conversationID" : "conv8fec736c-e530-453d-90a8-58fa4e8cceb5",
+      "msg:dateTimeStamp" : "2019-11-21T15:51:50.857Z",
+      "msg:messageID" : "msg17cc0235-8250-4d2b-b52c-1cb1d51661fa",
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
+        "@id" : "msg:Observation"
+      }, {
+        "@id" : "msg:meta"
+      } ]
+    } ],
+    "@id" : "msg:metadata"
+  }, {
+    "@graph" : [ {
+      "@id" : "_:b0",
+      "http://sensinact.com#dateTimestamp" : "2017-06-17T07:21:24.238Z",
+      "http://sensinact.com#name" : "last-day-step-counter",
+      "http://sensinact.com#provider" : "5c7e269830320800c9025892",
+      "http://sensinact.com#service" : "monitor",
+      "http://sensinact.com#type" : "PEDOMETER_MONITOR",
+      "http://sensinact.com#value" : "100",
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : {
+        "@id" : "http://sensinact.com#StepNumberResource"
+      }
+    }, {
+      "@id" : "_:b1",
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : {
+        "@id" : "http://purl.org/iot/vocab/m3-lite#StepPerDay"
+      }
+    }, {
+      "@id" : "InterIoT:syntax/FIWAREv2#_0",
+      "iiotex:hasLocalId" : "5c7e269830320800c9025891",
+      "InterIoT:syntax/FIWAREv2#hasAttribute" : {
+        "@id" : "InterIoT:syntax/FIWAREv2#_1"
+      }
+    }, {
+      "@id" : "InterIoT:syntax/FIWAREv2#_2",
+      "InterIoT:syntax/FIWAREv2#hasMetadata" : {
+        "@id" : "InterIoT:syntax/FIWAREv2#_3"
+      },
+      "InterIoT:syntax/FIWAREv2#hasType" : "Number"
+    }, {
+      "@id" : "InterIoT:syntax/FIWAREv2#_3",
+      "InterIoT:syntax/FIWAREv2#hasAttribute" : [ {
+        "@id" : "InterIoT:syntax/FIWAREv2#_4"
+      }, {
+        "@id" : "InterIoT:syntax/FIWAREv2#_6"
+      }, {
+        "@id" : "InterIoT:syntax/FIWAREv2#_8"
+      }, {
+        "@id" : "InterIoT:syntax/FIWAREv2#_10"
+      } ],
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : {
+        "@id" : "InterIoT:syntax/FIWAREv2#Metadata"
+      }
+    }, {
+      "@id" : "InterIoT:syntax/FIWAREv2#_4",
+      "InterIoT:syntax/FIWAREv2#hasName" : "timestamp",
+      "InterIoT:syntax/FIWAREv2#hasValue" : {
+        "@id" : "InterIoT:syntax/FIWAREv2#_5"
+      }
+    }, {
+      "@id" : "InterIoT:syntax/FIWAREv2#_7",
+      "InterIoT:syntax/FIWAREv2#hasType" : "String"
+    }, {
+      "@id" : "InterIoT:syntax/FIWAREv2#_8",
+      "InterIoT:syntax/FIWAREv2#hasName" : "quantityKind",
+      "InterIoT:syntax/FIWAREv2#hasValue" : {
+        "@id" : "InterIoT:syntax/FIWAREv2#_9"
+      }
+    }, {
+      "@id" : "InterIoT:syntax/FIWAREv2#_9",
+      "InterIoT:syntax/FIWAREv2#hasType" : "String"
+    } ],
+    "@id" : "msg:payload"
+  } ],
+  "@context" : {
+    "msg" : "http://inter-iot.eu/message/",
+    "iiotex" : "http://inter-iot.eu/GOIoTPex#",
+    "geosparql" : "http://www.opengis.net/ont/geosparql#",
+    "iiot" : "http://inter-iot.eu/GOIoTP#",
+    "InterIoT" : "http://inter-iot.eu/",
+    "ssn" : "http://www.w3.org/ns/ssn/",
+    "sosa" : "http://www.w3.org/ns/sosa/"
+  }
+}

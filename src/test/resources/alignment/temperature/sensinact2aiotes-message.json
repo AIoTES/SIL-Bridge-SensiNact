@@ -3,13 +3,13 @@
     {
       "@graph": [
         {
-          "@id": "msg:meta/18d2ce94-5e53-4505-bd34-600c3f28b4af",
+          "@id": "msg:meta/af827ec8-2c74-421d-8918-fd98414f2f16",
           "msg:SenderPlatformId": {
             "@id": "http://sna.com/model#"
           },
-          "msg:conversationID": "convd689b063-ceb5-4696-bb30-4284863e00fd",
-          "msg:dateTimeStamp": "2020-01-14T18:03:58.405+01:00",
-          "msg:messageID": "msgd2706cd1-2729-4fc9-8231-f016d6c5b557",
+          "msg:conversationID": "conv8adfb9a6-6ee1-4002-bda4-ada6f43ac96b",
+          "msg:dateTimeStamp": "2020-01-15T17:05:15.991+01:00",
+          "msg:messageID": "msgb7dbfd46-097b-4d60-a2e6-5b07a576e088",
           "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": [
             {
               "@id": "msg:Response"
@@ -29,6 +29,7 @@
       "@graph": [
         {
           "@id": "_:b0",
+          "http://sensinact.com#dateTimestamp": "2020-01-15T17:05:15.877+01:00",
           "http://sensinact.com#default": "20",
           "http://sensinact.com#description": "measured temperature",
           "http://sensinact.com#lower-bound": "-50",
@@ -37,14 +38,14 @@
           "http://sensinact.com#nickname": "last-temperature",
           "http://sensinact.com#provider": "PTL-Temperature",
           "http://sensinact.com#service": "monitor",
-          "http://sensinact.com#timestamp": "1579021435469",
+          "http://sensinact.com#timestamp": "1579104315877",
           "http://sensinact.com#type": [
-            "TEMPERATURE_ALERT",
-            "TEMPERATURE"
+            "TEMPERATURE",
+            "TEMPERATURE_ALERT"
           ],
           "http://sensinact.com#unit": "°C",
           "http://sensinact.com#upper-bound": "50",
-          "http://sensinact.com#value": "198",
+          "http://sensinact.com#value": "26",
           "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": [
             {
               "@id": "http://sensinact.com#Resource"
@@ -115,6 +116,9 @@
             }
           ],
           "http://www.w3.org/2000/01/rdf-schema#comment": [
+            {
+              "@id": "http://sensinact.com#dateTimestamp"
+            },
             {
               "@id": "http://sensinact.com#provider"
             },
@@ -201,6 +205,20 @@
             },
             {
               "@id": "http://sensinact.com#Resource"
+            }
+          ]
+        },
+        {
+          "@id": "http://sensinact.com#dateTimestamp",
+          "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": [
+            {
+              "@id": "http://www.w3.org/2000/01/rdf-schema#Resource"
+            },
+            {
+              "@id": "http://www.w3.org/2000/01/rdf-schema#Literal"
+            },
+            {
+              "@id": "http://www.w3.org/2002/07/owl#FunctionalProperty"
             }
           ]
         },

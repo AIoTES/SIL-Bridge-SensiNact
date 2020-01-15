@@ -25,7 +25,7 @@
       
     <align:Alignment>
         <dcelem:title>SensiNact2AIoTES</dcelem:title>
-        <exmo:version>0.4.6</exmo:version>
+        <exmo:version>0.4.9</exmo:version>
         <dcelem:creator>CEA Stephane Bergeon</dcelem:creator>
         <dcelem:description>Alignment between sensiNact AHA ontology and ACTIVAGE ontology.</dcelem:description>
         <dcelem:date>10 January 2020</dcelem:date>
@@ -72,9 +72,9 @@
                         <sna:service>
                             <sripas:service/>
                         </sna:service>
-                        <sna:timestamp>
+                        <sna:dateTimestamp>
                             <sripas:timestamp/>
-                        </sna:timestamp>
+                        </sna:dateTimestamp>
                         <sna:type>
                             <sripas:type/>
                         </sna:type>
@@ -134,9 +134,9 @@
                         <sna:service>
                             <sripas:service/>
                         </sna:service>
-                        <sna:timestamp>
+                        <sna:dateTimestamp>
                             <sripas:timestamp/>
-                        </sna:timestamp>
+                        </sna:dateTimestamp>
                         <sna:type>
                             <sripas:type/>
                         </sna:type>
@@ -192,9 +192,9 @@
                         <sna:service>
                             <sripas:service/>
                         </sna:service>
-                        <sna:timestamp>
+                        <sna:dateTimestamp>
                             <sripas:timestamp/>
-                        </sna:timestamp>
+                        </sna:dateTimestamp>
                         <sna:type>
                             <sripas:type/>
                         </sna:type>
@@ -215,6 +215,9 @@
                                 <sosa:hasResult>
                                     <sripas:value/>
                                 </sosa:hasResult>
+                                <sosa:observes>
+                                    <sripas:provider/>
+                                </sosa:observes>
                                 <sosa:observedProperty>
                                     <sosa:observableProperty>
                                         <rdf:type rdf:resource="http://purl.org/iot/vocab/m3-lite#Step"/>
@@ -250,9 +253,9 @@
                         <sna:service>
                             <sripas:service/>
                         </sna:service>
-                        <sna:timestamp>
+                        <sna:dateTimestamp>
                             <sripas:timestamp/>
-                        </sna:timestamp>
+                        </sna:dateTimestamp>
                         <sna:type>
                             <sripas:type/>
                         </sna:type>
@@ -281,6 +284,7 @@
                         </ssn:hasResult>
                         <sosa:madeBySensor>
                             <sosa:Sensor>
+                                <rdf:type rdf:resource="http://purl.org/iot/vocab/m3-lite#PressureSensor"/>
                                 <sosa:observes>
                                     <sripas:provider/>
                                 </sosa:observes>
@@ -321,9 +325,9 @@
                         <sna:service>
                             <sripas:service/>
                         </sna:service>
-                        <sna:timestamp>
+                        <sna:dateTimestamp>
                             <sripas:timestamp/>
-                        </sna:timestamp>
+                        </sna:dateTimestamp>
                         <sna:type>
                             <sripas:type/>
                         </sna:type>
@@ -375,9 +379,9 @@
                         <sna:service>
                             <sripas:service/>
                         </sna:service>
-                        <sna:timestamp>
+                        <sna:dateTimestamp>
                             <sripas:timestamp/>
-                        </sna:timestamp>
+                        </sna:dateTimestamp>
                         <sna:type>
                             <sripas:type/>
                         </sna:type>

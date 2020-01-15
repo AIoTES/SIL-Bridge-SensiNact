@@ -68,6 +68,9 @@
             <owl:FunctionalProperty rdf:about="&sna;timestamp"/>
         </rdfs:comment>
         <rdfs:comment>
+            <owl:FunctionalProperty rdf:about="&sna;dateTimestamp"/>
+        </rdfs:comment>
+        <rdfs:comment>
             <owl:FunctionalProperty rdf:about="&sna;value"/>
         </rdfs:comment>
     </owl:Class>
