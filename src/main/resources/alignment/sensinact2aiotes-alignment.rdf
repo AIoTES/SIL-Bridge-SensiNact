@@ -15,7 +15,7 @@
          xmlns:medex="http://inter-iot.eu/medex#" 
          xmlns:ssn="http://www.w3.org/ns/ssn/" 
          xmlns:aha="http://ontologies.activageproject.eu/aha-ontology#" 
-         xmlns:m3="http://purl.org/iot/vocab/m3-lite" 
+         xmlns:m3="http://purl.org/iot/vocab/m3-lite#" 
          xmlns:fw="http://inter-iot.eu/syntax/FIWAREv2#" 
          xmlns:geosparql="http://www.opengis.net/ont/geosparql#" 
          xmlns:sna="http://sensinact.com#"
@@ -25,10 +25,10 @@
       
     <align:Alignment>
         <dcelem:title>SensiNact2AIoTES</dcelem:title>
-        <exmo:version>0.4.9</exmo:version>
+        <exmo:version>0.5.1</exmo:version>
         <dcelem:creator>CEA Stephane Bergeon</dcelem:creator>
         <dcelem:description>Alignment between sensiNact AHA ontology and ACTIVAGE ontology.</dcelem:description>
-        <dcelem:date>10 January 2020</dcelem:date>
+        <dcelem:date>20 January 2020</dcelem:date>
         
         <align:onto1>
             <align:Ontology rdf:about="http://sensinact.com#">
@@ -205,13 +205,16 @@
                     </sripas:node_1>
                 </align:entity1>
                 <align:entity2 rdf:parseType="Literal">
-                    <iiotex:hasLocalId>
-                        <sripas:provider/>
-                    </iiotex:hasLocalId>
                     <sosa:Sensor>
                         <rdf:type rdf:resource="http://purl.org/iot/vocab/m3-lite#Pedometer"/>
                         <sosa:madeObservation>
                             <sosa:Observation>
+                                <iiotex:hasLocalId>
+                                    <sripas:provider/>
+                                </iiotex:hasLocalId>
+                                <iiot:hasUnit>
+                                    <m3:StepPerDay/>
+                                </iiot:hasUnit>
                                 <sosa:hasResult>
                                     <sripas:value/>
                                 </sosa:hasResult>

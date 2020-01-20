@@ -20,44 +20,29 @@
   }, {
     "@graph" : [ {
       "@id" : "_:b0",
-      "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
-        "@id" : "http://purl.org/iot/vocab/m3-lite#Step"
-      }, {
-        "@id" : "sosa:observableProperty"
-      } ]
-    }, {
-      "@id" : "_:b1",
-      "http://www.inter-iot.eu/sripas#provider" : "",
-      "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : {
-        "@id" : "iiotex:hasLocalId"
-      }
-    }, {
-      "@id" : "_:b2",
       "http://sensinact.com#timestamp" : "1579104227807",
       "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : {
         "@id" : "http://sensinact.com#Resource"
       }
     }, {
-      "@id" : "_:b3",
-      "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
-        "@id" : "http://purl.org/iot/vocab/m3-lite#Pedometer"
-      }, {
-        "@id" : "sosa:Sensor"
-      } ],
-      "sosa:madeObservation" : {
-        "@id" : "_:b4"
+      "@id" : "_:b1",
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : {
+        "@id" : "http://purl.org/iot/vocab/m3-lite#StepPerDay"
       }
     }, {
-      "@id" : "_:b4",
+      "@id" : "_:b2",
+      "sosa:observes" : "PTL-Pedometer"
+    }, {
+      "@id" : "_:b3",
+      "http://sensinact.com#dateTimestamp" : "2020-01-15T17:03:47.807+01:00",
+      "http://sensinact.com#name" : "last-day-step-counter",
+      "http://sensinact.com#provider" : "PTL-Pedometer",
+      "http://sensinact.com#service" : "monitor",
+      "http://sensinact.com#type" : "PEDOMETER_MONITOR",
+      "http://sensinact.com#value" : "85",
       "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : {
-        "@id" : "sosa:Observation"
-      },
-      "sosa:hasResult" : "85",
-      "sosa:observedProperty" : {
-        "@id" : "_:b0"
-      },
-      "sosa:observes" : "PTL-Pedometer",
-      "sosa:resultTime" : "2020-01-15T17:03:47.807+01:00"
+        "@id" : "http://sensinact.com#StepNumberResource"
+      }
     }, {
       "@id" : "http://sensinact.com#BedOccupancyResource",
       "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
