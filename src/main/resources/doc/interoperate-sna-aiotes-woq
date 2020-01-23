@@ -42,7 +42,7 @@
         2.2 Configure sensiNact bridge
           > cd aiotes/DT-AIOTES_docker/intermw-ipsm-deployment
           check sensiNact bridge configuration: check sensinact.host=$sNaRPi_IP and sensinact.http.port=8081
-            here sNaRPi_IP=10.255.1.28
+            here sNaRPi_IP="10.255.1.12"
           > nano ../../bridges/sensiNact/src/main/resources/SensiNactBridge.properties
     ########################
     #sensinact host address for example: sensinact.ddns.net:8080 (v1 japan), 193.48.18.248:8081 (IOF)
