@@ -18,6 +18,8 @@
  */
 package eu.interiot.intermw.bridge.sensinact;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import eu.interiot.intermw.bridge.BridgeConfiguration;
 import eu.interiot.intermw.bridge.abstracts.AbstractBridge;
 import eu.interiot.intermw.bridge.exceptions.BridgeException;
@@ -39,6 +41,7 @@ import eu.interiot.message.MessagePayload;
 import eu.interiot.message.managers.URI.URIManagerMessageMetadata;
 import eu.interiot.message.metadata.PlatformMessageMetadata;
 import eu.interiot.message.payload.types.IoTDevicePayload;
+import static eu.interiot.translators.syntax.sensinact.SensinactTranslator.snA;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
 import org.apache.jena.riot.Lang;
@@ -48,6 +51,7 @@ import org.slf4j.LoggerFactory;
 import spark.Spark;
 
 import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.util.*;
@@ -57,7 +61,7 @@ public class SensiNactBridge extends AbstractBridge {
 
     private final Logger log = LoggerFactory.getLogger(SensiNactBridge.class);
     private final SNAOntologyAggregator ontologyAggregator = new SNAOntologyAggregator();
-    private SensinactAPI sensinact;
+    private final SensinactAPI sensinact;
     private final ConversationMapper conversation = new ConversationMapper();
 
     public SensiNactBridge(BridgeConfiguration configuration, Platform platform) throws MiddlewareException {
@@ -102,7 +106,7 @@ public class SensiNactBridge extends AbstractBridge {
             public void notify(String provider, String service, String resource, String type, String value, String timestamp, Map<String, String> metadata) {
 
                 try {
-                    log.info("notified of an update of {]/{}/{} type={}, value={}, timestamp={}, metadata={}",
+                    log.info("notified of an update of {}/{}/{} type={}, value={}, timestamp={}, metadata={}",
                             provider, service, resource,
                             type, value, timestamp, metadata
                     );
@@ -127,6 +131,13 @@ public class SensiNactBridge extends AbstractBridge {
                                     provider, service, resource,
                                     type, value, timestamp, metadata
                                 );
+//                        final Model model2 = 
+//                                ontologyAggregator.createModel(
+//                                        provider, service, resource, 
+//                                        type, value, timestamp, metadata
+//                                );
+//                        Message observationMessage2 = SensiNactBridge.createObservationMessage(model2);
+//                        log.info("observation message2:\n {}", SensiNactBridge.toString(observationMessage2));
                         MessagePayload messagePayload = 
                                 new MessagePayload(model);
                         Message observationMessage = new Message();
@@ -230,6 +241,28 @@ public class SensiNactBridge extends AbstractBridge {
         });
     }
 
+    public static String toString(final Message message) throws IOException {
+        ObjectMapper mapper = new ObjectMapper();
+        ObjectNode jsonMessage = (ObjectNode) mapper.readTree(message.serializeToJSONLD());
+        return jsonMessage.toString();
+    }
+
+    public static Message createObservationMessage(Model model) throws IOException{
+        Message observationMessage = new Message();
+        // Metadata
+        PlatformMessageMetadata metadata = new MessageMetadata().asPlatformMessageMetadata();
+        metadata.initializeMetadata();
+        metadata.addMessageType(URIManagerMessageMetadata.MessageTypesEnum.OBSERVATION);
+        metadata.addMessageType(URIManagerMessageMetadata.MessageTypesEnum.RESPONSE);
+        metadata.setSenderPlatformId(new EntityID(snA));
+        observationMessage.setMetadata(metadata);
+       
+        //Finish creating the message
+        MessagePayload messagePayload = new MessagePayload(model);
+        observationMessage.setPayload(messagePayload); 
+        return observationMessage;
+    }
+       
     private List<String> convertIoTDeviceID(List<String> deviceIds) {
 
         List<String> neoDeviceIds = new ArrayList<>();
@@ -252,6 +285,7 @@ public class SensiNactBridge extends AbstractBridge {
 
         Message responseMessage = createResponseMessage(message);
         final List<String> deviceIds = extractDeviceIds(message);
+        log.debug("Received subscription message:...\n{}", message.serializeToJSONLD());
         try {
 
             log.debug("Subscribing to new devices {} from {}...", deviceIds, platform.getPlatformId());
@@ -264,6 +298,9 @@ public class SensiNactBridge extends AbstractBridge {
                 final List<String> convertedIoTDeviceIDs = convertIoTDeviceID(deviceIds);
                 log.debug("subscribing devices {}...", convertedIoTDeviceIDs);
                 conversation.subscriptionsPut(convertedIoTDeviceIDs, conversationId);
+                for (String resourceUri : convertedIoTDeviceIDs) {
+                    sensinact.subscribe(resourceUri);
+                }
                 log.debug("subscribed devices {} : conversation {}...", convertedIoTDeviceIDs, conversationId);
             } else {
                 throw new NullPointerException("unexpected null conversation id");

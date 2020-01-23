@@ -20,6 +20,7 @@ package eu.interiot.intermw.bridge.sensinact.wrapper;
 
 import eu.interiot.intermw.bridge.sensinact.fetcher.SensinactModelRecoverListener;
 import eu.interiot.intermw.bridge.sensinact.http.model.SensinactConfig;
+import java.text.MessageFormat;
 
 import java.util.List;
 
@@ -29,6 +30,15 @@ import java.util.List;
  */
 public interface SensinactAPI {
 
+    static final String RESOURCE_URI_PATTERN = "{0}/{1}/{2}";
+    static final MessageFormat RESOURCE_URI_FORMAT = new MessageFormat(RESOURCE_URI_PATTERN);
+    static final String UNKNOWN_USER = "unknown user";
+    static final String NO_CALLBACK = "";
+    
+    SubscriptionResponse subscribe(String resourceURI) throws Exception;
+    
+    SubscriptionResponse subscribe(String provider, String service, String resource) throws Exception;
+    
     SubscriptionResponse subscribe(String userId, String provider, String service, String resource, String callback) throws Exception;
 
     UnsubscriptionResponse unsubscribe(String userId, String provider, String service, String resource, String callback) throws Exception;

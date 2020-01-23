@@ -34,6 +34,8 @@ import eu.interiot.intermw.bridge.sensinact.wrapper.SNAResource;
 import eu.interiot.intermw.bridge.sensinact.wrapper.SensinactAPI;
 import eu.interiot.intermw.bridge.sensinact.wrapper.SubscriptionResponse;
 import eu.interiot.intermw.bridge.sensinact.wrapper.UnsubscriptionResponse;
+import java.text.MessageFormat;
+import java.text.ParseException;
 import org.eclipse.jetty.websocket.api.Session;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -72,12 +74,29 @@ public class SensinactCommunicationBridgeV2 implements SensinactAPI {
         "http://%s:%s/sensinact/providers/%s/services/%s/resources/%s/ACT";
     private static final String LIFECYCLE_SUBSCRIBE_REQUEST = 
         "{\"uri\":\"sensinact/SUBSCRIBE\",\"rid\":\"webapp\",\"parameters\":[{\"name\":\"sender\",\"type\":\"string\",\"value\":\"/.*\"},{\"name\":\"pattern\",\"type\":\"boolean\",\"value\":true},{\"name\":\"complement\",\"type\":\"boolean\",\"value\":false},{\"name\":\"types\",\"type\":\"array\",\"value\":[\"UPDATE\",\"LIFECYCLE\"]}]}";
-
+    
     public SensinactCommunicationBridgeV2() {
         subscribedResources = new HashMap<String, SNAResource>();
         userSubscriptions = new UserSubscriptionManager();
     }
     
+    @Override
+    public SubscriptionResponse subscribe(String resourceUri) throws Exception {
+        try {
+            Object[] uri = RESOURCE_URI_FORMAT.parse(resourceUri);
+            SubscriptionResponse subscribe = subscribe(uri[0].toString(), uri[1].toString(), uri[2].toString());
+            return subscribe;
+        } catch (ParseException e) {
+            LOG.error("unable to subscribe to resourceUri: not a valid uri: {}", e.getMessage());
+            throw e;
+        }
+    }
+        
+    @Override
+    public SubscriptionResponse subscribe(String provider, String service, String resource) throws Exception {
+        return subscribe(UNKNOWN_USER, provider, service, resource, NO_CALLBACK);
+    }
+
     @Override
     public SubscriptionResponse subscribe(String userId, String provider, String service, String resource, String callback) throws Exception {
         final String resourcePath = String.format(RESOURCE_PATH_PATTERN, provider, service, resource);
@@ -325,11 +344,13 @@ public class SensinactCommunicationBridgeV2 implements SensinactAPI {
             public void notify(String content) {
                 try {
                     LOG.info("Message received before json parser:{}", content);
+                    System.out.println(String.format("Message received before json parser: %s", content));
                     JsonObject payloadJson = (JsonObject) new JsonParser().parse(content);
                     JsonObject messagesJson = payloadJson.getAsJsonObject().getAsJsonArray("messages").get(0).getAsJsonObject();
                     String value = messagesJson.get("notification").getAsJsonObject().get("value").getAsString();
                     String timestamp = messagesJson.get("notification").getAsJsonObject().get("timestamp").getAsString();
                     String resourceURI = messagesJson.get("uri").getAsString();
+                    //TODO try subscription !
                     SNAResource snaResource = subscribedResources.get(resourceURI);
                     if (snaResource == null) {
                         snaResource = new SNAResource(resourceURI, value);

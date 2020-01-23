@@ -30,6 +30,7 @@ import eu.interiot.intermw.bridge.sensinact.wrapper.SNAResource;
 import eu.interiot.intermw.bridge.sensinact.wrapper.SensinactAPI;
 import eu.interiot.intermw.bridge.sensinact.wrapper.SubscriptionResponse;
 import eu.interiot.intermw.bridge.sensinact.wrapper.UnsubscriptionResponse;
+import java.text.ParseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -97,6 +98,23 @@ public class SensinactCommunicationBridgeV1 implements SensinactAPI {
             LOG.error("Failed", e);
         }
 
+    }
+
+    @Override
+    public SubscriptionResponse subscribe(String resourceUri) throws Exception {
+        try {
+            Object[] uri = RESOURCE_URI_FORMAT.parse(resourceUri);
+            SubscriptionResponse subscribe = subscribe(uri[0].toString(), uri[1].toString(), uri[2].toString());
+            return subscribe;
+        } catch (ParseException e) {
+            LOG.error("unable to subscribe to resourceUri: not a valid uri: {}", e.getMessage());
+            throw e;
+        }
+    }
+        
+    @Override
+    public SubscriptionResponse subscribe(String provider, String service, String resource) throws Exception {
+        return subscribe(UNKNOWN_USER, provider, service, resource, NO_CALLBACK);
     }
 
     @Override

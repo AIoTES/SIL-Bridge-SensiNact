@@ -20,6 +20,7 @@ package eu.interiot.translators.syntax.sensinact;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import eu.interiot.intermw.bridge.sensinact.SensiNactBridge;
 import eu.interiot.intermw.bridge.sensinact.fetcher.SensinactModelRecoverListener;
 import eu.interiot.intermw.bridge.sensinact.http.SensinactFactory;
 import eu.interiot.intermw.bridge.sensinact.http.model.SensinactConfig;
@@ -93,8 +94,8 @@ public class SensinactTranslatorTest {
             assertNotNull("unexpected null translated model", model);
             String translateddMessage = translator.printJenaModel(model, Lang.N3);
             assertNotNull("unexpected null translated message", translateddMessage);
-            String createObservationMessage = createObservationMessage(model);
-            System.out.println(createObservationMessage);
+            Message observationMessage = SensiNactBridge.createObservationMessage(model);
+            System.out.println(SensiNactBridge.toString(observationMessage));
         } catch (Exception ex) {
             fail("unexpected error " + ex.getMessage());
         }
@@ -166,32 +167,6 @@ public class SensinactTranslatorTest {
         RDFDataMgr.read(m, inStream, Lang.N3);
         return m;
     }
-
-    private String createObservationMessage(Model model) throws IOException{
-        Message callbackMessage = new Message();
-        // Metadata
-        PlatformMessageMetadata metadata = new MessageMetadata().asPlatformMessageMetadata();
-        metadata.initializeMetadata();
-        metadata.addMessageType(URIManagerMessageMetadata.MessageTypesEnum.OBSERVATION);
-        metadata.addMessageType(URIManagerMessageMetadata.MessageTypesEnum.RESPONSE);
-        metadata.setSenderPlatformId(new EntityID(snA));
-//        metadata.setConversationId(conversationId);
-        callbackMessage.setMetadata(metadata);
-       
-        //Finish creating the message
-        MessagePayload messagePayload = new MessagePayload(model);
-        callbackMessage.setPayload(messagePayload); 
-       
-        ObjectMapper mapper = new ObjectMapper();
-        ObjectNode jsonMessage = (ObjectNode) mapper.readTree(callbackMessage.serializeToJSONLD());
-//        ObjectNode context = (ObjectNode) jsonMessage.get("@context");
-        // TODO: to use @vocab instead of msg, replace also all "msg:XXX" tags by "InterIoT:message/XXX"
-//        context.remove("msg");
-//        context.put("@vocab", "http://inter-iot.eu/message/");
-//        jsonMessage.set("@context", context);
-        return jsonMessage.toString();
-       
-    }
     
     private class TestSensinactModelRecoverListener implements SensinactModelRecoverListener {
 
@@ -221,7 +196,7 @@ public class SensinactTranslatorTest {
                 )
             );
             try {
-                SubscriptionResponse subscriptionResponse = sensinact.subscribe("test-user", provider, service, resource, "callback");
+                SubscriptionResponse subscriptionResponse = sensinact.subscribe(resourcePath);
                 type = subscriptionResponse.getType();
                 System.out.print(String.format("subscribed to %s", resourcePath));
             } catch (Exception ex) {
@@ -230,8 +205,8 @@ public class SensinactTranslatorTest {
             try {
                 System.out.println("\nobservation message= ");
                 final Model model = aggregator.createModel(provider, service, resource, type, value, timestamp, metadata);
-                String observationMessage = createObservationMessage(model);
-                System.out.println(observationMessage);
+                Message observationMessage = SensiNactBridge.createObservationMessage(model);
+                System.out.println(SensiNactBridge.toString(observationMessage));
             } catch (Exception ex) {
                 System.out.println(" -failed: " + ex.getMessage());
             }
