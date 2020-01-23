@@ -20,8 +20,30 @@
   }, {
     "@graph" : [ {
       "@id" : "_:b0",
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : {
+        "@id" : "http://purl.org/iot/vocab/m3-lite#Step"
+      }
+    }, {
+      "@id" : "_:b1",
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
+        "@id" : "sosa:observableProperty"
+      }, {
+        "@id" : "http://ontologies.activageproject.eu/aha-ontology#StepPerDay"
+      } ]
+    }, {
+      "@id" : "_:b2",
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
+        "@id" : "sosa:Sensor"
+      }, {
+        "@id" : "http://purl.org/iot/vocab/m3-lite#Pedometer"
+      } ],
+      "sosa:madeObservation" : {
+        "@id" : "_:b3"
+      }
+    }, {
+      "@id" : "_:b3",
       "iiot:hasUnit" : {
-        "@id" : "_:b1"
+        "@id" : "_:b0"
       },
       "iiotex:hasLocalId" : "PTL-Pedometer",
       "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : {
@@ -29,32 +51,9 @@
       },
       "sosa:hasResult" : "85",
       "sosa:observedProperty" : {
-        "@id" : "_:b2"
+        "@id" : "_:b1"
       },
-      "sosa:observes" : "PTL-Pedometer",
       "sosa:resultTime" : "2020-01-15T17:03:47.807+01:00"
-    }, {
-      "@id" : "_:b1",
-      "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : {
-        "@id" : "http://purl.org/iot/vocab/m3-lite#StepPerDay"
-      }
-    }, {
-      "@id" : "_:b2",
-      "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
-        "@id" : "sosa:observableProperty"
-      }, {
-        "@id" : "http://purl.org/iot/vocab/m3-lite#Step"
-      } ]
-    }, {
-      "@id" : "_:b3",
-      "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
-        "@id" : "sosa:Sensor"
-      }, {
-        "@id" : "http://purl.org/iot/vocab/m3-lite#Pedometer"
-      } ],
-      "sosa:madeObservation" : {
-        "@id" : "_:b0"
-      }
     }, {
       "@id" : "_:b4",
       "http://sensinact.com#timestamp" : "1579104227807",

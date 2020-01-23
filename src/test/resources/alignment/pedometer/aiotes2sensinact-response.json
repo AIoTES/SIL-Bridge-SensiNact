@@ -26,14 +26,6 @@
       }
     }, {
       "@id" : "_:b1",
-      "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : {
-        "@id" : "http://purl.org/iot/vocab/m3-lite#StepPerDay"
-      }
-    }, {
-      "@id" : "_:b2",
-      "sosa:observes" : "PTL-Pedometer"
-    }, {
-      "@id" : "_:b3",
       "http://sensinact.com#dateTimestamp" : "2020-01-15T17:03:47.807+01:00",
       "http://sensinact.com#name" : "last-day-step-counter",
       "http://sensinact.com#provider" : "PTL-Pedometer",

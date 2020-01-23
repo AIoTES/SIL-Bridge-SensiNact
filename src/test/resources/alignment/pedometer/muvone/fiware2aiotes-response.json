@@ -1,0 +1,106 @@
+{
+  "@graph" : [ {
+    "@graph" : [ {
+      "@id" : "msg:meta/5a856398-589d-48a2-8fe1-8007ce093f85",
+      "msg:conversationID" : "conv28b23774-2aa2-4eef-af94-4f2263374abb",
+      "msg:dateTimeStamp" : "2020-01-23T14:31:30.365Z",
+      "msg:messageID" : "msgde780fb1-3f23-4917-a25a-fc008bfabe3a",
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
+        "@id" : "msg:meta"
+      }, {
+        "@id" : "msg:Observation"
+      } ]
+    } ],
+    "@id" : "msg:metadata"
+  }, {
+    "@graph" : [ {
+      "@id" : "_:b0",
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : {
+        "@id" : "http://purl.org/iot/vocab/m3-lite#Step"
+      }
+    }, {
+      "@id" : "_:b1",
+      "iiot:hasUnit" : {
+        "@id" : "_:b0"
+      },
+      "iiotex:hasLocalId" : "5c7e269830320800c9025892",
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : {
+        "@id" : "sosa:Observation"
+      },
+      "sosa:hasResult" : "100",
+      "sosa:observedProperty" : {
+        "@id" : "_:b2"
+      },
+      "sosa:resultTime" : "2017-06-17T07:21:24.238Z"
+    }, {
+      "@id" : "_:b2",
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
+        "@id" : "sosa:observableProperty"
+      }, {
+        "@id" : "http://ontologies.activageproject.eu/aha-ontology#StepPerDay"
+      } ]
+    }, {
+      "@id" : "InterIoT:syntax/FIWAREv2#_0",
+      "iiotex:hasLocalId" : "5c7e269830320800c9025891",
+      "InterIoT:syntax/FIWAREv2#hasAttribute" : {
+        "@id" : "InterIoT:syntax/FIWAREv2#_1"
+      },
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
+        "@id" : "sosa:Sensor"
+      }, {
+        "@id" : "http://purl.org/iot/vocab/m3-lite#Pedometer"
+      } ],
+      "sosa:madeObservation" : {
+        "@id" : "_:b1"
+      }
+    }, {
+      "@id" : "InterIoT:syntax/FIWAREv2#_2",
+      "InterIoT:syntax/FIWAREv2#hasMetadata" : {
+        "@id" : "InterIoT:syntax/FIWAREv2#_3"
+      },
+      "InterIoT:syntax/FIWAREv2#hasType" : "Number"
+    }, {
+      "@id" : "InterIoT:syntax/FIWAREv2#_3",
+      "InterIoT:syntax/FIWAREv2#hasAttribute" : [ {
+        "@id" : "InterIoT:syntax/FIWAREv2#_10"
+      }, {
+        "@id" : "InterIoT:syntax/FIWAREv2#_8"
+      }, {
+        "@id" : "InterIoT:syntax/FIWAREv2#_6"
+      }, {
+        "@id" : "InterIoT:syntax/FIWAREv2#_4"
+      } ],
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : {
+        "@id" : "InterIoT:syntax/FIWAREv2#Metadata"
+      }
+    }, {
+      "@id" : "InterIoT:syntax/FIWAREv2#_4",
+      "InterIoT:syntax/FIWAREv2#hasName" : "timestamp",
+      "InterIoT:syntax/FIWAREv2#hasValue" : {
+        "@id" : "InterIoT:syntax/FIWAREv2#_5"
+      }
+    }, {
+      "@id" : "InterIoT:syntax/FIWAREv2#_7",
+      "InterIoT:syntax/FIWAREv2#hasType" : "String"
+    }, {
+      "@id" : "InterIoT:syntax/FIWAREv2#_8",
+      "InterIoT:syntax/FIWAREv2#hasName" : "quantityKind",
+      "InterIoT:syntax/FIWAREv2#hasValue" : {
+        "@id" : "InterIoT:syntax/FIWAREv2#_9"
+      }
+    }, {
+      "@id" : "InterIoT:syntax/FIWAREv2#_9",
+      "InterIoT:syntax/FIWAREv2#hasType" : "String"
+    } ],
+    "@id" : "msg:payload"
+  } ],
+  "@context" : {
+    "msg" : "http://inter-iot.eu/message/",
+    "iiotex" : "http://inter-iot.eu/GOIoTPex#",
+    "geosparql" : "http://www.opengis.net/ont/geosparql#",
+    "iiot" : "http://inter-iot.eu/GOIoTP#",
+    "InterIoT" : "http://inter-iot.eu/",
+    "ssn" : "http://www.w3.org/ns/ssn/",
+    "sosa" : "http://www.w3.org/ns/sosa/"
+  }
+}

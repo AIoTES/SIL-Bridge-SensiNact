@@ -25,10 +25,10 @@
       
     <align:Alignment>
         <dcelem:title>SensiNact2AIoTES</dcelem:title>
-        <exmo:version>0.5.1</exmo:version>
+        <exmo:version>0.7.2</exmo:version>
         <dcelem:creator>CEA Stephane Bergeon</dcelem:creator>
-        <dcelem:description>Alignment between sensiNact AHA ontology and ACTIVAGE ontology.</dcelem:description>
-        <dcelem:date>20 January 2020</dcelem:date>
+        <dcelem:description>Upstream alignment between sensiNact AHA ontology and ACTIVAGE ontology.</dcelem:description>
+        <dcelem:date>23 January 2020</dcelem:date>
         
         <align:onto1>
             <align:Ontology rdf:about="http://sensinact.com#">
@@ -39,7 +39,7 @@
         </align:onto1>
         
         <align:onto2>
-            <align:Ontology rdf:about="http://aha.ontology.com/ACTIVAGE#">
+            <align:Ontology rdf:about="http://inter-iot.eu/GOIoTPex#">
                 <align:formalism>
                     <align:Formalism align:name="OWL2.0" align:uri="http://www.w3.org/2002/07/owl#"/>
                 </align:formalism>
@@ -213,17 +213,14 @@
                                     <sripas:provider/>
                                 </iiotex:hasLocalId>
                                 <iiot:hasUnit>
-                                    <m3:StepPerDay/>
+                                    <m3:Step/>
                                 </iiot:hasUnit>
                                 <sosa:hasResult>
                                     <sripas:value/>
                                 </sosa:hasResult>
-                                <sosa:observes>
-                                    <sripas:provider/>
-                                </sosa:observes>
                                 <sosa:observedProperty>
                                     <sosa:observableProperty>
-                                        <rdf:type rdf:resource="http://purl.org/iot/vocab/m3-lite#Step"/>
+                                        <rdf:type rdf:resource="http://ontologies.activageproject.eu/aha-ontology#StepPerDay"/>
                                     </sosa:observableProperty>
                                 </sosa:observedProperty>
                                 <sosa:resultTime>

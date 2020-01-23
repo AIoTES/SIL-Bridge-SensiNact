@@ -1,10 +1,10 @@
 {
   "@graph" : [ {
     "@graph" : [ {
-      "@id" : "msg:meta/ae9237e9-ed28-4199-8754-192a31c6a256",
-      "msg:conversationID" : "conv8fec736c-e530-453d-90a8-58fa4e8cceb5",
-      "msg:dateTimeStamp" : "2019-11-21T15:51:50.857Z",
-      "msg:messageID" : "msg17cc0235-8250-4d2b-b52c-1cb1d51661fa",
+      "@id" : "msg:meta/5a856398-589d-48a2-8fe1-8007ce093f85",
+      "msg:conversationID" : "conv28b23774-2aa2-4eef-af94-4f2263374abb",
+      "msg:dateTimeStamp" : "2020-01-23T14:31:30.365Z",
+      "msg:messageID" : "msgde780fb1-3f23-4917-a25a-fc008bfabe3a",
       "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
         "@id" : "msg:Observation"
       }, {
@@ -23,11 +23,6 @@
       "http://sensinact.com#value" : "100",
       "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : {
         "@id" : "http://sensinact.com#StepNumberResource"
-      }
-    }, {
-      "@id" : "_:b1",
-      "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : {
-        "@id" : "http://purl.org/iot/vocab/m3-lite#StepPerDay"
       }
     }, {
       "@id" : "InterIoT:syntax/FIWAREv2#_0",

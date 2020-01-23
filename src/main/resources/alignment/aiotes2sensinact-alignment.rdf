@@ -25,13 +25,13 @@
       
     <align:Alignment>
         <dcelem:title>AIoTES2SensiNact</dcelem:title>
-        <exmo:version>0.5.1.1</exmo:version>
+        <exmo:version>0.7.2</exmo:version>
         <dcelem:creator>CEA Stephane Bergeon</dcelem:creator>
-        <dcelem:description>Downstream Alignment between sensiNact AHA ontology and ACTIVAGE ontology.</dcelem:description>
-        <dcelem:date>20 January 2020</dcelem:date>
+        <dcelem:description>Downstream Alignment between ACTIVAGE ontology and sensiNact AHA ontology</dcelem:description>
+        <dcelem:date>23 January 2020</dcelem:date>
         
         <align:onto1>
-            <align:Ontology rdf:about="http://sensinact.com#">
+            <align:Ontology rdf:about="http://inter-iot.eu/GOIoTPex#">
                 <align:formalism>
                     <align:Formalism align:name="OWL2.0" align:uri="http://www.w3.org/2002/07/owl#"/>
                 </align:formalism>
@@ -39,12 +39,13 @@
         </align:onto1>
         
         <align:onto2>
-            <align:Ontology rdf:about="http://aha.ontology.com/ACTIVAGE#">
+            <align:Ontology rdf:about="http://sensinact.com#">
                 <align:formalism>
                     <align:Formalism align:name="OWL2.0" align:uri="http://www.w3.org/2002/07/owl#"/>
                 </align:formalism>
             </align:Ontology>
         </align:onto2>
+        
         
         <sripas:steps rdf:parseType="Literal">
             <sripas:step sripas:order="1" sripas:cell="http://www.inter-iot.eu/sripas#1_temperature"/>  
@@ -175,14 +176,14 @@
                                     <sripas:provider/>
                                 </iiotex:hasLocalId>
                                 <iiot:hasUnit>
-                                    <sripas:unit/>
+                                    <m3:Step/>
                                 </iiot:hasUnit>
                                 <sosa:hasResult>
                                     <sripas:value/>
                                 </sosa:hasResult>
                                 <sosa:observedProperty>
                                     <sosa:observableProperty>
-                                        <rdf:type rdf:resource="http://purl.org/iot/vocab/m3-lite#Step"/>
+                                        <rdf:type rdf:resource="http://ontologies.activageproject.eu/aha-ontology#StepPerDay"/>
                                     </sosa:observableProperty>
                                 </sosa:observedProperty>
                                 <sosa:resultTime>
