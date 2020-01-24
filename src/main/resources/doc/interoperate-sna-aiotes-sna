@@ -21,17 +21,7 @@
 
           get the CONTAINER_ID of intermw %IPSM_CONTAINER_ID
           -> here %IPSM_CONTAINER_ID= 5f5d712278a5
-> IPSM_CONTAINER_ID=""
-
-    1 Install sNaRPI
-        1.1 Get sNaRPI IP address
-          with MAC = b8:27:eb:d2:ea:ae
-        1.2 Check sNaRPI connectivity
-> ping <sNaRPI_IP>
-        1.3 Check sensiNact REST API
-> web-browser> http://<sNaRPI_IP>:8081/swagger-api
-> web-browser> http://<sNaRPI_IP>:8081/sensinact/providers/aha-night-rising-monitor-bedroom-WOQ/services/monitor/resources/state/GET
-{"response":{"name":"state","type":"boolean","value":false,"timestamp":1564751701101},"type":"GET_RESPONSE","uri":"/aha-night-rising-monitor-bedroom-WOQ/monitor/state","statusCode":200}
+> IPSM_CONTAINER_ID="5f5d712278a5"
 
     2 Install sensiNact bridge (with dependency and configuration)
         2.1 Pull sensiNact-SIL interoperability bridge  sources from ACTIVAGE git
@@ -100,7 +90,22 @@ sudo docker cp ../../bridges/sensiNact/src/main/resources/SensiNactBridge.proper
 intermw_1     | 14:24:30.459 [localhost-startStop-1] DEBUG eu.interiot.intermw.bridge.BridgeContext.registerBridges(BridgeContext.java:190) - Bridge eu.interiot.intermw.bridge.sensinact.SensiNactBridge for platform type http://sensinact.ddns.net/sensinact has been registered.
 
     3. Run SIL with a registered local sensiNact instance
-       
+       3.0 Prerequisites
+        3.0.1 start sNa-rpi-test:
+> cd <sensiNact>/gateway/org.eclipse.sensinact.gateway/distribution/sensinact-distribution-template
+> mvn -Ppi-test clean install
+> cd <sensiNact>/gateway/org.eclipse.sensinact.gateway/distribution/sensinact-distribution-generator-1
+> mvn -Pexecute-activage-pi-test clean install
+ 
+        3.0.2 start sNa-server-panel12
+> cd <activage>/gateway/org.eclipse.sensinact.gateway/distribution/sensinact-distribution-template
+> mvn -Pserver-panel12 clean install
+> cd <activage>/gateway/org.eclipse.sensinact.gateway/distribution/sensinact-distribution-generator
+> mvn -Pexecute-aha-panel12 clean install
+ 
+        3.0.3 Check sensiNact operationr:
+> http://localhost:8083/sensinact/providers
+
        3.1 Create IPSM alignments
        3.1.1 Downstream alignment AIOTES -> sensiNact ontology
 > nano ../../bridges/sensiNact/src/main/resources/alignment/aiotes2sensinact-alignment.rdf
@@ -113,8 +118,7 @@ intermw_1     | 14:24:30.459 [localhost-startStop-1] DEBUG eu.interiot.intermw.b
 {
   "message": "Alignment with AlignmentID(AIOTES2SensiNact,0.7.5) uploaded successfully"
 }
-          web-browser> Response Code=
-    201
+          web-browser> Response Code=    201
 
        3.1.2 Upstream alignment sensiNact -> AIOTES ontology
 > nano ../../bridges/sensiNact/src/main/resources/alignment/sensinact2aiotes-alignment.rdf 
@@ -127,8 +131,7 @@ intermw_1     | 14:24:30.459 [localhost-startStop-1] DEBUG eu.interiot.intermw.b
 {
   "message": "Alignment with AlignmentID(SensiNact2AIOTES,0.7.5) uploaded successfully"
 }
-          web-browser> Response Code=
-    201
+          web-browser> Response Code=    201
           check alignments:
 > curl -X GET --header 'Accept: application/json' 'http://localhost:8888/alignments'
 [{"name":"AIoTES2SensiNact","sourceOntologyURI":"http://inter-iot.eu/GOIoTPex#","description":"Downstream Alignment between ACTIVAGE ontology and sensiNact AHA ontology","creator":"CEA Stephane Bergeon","targetOntologyURI":"http://sensinact.com#","version":"0.7.2","id":1,"date":1579855767901,"descId":"[AIoTES2SensiNact] [0.7.2] : http://inter-iot.eu/GOIoTPex# -> http://sensinact.com#"},{"name":"SensiNact2AIoTES","sourceOntologyURI":"http://sensinact.com#","description":"Upstream alignment between sensiNact AHA ontology and ACTIVAGE ontology.","creator":"CEA Stephane Bergeon","targetOntologyURI":"http://inter-iot.eu/GOIoTPex#","version":"0.7.2","id":2,"date":1579855784424,"descId":"[SensiNact2AIoTES] [0.7.2] : http://sensinact.com# -> http://inter-iot.eu/GOIoTPex#"}]
@@ -161,7 +164,7 @@ intermw_1     | 14:24:30.459 [localhost-startStop-1] DEBUG eu.interiot.intermw.b
     "descId": "[SensiNact2AIoTES] [0.7.5] : http://sensinact.com# -> http://inter-iot.eu/GOIoTPex#"
   }
 ]
-          web-browser> Response Code=200
+          web-browser> Response Code=   200
 
        3.2 Register client
 > curl -X POST "http://localhost:8083/api/mw2mw/clients" -H  "accept: application/json" -H  "Client-ID: client" -H  "Content-Type: application/json" -d "{      \"clientId\": \"client\",      \"receivingCapacity\": 10,      \"responseFormat\": \"JSON_LD\",      \"responseDelivery\": \"CLIENT_PULL\"    }"
@@ -471,8 +474,8 @@ intermw_1     |         "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
     "Mapping":
         [
             {
-            "SourceDeviceId":	  "http://sensinact.ddns.net/PTL-Day-laying-monitor/monitor/state",  
-            "TargetDeviceId":	  "htpp://sNa.de/demo/BedSensor", 
+            "SourceDeviceId":	  "PTL-Day-laying-monitor",  
+            "TargetDeviceId":	  "newBedSensor", 
             "DeviceType":	  "http://purl.org/iot/vocab/m3-lite/PressureSensor",
             "SenderPlatformId":	  "http://local-sensinact-1",
             "ReceiverPlatformId": "http://local-sensinact-1",

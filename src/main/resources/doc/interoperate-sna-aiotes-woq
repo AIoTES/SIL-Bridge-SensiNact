@@ -6,8 +6,10 @@
           get the IPSM REST API http address and port: 
           here IPSM_IP=193.48.18.245 ; IPSM_PORT=8083
       0.3.1 Check AIOTES deployment
-          > cd aiotes/DT-AIOTES_docker/intermw-ipsm-deployment
-          > sudo docker container ls
+> cd aiotes/DT-AIOTES_docker/intermw-ipsm-deployment
+> sudo ./initialize-volumes.sh
+> sudo docker-compose up -d 
+> sudo docker container ls
     CONTAINER ID        IMAGE                                      COMMAND                  CREATED             STATUS              PORTS                                                                     NAMES
     5f5d712278a5        docker-activage.satrd.es/intermw:v2.3.0    "catalina.sh run"        About an hour ago   Up About an hour    0.0.0.0:8980->8980/tcp, 0.0.0.0:8083->8080/tcp                            intermw-ipsm-deployment_intermw_1
     6245707b9f6d        docker-activage.satrd.es/ipsm-core:0.8.8   "java -Dconfig.resou…"   About an hour ago   Up About an hour    0.0.0.0:8888->8080/tcp                                                    intermw-ipsm-deployment_ipsm_1
@@ -18,7 +20,7 @@
 
           get the CONTAINER_ID of intermw %IPSM_CONTAINER_ID
           -> here %IPSM_CONTAINER_ID= 5f5d712278a5
-          > IPSM_CONTAINER_ID="5f5d712278a5"
+> IPSM_CONTAINER_ID="5f5d712278a5"
 
     1 Install sNaRPI
         1.1 Get sNaRPI IP address
@@ -48,7 +50,7 @@
     #sensinact host address for example: sensinact.ddns.net:8080 (v1 japan), 193.48.18.248:8081 (IOF)
     # should be <sNaRPi_IP>
     ########################
-    sensinact.host=10.255.1.28
+    sensinact.host=10.255.1.12
 
     ########################
     #version of sensinact either v1 or v2
@@ -75,378 +77,133 @@
     ########################
     sensinact.provider.maxNumber=100
 
-          > sudo docker cp ../../bridges/sensiNact/target/mw.bridge.sna-2.0.0-SNAPSHOT.jar $IPSM_CONTAINER_ID:/usr/local/tomcat/webapps/ROOT/WEB-INF/lib
-          > sudo docker cp ~/.m2/repository/eu/inter-iot/translators/syntactic-translators/1.0/syntactic-translators-1.0.jar $IPSM_CONTAINER_ID:/usr/local/tomcat/webapps/ROOT/WEB-INF/lib
-          > sudo docker cp ../../bridges/sensiNact/src/main/resources/intermw.properties $IPSM_CONTAINER_ID:/etc/inter-iot/intermw
-          > sudo docker cp ../../bridges/sensiNact/src/main/resources/SensiNactBridge.properties $IPSM_CONTAINER_ID:/etc/inter-iot/intermw
+
+> sudo docker cp ../../bridges/sensiNact/target/mw.bridge.sna-2.0.0-SNAPSHOT.jar $IPSM_CONTAINER_ID:/usr/local/tomcat/webapps/ROOT/WEB-INF/lib; \
+sudo docker cp ~/.m2/repository/eu/inter-iot/translators/syntactic-translators/1.0/syntactic-translators-1.0.jar $IPSM_CONTAINER_ID:/usr/local/tomcat/webapps/ROOT/WEB-INF/lib; \
+sudo docker cp ../../bridges/sensiNact/src/main/resources/intermw.properties $IPSM_CONTAINER_ID:/etc/inter-iot/intermw; \
+sudo docker cp ../../bridges/sensiNact/src/main/resources/SensiNactBridge.properties $IPSM_CONTAINER_ID:/etc/inter-iot/intermw
           
           check installation is ok:
-          > sudo docker exec $IPSM_CONTAINER_ID ls -al /usr/local/tomcat/webapps/ROOT/WEB-INF/lib/mw.bridge.sna-2.0.0-SNAPSHOT.jar
+> sudo docker exec $IPSM_CONTAINER_ID ls -al /usr/local/tomcat/webapps/ROOT/WEB-INF/lib/mw.bridge.sna-2.0.0-SNAPSHOT.jar
     -rw-rw-r--    1 1000     1000         86586 Jul 23 14:54 /usr/local/tomcat/webapps/ROOT/WEB-INF/lib/mw.bridge.sna-2.0.0-SNAPSHOT.jar
-          > sudo docker exec $IPSM_CONTAINER_ID ls -al /usr/local/tomcat/webapps/ROOT/WEB-INF/lib/syntactic-translators-1.0.jar
+> sudo docker exec $IPSM_CONTAINER_ID ls -al /usr/local/tomcat/webapps/ROOT/WEB-INF/lib/syntactic-translators-1.0.jar
     -rw-rw-r--    1 1000     1000         77893 Jul 23 14:51 /usr/local/tomcat/webapps/ROOT/WEB-INF/lib/syntactic-translators-1.0.jar
-          > sudo docker exec $IPSM_CONTAINER_ID ls -al /etc/inter-iot/intermw/intermw.properties
+> sudo docker exec $IPSM_CONTAINER_ID ls -al /etc/inter-iot/intermw/intermw.properties
     -rw-rw-r--    1 1000     1000           902 Jul 23 14:50 /etc/inter-iot/intermw/intermw.properties
-          > sudo docker exec $IPSM_CONTAINER_ID ls -al /etc/inter-iot/intermw/SensiNactBridge.properties
+> sudo docker exec $IPSM_CONTAINER_ID ls -al /etc/inter-iot/intermw/SensiNactBridge.properties
     -rw-rw-r--    1 1000     1000           834 Jul 23 15:18 /etc/inter-iot/intermw/SensiNactBridge.properties
 
+    3 Install universAAL bridge (with dependency and configuration)
+        2.1 Pull universAAL-SIL interoperability bridge  sources from ACTIVAGE git
+          > cd aiotes
+          > mkdir bridges
+          > cd bridges
+          > git clone https://git.activageproject.eu/Bridges/universAAL
+          > cd universAAL
+          > mvn clean install -DskipTests=true
+
+        2.2 Configure universAAL bridge
+          > cd aiotes/DT-AIOTES_docker/intermw-ipsm-deployment
+          check universAAL bridge configuration: c
+> nano ../../bridges/sensiNact/src/main/resources/UAALBridge.properties
+
+# UniversAAL
+universaal-url=http://localhost:9000/uaal/
+universaal-user=interiot
+universaal-password=interiot
+universaal-space=interiot
+
+> sudo docker cp ../../bridges/universAAL/target/mw.bridge.uaal-2.3.0.jar $IPSM_CONTAINER_ID:/usr/local/tomcat/webapps/ROOT/WEB-INF/lib; \
+sudo docker cp ../../bridges/universAAL/src/main/resources/UAALBridge.properties $IPSM_CONTAINER_ID:/etc/inter-iot/intermw
+          
        2.3 Restart SIL container to include bridges
-          > sudo docker-compose restart intermw
+> sudo docker-compose restart intermw
           logs bridge registration:
-          > sudo docker-compose logs intermw | grep "sensinact.ddns.net"
+> sudo docker-compose logs intermw | grep "sensinact.ddns.net"
 intermw_1     | 14:24:30.459 [localhost-startStop-1] DEBUG eu.interiot.intermw.bridge.BridgeContext.registerBridges(BridgeContext.java:190) - Bridge eu.interiot.intermw.bridge.sensinact.SensiNactBridge for platform type http://sensinact.ddns.net/sensinact has been registered.
+> sudo docker-compose logs intermw | grep "UniversAAL"
 
-    3. Run SIL with a registered sensiNact instance
-       
+    3. Run SIL
+
        3.1 Create IPSM alignments
-       3.1.1 Downstream alignment AIOTES -> sensiNact ontology
-          > nano ../../bridges/sensiNact/src/main/resources/alignment/aiotes2sensinact-alignment.rdf
-          web-browser> http://???.??.??.???:8888/swagger/#!/Alignments/post_alignments
-          web-browser> aligment=
-<?xml version="1.0" encoding="UTF-8"?>
 
-<!DOCTYPE RDF
-    [
-<!ENTITY sripas "http://www.inter-iot.eu/sripas#">
-<!ENTITY var "http://www.inter-iot.eu/sripas#node_">
-<!ENTITY sosa "http://www.w3.org/ns/sosa/">
-<!ENTITY xsd "http://www.w3.org/2001/XMLSchema#">
-<!ENTITY iiot "http://inter-iot.eu/GOIoTP#">
-<!ENTITY iiotex "http://inter-iot.eu/GOIoTPex#">
-<!ENTITY medex "http://inter-iot.eu/medex#">
-<!ENTITY time "http://www.w3.org/2006/time#">
-<!ENTITY sweet_units "http://sweet.jpl.nasa.gov/2.3/reprSciUnits.owl#">
-<!ENTITY rdf "http://www.w3.org/1999/02/22-rdf-syntax-ns#">
-<!ENTITY ssn "http://www.w3.org/ns/ssn/">
-<!ENTITY aha "http://ontologies.activageproject.eu/aha-ontology#">
-<!ENTITY m3 "http://purl.org/iot/vocab/m3-lite">
-<!ENTITY sensinact "http://sensinact.com#">
-                ]>
-
-<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:var="http://www.inter-iot.eu/sripas#node_" xmlns:xsd="http://www.w3.org/2001/XMLSchema#" xmlns:medex="http://inter-iot.eu/medex#" xmlns:time="http://www.w3.org/2006/time#" xmlns:sweet_units="http://sweet.jpl.nasa.gov/2.3/reprSciUnits.owl#" xmlns:ssn="http://www.w3.org/ns/ssn/" xmlns:aha="http://ontologies.activageproject.eu/aha-ontology#" xmlns:m3="http://purl.org/iot/vocab/m3-lite" xmlns:iiot="http://inter-iot.eu/GOIoTP#" xmlns:iiotex="http://inter-iot.eu/GOIoTPex#" xmlns:exmo="http://exmo.inrialpes.fr/align/ext/1.0/#" xmlns="http://www.inter-iot.eu/sripas#" xmlns:sripas="http://www.inter-iot.eu/sripas#" xmlns:dcelem="http://purl.org/dc/elements/1.1/" xmlns:align="http://knowledgeweb.semanticweb.org/heterogeneity/alignment#" xmlns:sosa="http://www.w3.org/ns/sosa/" xmlns:sensinact="http://sensinact.com#">
-
-    <align:Alignment>
-        <dcelem:title>AIOTES2SensiNact</dcelem:title>
-        <exmo:version>0.1</exmo:version>
-        <dcelem:creator>CEA/UPV</dcelem:creator>
-        <dcelem:description>Downstream Alignment from AIOTES to SensiNact.</dcelem:description>
-        <dcelem:date>18 July 2019</dcelem:date>
-    <align:onto1>
-      <align:Ontology rdf:about="http://inter-iot.eu/GOIoTPex#">
-        <align:formalism>
-          <align:Formalism align:name="OWL2.0" align:uri="http://www.w3.org/2002/07/owl#"/>
-        </align:formalism>
-      </align:Ontology>
-        </align:onto1>
-    <align:onto2>
-      <align:Ontology rdf:about="http://sensinact.com#">
-        <align:formalism>
-              <align:Formalism align:name="OWL2.0" align:uri="http://www.w3.org/2002/07/owl#"/>
-        </align:formalism>
-      </align:Ontology>
-      </align:onto2>
-
-    <sripas:steps rdf:parseType="Literal">
-      <sripas:step sripas:order="1" sripas:cell="first_step"/>
-     </sripas:steps>
-
-
-        <sripas:cellFormat>
-            <iiot:DataFormat rdf:about="http://inter-iot.eu/sripas#rdfxml"/>
-        </sripas:cellFormat>
-
-            <align:map>
-      <align:Cell rdf:about="first_step"> <!-- to fill-->
-        <align:entity1 rdf:parseType="Literal">
-          <var:sensor>
-            <rdf:type rdf:resource="http://www.w3.org/ns/sosa/Sensor"/>
-          </var:sensor>
-        </align:entity1>
-
-        <align:entity2 rdf:parseType="Literal">
-          <var:sensor>
-            <rdf:type rdf:resource="http://www.w3.org/ns/sosa/Sensor"/>
-          </var:sensor>
-        </align:entity2>
-
-        <align:relation>=</align:relation>
-            </align:Cell>
-        </align:map>
-    </align:Alignment>
-</rdf:RDF>
+       3.1.1 alignments AIOTES <-> universAAL ontology
+> nano ../../alignments/DS_WOZ_UNIVERSAAL/AIOTES.rdf
+          web-browser> http://localhost:8888/swagger/#!/Alignments/post_alignments
+          web-browser> aligment= <content>
           web-browser> Try it out!
           
           check result:
           web-browser> Response Body=
 {
-  "message": "Alignment with AlignmentID(AIOTES2SensiNact,0.1) uploaded successfully"
+  "message": "Alignment with AlignmentID(AIOTES-universAAL-Alignment,2.1) uploaded successfully"
 }
-          web-browser> Response Code=
-    201
+          web-browser> Response Code= 201
 
-       3.1.2 Upstream alignment sensiNact -> AIOTES ontology
-          > nano ../../bridges/sensiNact/src/main/resources/alignment/sensinact2aiotes-alignment.rdf 
-          web-browser> http://???.??.??.???:8888/swagger/#!/Alignments/post_alignments
-          web-browser> aligment=
-<?xml version="1.0" encoding="UTF-8"?>
-
-<!DOCTYPE RDF
-    [
-<!ENTITY sripas "http://www.inter-iot.eu/sripas#">
-<!ENTITY var "http://www.inter-iot.eu/sripas#node_">
-<!ENTITY sosa "http://www.w3.org/ns/sosa/">
-<!ENTITY xsd "http://www.w3.org/2001/XMLSchema#">
-<!ENTITY iiot "http://inter-iot.eu/GOIoTP#">
-<!ENTITY iiotex "http://inter-iot.eu/GOIoTPex#">
-<!ENTITY medex "http://inter-iot.eu/medex#">
-<!ENTITY time "http://www.w3.org/2006/time#">
-<!ENTITY sweet_units "http://sweet.jpl.nasa.gov/2.3/reprSciUnits.owl#">
-<!ENTITY rdf "http://www.w3.org/1999/02/22-rdf-syntax-ns#">
-<!ENTITY ssn "http://www.w3.org/ns/ssn/">
-<!ENTITY aha "http://ontologies.activageproject.eu/aha-ontology#">
-<!ENTITY m3 "http://purl.org/iot/vocab/m3-lite">
-<!ENTITY sensinact "http://sensinact.com#">
-                ]>
-
-<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns="http://www.inter-iot.eu/sripas#node_" xmlns:xsd="http://www.w3.org/2001/XMLSchema#" xmlns:medex="http://inter-iot.eu/medex#" xmlns:time="http://www.w3.org/2006/time#" xmlns:sweet_units="http://sweet.jpl.nasa.gov/2.3/reprSciUnits.owl#" xmlns:ssn="http://www.w3.org/ns/ssn/" xmlns:aha="http://ontologies.activageproject.eu/aha-ontology#" xmlns:m3="http://purl.org/iot/vocab/m3-lite" xmlns:iiot="http://inter-iot.eu/GOIoTP#"  xmlns:iiotex="http://inter-iot.eu/GOIoTPex#"  xmlns:exmo="http://exmo.inrialpes.fr/align/ext/1.0/#"  xmlns:sripas="http://www.inter-iot.eu/sripas#"  xmlns:dcelem="http://purl.org/dc/elements/1.1/"  xmlns:var="http://www.inter-iot.eu/sripas#node_"  xmlns:align="http://knowledgeweb.semanticweb.org/heterogeneity/alignment#"  xmlns:sosa="http://www.w3.org/ns/sosa/" xmlns:sensinact="http://sensinact.com#">
-
-    <align:Alignment>
-        <dcelem:title>SensiNact2AIOTES</dcelem:title>
-        <exmo:version>0.1</exmo:version>
-        <dcelem:creator>CEA/UPV</dcelem:creator>
-        <dcelem:description>Upstream Alignment from SensiNact ontology to ACTIVAGE ontology.</dcelem:description>
-        <dcelem:date>18 July 2019</dcelem:date>
-    <align:onto1>
-      <align:Ontology rdf:about="http://sensinact.com#">
-        <align:formalism>
-          <align:Formalism align:name="OWL2.0" align:uri="http://www.w3.org/2002/07/owl#"/>
-        </align:formalism>
-      </align:Ontology>
-        </align:onto1>
-    <align:onto2>
-      <align:Ontology rdf:about="http://inter-iot.eu/GOIoTPex#">
-        <align:formalism>
-          <align:Formalism align:name="OWL2.0" align:uri="http://www.w3.org/2002/07/owl#"/>
-        </align:formalism>
-      </align:Ontology>
-        </align:onto2>
-    <sripas:steps rdf:parseType="Literal">
-      <sripas:step sripas:order="1" sripas:cell="http://www.inter-iot.eu/sripas#1_provider"/>
-       
-      <sripas:step sripas:order="2" sripas:cell="http://www.inter-iot.eu/sripas#2_observation"/>
-       
-      <sripas:step sripas:order="3" sripas:cell="http://www.inter-iot.eu/sripas#3_resource"/>
-       
-      <sripas:step sripas:order="4" sripas:cell="http://www.inter-iot.eu/sripas#4_clean"/>
-        </sripas:steps>
-		
-		
-        <sripas:cellFormat>
-            <iiot:DataFormat rdf:about="http://inter-iot.eu/sripas#rdfxml"/>
-        </sripas:cellFormat>
-		
-        <align:map>
-      <align:Cell rdf:about="http://www.inter-iot.eu/sripas#1_provider">
-        <align:entity1 rdf:parseType="Literal">
-          <var:provider>
-            <rdf:type rdf:resource="http://sensinact.com#Provider"/>
-             
-                        <sensinact:name>
-                            <var:provider_name/>
-            </sensinact:name>
-             
-            <sensinact:manages>
-              <var:service>
-                <rdf:type rdf:resource="http://sensinact.com#Service"/>
-                 
-                                <sensinact:name>
-                                    <var:service_name/>
-                </sensinact:name>
-              </var:service>
-            </sensinact:manages>
-          </var:provider>
-        </align:entity1>
-         
-        <align:entity2 rdf:parseType="Literal">
-          <var:provider>
-            <rdf:type rdf:resource="http://www.w3.org/ns/sosa/IoTDevice"/>
-             
-            <rdf:type rdf:resource="http://www.w3.org/ns/sosa/Platform"/>
-             
-                        <iiot:hasName>
-                            <var:provider_name/>
-            </iiot:hasName>
-             
-            <sosa:hosts>
-              <var:service>
-                <rdf:type rdf:resource="http://www.w3.org/ns/sosa/Sensor"/>
-                 
-                                <iiot:hasName>
-                                    <var:service_name/>
-                </iiot:hasName>
-              </var:service>
-            </sosa:hosts>
-          </var:provider>
-        </align:entity2>
-         
-        <align:relation>=</align:relation>
-            </align:Cell>
-        </align:map>
-        <align:map>
-      <align:Cell rdf:about="http://www.inter-iot.eu/sripas#2_observation">
-        <align:entity1 rdf:parseType="Literal">
-          <var:sensor>
-            <rdf:type rdf:resource="http://www.w3.org/ns/sosa/Sensor"/>
-             
-            <sensinact:manages>
-              <var:resource>
-                <rdf:type rdf:resource="http://sensinact.com#Resource"/>
-                 
-                                <sensinact:name>
-                                    <var:resource_name/>
-                </sensinact:name>
-                 
-                                <sensinact:value>
-                                    <var:resource_value/>
-                </sensinact:value>
-              </var:resource>
-            </sensinact:manages>
-          </var:sensor>
-        </align:entity1>
-         
-        <align:entity2 rdf:parseType="Literal">
-          <rdf:Description>
-            <rdf:type rdf:resource="http://www.w3.org/ns/sosa/Observation"/>
-             
-            <sosa:madeBySensor>
-              <var:sensor>
-                <rdf:type rdf:resource="http://www.w3.org/ns/sosa/Sensor"/>
-                 
-                                <sosa:oberves>
-                                    <var:resource/>
-                </sosa:oberves>
-              </var:sensor>
-            </sosa:madeBySensor>
-             
-                        <sosa:observedProperty>
-                            <var:resource/>
-            </sosa:observedProperty>
-             
-            <sosa:hasResult>
-              <rdf:Description>
-                                <iiot:hasResultValue>
-                                    <var:resource_value/>
-                </iiot:hasResultValue>
-                 
-                <rdf:type rdf:resource="http://www.w3.org/ns/sosa/Result"/>
-                 
-                                <iiot:hasName>
-                                    <var:resource_name/>
-                </iiot:hasName>
-              </rdf:Description>
-            </sosa:hasResult>
-          </rdf:Description>
-        </align:entity2>
-         
-        <align:relation>=</align:relation>
-            </align:Cell>
-        </align:map>
-        <align:map>
-      <align:Cell rdf:about="http://www.inter-iot.eu/sripas#3_resource">
-        <align:entity1 rdf:parseType="Literal">
-          <var:sensor>
-            <rdf:type rdf:resource="http://www.w3.org/ns/sosa/Sensor"/>
-             
-            <sensinact:manages>
-              <var:resource>
-                <rdf:type rdf:resource="http://sensinact.com#Resource"/>
-              </var:resource>
-            </sensinact:manages>
-          </var:sensor>
-        </align:entity1>
-         
-        <align:entity2 rdf:parseType="Literal">
-          <var:sensor>
-            <rdf:type rdf:resource="http://www.w3.org/ns/sosa/Sensor"/>
-             
-                        <sosa:observes>
-                            <var:resource/>
-            </sosa:observes>
-          </var:sensor>
-        </align:entity2>
-         
-        <align:relation>=</align:relation>
-            </align:Cell>
-        </align:map>
-        <align:map>
-      <align:Cell rdf:about="http://www.inter-iot.eu/sripas#4_clean">
-        <align:entity1 rdf:parseType="Literal">
-          <var:sensor>
-            <rdf:type rdf:resource="http://www.w3.org/ns/sosa/Sensor"/>
-             
-            <sensinact:manages>
-              <var:resource>
-                <rdf:type rdf:resource="http://sensinact.com#Resource"/>
-              </var:resource>
-            </sensinact:manages>
-          </var:sensor>
-        </align:entity1>
-         
-        <align:entity2 rdf:parseType="Literal">
-          <var:sensor>
-            <rdf:type rdf:resource="http://www.w3.org/ns/sosa/Sensor"/>
-          </var:sensor>
-        </align:entity2>
-         
-        <align:relation>=</align:relation>
-            </align:Cell>
-        </align:map>
-    </align:Alignment>
-</rdf:RDF>
-
+> nano ../../alignments/DS_WOZ_UNIVERSAAL/universAAL.rdf
+          web-browser> http://localhost:8888/swagger/#!/Alignments/post_alignments
+          web-browser> aligment= <content>
           web-browser> Try it out!
           
           check result:
           web-browser> Response Body=
 {
-  "message": "Alignment with AlignmentID(SensiNact2AIOTES,0.1) uploaded successfully"
+  "message": "Alignment with AlignmentID(universAAL-AIOTES-Alignment,2.0) uploaded successfully"
 }
-          web-browser> Response Code=
-    201
+          web-browser> Response Code= 201
+
+       3.1.2 alignments sensiNact >-> AIOTES ontology
+> nano ../../bridges/sensiNact/src/main/resources/alignment/sensinact2aiotes-alignment.rdf 
+          web-browser> http://localhost:8888/swagger/#!/Alignments/post_alignments
+          web-browser> aligment= <content>
+          web-browser> Try it out!
+          
+          check result:
+          web-browser> Response Body=
+{
+  "message": "Alignment with AlignmentID(SensiNact2AIoTES,0.7.5) uploaded successfully"
+}
+          web-browser> Response Code= 201
+
+> nano ../../bridges/sensiNact/src/main/resources/alignment/aiotes2sensinact-alignment.rdf 
+          web-browser> http://localhost:8888/swagger/#!/Alignments/post_alignments
+          web-browser> aligment= <content>
+          web-browser> Try it out!
+          
+          check result:
+          web-browser> Response Body=
+{
+  "message": "Alignment with AlignmentID(AIoTES2SensiNact,0.7.5) uploaded successfully"
+}
+          web-browser> Response Code= 201
+
           check alignments:
-          web-browser> http://<IPSM_IP>:8888/swagger/#!/Alignments/get_alignments
+> curl -X GET --header 'Accept: application/json' 'http://localhost:8888/alignments'
+[{"name":"AIoTES2SensiNact","sourceOntologyURI":"http://inter-iot.eu/GOIoTPex#","description":"Downstream Alignment between ACTIVAGE ontology and sensiNact AHA ontology","creator":"CEA Stephane Bergeon","targetOntologyURI":"http://sensinact.com#","version":"0.7.2","id":1,"date":1579855767901,"descId":"[AIoTES2SensiNact] [0.7.2] : http://inter-iot.eu/GOIoTPex# -> http://sensinact.com#"},{"name":"SensiNact2AIoTES","sourceOntologyURI":"http://sensinact.com#","description":"Upstream alignment between sensiNact AHA ontology and ACTIVAGE ontology.","creator":"CEA Stephane Bergeon","targetOntologyURI":"http://inter-iot.eu/GOIoTPex#","version":"0.7.2","id":2,"date":1579855784424,"descId":"[SensiNact2AIoTES] [0.7.2] : http://sensinact.com# -> http://inter-iot.eu/GOIoTPex#"}]
+
+          web-browser> http://localhost:8888/swagger/#!/Alignments/get_alignments
           web-browser> Try it out!
           check result:
           web-browser> Response Body=
 [
   {
-    "name": "AIOTES2SensiNact",
-    "sourceOntologyURI": "http://inter-iot.eu/GOIoTPex#",
-    "description": "Downstream Alignment from AIOTES to SensiNact.",
-    "creator": "CEA/UPV",
-    "targetOntologyURI": "http://sensinact.com#",
-    "version": "0.1",
-    "id": 3,
-    "date": 1564414856139,
-    "descId": "[AIOTES2SensiNact] [0.1] : http://inter-iot.eu/GOIoTPex# -> http://sensinact.com#"
+    "name": "AIOTES-universAAL-Alignment",
+    ...
+    
   },
+...
   {
-    "name": "SensiNact2AIOTES",
-    "sourceOntologyURI": "http://sensinact.com#",
-    "description": "Upstream Alignment from SensiNact ontology to ACTIVAGE ontology.",
-    "creator": "CEA/UPV",
-    "targetOntologyURI": "http://inter-iot.eu/GOIoTPex#",
-    "version": "0.1",
-    "id": 4,
-    "date": 1564415280585,
-    "descId": "[SensiNact2AIOTES] [0.1] : http://sensinact.com# -> http://inter-iot.eu/GOIoTPex#"
+    "name": "SensiNact2AIoTES",
+    ...
   }
+...
 ]
-          web-browser> Response Code=
-    200
+          web-browser> Response Code=200
 
        3.2 Register client
-          web-browser> http://<IPSM_IP>:<IPSM_PORT>/swagger/#/Clients/registerClient
+> curl -X POST "http://localhost:8083/api/mw2mw/clients" -H  "accept: application/json" -H  "Client-ID: client" -H  "Content-Type: application/json" -d "{      \"clientId\": \"client\",      \"receivingCapacity\": 10,      \"responseFormat\": \"JSON_LD\",      \"responseDelivery\": \"CLIENT_PULL\"    }"
+
+          web-browser> http://localhost:8083/swagger/#/Clients/registerClient
           web-browser> Try it out
           web-browser> Client-ID= client
           web-browser> body=
@@ -457,9 +214,13 @@ intermw_1     | 14:24:30.459 [localhost-startStop-1] DEBUG eu.interiot.intermw.b
       "responseDelivery": "CLIENT_PULL"
     }
           web-browser> Execute
+
+
           check result:
+> curl -X GET "http://localhost:8083/api/mw2mw/clients" -H  "accept: application/json" -H  "Client-ID: client"
+
           web-browser> Server reponse code= 201
-          web-browser> http://<IPSM_IP>:<IPSM_PORT>/swagger/#/Clients/listClients
+          web-browser> http://localhost:8083/swagger/#/Clients/listClients
           web-browser> Client-ID= client
           web-browser> Execute
           check result:
@@ -475,79 +236,144 @@ intermw_1     | 14:24:30.459 [localhost-startStop-1] DEBUG eu.interiot.intermw.b
       }
     ]
 
-       3.3 Register platform
-          web-browser> http://<IPSM_IP>:<IPSM_PORT>/swagger/#/Platforms/registerPlatform
+       3.3 Register sensiNact and universAAL platforms
+          web-browser> http://localhost:8083/swagger/#/Platforms/registerPlatform
           web-browser> Try it out
           web-browser> Client-ID= client
           web-browser> body=
     {
-      "platformId": "http://DS7-WOQ-testbed-sensinact-1",
+      "platformId": "http://rpi-sensinact-1",
       "type": "http://sensinact.ddns.net/sensinact",
-      "baseEndpoint": "http://<sNaRPi_IP>:8081",
-      "location": "http://DS7/WOQ-testbed",
-      "name": "DS7-WOQ-testbed-sensinact-1",
+      "baseEndpoint": "http://10.255.1.12:8082",
+      "location": "http://rpi-1",
+      "name": "rpi-sensinact-1",
       "downstreamInputAlignmentName": "",
       "downstreamInputAlignmentVersion": "",
-      "downstreamOutputAlignmentName": "AIOTES2SensiNact",
-      "downstreamOutputAlignmentVersion": "0.1",
-      "upstreamInputAlignmentName": "SensiNact2AIOTES",
-      "upstreamInputAlignmentVersion": "0.1",
+      "downstreamOutputAlignmentName": "AIoTES2SensiNact",
+      "downstreamOutputAlignmentVersion": "0.7.5",
+      "upstreamInputAlignmentName": "SensiNact2AIoTES",
+      "upstreamInputAlignmentVersion": "0.7.5",
       "upstreamOutputAlignmentName": "",
       "upstreamOutputAlignmentVersion": ""
     }
           web-browser> Execute
+
+          web-browser> http://localhost:8083/swagger/#/Platforms/registerPlatform
+          web-browser> Try it out
+          web-browser> Client-ID= client
+          web-browser> body=
+    {
+      "platformId": "http://local-universaal-1",
+      "type": "http://inter-iot.eu/UniversAAL",
+      "baseEndpoint": "http://localhost:9000",
+      "location": "http://local-1",
+      "name": "local-universaal-1",
+      "downstreamInputAlignmentName": "",
+      "downstreamInputAlignmentVersion": "",
+      "downstreamOutputAlignmentName": "AIOTES-universAAL-Alignment",
+      "downstreamOutputAlignmentVersion": "2.1",
+      "upstreamInputAlignmentName": "universAAL-AIOTES-Alignment",
+      "upstreamInputAlignmentVersion": "2.0",
+      "upstreamOutputAlignmentName": "",
+      "upstreamOutputAlignmentVersion": ""
+    }
+          web-browser> Execute
+
           check result:
+> curl -X GET "http://localhost:8083/api/mw2mw/platforms" -H  "accept: application/json" -H  "Client-ID: client"
+
           web-browser> Server reponse code= 202
-          web-browser> http://<IPSM_IP>:<IPSM_PORT>/swagger/#/Platforms/listPlatforms
+          web-browser> http://localhost:8083/swagger/#/Platforms/listPlatforms
           web-browser> Try it out
           web-browser> Client-ID= client
           web-browser> Execute
           web-browser> Server reponse code= 200
           web-browser> Server reponse Details=
-    [
-      {
-        "platformId": "http://DS7-WOQ-testbed-sensinact-1",
-        "type": "http://sensinact.ddns.net/sensinact",
-        "baseEndpoint": "http://<sNaRPi_IP>:8081",
-        "location": "http://DS7/WOQ-testbed",
-        "name": "DS7-WOQ-testbed-sensinact-1",
-        "clientId": "http://inter-iot.eu/clients#client",
-        "username": "",
-        "timeCreated": 1563898191609,
-        "platformStatistics": {
-          "deviceCount": 0,
-          "subscribedDeviceCount": 0,
-          "subscriptionCount": 0
-        },
-        "downstreamInputAlignmentName": "",
-        "downstreamInputAlignmentVersion": "",
-        "downstreamOutputAlignmentName": "AIOTES2SensiNact",
-        "downstreamOutputAlignmentVersion": "0.1",
-        "upstreamInputAlignmentName": "SensiNact2AIOTES",
-        "upstreamInputAlignmentVersion": "0.1",
-        "upstreamOutputAlignmentName": "",
-        "upstreamOutputAlignmentVersion": ""
-      }
-    ]      
+[
+  {
+    "platformId": "http://rpi-sensinact-1",
+    "type": "http://sensinact.ddns.net/sensinact",
+...
+  },
+  {
+    "platformId": "http://local-universaal-1",
+    "type": "http://inter-iot.eu/UniversAAL",
+...
+  }
+]
 
        3.4 Register devices
-          web-browser> http://<IPSM_IP>:<IPSM_PORT>/swagger/#/Devices/platformCreateDevices
+          web-browser> http://localhost:8083/swagger/#/Devices/platformCreateDevices
           web-browser> Try it out
           web-browser> Client-ID= client
           web-browser> body=
 {
    "devices": [
      {
-       "deviceId":
-"http://sensinact.ddns.net/aha-night-rising-monitor-bedroom-WOQ/monitor/state",
-       "hostedBy": "http://DS7-WOQ-testbed-sensinact-1",
-       "location": "http://DS7/WOQ-testbed",
+       "deviceId": "http://sensinact.ddns.net/aha-night-rising-monitor-bedroom-WOQ/monitor/state",
+       "hostedBy": "http://rpi-sensinact-1",
+       "location": "http://rpi-1",
        "name": "aha-night-rising-monitor-bedroom-WOQ-state"
      }
    ]
 }
+
+{
+   "devices": [
+
+     {
+       "deviceId":"http://sNa.de/demo/BedSensor",
+       "hostedBy": "http://local-universaal-1",
+       "location": "http://local-1",
+       "name": "demo-target-bedsensor-state"
+     }
+   ]
+}
+          check device:
+> curl -X GET "http://localhost:8083/api/mw2mw/devices?platformId=http%3A%2F%2Flocal-sensinact-1" -H  "accept: application/json" -H  "Client-ID: client"
+
+          web-browser> http://localhost:8083/swagger/#/Devices/listDevices
+          web-browser> Try it out
+          web-browser> Client-ID= client
+          web-browser> platformId= http://local-sensinact-1
+          web-browser> Response Code= 200
+          web-browser> Response body=
+[
+  {
+    "deviceTypes": [
+      "DEVICE"
+    ],
+    "deviceId": "http://sensinact.ddns.net/aha-night-rising-monitor-bedroom-WOQ/monitor/state",
+    "hostedBy": "http://rpi-sensinact-1",
+    "location": "http://rpi-1",
+    "name": "aha-night-rising-monitor-bedroom-WOQ-state"
+    "hosts": [],
+    "forProperty": [],
+    "madeActuation": null,
+    "implementsProcedure": null,
+    "observes": [],
+    "detects": null,
+    "madeObservation": null
+  },
+  {
+    "deviceTypes": [
+      "DEVICE"
+    ],
+    "deviceId": "http://sNa.de/demo/BedSensor",
+    "hostedBy": "http://local-universaal-1",
+    "location": "http://local-1",
+    "name": "demo-target-bedsensor-state",
+    "hosts": [],
+    "forProperty": [],
+    "madeActuation": null,
+    "implementsProcedure": null,
+    "observes": [],
+    "detects": null,
+    "madeObservation": null
+  }
+]
        3.5 Subscribe devices
-          web-browser> http://<IPSM_IP>:<IPSM_PORT>/swagger/#/Subscriptions/subscribe
+          web-browser> http://localhost:8083/swagger/#/Subscriptions/subscribe
           web-browser> Try it out
           web-browser> Client-ID= client
           web-browser> body=
@@ -556,727 +382,166 @@ intermw_1     | 14:24:30.459 [localhost-startStop-1] DEBUG eu.interiot.intermw.b
     "http://sensinact.ddns.net/aha-night-rising-monitor-bedroom-WOQ/monitor/state"
   ]
 }
+          web-browser> Response Code= 202
 
        3.6 Check communication 
-         > sudo docker-compose logs -f intermw
-...
-intermw_1     | 14:37:18.237 [WebSocketClient@510148390-92] INFO  eu.interiot.intermw.bridge.sensinact.SensiNactBridge$1.notify(SensiNactBridge.java:110) - watchdog/monitor/state/false
-...
-14:39:23.684 [WebSocketClient@510148390-91] INFO  eu.interiot.intermw.bridge.s$
-14:39:23.686 [WebSocketClient@510148390-91] INFO  eu.interiot.intermw.bridge.s$
-14:39:23.687 [WebSocketClient@510148390-91] INFO  eu.interiot.intermw.bridge.s$
-14:39:23.689 [WebSocketClient@510148390-91] INFO  eu.interiot.intermw.bridge.s$
-14:39:23.689 [WebSocketClient@510148390-91] INFO  eu.interiot.intermw.bridge.s$
-14:39:23.690 [WebSocketClient@510148390-91] INFO  eu.interiot.intermw.bridge.s$
-14:39:23.691 [WebSocketClient@510148390-91] INFO  eu.interiot.intermw.bridge.s$
-14:39:23.764 [WebSocketClient@510148390-91] INFO  eu.interiot.intermw.bridge.s$
-  "@graph" : [ {
-    "@graph" : [ {
-      "@id" : "msg:meta/e5959e4e-f9e6-4604-9f12-0854b2e8ffe9",
-      "msg:SenderPlatformId" : {
-        "@id" : "http://DS7-WOQ-testbed-sensinact-1"
-      },
-      "msg:conversationID" : "convb272ceb3-b777-453a-b5cb-f46a98204d0e",
-      "msg:dateTimeStamp" : "2019-08-02T14:39:23.692Z",
-      "msg:messageID" : "msg0562d4e5-03fe-47d7-afca-288b576a96a7",
-      "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
-        "@id" : "msg:Response"
-      }, {
-        "@id" : "msg:Observation"
-      }, {
-        "@id" : "msg:meta"
-      } ]
-    } ],
-    "@id" : "msg:metadata"
-  }, {
-    "@graph" : [ {
-      "@id" : "_:b0",
-      "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
-        "@id" : "http://www.w3.org/2002/07/owl#Restriction"
-      }, {
-        "@id" : "http://www.w3.org/2000/01/rdf-schema#Class"
-      }, {
-        "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
-      } ],
-      "http://www.w3.org/2000/01/rdf-schema#subClassOf" : {
-        "@id" : "_:b0"
-      },
-      "http://www.w3.org/2002/07/owl#allValuesFrom" : {
-        "@id" : "http://sensinact.com#Service"
-      },
-      "http://www.w3.org/2002/07/owl#onProperty" : {
-        "@id" : "http://sensinact.com#isManagedBy"
-      }
-    }, {
-      "@id" : "_:b1",
-      "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
-        "@id" : "http://www.w3.org/2002/07/owl#Restriction"
-      }, {
-        "@id" : "http://www.w3.org/2000/01/rdf-schema#Class"
-      }, {
-        "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
-      } ],
-      "http://www.w3.org/2000/01/rdf-schema#subClassOf" : {
-        "@id" : "_:b1"
-      },
-      "http://www.w3.org/2002/07/owl#allValuesFrom" : {
-        "@id" : "http://sensinact.com#Provider"
-      },
-      "http://www.w3.org/2002/07/owl#onProperty" : {
-        "@id" : "http://sensinact.com#isManagedBy"
-      }
-    }, {
-      "@id" : "_:b10",
-      "http://www.w3.org/1999/02/22-rdf-syntax-ns#first" : {
-        "@id" : "http://sensinact.com#Service"
-      },
-      "http://www.w3.org/1999/02/22-rdf-syntax-ns#rest" : {
-        "@list" : [ ]
-      },
-      "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
-        "@id" : "http://www.w3.org/1999/02/22-rdf-syntax-ns#List"
-      }, {
-        "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
-      } ]
-    }, {
-      "@id" : "_:b2",
-      "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
-        "@id" : "http://www.w3.org/2002/07/owl#Restriction"
-      }, {
-        "@id" : "http://www.w3.org/2000/01/rdf-schema#Class"
-      }, {
-        "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
-      } ],
-      "http://www.w3.org/2000/01/rdf-schema#subClassOf" : {
-        "@id" : "_:b2"
-      },
-      "http://www.w3.org/2002/07/owl#allValuesFrom" : {
-        "@id" : "http://sensinact.com#Resource"
-      },
-      "http://www.w3.org/2002/07/owl#onProperty" : {
-        "@id" : "http://sensinact.com#manages"
-      }
-    }, {
-      "@id" : "_:b3",
-      "http://www.w3.org/1999/02/22-rdf-syntax-ns#first" : {
-        "@id" : "http://sensinact.com#Provider"
-      },
-      "http://www.w3.org/1999/02/22-rdf-syntax-ns#rest" : {
-        "@id" : "_:b4"
-      },
-      "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
-        "@id" : "http://www.w3.org/1999/02/22-rdf-syntax-ns#List"
-      }, {
-        "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
-      } ]
-    }, {
-      "@id" : "_:b4",
-      "http://www.w3.org/1999/02/22-rdf-syntax-ns#first" : {
-        "@id" : "http://sensinact.com#Resource"
-      },
-      "http://www.w3.org/1999/02/22-rdf-syntax-ns#rest" : {
-        "@id" : "_:b10"
-      },
-      "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
-        "@id" : "http://www.w3.org/1999/02/22-rdf-syntax-ns#List"
-      }, {
-        "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
-      } ]
-    }, {
-      "@id" : "_:b5",
-      "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
-        "@id" : "http://www.w3.org/2002/07/owl#Restriction"
-      }, {
-        "@id" : "http://www.w3.org/2000/01/rdf-schema#Class"
-      }, {
-        "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
-      } ],
-      "http://www.w3.org/2000/01/rdf-schema#subClassOf" : {
-        "@id" : "_:b5"
-      },
-      "http://www.w3.org/2002/07/owl#allValuesFrom" : {
-        "@id" : "http://sensinact.com#Service"
-      },
-      "http://www.w3.org/2002/07/owl#onProperty" : {
-        "@id" : "http://sensinact.com#manages"
-      }
-    }, {
-      "@id" : "_:b6",
-      "http://sensinact.com#manages" : {
-        "@id" : "_:b7"
-      },
-      "http://sensinact.com#name" : "monitor",
-      "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
-        "@id" : "http://sensinact.com#Service"
-      }, {
-        "@id" : "_:b2"
-      }, {
-        "@id" : "_:b1"
-      }, {
-        "@id" : "http://sensinact.com#Element"
-      } ]
-    }, {
-      "@id" : "_:b7",
-      "http://sensinact.com#name" : "state",
-      "http://sensinact.com#value" : "false",
-      "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
-        "@id" : "http://sensinact.com#Resource"
-      }, {
-        "@id" : "http://sensinact.com#Element"
-      }, {
-        "@id" : "_:b0"
-      } ]
-    }, {
-      "@id" : "_:b8",
-      "http://sensinact.com#manages" : {
-        "@id" : "_:b6"
-      },
-      "http://sensinact.com#name" : "aha-night-rising-monitor-bedroom-WOQ",
-      "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
-        "@id" : "http://sensinact.com#Provider"
-      }, {
-        "@id" : "_:b5"
-      }, {
-        "@id" : "http://sensinact.com#Element"
-      } ]
-    }, {
-      "@id" : "_:b9",
-      "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : {
-        "@id" : "http://www.w3.org/2002/07/owl#AllDisjointClasses"
-      },
-      "http://www.w3.org/2002/07/owl#members" : {
-        "@id" : "_:b3"
-      }
-    }, {
-      "@id" : "http://sensinact.com",
-      "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : {
-        "@id" : "http://www.w3.org/2002/07/owl#Ontology"
-      }
-    }, {
-      "@id" : "http://sensinact.com#Element",
-      "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
-        "@id" : "http://www.w3.org/2002/07/owl#Class"
-      }, {
-        "@id" : "http://www.w3.org/2000/01/rdf-schema#Class"
-      }, {
-        "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
-      } ],
-      "http://www.w3.org/2000/01/rdf-schema#comment" : {
-        "@id" : "http://sensinact.com#name"
-      },
-      "http://www.w3.org/2000/01/rdf-schema#subClassOf" : {
-        "@id" : "http://sensinact.com#Element"
-      }
-    }, {
-      "@id" : "http://sensinact.com#Provider",
-      "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
-        "@id" : "http://www.w3.org/2002/07/owl#Class"
-      }, {
-        "@id" : "http://www.w3.org/2000/01/rdf-schema#Class"
-      }, {
-        "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
-      } ],
-      "http://www.w3.org/2000/01/rdf-schema#subClassOf" : [ {
-        "@id" : "http://sensinact.com#Element"
-      }, {
-        "@id" : "_:b5"
-      }, {
-        "@id" : "http://sensinact.com#Provider"
-      } ]
-    }, {
-      "@id" : "http://sensinact.com#Resource",
-      "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
-        "@id" : "http://www.w3.org/2002/07/owl#Class"
-      }, {
-        "@id" : "http://www.w3.org/2000/01/rdf-schema#Class"
-      }, {
-        "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
-      } ],
-      "http://www.w3.org/2000/01/rdf-schema#comment" : {
-        "@id" : "http://sensinact.com#value"
-      },
-      "http://www.w3.org/2000/01/rdf-schema#subClassOf" : [ {
-        "@id" : "http://sensinact.com#Element"
-      }, {
-        "@id" : "_:b0"
-      }, {
-        "@id" : "http://sensinact.com#Resource"
-      } ]
-    }, {
-      "@id" : "http://sensinact.com#Service",
-      "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
-        "@id" : "http://www.w3.org/2002/07/owl#Class"
-      }, {
-        "@id" : "http://www.w3.org/2000/01/rdf-schema#Class"
-      }, {
-        "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
-      } ],
-      "http://www.w3.org/2000/01/rdf-schema#subClassOf" : [ {
-        "@id" : "http://sensinact.com#Element"
-      }, {
-        "@id" : "_:b1"
-      }, {
-        "@id" : "_:b2"
-      }, {
-        "@id" : "http://sensinact.com#Service"
-      } ]
-    }, {
-      "@id" : "http://sensinact.com#contains",
-      "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : {
-        "@id" : "http://www.w3.org/2002/07/owl#AnnotationProperty"
-      }
-    }, {
-      "@id" : "http://sensinact.com#isManagedBy",
-      "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
-        "@id" : "http://www.w3.org/2002/07/owl#ObjectProperty"
-      }, {
-        "@id" : "http://www.w3.org/2002/07/owl#FunctionalProperty"
-      }, {
-        "@id" : "http://www.w3.org/2002/07/owl#InverseFunctionalProperty"
-      }, {
-        "@id" : "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
-      }, {
-        "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
-      } ],
-      "http://www.w3.org/2000/01/rdf-schema#subPropertyOf" : [ {
-        "@id" : "http://www.w3.org/2002/07/owl#topObjectProperty"
-      }, {
-        "@id" : "http://sensinact.com#isManagedBy"
-      } ],
-      "http://www.w3.org/2002/07/owl#inverseOf" : {
-        "@id" : "http://sensinact.com#manages"
-      }
-    }, {
-      "@id" : "http://sensinact.com#manages",
-      "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
-        "@id" : "http://www.w3.org/2002/07/owl#ObjectProperty"
-      }, {
-        "@id" : "http://www.w3.org/2002/07/owl#FunctionalProperty"
-      }, {
-        "@id" : "http://www.w3.org/2002/07/owl#InverseFunctionalProperty"
-      } ]
-    }, {
-      "@id" : "http://sensinact.com#name",
-      "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
-        "@id" : "http://www.w3.org/2002/07/owl#DatatypeProperty"
-      }, {
-        "@id" : "http://www.w3.org/2000/01/rdf-schema#Literal"
-      }, {
-        "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
-      } ]
-    }, {
-      "@id" : "http://sensinact.com#value",
-      "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
-        "@id" : "http://www.w3.org/2002/07/owl#DatatypeProperty"
-      }, {
-        "@id" : "http://www.w3.org/2002/07/owl#FunctionalProperty"
-      }, {
-        "@id" : "http://www.w3.org/2000/01/rdf-schema#Literal"
-      }, {
-        "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
-      } ]
-    }, {
-      "@id" : "http://www.w3.org/1999/02/22-rdf-syntax-ns#Alt",
-      "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
-        "@id" : "http://www.w3.org/2000/01/rdf-schema#Class"
-      }, {
-        "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
-      } ],
-      "http://www.w3.org/2000/01/rdf-schema#subClassOf" : [ {
-        "@id" : "http://www.w3.org/1999/02/22-rdf-syntax-ns#Alt"
-      }, {
-        "@id" : "http://www.w3.org/2000/01/rdf-schema#Container"
-      } ]
-    }, {
-      "@id" : "http://www.w3.org/1999/02/22-rdf-syntax-ns#Bag",
-      "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
-        "@id" : "http://www.w3.org/2000/01/rdf-schema#Class"
-      }, {
-        "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
-      } ],
-      "http://www.w3.org/2000/01/rdf-schema#subClassOf" : [ {
-        "@id" : "http://www.w3.org/1999/02/22-rdf-syntax-ns#Bag"
-      }, {
-        "@id" : "http://www.w3.org/2000/01/rdf-schema#Container"
-      } ]
-    }, {
-      "@id" : "http://www.w3.org/1999/02/22-rdf-syntax-ns#List",
-      "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
-        "@id" : "http://www.w3.org/2000/01/rdf-schema#Class"
-      }, {
-        "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
-      } ],
-      "http://www.w3.org/2000/01/rdf-schema#subClassOf" : {
-        "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
-      }
-    }, {
-      "@id" : "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property",
-      "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
-        "@id" : "http://www.w3.org/2000/01/rdf-schema#Class"
-      }, {
-        "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
-      } ],
-      "http://www.w3.org/2000/01/rdf-schema#subClassOf" : [ {
-        "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
-      }, {
-        "@id" : "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
-      } ]
-    }, {
-      "@id" : "http://www.w3.org/1999/02/22-rdf-syntax-ns#Seq",
-      "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
-        "@id" : "http://www.w3.org/2000/01/rdf-schema#Class"
-      }, {
-        "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
-      } ],
-      "http://www.w3.org/2000/01/rdf-schema#subClassOf" : [ {
-        "@id" : "http://www.w3.org/1999/02/22-rdf-syntax-ns#Seq"
-      }, {
-        "@id" : "http://www.w3.org/2000/01/rdf-schema#Container"
-      } ]
-    }, {
-      "@id" : "http://www.w3.org/1999/02/22-rdf-syntax-ns#Statement",
-      "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
-        "@id" : "http://www.w3.org/2000/01/rdf-schema#Class"
-      }, {
-        "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
-      } ],
-      "http://www.w3.org/2000/01/rdf-schema#subClassOf" : {
-        "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
-      }
-    }, {
-      "@id" : "http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral",
-      "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
-        "@id" : "http://www.w3.org/2000/01/rdf-schema#Datatype"
-      }, {
-        "@id" : "http://www.w3.org/2000/01/rdf-schema#Class"
-      }, {
-        "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
-      } ]
-    }, {
-      "@id" : "http://www.w3.org/1999/02/22-rdf-syntax-ns#first",
-      "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
-        "@id" : "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
-      }, {
-        "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
-      } ],
-      "http://www.w3.org/2000/01/rdf-schema#domain" : {
-        "@id" : "http://www.w3.org/1999/02/22-rdf-syntax-ns#List"
-      },
-      "http://www.w3.org/2000/01/rdf-schema#subPropertyOf" : {
-        "@id" : "http://www.w3.org/1999/02/22-rdf-syntax-ns#first"
-      }
-    }, {
-      "@id" : "http://www.w3.org/1999/02/22-rdf-syntax-ns#nil",
-      "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
-        "@id" : "http://www.w3.org/1999/02/22-rdf-syntax-ns#List"
-      }, {
-        "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
-      } ]
-    }, {
-      "@id" : "http://www.w3.org/1999/02/22-rdf-syntax-ns#object",
-      "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
-        "@id" : "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
-      }, {
-        "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
-      } ],
-      "http://www.w3.org/2000/01/rdf-schema#domain" : {
-        "@id" : "http://www.w3.org/1999/02/22-rdf-syntax-ns#Statement"
-      },
-      "http://www.w3.org/2000/01/rdf-schema#subPropertyOf" : {
-        "@id" : "http://www.w3.org/1999/02/22-rdf-syntax-ns#object"
-      }
-    }, {
-      "@id" : "http://www.w3.org/1999/02/22-rdf-syntax-ns#predicate",
-      "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
-        "@id" : "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
-      }, {
-        "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
-      } ],
-      "http://www.w3.org/2000/01/rdf-schema#domain" : {
-        "@id" : "http://www.w3.org/1999/02/22-rdf-syntax-ns#Statement"
-      },
-      "http://www.w3.org/2000/01/rdf-schema#subPropertyOf" : {
-        "@id" : "http://www.w3.org/1999/02/22-rdf-syntax-ns#predicate"
-      }
-    }, {
-      "@id" : "http://www.w3.org/1999/02/22-rdf-syntax-ns#rest",
-      "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
-        "@id" : "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
-      }, {
-        "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
-      } ],
-      "http://www.w3.org/2000/01/rdf-schema#domain" : {
-        "@id" : "http://www.w3.org/1999/02/22-rdf-syntax-ns#List"
-      },
-      "http://www.w3.org/2000/01/rdf-schema#range" : {
-        "@id" : "http://www.w3.org/1999/02/22-rdf-syntax-ns#List"
-      },
-      "http://www.w3.org/2000/01/rdf-schema#subPropertyOf" : {
-        "@id" : "http://www.w3.org/1999/02/22-rdf-syntax-ns#rest"
-      }
-    }, {
-      "@id" : "http://www.w3.org/1999/02/22-rdf-syntax-ns#subject",
-      "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
-        "@id" : "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
-      }, {
-        "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
-      } ],
-      "http://www.w3.org/2000/01/rdf-schema#domain" : {
-        "@id" : "http://www.w3.org/1999/02/22-rdf-syntax-ns#Statement"
-      },
-      "http://www.w3.org/2000/01/rdf-schema#subPropertyOf" : {
-        "@id" : "http://www.w3.org/1999/02/22-rdf-syntax-ns#subject"
-      }
-    }, {
-      "@id" : "http://www.w3.org/1999/02/22-rdf-syntax-ns#type",
-      "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
-        "@id" : "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
-      }, {
-        "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
-      } ],
-      "http://www.w3.org/2000/01/rdf-schema#range" : {
-        "@id" : "http://www.w3.org/2000/01/rdf-schema#Class"
-      }
-    }, {
-      "@id" : "http://www.w3.org/2000/01/rdf-schema#Class",
-      "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
-        "@id" : "http://www.w3.org/2000/01/rdf-schema#Class"
-      }, {
-        "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
-      } ],
-      "http://www.w3.org/2000/01/rdf-schema#subClassOf" : [ {
-        "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
-      }, {
-        "@id" : "http://www.w3.org/2000/01/rdf-schema#Class"
-      } ]
-    }, {
-      "@id" : "http://www.w3.org/2000/01/rdf-schema#Container",
-      "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
-        "@id" : "http://www.w3.org/2000/01/rdf-schema#Class"
-      }, {
-        "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
-      } ],
-      "http://www.w3.org/2000/01/rdf-schema#subClassOf" : {
-        "@id" : "http://www.w3.org/2000/01/rdf-schema#Container"
-      }
-    }, {
-      "@id" : "http://www.w3.org/2000/01/rdf-schema#ContainerMembershipPropert$
-      "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
-        "@id" : "http://www.w3.org/2000/01/rdf-schema#Class"
-      }, {
-        "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
-      } ],
-      "http://www.w3.org/2000/01/rdf-schema#subClassOf" : [ {
-        "@id" : "http://www.w3.org/2000/01/rdf-schema#ContainerMembershipPrope$
-      }, {
-        "@id" : "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
-      } ]
-    }, {
-      "@id" : "http://www.w3.org/2000/01/rdf-schema#Datatype",
-      "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
-        "@id" : "http://www.w3.org/2000/01/rdf-schema#Class"
-      }, {
-        "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
-      } ],
-      "http://www.w3.org/2000/01/rdf-schema#subClassOf" : [ {
-        "@id" : "http://www.w3.org/2000/01/rdf-schema#Datatype"
-      }, {
-        "@id" : "http://www.w3.org/2000/01/rdf-schema#Class"
-      } ]
-    }, {
-      "@id" : "http://www.w3.org/2000/01/rdf-schema#Literal",
-      "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
-        "@id" : "http://www.w3.org/2000/01/rdf-schema#Class"
-      }, {
-        "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
-      } ],
-      "http://www.w3.org/2000/01/rdf-schema#subClassOf" : {
-        "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
-      }
-    }, {
-      "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource",
-      "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
-        "@id" : "http://www.w3.org/2000/01/rdf-schema#Class"
-      }, {
-        "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
-      } ]
-    }, {
-      "@id" : "http://www.w3.org/2000/01/rdf-schema#comment",
-      "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
-        "@id" : "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
-      }, {
-        "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
-      } ],
-      "http://www.w3.org/2000/01/rdf-schema#range" : {
-        "@id" : "http://www.w3.org/2000/01/rdf-schema#Literal"
-      }
-    }, {
-      "@id" : "http://www.w3.org/2000/01/rdf-schema#domain",
-      "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
-        "@id" : "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
-      }, {
-        "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
-      } ],
-      "http://www.w3.org/2000/01/rdf-schema#domain" : {
-        "@id" : "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
-      },
-      "http://www.w3.org/2000/01/rdf-schema#range" : {
-        "@id" : "http://www.w3.org/2000/01/rdf-schema#Class"
-      }
-    }, {
-      "@id" : "http://www.w3.org/2000/01/rdf-schema#isDefinedBy",
-      "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
-        "@id" : "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
-      }, {
-        "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
-      } ],
-      "http://www.w3.org/2000/01/rdf-schema#subPropertyOf" : [ {
-        "@id" : "http://www.w3.org/2000/01/rdf-schema#isDefinedBy"
-      }, {
-        "@id" : "http://www.w3.org/2000/01/rdf-schema#seeAlso"
-      } ]
-    }, {
-      "@id" : "http://www.w3.org/2000/01/rdf-schema#label",
-      "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
-        "@id" : "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
-      }, {
-        "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
-      } ],
-      "http://www.w3.org/2000/01/rdf-schema#range" : {
-        "@id" : "http://www.w3.org/2000/01/rdf-schema#Literal"
-      }
-    }, {
-      "@id" : "http://www.w3.org/2000/01/rdf-schema#range",
-      "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
-        "@id" : "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
-      }, {
-        "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
-      } ],
-      "http://www.w3.org/2000/01/rdf-schema#domain" : {
-        "@id" : "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
-      },
-      "http://www.w3.org/2000/01/rdf-schema#range" : {
-        "@id" : "http://www.w3.org/2000/01/rdf-schema#Class"
-      }
-    }, {
-      "@id" : "http://www.w3.org/2000/01/rdf-schema#seeAlso",
-      "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
-        "@id" : "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
-      }, {
-        "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
-      } ],
-      "http://www.w3.org/2000/01/rdf-schema#subPropertyOf" : {
-        "@id" : "http://www.w3.org/2000/01/rdf-schema#seeAlso"
-      }
-    }, {
-      "@id" : "http://www.w3.org/2000/01/rdf-schema#subClassOf",
-      "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
-        "@id" : "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
-      }, {
-        "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
-      } ],
-      "http://www.w3.org/2000/01/rdf-schema#domain" : {
-        "@id" : "http://www.w3.org/2000/01/rdf-schema#Class"
-      },
-      "http://www.w3.org/2000/01/rdf-schema#range" : {
-        "@id" : "http://www.w3.org/2000/01/rdf-schema#Class"
-      }
-    }, {
-      "@id" : "http://www.w3.org/2000/01/rdf-schema#subPropertyOf",
-      "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
-        "@id" : "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
-      }, {
-        "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
-      } ],
-      "http://www.w3.org/2000/01/rdf-schema#domain" : {
-        "@id" : "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
-      },
-      "http://www.w3.org/2000/01/rdf-schema#range" : {
-        "@id" : "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
-      }
-    }, {
-      "@id" : "http://www.w3.org/2002/07/owl#AllDisjointClasses",
-      "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
-        "@id" : "http://www.w3.org/2000/01/rdf-schema#Class"
-      }, {
-        "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
-      } ]
-    }, {
-      "@id" : "http://www.w3.org/2002/07/owl#AnnotationProperty",
-      "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
-        "@id" : "http://www.w3.org/2000/01/rdf-schema#Class"
-      }, {
-        "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
-      } ]
-    }, {
-      "@id" : "http://www.w3.org/2002/07/owl#Class",
-      "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
-        "@id" : "http://www.w3.org/2000/01/rdf-schema#Class"
-      }, {
-        "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
-      } ]
-    }, {
-      "@id" : "http://www.w3.org/2002/07/owl#DatatypeProperty",
-      "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
-        "@id" : "http://www.w3.org/2000/01/rdf-schema#Class"
-      }, {
-        "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
-      } ]
-    }, {
-      "@id" : "http://www.w3.org/2002/07/owl#FunctionalProperty",
-      "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
-        "@id" : "http://www.w3.org/2000/01/rdf-schema#Class"
-      }, {
-        "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
-      } ]
-    }, {
-      "@id" : "http://www.w3.org/2002/07/owl#InverseFunctionalProperty",
-      "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
-        "@id" : "http://www.w3.org/2000/01/rdf-schema#Class"
-      }, {
-        "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
-      } ]
-    }, {
-      "@id" : "http://www.w3.org/2002/07/owl#ObjectProperty",
-      "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
-        "@id" : "http://www.w3.org/2000/01/rdf-schema#Class"
-      }, {
-        "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
-      } ]
-    }, {
-      "@id" : "http://www.w3.org/2002/07/owl#Ontology",
-      "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
-        "@id" : "http://www.w3.org/2000/01/rdf-schema#Class"
-      }, {
-        "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
-      } ]
-    }, {
-      "@id" : "http://www.w3.org/2002/07/owl#Restriction",
-      "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
-        "@id" : "http://www.w3.org/2000/01/rdf-schema#Class"
-      }, {
-        "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
-      } ]
-    }, {
-      "@id" : "http://www.w3.org/2002/07/owl#topObjectProperty",
-      "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
-        "@id" : "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
-      }, {
-        "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
-      } ],
-      "http://www.w3.org/2000/01/rdf-schema#subPropertyOf" : {
-        "@id" : "http://www.w3.org/2002/07/owl#topObjectProperty"
-      }
-    } ],
-    "@id" : "msg:payload"
-  } ],
-  "@context" : {
-    "msg" : "http://inter-iot.eu/message/",
-    "iiotex" : "http://inter-iot.eu/GOIoTPex#",
-    "geosparql" : "http://www.opengis.net/ont/geosparql#",
-    "iiot" : "http://inter-iot.eu/GOIoTP#",
-    "InterIoT" : "http://inter-iot.eu/",
-    "ssn" : "http://www.w3.org/ns/ssn/",
-    "sosa" : "http://www.w3.org/ns/sosa/"
+
+       3.6.1 Message sent to intermw out of sensiNact
+> sudo docker-compose logs -f intermw | grep -A 40 "Sending following observation message to intermw"
+
+intermw_1     | 10:06:55.132 [WebSocketClient@878736416-97] INFO  eu.interiot.intermw.bridge.sensinact.SensiNactBridge$1.notify(SensiNactBridge.java:148) - Sending following observation message to intermw {
+intermw_1     |   "@graph" : [ {
+intermw_1     |     "@graph" : [ {
+intermw_1     |       "@id" : "msg:meta/c9313150-c401-4118-a805-0b882f8e2566",
+intermw_1     |       "msg:SenderPlatformId" : {
+intermw_1     |         "@id" : "http://rpi-sensinact-1"
+intermw_1     |       },
+intermw_1     |       "msg:conversationID" : "conv9fb71ffa-52c2-4889-9a30-c78604321d5f",
+intermw_1     |       "msg:dateTimeStamp" : "2020-01-23T10:06:55.067Z",
+intermw_1     |       "msg:messageID" : "msgcf5d66d5-fe56-486a-b3b5-108ccc96e615",
+intermw_1     |       "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
+intermw_1     |         "@id" : "msg:Response"
+intermw_1     |       }, {
+intermw_1     |         "@id" : "msg:Observation"
+intermw_1     |       }, {
+intermw_1     |         "@id" : "msg:meta"
+intermw_1     |       } ]
+intermw_1     |     } ],
+intermw_1     |     "@id" : "msg:metadata"
+intermw_1     |   }, {
+intermw_1     |     "@graph" : [ {
+intermw_1     |       "@id" : "_:b0",
+intermw_1     |       "http://sensinact.com#dateTimestamp" : "2020-01-23T10:06:54.818Z",
+intermw_1     |       "http://sensinact.com#description" : "check if the patient is currently laying on bed whatever current time is (day and night)",
+intermw_1     |       "http://sensinact.com#modifiable" : "MODIFIABLE",
+intermw_1     |       "http://sensinact.com#name" : "state",
+intermw_1     |       "http://sensinact.com#nickname" : "state",
+intermw_1     |       "http://sensinact.com#provider" : "aha-night-rising-monitor-bedroom-WOQ",
+intermw_1     |       "http://sensinact.com#service" : "monitor",
+intermw_1     |       "http://sensinact.com#timestamp" : "1579774014818",
+intermw_1     |       "http://sensinact.com#type" : "NIGHT_RISING",
+intermw_1     |       "http://sensinact.com#value" : "false",
+intermw_1     |       "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
+intermw_1     |         "@id" : "http://sensinact.com#Resource"
+intermw_1     |       }, {
+intermw_1     |         "@id" : "http://sensinact.com#BedOccupancyResource"
+intermw_1     |       } ]
+intermw_1     |     }, {
+intermw_1     |       "@id" : "http://sensinact.com#BedOccupancyResource",
+intermw_1     |       "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
+intermw_1     |         "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
+
+       3.6.2 Message received by intermw after upstream alignment
+> curl -X POST "http://localhost:8083/api/mw2mw/responses" -H  "accept: application/ld+json" -H  "Client-ID: client" | grep "iiot:hasResultValue" 
+
+ % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0      "iiot:hasResultValue" : "true",
+
+       4 Test complete data flow
+       4.1 Create push client
+          web-browser> http://localhost:8083/swagger/#/Clients/registerClient
+          web-browser> Try it out
+          web-browser> Client-ID= client
+          web-browser> body=
+    {
+      "clientId": "push",
+      "callbackUrl": "http://<universAAL.receiver.url>/receiver",
+      "receivingCapacity": 10,
+      "responseFormat": "JSON_LD",
+      "responseDelivery": "SERVER_PUSH"
+      
+    }
+          web-browser> Execute
+
+          check result:
+> curl -X GET "http://localhost:8083/api/mw2mw/clients" -H  "accept: application/json" -H  "Client-ID: client"
+
+          web-browser> Server reponse code= 201
+          web-browser> http://localhost:8083/swagger/#/Clients/listClients
+          web-browser> Client-ID= client
+          web-browser> Execute
+          check result:
+          web-browser> Server reponse code= 200
+          web-browser> Server reponse Details=
+[
+  {
+    "clientId": "client",
+    "callbackUrl": null,
+    "receivingCapacity": 10,
+    "responseFormat": "JSON_LD",
+    "responseDelivery": "CLIENT_PULL"
+  },
+  {
+    "clientId": "push",
+    "callbackUrl": "http://<universAAL.receiver.url>/receiver",
+    "receivingCapacity": 10,
+    "responseFormat": "JSON_LD",
+    "responseDelivery": "SERVER_PUSH"
   }
+]
+
+       4.2 Subscribe device 
+          web-browser> http://localhost:8083/swagger/#/Subscriptions/subscribe
+          web-browser> Try it out
+          web-browser> Client-ID= push
+          web-browser> body=
+{
+  "deviceIds": [
+    "http://sensinact.ddns.net/aha-night-rising-monitor-bedroom-WOQ/monitor/state"
+  ]
 }
+          web-browser> Response Code= 202
+
+       4.2 Run AIOTES receiver
+       4.2.1 install aiotes receiver
+> cd ~/dev/aiotes/bridges
+> git clone https://git.activageproject.eu/Example_Code/Forward_Client
+> cd Forward_Client/receiver
+
+       4.2.2 Configure aiotes receiver
+> nano config.prop
+{
+    "Mapping":
+        [
+            {
+            "SourceDeviceId":	  "http://sensinact.ddns.net/aha-night-rising-monitor-bedroom-WOQ/monitor/state",  
+            "TargetDeviceId":	  "htpp://sNa.de/demo/BedSensor", 
+            "DeviceType":	  "http://purl.org/iot/vocab/m3-lite/PressureSensor",
+            "SenderPlatformId":	  "http://rpi-sensinact-1",
+            "ReceiverPlatformId": "http://local-universaal-1",
+            }
+        ],
+    "serverURI": "http://localhost:8083/api/mw2mw/requests",
+    "clientId":	"push"
+}
+
+       4.2.3 Run aiotes receiver
+> mvn -Pexecute clean install
+...
+--- exec-maven-plugin:1.6.0:java (RUN-receiver) @ receiver ---
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::        (v2.2.2.RELEASE)
+
+2020-01-23 12:28:40.792  INFO 24783 --- [lication.main()] uAAL.SIL.client.Application              : Starting Application on ptl01-Lenovo-Flex-2-15 with PID 24783 (/home/ptl01/dev/aiotes/bridges/Forward_Client/receiver/target/classes started by ptl01 in /home/ptl01/dev/aiotes/bridges/Forward_Client/receiver)
+2020-01-23 12:28:40.799  INFO 24783 --- [lication.main()] uAAL.SIL.client.Application              : No active profile set, falling back to default profiles: default
+2020-01-23 12:28:42.166  INFO 24783 --- [lication.main()] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 1122 (http)
+2020-01-23 12:28:42.201  INFO 24783 --- [lication.main()] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2020-01-23 12:28:42.202  INFO 24783 --- [lication.main()] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.29]
+2020-01-23 12:28:42.319  INFO 24783 --- [lication.main()] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2020-01-23 12:28:42.320  INFO 24783 --- [lication.main()] o.s.web.context.ContextLoader            : Root WebApplicationContext: initialization completed in 1418 ms
+2020-01-23 12:28:42.566  INFO 24783 --- [lication.main()] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
+2020-01-23 12:28:42.846  INFO 24783 --- [lication.main()] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 1122 (http) with context path ''
+2020-01-23 12:28:42.849  INFO 24783 --- [lication.main()] uAAL.SIL.client.Application              : Started Application in 3.199 seconds (JVM running for 12.954)
+
+
+        5 Test bed sensor data flow sensiNact -> AIOTES -> universAAL
+        5.1 stimulate the bed sensor 
+        5.2 check in universAAL API that htpp://sNa.de/demo/BedSensor is updated
