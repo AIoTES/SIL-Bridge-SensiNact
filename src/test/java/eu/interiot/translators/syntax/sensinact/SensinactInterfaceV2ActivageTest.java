@@ -99,7 +99,7 @@ public class SensinactInterfaceV2ActivageTest {
     public void deviceCreation() {
         System.out.println("\nTesting create device...");
         doCreateProvider("temporaryProvider");
-        Boolean devicePresent = sensinact.listDevices().stream().filter(
+        Boolean devicePresent = sensinact.listResources().stream().filter(
             sNAResource -> sNAResource.getProvider().equals("temporaryProvider")
         ).toArray().length > 0;
         System.out.println(devicePresent?"device present":"device absent");
@@ -110,11 +110,11 @@ public class SensinactInterfaceV2ActivageTest {
     public void serviceCreation() {
         System.out.println("\nTesting create service...");
         doCreateService("temporaryProvider", "temporaryService");
-        Boolean devicePresent = sensinact.listDevices().stream().filter(
+        Boolean devicePresent = sensinact.listResources().stream().filter(
             sNAResource -> sNAResource.getProvider().equals("temporaryProvider")
         ).toArray().length > 0;
         System.out.println(devicePresent?"device present":"device absent");
-        Boolean servicePresent = sensinact.listDevices().stream().filter(
+        Boolean servicePresent = sensinact.listResources().stream().filter(
             sNAResource -> sNAResource.getService().equals("temporaryService")
         ).toArray().length > 0;
         System.out.println(servicePresent?"service present":"service absent");
@@ -125,15 +125,15 @@ public class SensinactInterfaceV2ActivageTest {
     public void resourceCreation() {
         System.out.println("\nTesting create resource...");
         doCreateResource("temporaryProvider", "temporaryService", "temporaryResource", "temporaryType", "OK");
-        Boolean devicePresent = sensinact.listDevices().stream().filter(
+        Boolean devicePresent = sensinact.listResources().stream().filter(
             sNAResource -> sNAResource.getProvider().equals("temporaryProvider")
         ).toArray().length > 0;
         System.out.println(devicePresent?"device present":"device absent");
-        Boolean servicePresent = sensinact.listDevices().stream().filter(
+        Boolean servicePresent = sensinact.listResources().stream().filter(
             sNAResource -> sNAResource.getService().equals("temporaryService")
         ).toArray().length > 0;
         System.out.println(servicePresent?"service present":"service absent");
-        Boolean resourcePresent = sensinact.listDevices().stream().filter(
+        Boolean resourcePresent = sensinact.listResources().stream().filter(
             sNAResource -> sNAResource.getResource().equals("temporaryResource")
         ).toArray().length > 0;
         System.out.println(resourcePresent?"resource present":"resource absent");
@@ -150,7 +150,7 @@ public class SensinactInterfaceV2ActivageTest {
 
     private void doCreateResource(final String provider, final String service, final String resource, final String type, final String value) {
         try {
-            sensinact.createDevice(provider, service, resource, type, value);
+            sensinact.updateResource(provider, service, resource, type, value);
             System.out.println(
                     String.format(
                             "... created %s/%s/%s resource",
@@ -158,7 +158,7 @@ public class SensinactInterfaceV2ActivageTest {
                     )
             );
             Thread.sleep(1000);
-            List<SNAResource> listDevices = sensinact.listDevices();
+            List<SNAResource> listDevices = sensinact.listResources();
             for (SNAResource snaResource : listDevices) {
                 if (snaResource.getProvider().equals("temporaryProvider")) {
                     System.out.println(
@@ -180,8 +180,8 @@ public class SensinactInterfaceV2ActivageTest {
         System.out.println("\nTesting remove resource...");
         try {
             doCreateResource("temporaryProvider", "temporaryService", "temporaryResource", "temporaryType", "OK");
-            sensinact.removeDevice("temporaryProvider", "temporaryService", "temporaryResource");
-            //sensinact.removeDevice("temporaryProvider","temporaryService","temporaryResource");
+            sensinact.removeResource("temporaryProvider", "temporaryService", "temporaryResource");
+            //sensinact.removeResource("temporaryProvider","temporaryService","temporaryResource");
             System.out.println(
                     String.format(
                             "... removed temporaryProvider/temporaryService/temporaryResource resource"
@@ -189,15 +189,15 @@ public class SensinactInterfaceV2ActivageTest {
             );
             Thread.sleep(1000);
            
-            Boolean devicePresent = sensinact.listDevices().stream().filter(
+            Boolean devicePresent = sensinact.listResources().stream().filter(
                 sNAResource -> sNAResource.getProvider().equals("temporaryProvider")
             ).toArray().length > 0;
             System.out.println(devicePresent?"device present":"device absent");
-            Boolean servicePresent = sensinact.listDevices().stream().filter(
+            Boolean servicePresent = sensinact.listResources().stream().filter(
                 sNAResource -> sNAResource.getService().equals("temporaryService")
             ).toArray().length > 0;
             System.out.println(servicePresent?"service present":"service absent");
-            Boolean resourcePresent = sensinact.listDevices().stream().filter(
+            Boolean resourcePresent = sensinact.listResources().stream().filter(
                 sNAResource -> sNAResource.getResource().equals("temporaryResource")
             ).toArray().length > 0;
             System.out.println(resourcePresent?"resource present":"resource absent");
@@ -213,14 +213,14 @@ public class SensinactInterfaceV2ActivageTest {
         System.out.println("\nTesting remove device...");
         try {
             doCreateProvider("temporaryProvider");
-            sensinact.removeDevice("temporaryProvider", null, null);
+            sensinact.removeResource("temporaryProvider", null, null);
             System.out.println(
                     String.format(
                             "... removed temporaryProvider device"
                     )
             );
             Thread.sleep(1000);
-            Boolean devicePresent = sensinact.listDevices().stream().filter(sNAResource -> sNAResource.getProvider().equals("temporaryProvider")).toArray().length > 0;
+            Boolean devicePresent = sensinact.listResources().stream().filter(sNAResource -> sNAResource.getProvider().equals("temporaryProvider")).toArray().length > 0;
             System.out.println(devicePresent?"device present":"device absent");
             Assert.assertTrue("failed to remove provider", !devicePresent);
         } catch (Exception ex) {
@@ -232,7 +232,7 @@ public class SensinactInterfaceV2ActivageTest {
     @Test
     public void listDevice() {
         System.out.println("\nTesting list devices...");
-        List<SNAResource> listDevices = sensinact.listDevices();
+        List<SNAResource> listDevices = sensinact.listResources();
         for (SNAResource snaResource : listDevices) {
             System.out.println(
                 String.format(
@@ -241,7 +241,7 @@ public class SensinactInterfaceV2ActivageTest {
                 )
             );
         }
-        final int size = sensinact.listDevices().size();
+        final int size = sensinact.listResources().size();
         System.out.println(
                 String.format(
                         "found %s devices",

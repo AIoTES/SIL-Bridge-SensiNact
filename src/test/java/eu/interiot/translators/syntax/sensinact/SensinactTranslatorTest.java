@@ -18,35 +18,22 @@
  */
 package eu.interiot.translators.syntax.sensinact;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 import eu.interiot.intermw.bridge.sensinact.SensiNactBridge;
 import eu.interiot.intermw.bridge.sensinact.fetcher.SensinactModelRecoverListener;
 import eu.interiot.intermw.bridge.sensinact.http.SensinactFactory;
 import eu.interiot.intermw.bridge.sensinact.http.model.SensinactConfig;
 import eu.interiot.intermw.bridge.sensinact.ontology.SNAOntologyAggregator;
+import eu.interiot.intermw.bridge.sensinact.wrapper.SNAResource;
 import eu.interiot.intermw.bridge.sensinact.wrapper.SensinactAPI;
 import eu.interiot.intermw.bridge.sensinact.wrapper.SubscriptionResponse;
-import eu.interiot.message.ID.EntityID;
 import eu.interiot.message.Message;
-import eu.interiot.message.MessageMetadata;
-import eu.interiot.message.MessagePayload;
-import eu.interiot.message.managers.URI.URIManagerMessageMetadata;
-import eu.interiot.message.metadata.PlatformMessageMetadata;
-import static eu.interiot.translators.syntax.sensinact.SensinactTranslator.snA;
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.apache.jena.rdf.model.Model;
-import org.apache.jena.rdf.model.ModelFactory;
 import org.apache.jena.riot.Lang;
-import org.apache.jena.riot.RDFDataMgr;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Assert;
@@ -127,7 +114,7 @@ public class SensinactTranslatorTest {
             sensinact.connect();
             System.out.println("connected");
 
-            final int size = sensinact.listDevices().size();
+            final int size = sensinact.listResources().size();
             System.out.println(
                 String.format(
                     "found %s devices",
@@ -160,14 +147,6 @@ public class SensinactTranslatorTest {
         }
     }
 
-    private Model createModel(final String observation) {
-        // convert observation from N3 format into a MessagePayload object
-        Model m = ModelFactory.createDefaultModel();
-        InputStream inStream = new ByteArrayInputStream(observation.getBytes());
-        RDFDataMgr.read(m, inStream, Lang.N3);
-        return m;
-    }
-    
     private class TestSensinactModelRecoverListener implements SensinactModelRecoverListener {
 
         private final AtomicInteger counter;
@@ -207,6 +186,8 @@ public class SensinactTranslatorTest {
                 final Model model = aggregator.createModel(provider, service, resource, type, value, timestamp, metadata);
                 Message observationMessage = SensiNactBridge.createObservationMessage(model);
                 System.out.println(SensiNactBridge.toString(observationMessage));
+                List<SNAResource> resourceList = aggregator.getResourceList();
+                System.out.println("found resources: " + resourceList);
             } catch (Exception ex) {
                 System.out.println(" -failed: " + ex.getMessage());
             }

@@ -128,17 +128,17 @@ public class SensinactCommunicationBridgeV1 implements SensinactAPI {
     }
 
     @Override
-    public void createDevice(String provider, String service, String resource, String type, String value) throws Exception {
+    public void updateResource(String provider, String service, String resource, String type, String value) throws Exception {
         throw new Exception("Create device method is not supported for sensinact V1");
     }
 
     @Override
-    public void removeDevice(String provider, String service, String resource) throws Exception {
+    public void removeResource(String provider, String service, String resource) throws Exception {
         throw new Exception("Remove device method is not supported for sensinact V1");
     }
 
     @Override
-    public List<SNAResource> listDevices() {
+    public List<SNAResource> listResources() {
         String functionType;
         List<SNAResource> providerResourceList = new ArrayList<>();
         List<SNAResource> deviceList = new ArrayList<>();
@@ -242,7 +242,7 @@ public class SensinactCommunicationBridgeV1 implements SensinactAPI {
         @Override
         public void run() {
             final long timestamp = System.currentTimeMillis();
-            for (SNAResource resource : SensinactCommunicationBridgeV1.this.listDevices()) {
+            for (SNAResource resource : SensinactCommunicationBridgeV1.this.listResources()) {
                 if (SensinactCommunicationBridgeV1.this.listener != null) {
                     SensinactCommunicationBridgeV1.this.listener.notify(
                             resource.getProvider(), 

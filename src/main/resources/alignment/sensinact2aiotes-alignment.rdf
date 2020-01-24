@@ -25,7 +25,7 @@
       
     <align:Alignment>
         <dcelem:title>SensiNact2AIoTES</dcelem:title>
-        <exmo:version>0.7.2</exmo:version>
+        <exmo:version>0.7.5</exmo:version>
         <dcelem:creator>CEA Stephane Bergeon</dcelem:creator>
         <dcelem:description>Upstream alignment between sensiNact AHA ontology and ACTIVAGE ontology.</dcelem:description>
         <dcelem:date>23 January 2020</dcelem:date>

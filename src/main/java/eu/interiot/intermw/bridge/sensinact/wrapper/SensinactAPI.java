@@ -43,11 +43,11 @@ public interface SensinactAPI {
 
     UnsubscriptionResponse unsubscribe(String userId, String provider, String service, String resource, String callback) throws Exception;
 
-    void createDevice(String provider, String service, String resource, String type, String value) throws Exception;
+    void updateResource(String provider, String service, String resource, String type, String value) throws Exception;
 
-    void removeDevice(String provider, String service, String resource) throws Exception;
+    void removeResource(String provider, String service, String resource) throws Exception;
 
-    List<SNAResource> listDevices();
+    List<SNAResource> listResources();
 
     void act(String provider, String service, String resource) throws Exception;
 

@@ -30,16 +30,19 @@ import java.time.DateTimeException;
 import java.time.Instant;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Properties;
 import java.util.TimeZone;
 import org.apache.jena.riot.Lang;
 import org.apache.jena.riot.RDFDataMgr;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * This classes loads Sensinact Ontology and create individuals on that ontology
@@ -47,10 +50,13 @@ import org.apache.jena.riot.RDFDataMgr;
  */
 public class SNAOntologyAggregator {
 
-    private static final DateTimeFormatter DATE_TIMESTAMP_FORMATTER = 
-        DateTimeFormatter.ISO_OFFSET_DATE_TIME;
+    private static final Logger LOG = LoggerFactory.getLogger(SNAOntologyAggregator.class);
     
+    private static final DateTimeFormatter DATE_TIMESTAMP_FORMATTER
+            = DateTimeFormatter.ISO_OFFSET_DATE_TIME;
+
     private static final OntModel EMPTY_MODEL = ModelFactory.createOntologyModel();
+
     public enum JenaWriterType {
         rdf("RDF/XML"),
         n3("N3"),
@@ -68,12 +74,13 @@ public class SNAOntologyAggregator {
     private static final String SNA_ONTOLOGY_PREFIX = "http://sensinact.com#";
     private static final String SNA_ONTOLOGY_FILE_PATH = "/ontology/SNAOntology.owl";
     private static final String SNA_ONTOLOGY_FILE_PATH_PATTERN = "/ontology/%s/SNAOntology.owl";
-    private static Map<String, String> SNA2AIOTES_KPI = new HashMap<>();
+    private static final Properties SNA2AIOTES_KPI = new Properties();
     static {
-        SNA2AIOTES_KPI.put("device-counter", "KPI_DEVICES");
-        SNA2AIOTES_KPI.put("function-counter", "KPI_APPLI_IN");
-        SNA2AIOTES_KPI.put("gateway-counter", "KPI_BENEFICIARIES");
-        SNA2AIOTES_KPI.put("raw-database-size", "KPI_USAGE_5");
+        try {
+            SNA2AIOTES_KPI.load(SNAOntologyAggregator.class.getResourceAsStream("sna2aiotes-kpi.properties"));
+        } catch (IOException ex) {
+            LOG.error("failed to load sensiNact to AIOTES mapping sna2aiotes-kpi.properties");
+        }
     };
 
     public SNAOntologyAggregator(Model rdfmodel) {
@@ -123,10 +130,11 @@ public class SNAOntologyAggregator {
 //            RDFDataMgr..read(isolatedModel, is, Lang.RDFXML);
 //        }
         updateOntologyWith(provider, service, resource, type, value, timestamp, isolatedModel);
+        this.model = isolatedModel;
         final Model minimalModel = isolatedModel.difference(EMPTY_MODEL);
         return minimalModel;
     }
-    
+
     public Model transformOntology(String provider, String service, String resource, String type, String value, String timestamp, Map<String, String> metadata) {
         final OntModel isolatedModel = ModelFactory.createOntologyModel();
         String ontologyFilePath;
@@ -140,10 +148,11 @@ public class SNAOntologyAggregator {
 //            RDFDataMgr.read(isolatedModel, is, Lang.RDFXML);
 //        }
         updateOntologyWith(provider, service, resource, type, value, timestamp, metadata, isolatedModel);
+        this.model = isolatedModel;
         final Model minimalModel = isolatedModel.difference(EMPTY_MODEL);
         return minimalModel;
     }
-    
+
     public Model createModel(String provider, String service, String resource, String type, String value, String timestamp) {
         final Model isolatedModel = transformOntology(provider, service, resource, type, value, timestamp);
         return isolatedModel;
@@ -165,10 +174,10 @@ public class SNAOntologyAggregator {
     public void updateOntologyWith(SNAResource snaResource) {
         final long timestamp = System.currentTimeMillis();
         updateOntologyWith(
-                snaResource.getProvider(), 
-                snaResource.getService(), 
-                snaResource.getResource(), 
-                snaResource.getType(), 
+                snaResource.getProvider(),
+                snaResource.getService(),
+                snaResource.getResource(),
+                snaResource.getType(),
                 snaResource.getValue(),
                 String.valueOf(timestamp),
                 snaResource.getMetadata()
@@ -188,7 +197,7 @@ public class SNAOntologyAggregator {
      */
     public void updateOntologyWith(String provider, String service, String resource, String type, String value, String timestamp, OntModel model) {
         updateOntologyWith(
-                provider, service, resource, type, value, timestamp, 
+                provider, service, resource, type, value, timestamp,
                 Collections.EMPTY_MAP, model);
     }
 
@@ -205,8 +214,8 @@ public class SNAOntologyAggregator {
      */
     public void updateOntologyWith(String provider, String service, String resource, String type, String value, String timestamp, Map<String, String> metadata, OntModel model) {
 
-        final SNAAHAOntologyType snaOntologyType = 
-            SNAAHAOntologyType.getSNAAHAOntologyType(type, service, resource);
+        final SNAAHAOntologyType snaOntologyType
+                = SNAAHAOntologyType.getSNAAHAOntologyType(type, service, resource);
         final String ontologyClassName = snaOntologyType.getOntologyClassName();
         OntClass ontologyClass = getOntologyClass(ontologyClassName);
         Individual individualResource = model.createIndividual(ontologyClass);
@@ -242,11 +251,11 @@ public class SNAOntologyAggregator {
         ZonedDateTime dateTime = null;
         try {
             final long timestamp = Long.parseLong(timestamp$);
-            dateTime =
-                ZonedDateTime.ofInstant(
-                    Instant.ofEpochMilli(timestamp), 
-                    TimeZone.getDefault().toZoneId()
-                );
+            dateTime
+                    = ZonedDateTime.ofInstant(
+                            Instant.ofEpochMilli(timestamp),
+                            TimeZone.getDefault().toZoneId()
+                    );
             date = dateTime.format(DATE_TIMESTAMP_FORMATTER);
         } catch (NumberFormatException e) {
             //nothing to do
@@ -258,11 +267,25 @@ public class SNAOntologyAggregator {
         }
         return date;
     }
+
+    private static long toTimeStamp(String dateTime$) {
+        long timeStamp = System.currentTimeMillis();
+        try {
+         ZonedDateTime dateTime = ZonedDateTime.parse(dateTime$);
+         timeStamp = dateTime.toEpochSecond();
+        } catch (DateTimeParseException e) {
+            
+        } 
+        return timeStamp;
+    }
+
     private static interface ValueComputer {
+
         String computeValue(String value);
     }
 
     private static interface NameMapper {
+
         String mapName(String name);
     }
 
@@ -271,7 +294,7 @@ public class SNAOntologyAggregator {
         KPI("KPIResource") {
             @Override
             public String mapName(final String snaKpiName) {
-                String aiotesKpiName = SNA2AIOTES_KPI.get(snaKpiName);
+                String aiotesKpiName = SNA2AIOTES_KPI.getProperty(snaKpiName, snaKpiName);
                 if (aiotesKpiName == null) {
                     aiotesKpiName = snaKpiName;
                 }
@@ -284,7 +307,7 @@ public class SNAOntologyAggregator {
                 boolean isOutOfBed = Boolean.valueOf(value);
                 boolean isInBed = !isOutOfBed;
                 return String.valueOf(isInBed);
-            }            
+            }
         },
         PEDOMETER_MONITOR("last-day-step-counter", "StepNumberResource"),
         TEMPERATURE_ALERT("last-temperature", "TemperatureMonitorResource"),
@@ -298,13 +321,13 @@ public class SNAOntologyAggregator {
         private final String ontologyClassName;
         private final String service;
         private final String resource;
-        
+
         SNAAHAOntologyType() {
             this.ontologyClassName = DEFAULT_ONTOLOGY_CLASS_NAME;
             this.service = DEFAULT_SERVICE;
             this.resource = DEFAULT_RESOURCE;
         }
-        
+
         SNAAHAOntologyType(final String ontologyClassName) {
             this.ontologyClassName = ontologyClassName;
             this.service = DEFAULT_SERVICE;
@@ -320,7 +343,7 @@ public class SNAOntologyAggregator {
         private String getOntologyClassName() {
             return ontologyClassName;
         }
-        
+
         private boolean isForService(final String service) {
             boolean isForService = this.service.equals(service);
             return isForService;
@@ -335,7 +358,7 @@ public class SNAOntologyAggregator {
         public String computeValue(String value) {
             return value;
         }
-        
+
         @Override
         public String mapName(String name) {
             return name;
@@ -369,7 +392,8 @@ public class SNAOntologyAggregator {
         try {
             return new String(bos.toByteArray(), "utf-8");
         } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
+            LOG.error("unsupported encoding {}", e.getMessage());
+            LOG.debug("unsupported encoding", e);
             return null;
         }
     }
@@ -382,25 +406,46 @@ public class SNAOntologyAggregator {
     }
 
     public List<SNAResource> getResourceList() {
+        return getResourceList(model);
+    }
+
+    public List<SNAResource> getResourceList(final OntModel model) {
 
         final List<SNAResource> resources = new ArrayList<>();
 
-        Property nameProperty = getObjectProperty("name");
-        Property managesProperty = getObjectProperty("manages");
-        DatatypeProperty valueDataProperty = getDataProperty("value");
+        final Property providerDataProperty = getObjectProperty("provider");
+        final Property serviceDataProperty = getObjectProperty("service");
+        final Property nameDataProperty = getObjectProperty("name");
+        final Property typeDataProperty = getObjectProperty("type");
+        final Property timestampDataProperty = getObjectProperty("timestamp");
+        final Property dateTimeDataProperty = getObjectProperty("dateTimestamp");
+        final Property valueDataProperty = getObjectProperty("value");
 
-        for (Iterator<Individual> it = getOntModel().listIndividuals(); it.hasNext();) {
-
-            Individual indi = it.next();
-            if (indi.getOntClass().equals(getOntologyClass("Provider"))) {
-
-                final String providerName = indi.getProperty(nameProperty).getString();
-                Statement service = indi.getProperty(managesProperty);
-                final String serviceName = service.getProperty(nameProperty).getString();
-                Statement resourceStatement = service.getProperty(managesProperty);
-                final String resourceName = resourceStatement.getProperty(nameProperty).getString();
-                final String resouceValue = resourceStatement.getProperty(valueDataProperty).getString();
-                resources.add(new SNAResource(providerName, serviceName, resourceName, resouceValue));
+        for (Iterator<Individual> it = model.listIndividuals(); it.hasNext();) {
+            Individual resource = it.next();
+            try {
+                final String providerName = resource.getProperty(providerDataProperty).getString();
+                final String serviceName = resource.getProperty(serviceDataProperty).getString();
+                final String resourceName = resource.getProperty(nameDataProperty).getString();
+                final String resourceType = resource.getProperty(typeDataProperty).getString();
+                final String resouceValue = resource.getProperty(valueDataProperty).getString();
+                final Statement timeStampStatement = resource.getProperty(timestampDataProperty);
+                final SNAResource snaResource = new SNAResource(providerName, serviceName, resourceName, resourceType, resouceValue);
+                if (timeStampStatement != null) {
+                    final String timeStampValue = timeStampStatement.getString();
+                    snaResource.putMetadata("timestamp", timeStampValue);
+                } else {
+                    final Statement dateTimeStatement = resource.getProperty(dateTimeDataProperty);
+                    if (dateTimeStatement != null) {
+                        final String dateTimeValue = dateTimeStatement.getString();
+                        final String timeStampValue = String.valueOf(toTimeStamp(dateTimeValue));
+                        snaResource.putMetadata("timestamp", timeStampValue);
+                    }
+                }
+                LOG.info("found update for resource {}", snaResource);
+                resources.add(snaResource);
+            } catch (Exception e) {
+                LOG.error("not a complete resource description for individual {}: {}", resource, e.getMessage());
             }
         }
         return resources;

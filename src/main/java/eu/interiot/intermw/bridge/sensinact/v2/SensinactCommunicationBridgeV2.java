@@ -147,7 +147,7 @@ public class SensinactCommunicationBridgeV2 implements SensinactAPI {
     }
 
     @Override
-    public void createDevice(String provider, String service, String resource, String type, String value) throws Exception {
+    public void updateResource(String provider, String service, String resource, String type, String value) throws Exception {
         Session session = deviceCreationEndPoint.getSession().get();
         try {
             final String payload = ProviderJSONPayload.builder().provider(provider).service(service).resource(resource).type(type).value(value).build().toString();
@@ -160,7 +160,7 @@ public class SensinactCommunicationBridgeV2 implements SensinactAPI {
     }
 
     @Override
-    public void removeDevice(String provider, String service, String resource) throws Exception {
+    public void removeResource(String provider, String service, String resource) throws Exception {
         Session session = deviceCreationEndPoint.getSession().get();
         try {
             final String payload = ProviderJSONPayload.builder().provider(provider).service(service).resource(resource).type(ProviderJSONPayload.TYPE.Goodbye).build().toString();
@@ -173,18 +173,18 @@ public class SensinactCommunicationBridgeV2 implements SensinactAPI {
     }
 
     @Override
-    public List<SNAResource> listDevices() {
+    public List<SNAResource> listResources() {
         String functionType;
         List<SNAResource> snaResourceList = new ArrayList<>();
         List<SNAResource> providerResourceList = new ArrayList<>();
         try {
-            LOG.debug("Starting executing.." + Thread.currentThread().getName());
+            LOG.debug("listing resources..." + Thread.currentThread().getName());
 
             HTTP httpcall = new HTTP();
             httpcall.setMethod("GET");
             try {
-
-                String result = httpcall.submit(String.format(GET_ALL_PROVIDERS_DETAILS_REQUEST_PATTERN, config.getHost(), config.getHttpPort()));
+                String result = httpcall.submit(
+                        String.format(GET_ALL_PROVIDERS_DETAILS_REQUEST_PATTERN, config.getHost(), config.getHttpPort()));
                 JsonObject jsonPathPayload = (JsonObject) new JsonParser().parse(result);
 
                 JsonArray jsProvider = jsonPathPayload.getAsJsonArray("providers");
@@ -209,7 +209,8 @@ public class SensinactCommunicationBridgeV2 implements SensinactAPI {
                             String resourceName = obResource.get("name").getAsString();
                             if (serviceName.equals(AHA_SERVICE_NAME) 
                             && resourceName.equals(FUNCTION_TYPE_RESOURCE_NAME)) {
-                                String resourceValue = getResourceValue(providerName, serviceName, resourceName, SNAResource.DEFAULT_TYPE);
+                                String resourceValue = 
+                                        getResourceValue(providerName, serviceName, resourceName, SNAResource.DEFAULT_TYPE);
                                 functionType = resourceValue;
                             }
                             providerResourceList.add(new SNAResource(providerName, serviceName, resourceName, functionType));
@@ -372,7 +373,7 @@ public class SensinactCommunicationBridgeV2 implements SensinactAPI {
                         LOG.error("failed to notify with {} at {}: unexpected null listener", snaResource, timestamp);
                     }
                 } catch (Throwable e) {
-                    LOG.error("Failed to deliver message", e);
+                    LOG.error("Failed to deliver message: {}", e.getMessage());
                 }
             }
         });

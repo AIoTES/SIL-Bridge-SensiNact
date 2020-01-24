@@ -91,7 +91,7 @@ public class SensinactOntologyTest {
         System.out.println("connected");
 
         System.out.println("\n listing devices... ");
-        List<SNAResource> listDevices = sensinact.listDevices();
+        List<SNAResource> listDevices = sensinact.listResources();
         for (SNAResource snaResource : listDevices) {
             System.out.println(
                     String.format(
@@ -100,7 +100,7 @@ public class SensinactOntologyTest {
                     )
             );
         }
-        final int size = sensinact.listDevices().size();
+        final int size = sensinact.listResources().size();
         System.out.println(
                 String.format(
                         "found %s devices",

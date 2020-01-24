@@ -69,22 +69,22 @@ public class SensinactInterfaceV1Test {
 
     @Test(expected = Exception.class)
     public void createDevice() throws Exception {
-        sensinact.createDevice("","","","","");
+        sensinact.updateResource("","","","","");
     }
 
     @Test(expected = Exception.class,timeout = 20000)
     public void removeDevice() throws Exception {
-        sensinact.removeDevice("","","");
+        sensinact.removeResource("","","");
     }
 
     @Test(timeout = 20000)
     public void listDevice(){
 
-        sensinact.listDevices().forEach((dev)->{
+        sensinact.listResources().forEach((dev)->{
             System.out.println(String.format("%s/%s/%s found",dev.getProvider(),dev.getService(),dev.getResource()));
         });
 
-        Assert.assertTrue(sensinact.listDevices().size()>0);
+        Assert.assertTrue(sensinact.listResources().size()>0);
     }
 
 }

@@ -25,7 +25,7 @@
       
     <align:Alignment>
         <dcelem:title>AIoTES2SensiNact</dcelem:title>
-        <exmo:version>0.7.2</exmo:version>
+        <exmo:version>0.7.5</exmo:version>
         <dcelem:creator>CEA Stephane Bergeon</dcelem:creator>
         <dcelem:description>Downstream Alignment between ACTIVAGE ontology and sensiNact AHA ontology</dcelem:description>
         <dcelem:date>23 January 2020</dcelem:date>
@@ -259,7 +259,7 @@
                     </sosa:Observation>
                 </align:entity1>
                 <align:entity2 rdf:parseType="Literal">
-                    <sna:BedOccupancyResource>
+                    <sna:Resource>
                         <sna:name>state</sna:name>
                         <sna:provider>
                             <sripas:provider/>
@@ -272,7 +272,8 @@
                         <sna:value>
                             <sripas:value/>
                         </sna:value>
-                    </sna:BedOccupancyResource>
+                        <rdf:type rdf:resource="http://sensinact.com#BedOccupancyResource"/>
+                    </sna:Resource>
                 </align:entity2>
                 <align:relation>=</align:relation>
                 <sripas:typings rdf:parseType="Literal">

@@ -71,11 +71,11 @@ public class SensinactInterfaceV2Test {
 
     @Test
     public void deviceCreation() throws Exception {
-        sensinact.createDevice("temporaryProvider", "temporaryService", "temporaryResource", "temporaryType", "OK");
+        sensinact.updateResource("temporaryProvider", "temporaryService", "temporaryResource", "temporaryType", "OK");
         Thread.sleep(1000);
-        Boolean devicePresent = sensinact.listDevices().stream().filter(sNAResource -> sNAResource.getProvider().equals("temporaryProvider")).toArray().length > 0;
-        Boolean servicePresent = sensinact.listDevices().stream().filter(sNAResource -> sNAResource.getProvider().equals("temporaryProvider") && sNAResource.getService().equals("temporaryService")).toArray().length > 0;
-        Boolean resourceNotPresent = sensinact.listDevices().stream().filter(sNAResource -> sNAResource.getProvider().equals("temporaryResource")).toArray().length == 0;
+        Boolean devicePresent = sensinact.listResources().stream().filter(sNAResource -> sNAResource.getProvider().equals("temporaryProvider")).toArray().length > 0;
+        Boolean servicePresent = sensinact.listResources().stream().filter(sNAResource -> sNAResource.getProvider().equals("temporaryProvider") && sNAResource.getService().equals("temporaryService")).toArray().length > 0;
+        Boolean resourceNotPresent = sensinact.listResources().stream().filter(sNAResource -> sNAResource.getProvider().equals("temporaryResource")).toArray().length == 0;
         Assert.assertTrue(devicePresent && servicePresent && resourceNotPresent);
     }
 
@@ -83,11 +83,11 @@ public class SensinactInterfaceV2Test {
     @Ignore
     public void resourceRemoval() throws Exception {
         deviceCreation();
-        sensinact.removeDevice("temporaryProvider", "temporaryService", "temporaryResource");
-        //sensinact.removeDevice("temporaryProvider","temporaryService","temporaryResource");
+        sensinact.removeResource("temporaryProvider", "temporaryService", "temporaryResource");
+        //sensinact.removeResource("temporaryProvider","temporaryService","temporaryResource");
         Thread.sleep(1000);
 
-        Stream<SNAResource> temporaryProviderStream = sensinact.listDevices().stream().filter(sNAResource -> sNAResource.getProvider().equals("temporaryProvider"));
+        Stream<SNAResource> temporaryProviderStream = sensinact.listResources().stream().filter(sNAResource -> sNAResource.getProvider().equals("temporaryProvider"));
 
         Boolean devicePresent = temporaryProviderStream.toArray().length > 0;
         Stream<SNAResource> temporaryServiceStream = temporaryProviderStream.filter(sNAResource -> sNAResource.getService().equals("temporaryService"));
@@ -99,20 +99,20 @@ public class SensinactInterfaceV2Test {
     @Test
     public void providerRemoval() throws Exception {
         deviceCreation();
-        sensinact.removeDevice("temporaryProvider", null, null);
+        sensinact.removeResource("temporaryProvider", null, null);
         Thread.sleep(1000);
-        Boolean deviceNotPresent = sensinact.listDevices().stream().filter(sNAResource -> sNAResource.getProvider().equals("temporaryProvider")).toArray().length == 0;
+        Boolean deviceNotPresent = sensinact.listResources().stream().filter(sNAResource -> sNAResource.getProvider().equals("temporaryProvider")).toArray().length == 0;
         Assert.assertTrue(deviceNotPresent);
     }
 
     @Test
     public void listDevice() {
 
-        sensinact.listDevices().forEach((dev) -> {
+        sensinact.listResources().forEach((dev) -> {
             System.out.println(String.format("%s/%s/%s found", dev.getProvider(), dev.getService(), dev.getResource()));
         });
 
-        Assert.assertTrue(sensinact.listDevices().size() > 0);
+        Assert.assertTrue(sensinact.listResources().size() > 0);
     }
 
 }
