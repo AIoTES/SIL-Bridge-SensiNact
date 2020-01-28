@@ -98,13 +98,13 @@ intermw_1     | 14:24:30.459 [localhost-startStop-1] DEBUG eu.interiot.intermw.b
 > mvn -Pexecute-activage-pi-test clean install
  
         3.0.2 start sNa-server-panel12
-> cd <activage>/gateway/org.eclipse.sensinact.gateway/distribution/sensinact-distribution-template
+> cd <sensiNact>/gateway/org.eclipse.sensinact.gateway/distribution/sensinact-distribution-template
 > mvn -Pserver-panel12 clean install
-> cd <activage>/gateway/org.eclipse.sensinact.gateway/distribution/sensinact-distribution-generator
+> cd <sensiNact>/gateway/org.eclipse.sensinact.gateway/distribution/sensinact-distribution-generator
 > mvn -Pexecute-aha-panel12 clean install
  
-        3.0.3 Check sensiNact operationr:
-> http://localhost:8083/sensinact/providers
+        3.0.3 Check sensiNact operation:
+> curl -X GET --header 'Accept: application/json' 'http://localhost:8083/sensinact/providers'
 
        3.1 Create IPSM alignments
        3.1.1 Downstream alignment AIOTES -> sensiNact ontology
@@ -462,13 +462,13 @@ intermw_1     |         "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
 }
           web-browser> Response Code= 202
 
-       4.2 Run AIOTES receiver
-       4.2.1 install aiotes receiver
+       4.3 Run AIOTES receiver
+       4.3.1 install aiotes receiver
 > cd ~/dev/aiotes/bridges
 > git clone https://git.activageproject.eu/Example_Code/Forward_Client
 > cd Forward_Client/sna-receiver
 
-       4.2.2 Configure aiotes receiver
+       4.3.2 Configure aiotes receiver
 > nano config.prop
 {
     "Mapping":
@@ -488,10 +488,11 @@ intermw_1     |         "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
 > nano src/main/resources/application.properties
 server.port: 8084
 
-       4.2.3 Run aiotes receiver
+       4.3.3 Run aiotes receiver
 > mvn -Pexecute clean install
+
 ...
---- exec-maven-plugin:1.6.0:java (RUN-receiver) @ receiver ---
+--- exec-maven-plugin:1.6.0:java (RUN-receiver) @ sna-receiver ---
 
   .   ____          _            __ _ _
  /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
@@ -501,16 +502,17 @@ server.port: 8084
  =========|_|==============|___/=/_/_/_/
  :: Spring Boot ::        (v2.2.2.RELEASE)
 
-2020-01-23 12:28:40.792  INFO 24783 --- [lication.main()] uAAL.SIL.client.Application              : Starting Application on ptl01-Lenovo-Flex-2-15 with PID 24783 (/home/ptl01/dev/aiotes/bridges/Forward_Client/receiver/target/classes started by ptl01 in /home/ptl01/dev/aiotes/bridges/Forward_Client/receiver)
-2020-01-23 12:28:40.799  INFO 24783 --- [lication.main()] uAAL.SIL.client.Application              : No active profile set, falling back to default profiles: default
-2020-01-23 12:28:42.166  INFO 24783 --- [lication.main()] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 1122 (http)
-2020-01-23 12:28:42.201  INFO 24783 --- [lication.main()] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
-2020-01-23 12:28:42.202  INFO 24783 --- [lication.main()] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.29]
-2020-01-23 12:28:42.319  INFO 24783 --- [lication.main()] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
-2020-01-23 12:28:42.320  INFO 24783 --- [lication.main()] o.s.web.context.ContextLoader            : Root WebApplicationContext: initialization completed in 1418 ms
-2020-01-23 12:28:42.566  INFO 24783 --- [lication.main()] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
-2020-01-23 12:28:42.846  INFO 24783 --- [lication.main()] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 1122 (http) with context path ''
-2020-01-23 12:28:42.849  INFO 24783 --- [lication.main()] uAAL.SIL.client.Application              : Started Application in 3.199 seconds (JVM running for 12.954)
+2020-01-27 16:04:35.490  INFO 6262 --- [lication.main()] sna.sil.client.Application               : Starting Application on ptl01-Lenovo-Flex-2-15 with PID 6262 (/home/ptl01/dev/aiotes/bridges/Forward_Client/sna-receiver/target/classes started by ptl01 in /home/ptl01/dev/aiotes/bridges/Forward_Client/sna-receiver)
+2020-01-27 16:04:35.492  INFO 6262 --- [lication.main()] sna.sil.client.Application               : No active profile set, falling back to default profiles: default
+2020-01-27 16:04:40.269  INFO 6262 --- [lication.main()] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8084 (http)
+2020-01-27 16:04:40.538  INFO 6262 --- [lication.main()] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2020-01-27 16:04:40.538  INFO 6262 --- [lication.main()] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.29]
+2020-01-27 16:04:40.898  INFO 6262 --- [lication.main()] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2020-01-27 16:04:40.899  INFO 6262 --- [lication.main()] o.s.web.context.ContextLoader            : Root WebApplicationContext: initialization completed in 4378 ms
+2020-01-27 16:04:41.287  INFO 6262 --- [lication.main()] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
+2020-01-27 16:04:42.617  INFO 6262 --- [lication.main()] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8084 (http) with context path ''
+2020-01-27 16:04:42.620  INFO 6262 --- [lication.main()] sna.sil.client.Application               : Started Application in 13.137 seconds (JVM running for 48.493)
+
 
 
         5 Test bed sensor data flow sensiNact -> AIOTES -> sensiNact

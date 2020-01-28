@@ -147,10 +147,10 @@ public class SensinactCommunicationBridgeV2 implements SensinactAPI {
     }
 
     @Override
-    public void updateResource(String provider, String service, String resource, String type, String value) throws Exception {
+    public void updateResource(String provider, String service, String resource, String type, String value, Map<String, String> metadata) throws Exception {
         Session session = deviceCreationEndPoint.getSession().get();
         try {
-            final String payload = ProviderJSONPayload.builder().provider(provider).service(service).resource(resource).type(type).value(value).build().toString();
+            final String payload = ProviderJSONPayload.builder().provider(provider).service(service).resource(resource).type(type).value(value).metadata(metadata).build().toString();
             LOG.debug("Sending device creation/update message {} to sensinact", payload);
             session.getRemote().sendString(payload);
         } catch (Exception e) {

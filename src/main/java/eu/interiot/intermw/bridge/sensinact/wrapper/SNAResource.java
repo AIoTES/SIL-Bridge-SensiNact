@@ -27,7 +27,7 @@ public class SNAResource {
     public static final String DEFAULT_VALUE = null;
     public static final String NOT_A_FUNCTION = "not-a-function";
     public static final String DEFAULT_TYPE = NOT_A_FUNCTION;
-    private static final String FORMAT_PATTERN = "SNAResource{provider=%s, service='%s, resource=%s, type=%s, value='%s}";
+    private static final String FORMAT_PATTERN = "SNAResource{provider=%s, service=%s, resource=%s, type=%s, value=%s, %s}";
     private String provider;
     private String service;
     private String resource;
@@ -113,8 +113,12 @@ public class SNAResource {
         this.type = type;
     }
 
+    public void setResource(String resource) {
+        this.resource = resource;
+    }
+
     @Override
     public String toString() {
-        return String.format(FORMAT_PATTERN, provider, service, resource, type, value);
+        return String.format(FORMAT_PATTERN, provider, service, resource, type, value, metadata.isEmpty() ? "" : "metadata=" + metadata);
     }
 }

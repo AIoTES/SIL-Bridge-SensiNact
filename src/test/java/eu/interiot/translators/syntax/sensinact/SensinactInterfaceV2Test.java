@@ -23,6 +23,7 @@ import eu.interiot.intermw.bridge.sensinact.http.SensinactFactory;
 import eu.interiot.intermw.bridge.sensinact.http.model.SensinactConfig;
 import eu.interiot.intermw.bridge.sensinact.wrapper.SNAResource;
 import eu.interiot.intermw.bridge.sensinact.wrapper.SensinactAPI;
+import java.util.HashMap;
 import java.util.Map;
 import org.junit.After;
 import org.junit.Assert;
@@ -71,7 +72,8 @@ public class SensinactInterfaceV2Test {
 
     @Test
     public void deviceCreation() throws Exception {
-        sensinact.updateResource("temporaryProvider", "temporaryService", "temporaryResource", "temporaryType", "OK");
+        Map<String, String> metadata = new HashMap<String, String>();
+        sensinact.updateResource("temporaryProvider", "temporaryService", "temporaryResource", "temporaryType", "OK", metadata);
         Thread.sleep(1000);
         Boolean devicePresent = sensinact.listResources().stream().filter(sNAResource -> sNAResource.getProvider().equals("temporaryProvider")).toArray().length > 0;
         Boolean servicePresent = sensinact.listResources().stream().filter(sNAResource -> sNAResource.getProvider().equals("temporaryProvider") && sNAResource.getService().equals("temporaryService")).toArray().length > 0;

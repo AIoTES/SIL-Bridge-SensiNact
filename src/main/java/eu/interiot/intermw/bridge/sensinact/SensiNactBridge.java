@@ -370,29 +370,21 @@ public class SensiNactBridge extends AbstractBridge {
     private void snaCreateUpdateDevice(SNAResource snaResource) {
 
         try {
-            LOG.info("Creating/Updating Sensinact device {}/{}/{}/{}...", 
-                    snaResource.getProvider(), 
-                    snaResource.getService(), 
-                    snaResource.getResource(), 
-                    snaResource.getValue());
+            LOG.info("Creating/Updating Sensinact device {}...", 
+                    snaResource);
             sensinact.updateResource(
                     snaResource.getProvider(),
                     snaResource.getService(),
                     snaResource.getResource(),
                     snaResource.getType(),
-                    snaResource.getValue()
+                    snaResource.getValue(),
+                    snaResource.getMetadata()
             );
-            LOG.info("Sensinact device {}/{}/{}/{} created/updated", 
-                    snaResource.getProvider(), 
-                    snaResource.getService(), 
-                    snaResource.getResource(), 
-                    snaResource.getValue());
+            LOG.info("Sensinact device {} created/updated", 
+                    snaResource);
         } catch (Exception e) {
-            LOG.error("Failed to create/update Sensinact device {}/{}/{}/{}", 
-                    snaResource.getProvider(), 
-                    snaResource.getService(), 
-                    snaResource.getResource(), 
-                    snaResource.getValue());
+            LOG.error("Failed to create/update Sensinact device {}", 
+                    snaResource);
         }
 
     }

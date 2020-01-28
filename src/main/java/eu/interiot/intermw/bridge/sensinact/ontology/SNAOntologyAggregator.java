@@ -228,7 +228,7 @@ public class SNAOntologyAggregator {
         Property dateTimestampDataProperty = getObjectProperty("dateTimestamp");
         if (value != null) {
             String correctedValue = snaOntologyType.computeValue(value);
-            String correctedName = snaOntologyType.mapName(resource);
+            String correctedName = snaOntologyType.toAIOTESName(resource);
             Property valueProperty = getObjectProperty("value");
             individualResource.addLiteral(providerDataProperty, provider);
             individualResource.addLiteral(serviceDataProperty, service);
@@ -286,20 +286,37 @@ public class SNAOntologyAggregator {
 
     private static interface NameMapper {
 
-        String mapName(String name);
+        String toAIOTESName(String snaName);
+        
+        String toSNAName(String aiotesName);
     }
 
     private static enum SNAAHAOntologyType implements ValueComputer, NameMapper {
         DAY_LAYING("state", "BedOccupancyResource"),
         KPI("KPIResource") {
             @Override
-            public String mapName(final String snaKpiName) {
+            public String toAIOTESName(final String snaKpiName) {
                 String aiotesKpiName = SNA2AIOTES_KPI.getProperty(snaKpiName, snaKpiName);
                 if (aiotesKpiName == null) {
                     aiotesKpiName = snaKpiName;
                 }
                 return aiotesKpiName;
             }
+            
+            @Override
+            public String toSNAName(final String aiotesKpiName) {
+                String snaName = aiotesKpiName;
+                String propertyValue;
+                for (Entry entry : SNA2AIOTES_KPI.entrySet()) {
+                    propertyValue = entry.getValue().toString();
+                    if (propertyValue.equals(aiotesKpiName)) {
+                        snaName = entry.getKey().toString();
+                        break;
+                    }
+                };
+                return snaName;
+            }
+
         },
         NIGHT_RISING("state", "BedOccupancyResource") {
             @Override
@@ -360,8 +377,13 @@ public class SNAOntologyAggregator {
         }
 
         @Override
-        public String mapName(String name) {
-            return name;
+        public String toAIOTESName(String snaName) {
+            return snaName;
+        }
+
+        @Override
+        public String toSNAName(String aiotesName) {
+            return aiotesName;
         }
 
         private static SNAAHAOntologyType getSNAAHAOntologyType(final String ahaType, final String serviceId, final String resourceId) {
@@ -427,6 +449,7 @@ public class SNAOntologyAggregator {
                 final String providerName = resource.getProperty(providerDataProperty).getString();
                 final String serviceName = resource.getProperty(serviceDataProperty).getString();
                 final String resourceName = resource.getProperty(nameDataProperty).getString();
+                
                 final String resourceType = resource.getProperty(typeDataProperty).getString();
                 final String resouceValue = resource.getProperty(valueDataProperty).getString();
                 final Statement timeStampStatement = resource.getProperty(timestampDataProperty);
@@ -442,6 +465,14 @@ public class SNAOntologyAggregator {
                         snaResource.putMetadata("timestamp", timeStampValue);
                     }
                 }
+                if (resourceType.equals("KPI")) {
+                    final String snaKpiName = SNAAHAOntologyType.KPI.toSNAName(resourceName);
+                    snaResource.setResource(snaKpiName);
+                    final Property targetDataProperty = getObjectProperty("target");
+                    final String resourceTarget = resource.getProperty(targetDataProperty).getString();
+                    snaResource.putMetadata("target", resourceTarget);
+                }
+
                 LOG.info("found update for resource {}", snaResource);
                 resources.add(snaResource);
             } catch (Exception e) {

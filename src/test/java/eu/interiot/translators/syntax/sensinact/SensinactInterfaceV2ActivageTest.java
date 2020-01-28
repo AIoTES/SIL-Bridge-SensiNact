@@ -23,6 +23,8 @@ import eu.interiot.intermw.bridge.sensinact.http.SensinactFactory;
 import eu.interiot.intermw.bridge.sensinact.http.model.SensinactConfig;
 import eu.interiot.intermw.bridge.sensinact.wrapper.SNAResource;
 import eu.interiot.intermw.bridge.sensinact.wrapper.SensinactAPI;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import org.junit.After;
@@ -149,8 +151,9 @@ public class SensinactInterfaceV2ActivageTest {
     }
 
     private void doCreateResource(final String provider, final String service, final String resource, final String type, final String value) {
+        Map<String, String> metadata = new HashMap<String, String>();
         try {
-            sensinact.updateResource(provider, service, resource, type, value);
+            sensinact.updateResource(provider, service, resource, type, value, metadata);
             System.out.println(
                     String.format(
                             "... created %s/%s/%s resource",

@@ -18,7 +18,10 @@
  */
 package eu.interiot.intermw.bridge.sensinact.http.model;
 
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import java.util.Map;
+import java.util.Map.Entry;
 
 public class ProviderJSONPayload {
 
@@ -66,6 +69,19 @@ public class ProviderJSONPayload {
 
         public ProviderJSONPayloadBuilder timestamp(String timestamp) {
             jsonObject.addProperty("timestamp", timestamp);
+            return this;
+        }
+        
+        public ProviderJSONPayloadBuilder metadata(Map<String, String> metadata) {
+            final JsonArray metadataArray = new JsonArray();
+            JsonObject tempData;
+            for (Entry<String, String> entry : metadata.entrySet()) {
+                tempData = new JsonObject();
+                tempData.addProperty("name", entry.getKey());
+                tempData.addProperty("type", "string");
+                tempData.addProperty("value", entry.getValue());
+            }
+            jsonObject.add("metadata", metadataArray);
             return this;
         }
 

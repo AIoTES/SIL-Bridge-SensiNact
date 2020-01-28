@@ -25,7 +25,7 @@
       
     <align:Alignment>
         <dcelem:title>AIoTES2SensiNact</dcelem:title>
-        <exmo:version>0.7.5</exmo:version>
+        <exmo:version>0.7.6</exmo:version>
         <dcelem:creator>CEA Stephane Bergeon</dcelem:creator>
         <dcelem:description>Downstream Alignment between ACTIVAGE ontology and sensiNact AHA ontology</dcelem:description>
         <dcelem:date>23 January 2020</dcelem:date>
@@ -308,9 +308,7 @@
                         <sna:name>
                             <sripas:name/>
                         </sna:name>
-                        <sna:provider>
-                            <sripas:provider/>
-                        </sna:provider>
+                        <sna:provider>AIOTES-KPI</sna:provider>
                         <sna:service>monitor</sna:service>
                         <sna:dateTimestamp>
                             <sripas:timestamp/>

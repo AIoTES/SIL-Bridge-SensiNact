@@ -38,6 +38,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 
@@ -128,7 +129,7 @@ public class SensinactCommunicationBridgeV1 implements SensinactAPI {
     }
 
     @Override
-    public void updateResource(String provider, String service, String resource, String type, String value) throws Exception {
+    public void updateResource(String provider, String service, String resource, String type, String value, Map<String, String> metadata) throws Exception {
         throw new Exception("Create device method is not supported for sensinact V1");
     }
 

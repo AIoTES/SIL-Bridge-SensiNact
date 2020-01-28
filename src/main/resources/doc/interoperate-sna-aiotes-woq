@@ -263,11 +263,11 @@ intermw_1     | 14:24:30.459 [localhost-startStop-1] DEBUG eu.interiot.intermw.b
           web-browser> Client-ID= client
           web-browser> body=
     {
-      "platformId": "http://local-universaal-1",
+      "platformId": "http://RPI-uLive-1",
       "type": "http://inter-iot.eu/UniversAAL",
-      "baseEndpoint": "http://localhost:9000",
-      "location": "http://local-1",
-      "name": "local-universaal-1",
+      "baseEndpoint": "http://10.255.1.12:9000",
+      "location": "http://RPI-uLive-1",
+      "name": "RPI-uLive-1",
       "downstreamInputAlignmentName": "",
       "downstreamInputAlignmentVersion": "",
       "downstreamOutputAlignmentName": "AIOTES-universAAL-Alignment",

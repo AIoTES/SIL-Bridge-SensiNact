@@ -23,6 +23,7 @@ import eu.interiot.intermw.bridge.sensinact.http.model.SensinactConfig;
 import java.text.MessageFormat;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * This is the interface that represents the boundaries between InterIot and
@@ -43,7 +44,7 @@ public interface SensinactAPI {
 
     UnsubscriptionResponse unsubscribe(String userId, String provider, String service, String resource, String callback) throws Exception;
 
-    void updateResource(String provider, String service, String resource, String type, String value) throws Exception;
+    void updateResource(String provider, String service, String resource, String type, String value, Map<String, String> metadata) throws Exception;
 
     void removeResource(String provider, String service, String resource) throws Exception;
 

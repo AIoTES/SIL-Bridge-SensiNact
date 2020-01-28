@@ -22,6 +22,7 @@ import eu.interiot.intermw.bridge.sensinact.fetcher.SensinactModelRecoverListene
 import eu.interiot.intermw.bridge.sensinact.http.SensinactFactory;
 import eu.interiot.intermw.bridge.sensinact.http.model.SensinactConfig;
 import eu.interiot.intermw.bridge.sensinact.wrapper.SensinactAPI;
+import java.util.HashMap;
 import java.util.Map;
 import org.junit.After;
 import org.junit.Assert;
@@ -69,7 +70,8 @@ public class SensinactInterfaceV1Test {
 
     @Test(expected = Exception.class)
     public void createDevice() throws Exception {
-        sensinact.updateResource("","","","","");
+        Map<String, String> metadata = new HashMap<String, String>();
+        sensinact.updateResource("","","","","", metadata);
     }
 
     @Test(expected = Exception.class,timeout = 20000)
