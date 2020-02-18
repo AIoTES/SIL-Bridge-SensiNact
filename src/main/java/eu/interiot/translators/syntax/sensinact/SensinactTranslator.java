@@ -24,11 +24,15 @@ import eu.interiot.message.MessageMetadata;
 import eu.interiot.message.MessagePayload;
 import eu.interiot.message.managers.URI.URIManagerMessageMetadata;
 import eu.interiot.message.metadata.PlatformMessageMetadata;
+import eu.interiot.message.payload.types.SoftwarePlatformPayload;
 import eu.interiot.translators.syntax.SyntacticTranslator;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
+import java.util.HashSet;
 import org.apache.jena.rdf.model.*;
 import java.util.Iterator;
+import java.util.Optional;
+import java.util.Set;
 import org.apache.jena.riot.Lang;
 import org.apache.jena.riot.RDFDataMgr;
 
@@ -68,7 +72,7 @@ public class SensinactTranslator extends SyntacticTranslator<String> {
         return model;
     }
 
-    protected Message translate(final String observation, final String conversationId) {
+    protected static Message translate(final String observation, final String conversationId) {
         // create message metadata
         PlatformMessageMetadata metadata = new MessageMetadata().asPlatformMessageMetadata();
         metadata.initializeMetadata();
@@ -87,6 +91,57 @@ public class SensinactTranslator extends SyntacticTranslator<String> {
         observationMessage.setMetadata(metadata);
         observationMessage.setPayload(messagePayload);
         return observationMessage;
+    }
+
+    public static String getSenderPlatformId(final Message message) {
+        // parse message metadata
+        MessageMetadata metadata = message.getMetadata();
+        PlatformMessageMetadata platformMetadata = metadata.asPlatformMessageMetadata();
+        Optional<EntityID> senderPlatformId = platformMetadata.getSenderPlatformId();
+        return senderPlatformId.toString();
+    }
+
+    public static Set<String> getReceivingPlatformIds(final Message message) {
+        // parse message metadata
+        MessageMetadata metadata = message.getMetadata();
+        PlatformMessageMetadata platformMetadata = metadata.asPlatformMessageMetadata();
+        Set<EntityID> receivingPlatformIDs = platformMetadata.getReceivingPlatformIDs();
+        Set<String> receivingPlatforms = new HashSet<String>();
+        for (EntityID receivingPlatformID : receivingPlatformIDs) {
+            receivingPlatforms.add(receivingPlatformID.toString());
+        }
+        return receivingPlatforms;
+    }
+
+    public static Set<SoftwarePlatform> getRegisteredPlatforms(final Message platformRegistrationMessage) {
+        Set<SoftwarePlatform> registeredPlatforms = new HashSet<SoftwarePlatform>();
+        // parse message metadata
+        MessagePayload messagePayload = platformRegistrationMessage.getPayload();
+        SoftwarePlatformPayload softwarePlatformPayload = messagePayload.asGOIoTPPayload().asSoftwarePlatformPayload();
+        Set<EntityID> softwarePlatforms = softwarePlatformPayload.getSoftwarePlatforms();
+        for (EntityID softwarePlatform : softwarePlatforms) {
+            Optional<String> baseEndpoint = softwarePlatformPayload.getHasBaseEndpoint(softwarePlatform);
+            Optional<String> name = softwarePlatformPayload.getHasName(softwarePlatform);
+            registeredPlatforms.add(new SoftwarePlatform(softwarePlatform, baseEndpoint, name));
+        }
+        return registeredPlatforms;
+    }
+
+    public static class SoftwarePlatform {
+        public final String id;
+        public final String baseEndpoint;
+        public final String name;
+        
+        public SoftwarePlatform(final EntityID id, final Optional<String> baseEndpoint, final Optional<String> name) {
+            this.id = id.toString();
+            this.baseEndpoint = baseEndpoint.get();
+            this.name = name.get();
+        }
+        
+        @Override
+        public String toString() {
+            return String.format("sensiNact(%s, %s, %s)", id, baseEndpoint, name);
+        }
     }
 
     @Override

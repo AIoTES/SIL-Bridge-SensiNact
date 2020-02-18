@@ -34,7 +34,6 @@ import eu.interiot.intermw.bridge.sensinact.wrapper.SNAResource;
 import eu.interiot.intermw.bridge.sensinact.wrapper.SensinactAPI;
 import eu.interiot.intermw.bridge.sensinact.wrapper.SubscriptionResponse;
 import eu.interiot.intermw.bridge.sensinact.wrapper.UnsubscriptionResponse;
-import java.text.MessageFormat;
 import java.text.ParseException;
 import org.eclipse.jetty.websocket.api.Session;
 import org.slf4j.Logger;
@@ -53,7 +52,7 @@ import java.util.HashMap;
 public class SensinactCommunicationBridgeV2 implements SensinactAPI {
 
     private final Logger LOG = LoggerFactory.getLogger(SensinactCommunicationBridgeV2.class);
-    private SensinactConfig config;
+    private final SensinactConfig config;
     private SensinactWebSocketConnectionManager connectionWebSocket;
     private SensinactModelRecoverListener listener;
     private SensinactWebSocketConnectionManager deviceCreationEndPoint;
@@ -75,9 +74,10 @@ public class SensinactCommunicationBridgeV2 implements SensinactAPI {
     private static final String LIFECYCLE_SUBSCRIBE_REQUEST = 
         "{\"uri\":\"sensinact/SUBSCRIBE\",\"rid\":\"webapp\",\"parameters\":[{\"name\":\"sender\",\"type\":\"string\",\"value\":\"/.*\"},{\"name\":\"pattern\",\"type\":\"boolean\",\"value\":true},{\"name\":\"complement\",\"type\":\"boolean\",\"value\":false},{\"name\":\"types\",\"type\":\"array\",\"value\":[\"UPDATE\",\"LIFECYCLE\"]}]}";
     
-    public SensinactCommunicationBridgeV2() {
+    public SensinactCommunicationBridgeV2(final SensinactConfig config) {
         subscribedResources = new HashMap<String, SNAResource>();
         userSubscriptions = new UserSubscriptionManager();
+        this.config = config;
     }
     
     @Override
@@ -107,7 +107,7 @@ public class SensinactCommunicationBridgeV2 implements SensinactAPI {
         if (alreadySubscribedResource != null) {
             LOG.info("have already subscribed to {} before...", resourcePath);
             if (userSubscriptions.hasAlreadySubscribedTo(userId, resourcePath)) {
-                response = userSubscriptions.getSubscriptionResponse(userId, resourcePath);
+                throw new AlreadySubscribedException(alreadySubscribedResource);
             } else {
                 response = userSubscriptions.putSubscriptionResponse(userId, alreadySubscribedResource);
             }
@@ -318,11 +318,6 @@ public class SensinactCommunicationBridgeV2 implements SensinactAPI {
     }
 
     @Override
-    public void setConfig(SensinactConfig config) {
-        this.config = config;
-    }
-
-    @Override
     public void setListener(SensinactModelRecoverListener listener) {
         this.listener = listener;
     }
@@ -339,7 +334,7 @@ public class SensinactCommunicationBridgeV2 implements SensinactAPI {
             }
         }
 
-        final String sensinactWebSocketURL = String.format("%s://%s:%d/ws", protocol, config.getHost(), config.getHttpPort()).toString();
+        final String sensinactWebSocketURL = String.format("%s://%s:%s/ws", protocol, config.getHost(), config.getHttpPort()).toString();
         connectionWebSocket = new SensinactWebSocketConnectionManager(sensinactWebSocketURL, new WebSocketModelRecoverListener() {
             @Override
             public void notify(String content) {
@@ -384,7 +379,7 @@ public class SensinactCommunicationBridgeV2 implements SensinactAPI {
             }
         });
 
-        final String deviceCreationURL = String.format("%s://%s:%d/androidws", protocol, config.getHost(), config.getHttpPort());
+        final String deviceCreationURL = String.format("%s://%s:%s/androidws", protocol, config.getHost(), config.getHttpPort());
 
         deviceCreationEndPoint = new SensinactWebSocketConnectionManager(deviceCreationURL);
 
@@ -404,6 +399,21 @@ public class SensinactCommunicationBridgeV2 implements SensinactAPI {
         deviceCreationEndPoint.disconnect();
     }
     
+    @Override
+    public String getBaseEndpoint() {
+        return config.getBaseEndpoint();
+     }
+    
+    @Override
+    public String getName() {
+        return config.getName();
+    }
+    
+    @Override
+    public String toString() {
+        return getName();
+    }
+
     private static class UserSubscriptionManager extends HashMap<String, Map<String, SubscriptionResponse>> {
                 
         private UserSubscriptionManager() {

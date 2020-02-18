@@ -19,7 +19,6 @@
 package eu.interiot.intermw.bridge.sensinact.http.ws;
 
 import eu.interiot.intermw.bridge.sensinact.fetcher.WebSocketModelRecoverListener;
-import eu.interiot.intermw.bridge.sensinact.v1.SensinactCommunicationBridgeV1;
 import org.eclipse.jetty.websocket.api.Session;
 import org.eclipse.jetty.websocket.client.ClientUpgradeRequest;
 import org.eclipse.jetty.websocket.client.WebSocketClient;
@@ -31,7 +30,7 @@ import java.util.concurrent.Future;
 
 public class SensinactWebSocketConnectionManager {
 
-    private final Logger LOG = LoggerFactory.getLogger(SensinactCommunicationBridgeV1.class);
+    private final Logger LOG = LoggerFactory.getLogger(SensinactWebSocketConnectionManager.class);
     private WebSocketModelRecoverListener listener;
     private String sensinactWebSocketURL;// format: "ws://sensinact.ddns.net:8092";
     private WSObject socket;

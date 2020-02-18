@@ -5,6 +5,7 @@
       0.3 Deployed AIOTES docker
           get the IPSM REST API http address and port: 
           here IPSM_IP=193.48.18.245 ; IPSM_PORT=8083
+          Deploy the SIL
       0.3.1 Check AIOTES deployment
 > cd aiotes/DT-AIOTES_docker/intermw-ipsm-deployment
 > sudo ./initialize-volumes.sh
@@ -22,35 +23,25 @@
           -> here %IPSM_CONTAINER_ID= 5f5d712278a5
 > IPSM_CONTAINER_ID="5f5d712278a5"
 
-    1 Install sNaRPI
-        1.1 Get sNaRPI IP address
-          with MAC = b8:27:eb:d2:ea:ae
-        1.2 Check sNaRPI connectivity
-          > ping <sNaRPI_IP>
-        1.3 Check sensiNact REST API
-          > web-browser> http://<sNaRPI_IP>:8081/swagger-api
-          > web-browser> http://<sNaRPI_IP>:8081/sensinact/providers/aha-night-rising-monitor-bedroom-WOQ/services/monitor/resources/state/GET
-{"response":{"name":"state","type":"boolean","value":false,"timestamp":1564751701101},"type":"GET_RESPONSE","uri":"/aha-night-rising-monitor-bedroom-WOQ/monitor/state","statusCode":200}
-
     2 Install sensiNact bridge (with dependency and configuration)
         2.1 Pull sensiNact-SIL interoperability bridge  sources from ACTIVAGE git
-          > cd aiotes
-          > mkdir bridges
-          > cd bridges
-          > git clone https://git.activageproject.eu/Bridges/sensiNact
-          > cd sensiNact
-          > mvn clean install -DskipTests=true
+> cd aiotes
+> mkdir bridges
+> cd bridges
+> git clone https://git.activageproject.eu/Bridges/sensiNact
+> cd sensiNact
+> mvn clean install -DskipTests=true
 
         2.2 Configure sensiNact bridge
-          > cd aiotes/DT-AIOTES_docker/intermw-ipsm-deployment
-          check sensiNact bridge configuration: check sensinact.host=$sNaRPi_IP and sensinact.http.port=8081
+> cd aiotes/DT-AIOTES_docker/intermw-ipsm-deployment
+          check sensiNact bridge configuration: check sensinact.host=localhost and sensinact.http.port=8082
             here sNaRPi_IP="10.255.1.12"
-          > nano ../../bridges/sensiNact/src/main/resources/SensiNactBridge.properties
+> nano ../../bridges/sensiNact/src/main/resources/SensiNactBridge.properties
     ########################
     #sensinact host address for example: sensinact.ddns.net:8080 (v1 japan), 193.48.18.248:8081 (IOF)
     # should be <sNaRPi_IP>
     ########################
-    sensinact.host=10.255.1.12
+    sensinact.host=localhost
 
     ########################
     #version of sensinact either v1 or v2
@@ -70,13 +61,12 @@
     ########################
     #sensinact http port
     ########################
-    sensinact.http.port=8081
+    sensinact.http.port=8082
 
     ########################
     #Set to -1 in case wish to set to an infinite number of devices
     ########################
     sensinact.provider.maxNumber=100
-
 
 > sudo docker cp ../../bridges/sensiNact/target/mw.bridge.sna-2.0.0-SNAPSHOT.jar $IPSM_CONTAINER_ID:/usr/local/tomcat/webapps/ROOT/WEB-INF/lib; \
 sudo docker cp ~/.m2/repository/eu/inter-iot/translators/syntactic-translators/1.0/syntactic-translators-1.0.jar $IPSM_CONTAINER_ID:/usr/local/tomcat/webapps/ROOT/WEB-INF/lib; \
@@ -93,42 +83,32 @@ sudo docker cp ../../bridges/sensiNact/src/main/resources/SensiNactBridge.proper
 > sudo docker exec $IPSM_CONTAINER_ID ls -al /etc/inter-iot/intermw/SensiNactBridge.properties
     -rw-rw-r--    1 1000     1000           834 Jul 23 15:18 /etc/inter-iot/intermw/SensiNactBridge.properties
 
-    3 Install universAAL bridge (with dependency and configuration)
-        2.1 Pull universAAL-SIL interoperability bridge  sources from ACTIVAGE git
-          > cd aiotes
-          > mkdir bridges
-          > cd bridges
-          > git clone https://git.activageproject.eu/Bridges/universAAL
-          > cd universAAL
-          > mvn clean install -DskipTests=true
-
-        2.2 Configure universAAL bridge
-          > cd aiotes/DT-AIOTES_docker/intermw-ipsm-deployment
-          check universAAL bridge configuration: c
-> nano ../../bridges/sensiNact/src/main/resources/UAALBridge.properties
-
-# UniversAAL
-universaal-url=http://localhost:9000/uaal/
-universaal-user=interiot
-universaal-password=interiot
-universaal-space=interiot
-
-> sudo docker cp ../../bridges/universAAL/target/mw.bridge.uaal-2.3.0.jar $IPSM_CONTAINER_ID:/usr/local/tomcat/webapps/ROOT/WEB-INF/lib; \
-sudo docker cp ../../bridges/universAAL/src/main/resources/UAALBridge.properties $IPSM_CONTAINER_ID:/etc/inter-iot/intermw
-          
        2.3 Restart SIL container to include bridges
 > sudo docker-compose restart intermw
           logs bridge registration:
 > sudo docker-compose logs intermw | grep "sensinact.ddns.net"
 intermw_1     | 14:24:30.459 [localhost-startStop-1] DEBUG eu.interiot.intermw.bridge.BridgeContext.registerBridges(BridgeContext.java:190) - Bridge eu.interiot.intermw.bridge.sensinact.SensiNactBridge for platform type http://sensinact.ddns.net/sensinact has been registered.
-> sudo docker-compose logs intermw | grep "UniversAAL"
 
-    3. Run SIL
+    3. Run SIL with a registered local sensiNact instance
+       3.0 Prerequisites
+        3.0.1 start sNa-rpi-test:
+> cd <sensiNact>/gateway/org.eclipse.sensinact.gateway/distribution/sensinact-distribution-template
+> mvn -Ppi-test clean install
+> cd <sensiNact>/gateway/org.eclipse.sensinact.gateway/distribution/sensinact-distribution-generator-1
+> mvn -Pexecute-activage-pi-test clean install
+ 
+        3.0.2 start sNa-server-panel12
+> cd <sensiNact>/gateway/org.eclipse.sensinact.gateway/distribution/sensinact-distribution-template
+> mvn -Pserver-panel12 clean install
+> cd <sensiNact>/gateway/org.eclipse.sensinact.gateway/distribution/sensinact-distribution-generator
+> mvn -Pexecute-aha-panel12 clean install
+ 
+        3.0.3 Check sensiNact operation:
+> curl -X GET --header 'Accept: application/json' 'http://localhost:8083/sensinact/providers'
 
        3.1 Create IPSM alignments
-
-       3.1.1 alignments AIOTES <-> universAAL ontology
-> nano ../../alignments/DS_WOZ_UNIVERSAAL/AIOTES.rdf
+       3.1.1 Downstream alignment AIOTES -> sensiNact ontology
+> nano ../../bridges/sensiNact/src/main/resources/alignment/aiotes2sensinact-alignment.rdf
           web-browser> http://localhost:8888/swagger/#!/Alignments/post_alignments
           web-browser> aligment= <content>
           web-browser> Try it out!
@@ -136,23 +116,11 @@ intermw_1     | 14:24:30.459 [localhost-startStop-1] DEBUG eu.interiot.intermw.b
           check result:
           web-browser> Response Body=
 {
-  "message": "Alignment with AlignmentID(AIOTES-universAAL-Alignment,2.1) uploaded successfully"
+  "message": "Alignment with AlignmentID(AIOTES2SensiNact,0.7.5) uploaded successfully"
 }
-          web-browser> Response Code= 201
+          web-browser> Response Code=    201
 
-> nano ../../alignments/DS_WOZ_UNIVERSAAL/universAAL.rdf
-          web-browser> http://localhost:8888/swagger/#!/Alignments/post_alignments
-          web-browser> aligment= <content>
-          web-browser> Try it out!
-          
-          check result:
-          web-browser> Response Body=
-{
-  "message": "Alignment with AlignmentID(universAAL-AIOTES-Alignment,2.0) uploaded successfully"
-}
-          web-browser> Response Code= 201
-
-       3.1.2 alignments sensiNact >-> AIOTES ontology
+       3.1.2 Upstream alignment sensiNact -> AIOTES ontology
 > nano ../../bridges/sensiNact/src/main/resources/alignment/sensinact2aiotes-alignment.rdf 
           web-browser> http://localhost:8888/swagger/#!/Alignments/post_alignments
           web-browser> aligment= <content>
@@ -161,22 +129,9 @@ intermw_1     | 14:24:30.459 [localhost-startStop-1] DEBUG eu.interiot.intermw.b
           check result:
           web-browser> Response Body=
 {
-  "message": "Alignment with AlignmentID(SensiNact2AIoTES,0.7.5) uploaded successfully"
+  "message": "Alignment with AlignmentID(SensiNact2AIOTES,0.7.5) uploaded successfully"
 }
-          web-browser> Response Code= 201
-
-> nano ../../bridges/sensiNact/src/main/resources/alignment/aiotes2sensinact-alignment.rdf 
-          web-browser> http://localhost:8888/swagger/#!/Alignments/post_alignments
-          web-browser> aligment= <content>
-          web-browser> Try it out!
-          
-          check result:
-          web-browser> Response Body=
-{
-  "message": "Alignment with AlignmentID(AIoTES2SensiNact,0.7.5) uploaded successfully"
-}
-          web-browser> Response Code= 201
-
+          web-browser> Response Code=    201
           check alignments:
 > curl -X GET --header 'Accept: application/json' 'http://localhost:8888/alignments'
 [{"name":"AIoTES2SensiNact","sourceOntologyURI":"http://inter-iot.eu/GOIoTPex#","description":"Downstream Alignment between ACTIVAGE ontology and sensiNact AHA ontology","creator":"CEA Stephane Bergeon","targetOntologyURI":"http://sensinact.com#","version":"0.7.2","id":1,"date":1579855767901,"descId":"[AIoTES2SensiNact] [0.7.2] : http://inter-iot.eu/GOIoTPex# -> http://sensinact.com#"},{"name":"SensiNact2AIoTES","sourceOntologyURI":"http://sensinact.com#","description":"Upstream alignment between sensiNact AHA ontology and ACTIVAGE ontology.","creator":"CEA Stephane Bergeon","targetOntologyURI":"http://inter-iot.eu/GOIoTPex#","version":"0.7.2","id":2,"date":1579855784424,"descId":"[SensiNact2AIoTES] [0.7.2] : http://sensinact.com# -> http://inter-iot.eu/GOIoTPex#"}]
@@ -187,18 +142,29 @@ intermw_1     | 14:24:30.459 [localhost-startStop-1] DEBUG eu.interiot.intermw.b
           web-browser> Response Body=
 [
   {
-    "name": "AIOTES-universAAL-Alignment",
-    ...
-    
+    "name": "AIoTES2SensiNact",
+    "sourceOntologyURI": "http://inter-iot.eu/GOIoTPex#",
+    "description": "Downstream Alignment between ACTIVAGE ontology and sensiNact AHA ontology",
+    "creator": "CEA Stephane Bergeon",
+    "targetOntologyURI": "http://sensinact.com#",
+    "version": "0.7.5",
+    "id": 1,
+    "date": 1579861818618,
+    "descId": "[AIoTES2SensiNact] [0.7.5] : http://inter-iot.eu/GOIoTPex# -> http://sensinact.com#"
   },
-...
   {
     "name": "SensiNact2AIoTES",
-    ...
+    "sourceOntologyURI": "http://sensinact.com#",
+    "description": "Upstream alignment between sensiNact AHA ontology and ACTIVAGE ontology.",
+    "creator": "CEA Stephane Bergeon",
+    "targetOntologyURI": "http://inter-iot.eu/GOIoTPex#",
+    "version": "0.7.5",
+    "id": 2,
+    "date": 1579861827552,
+    "descId": "[SensiNact2AIoTES] [0.7.5] : http://sensinact.com# -> http://inter-iot.eu/GOIoTPex#"
   }
-...
 ]
-          web-browser> Response Code=200
+          web-browser> Response Code=   200
 
        3.2 Register client
 > curl -X POST "http://localhost:8083/api/mw2mw/clients" -H  "accept: application/json" -H  "Client-ID: client" -H  "Content-Type: application/json" -d "{      \"clientId\": \"client\",      \"receivingCapacity\": 10,      \"responseFormat\": \"JSON_LD\",      \"responseDelivery\": \"CLIENT_PULL\"    }"
@@ -236,17 +202,19 @@ intermw_1     | 14:24:30.459 [localhost-startStop-1] DEBUG eu.interiot.intermw.b
       }
     ]
 
-       3.3 Register sensiNact and universAAL platforms
+       3.3 Register platform
+> curl -X POST "http://localhost:8083/api/mw2mw/platforms" -H  "accept: application/json" -H  "Client-ID: client" -H  "Content-Type: application/json" -d "{      \"platformId\": \"http://local-sensinact-1\",      \"type\": \"http://sensinact.ddns.net/sensinact\",      \"baseEndpoint\": \"http://10.255.4.49:8082\",      \"location\": \"http://local-1\",      \"name\": \"local-sensinact-1\",      \"downstreamInputAlignmentName\": \"\",      \"downstreamInputAlignmentVersion\": \"\",      \"downstreamOutputAlignmentName\": \"AIoTES2SensiNact\",      \"downstreamOutputAlignmentVersion\": \"0.7.5\",      \"upstreamInputAlignmentName\": \"SensiNact2AIoTES\",      \"upstreamInputAlignmentVersion\": \"0.7.5\",      \"upstreamOutputAlignmentName\": \"\",      \"upstreamOutputAlignmentVersion\": \"\"    }"
+
           web-browser> http://localhost:8083/swagger/#/Platforms/registerPlatform
           web-browser> Try it out
           web-browser> Client-ID= client
           web-browser> body=
     {
-      "platformId": "http://rpi-sensinact-1",
+      "platformId": "http://local-sensinact-1",
       "type": "http://sensinact.ddns.net/sensinact",
-      "baseEndpoint": "http://10.255.1.12:8082",
-      "location": "http://rpi-1",
-      "name": "rpi-sensinact-1",
+      "baseEndpoint": "http://10.255.4.49:8082",
+      "location": "http://local-1",
+      "name": "local-sensinact-1",
       "downstreamInputAlignmentName": "",
       "downstreamInputAlignmentVersion": "",
       "downstreamOutputAlignmentName": "AIoTES2SensiNact",
@@ -258,29 +226,9 @@ intermw_1     | 14:24:30.459 [localhost-startStop-1] DEBUG eu.interiot.intermw.b
     }
           web-browser> Execute
 
-          web-browser> http://localhost:8083/swagger/#/Platforms/registerPlatform
-          web-browser> Try it out
-          web-browser> Client-ID= client
-          web-browser> body=
-    {
-      "platformId": "http://RPI-uLive-1",
-      "type": "http://inter-iot.eu/UniversAAL",
-      "baseEndpoint": "http://10.255.1.12:9000",
-      "location": "http://RPI-uLive-1",
-      "name": "RPI-uLive-1",
-      "downstreamInputAlignmentName": "",
-      "downstreamInputAlignmentVersion": "",
-      "downstreamOutputAlignmentName": "AIOTES-universAAL-Alignment",
-      "downstreamOutputAlignmentVersion": "2.1",
-      "upstreamInputAlignmentName": "universAAL-AIOTES-Alignment",
-      "upstreamInputAlignmentVersion": "2.0",
-      "upstreamOutputAlignmentName": "",
-      "upstreamOutputAlignmentVersion": ""
-    }
-          web-browser> Execute
-
           check result:
 > curl -X GET "http://localhost:8083/api/mw2mw/platforms" -H  "accept: application/json" -H  "Client-ID: client"
+[{"platformId":"http://local-sensinact-1","type":"http://sensinact.ddns.net/sensinact","baseEndpoint":"http://10.255.4.49:8082","location":"http://local-1","name":"local-sensinact-1","clientId":"http://inter-iot.eu/clients#client","username":"","timeCreated":1579856028275,"platformStatistics":{"deviceCount":0,"subscribedDeviceCount":0,"subscriptionCount":0},"downstreamInputAlignmentName":"","downstreamInputAlignmentVersion":"","downstreamOutputAlignmentName":"AIoTES2SensiNact","downstreamOutputAlignmentVersion":"0.7.2","upstreamInputAlignmentName":"SensiNact2AIoTES","upstreamInputAlignmentVersion":"0.7.2","upstreamOutputAlignmentName":"","upstreamOutputAlignmentVersion":""}]
 
           web-browser> Server reponse code= 202
           web-browser> http://localhost:8083/swagger/#/Platforms/listPlatforms
@@ -291,18 +239,33 @@ intermw_1     | 14:24:30.459 [localhost-startStop-1] DEBUG eu.interiot.intermw.b
           web-browser> Server reponse Details=
 [
   {
-    "platformId": "http://rpi-sensinact-1",
+    "platformId": "http://local-sensinact-1",
     "type": "http://sensinact.ddns.net/sensinact",
-...
-  },
-  {
-    "platformId": "http://local-universaal-1",
-    "type": "http://inter-iot.eu/UniversAAL",
-...
+    "baseEndpoint": "http://10.255.4.49:8082",
+    "location": "http://local-1",
+    "name": "local-sensinact-1",
+    "clientId": "http://inter-iot.eu/clients#client",
+    "username": "",
+    "timeCreated": 1579686961403,
+    "platformStatistics": {
+      "deviceCount": 0,
+      "subscribedDeviceCount": 0,
+      "subscriptionCount": 0
+    },
+    "downstreamInputAlignmentName": "",
+    "downstreamInputAlignmentVersion": "",
+    "downstreamOutputAlignmentName": "AIoTES2SensiNact",
+    "downstreamOutputAlignmentVersion": "0.7.5",
+    "upstreamInputAlignmentName": "SensiNact2AIoTES",
+    "upstreamInputAlignmentVersion": "0.7.5",
+    "upstreamOutputAlignmentName": "",
+    "upstreamOutputAlignmentVersion": ""
   }
 ]
 
        3.4 Register devices
+> curl -X POST "http://localhost:8083/api/mw2mw/devices" -H  "accept: application/json" -H  "Client-ID: client" -H  "Content-Type: application/json" -d "{   \"devices\": [     {       \"deviceId\":\"http://sensinact.ddns.net/PTL-Day-laying-monitor/monitor/state\",       \"hostedBy\": \"http://local-sensinact-1\",       \"location\": \"http://local-1\",       \"name\": \"aha-day-laying-monitor-local-state\"     }   ]}"
+> curl -X POST "http://localhost:8083/api/mw2mw/devices" -H  "accept: application/json" -H  "Client-ID: client" -H  "Content-Type: application/json" -d "{   \"devices\": [     {       \"deviceId\":\"http://sNa.de/demo/BedSensor\",       \"hostedBy\": \"http://local-sensinact-1\",       \"location\": \"http://local-1\",       \"name\": \"demo-target-bedsensor-state\"     }   ]}"
           web-browser> http://localhost:8083/swagger/#/Devices/platformCreateDevices
           web-browser> Try it out
           web-browser> Client-ID= client
@@ -310,10 +273,11 @@ intermw_1     | 14:24:30.459 [localhost-startStop-1] DEBUG eu.interiot.intermw.b
 {
    "devices": [
      {
-       "deviceId": "http://sensinact.ddns.net/aha-night-rising-monitor-bedroom-WOQ/monitor/state",
-       "hostedBy": "http://rpi-sensinact-1",
-       "location": "http://rpi-1",
-       "name": "aha-night-rising-monitor-bedroom-WOQ-state"
+       "deviceId":
+"http://sensinact.ddns.net/PTL-Day-laying-monitor/monitor/state",
+       "hostedBy": "http://local-sensinact-1",
+       "location": "http://local-1",
+       "name": "aha-day-laying-monitor-local-state"
      }
    ]
 }
@@ -323,7 +287,7 @@ intermw_1     | 14:24:30.459 [localhost-startStop-1] DEBUG eu.interiot.intermw.b
 
      {
        "deviceId":"http://sNa.de/demo/BedSensor",
-       "hostedBy": "http://local-universaal-1",
+       "hostedBy": "http://local-sensinact-1",
        "location": "http://local-1",
        "name": "demo-target-bedsensor-state"
      }
@@ -343,10 +307,10 @@ intermw_1     | 14:24:30.459 [localhost-startStop-1] DEBUG eu.interiot.intermw.b
     "deviceTypes": [
       "DEVICE"
     ],
-    "deviceId": "http://sensinact.ddns.net/aha-night-rising-monitor-bedroom-WOQ/monitor/state",
-    "hostedBy": "http://rpi-sensinact-1",
-    "location": "http://rpi-1",
-    "name": "aha-night-rising-monitor-bedroom-WOQ-state"
+    "deviceId": "http://sensinact.ddns.net/PTL-Day-laying-monitor/monitor/state",
+    "hostedBy": "http://local-sensinact-1",
+    "location": "http://local-1",
+    "name": "aha-day-laying-monitor-local-state",
     "hosts": [],
     "forProperty": [],
     "madeActuation": null,
@@ -360,7 +324,7 @@ intermw_1     | 14:24:30.459 [localhost-startStop-1] DEBUG eu.interiot.intermw.b
       "DEVICE"
     ],
     "deviceId": "http://sNa.de/demo/BedSensor",
-    "hostedBy": "http://local-universaal-1",
+    "hostedBy": "http://local-sensinact-1",
     "location": "http://local-1",
     "name": "demo-target-bedsensor-state",
     "hosts": [],
@@ -373,13 +337,14 @@ intermw_1     | 14:24:30.459 [localhost-startStop-1] DEBUG eu.interiot.intermw.b
   }
 ]
        3.5 Subscribe devices
+> curl -X POST "http://localhost:8083/api/mw2mw/subscriptions" -H  "accept: application/json" -H  "Client-ID: client" -H  "Content-Type: application/json" -d "{  \"deviceIds\": [    \"http://sensinact.ddns.net/PTL-Day-laying-monitor/monitor/state\"  ]}"
           web-browser> http://localhost:8083/swagger/#/Subscriptions/subscribe
           web-browser> Try it out
           web-browser> Client-ID= client
           web-browser> body=
 {
   "deviceIds": [
-    "http://sensinact.ddns.net/aha-night-rising-monitor-bedroom-WOQ/monitor/state"
+    "http://sensinact.ddns.net/PTL-Day-laying-monitor/monitor/state"
   ]
 }
           web-browser> Response Code= 202
@@ -394,7 +359,7 @@ intermw_1     |   "@graph" : [ {
 intermw_1     |     "@graph" : [ {
 intermw_1     |       "@id" : "msg:meta/c9313150-c401-4118-a805-0b882f8e2566",
 intermw_1     |       "msg:SenderPlatformId" : {
-intermw_1     |         "@id" : "http://rpi-sensinact-1"
+intermw_1     |         "@id" : "http://local-sensinact-1"
 intermw_1     |       },
 intermw_1     |       "msg:conversationID" : "conv9fb71ffa-52c2-4889-9a30-c78604321d5f",
 intermw_1     |       "msg:dateTimeStamp" : "2020-01-23T10:06:55.067Z",
@@ -416,10 +381,10 @@ intermw_1     |       "http://sensinact.com#description" : "check if the patient
 intermw_1     |       "http://sensinact.com#modifiable" : "MODIFIABLE",
 intermw_1     |       "http://sensinact.com#name" : "state",
 intermw_1     |       "http://sensinact.com#nickname" : "state",
-intermw_1     |       "http://sensinact.com#provider" : "aha-night-rising-monitor-bedroom-WOQ",
+intermw_1     |       "http://sensinact.com#provider" : "PTL-Day-laying-monitor",
 intermw_1     |       "http://sensinact.com#service" : "monitor",
 intermw_1     |       "http://sensinact.com#timestamp" : "1579774014818",
-intermw_1     |       "http://sensinact.com#type" : "NIGHT_RISING",
+intermw_1     |       "http://sensinact.com#type" : "DAY_LAYING",
 intermw_1     |       "http://sensinact.com#value" : "false",
 intermw_1     |       "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
 intermw_1     |         "@id" : "http://sensinact.com#Resource"
@@ -441,13 +406,15 @@ intermw_1     |         "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
 
        4 Test complete data flow
        4.1 Create push client
+> curl -X POST "http://localhost:8083/api/mw2mw/clients" -H  "accept: application/json" -H  "Client-ID: push" -H  "Content-Type: application/json" -d "{      \"clientId\": \"push\",      \"callbackUrl\": \"http://10.255.4.49:8084/receiver\",      \"receivingCapacity\": 10,      \"responseFormat\": \"JSON_LD\",      \"responseDelivery\": \"SERVER_PUSH\"          }"
+
           web-browser> http://localhost:8083/swagger/#/Clients/registerClient
           web-browser> Try it out
           web-browser> Client-ID= client
           web-browser> body=
     {
       "clientId": "push",
-      "callbackUrl": "http://<universAAL.receiver.url>/receiver",
+      "callbackUrl": "http://10.255.4.49:8084/receiver",
       "receivingCapacity": 10,
       "responseFormat": "JSON_LD",
       "responseDelivery": "SERVER_PUSH"
@@ -475,7 +442,7 @@ intermw_1     |         "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
   },
   {
     "clientId": "push",
-    "callbackUrl": "http://<universAAL.receiver.url>/receiver",
+    "callbackUrl": "http://10.255.4.49:8084/receiver",
     "receivingCapacity": 10,
     "responseFormat": "JSON_LD",
     "responseDelivery": "SERVER_PUSH"
@@ -483,44 +450,49 @@ intermw_1     |         "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
 ]
 
        4.2 Subscribe device 
+> curl -X POST "http://localhost:8083/api/mw2mw/subscriptions" -H  "accept: application/json" -H  "Client-ID: push" -H  "Content-Type: application/json" -d "{  \"deviceIds\": [    \"http://sensinact.ddns.net/PTL-Day-laying-monitor/monitor/state\"  ]}"
           web-browser> http://localhost:8083/swagger/#/Subscriptions/subscribe
           web-browser> Try it out
           web-browser> Client-ID= push
           web-browser> body=
 {
   "deviceIds": [
-    "http://sensinact.ddns.net/aha-night-rising-monitor-bedroom-WOQ/monitor/state"
+    "http://sensinact.ddns.net/PTL-Day-laying-monitor/monitor/state"
   ]
 }
           web-browser> Response Code= 202
 
-       4.2 Run AIOTES receiver
-       4.2.1 install aiotes receiver
+       4.3 Run AIOTES receiver
+       4.3.1 install aiotes receiver
 > cd ~/dev/aiotes/bridges
 > git clone https://git.activageproject.eu/Example_Code/Forward_Client
-> cd Forward_Client/receiver
+> cd Forward_Client/sna-receiver
 
-       4.2.2 Configure aiotes receiver
+       4.3.2 Configure aiotes receiver
 > nano config.prop
 {
     "Mapping":
         [
             {
-            "SourceDeviceId":	  "http://sensinact.ddns.net/aha-night-rising-monitor-bedroom-WOQ/monitor/state",  
-            "TargetDeviceId":	  "htpp://sNa.de/demo/BedSensor", 
+            "SourceDeviceId":	  "PTL-Day-laying-monitor",  
+            "TargetDeviceId":	  "PTL-Day-laying-monitor-target", 
             "DeviceType":	  "http://purl.org/iot/vocab/m3-lite/PressureSensor",
-            "SenderPlatformId":	  "http://rpi-sensinact-1",
-            "ReceiverPlatformId": "http://local-universaal-1",
+            "SenderPlatformId":	  "http://sNa_source_platform_8",
+            "ReceiverPlatformId": "http://sNa_target_platform_8",
             }
         ],
     "serverURI": "http://localhost:8083/api/mw2mw/requests",
     "clientId":	"push"
 }
 
-       4.2.3 Run aiotes receiver
+> nano src/main/resources/application.properties
+server.port: 8084
+
+       4.3.3 Run aiotes receiver
 > mvn -Pexecute clean install
+
 ...
---- exec-maven-plugin:1.6.0:java (RUN-receiver) @ receiver ---
+--- exec-maven-plugin:1.6.0:java (RUN-receiver) @ sna-receiver ---
 
   .   ____          _            __ _ _
  /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
@@ -530,60 +502,129 @@ intermw_1     |         "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
  =========|_|==============|___/=/_/_/_/
  :: Spring Boot ::        (v2.2.2.RELEASE)
 
-2020-01-23 12:28:40.792  INFO 24783 --- [lication.main()] uAAL.SIL.client.Application              : Starting Application on ptl01-Lenovo-Flex-2-15 with PID 24783 (/home/ptl01/dev/aiotes/bridges/Forward_Client/receiver/target/classes started by ptl01 in /home/ptl01/dev/aiotes/bridges/Forward_Client/receiver)
-2020-01-23 12:28:40.799  INFO 24783 --- [lication.main()] uAAL.SIL.client.Application              : No active profile set, falling back to default profiles: default
-2020-01-23 12:28:42.166  INFO 24783 --- [lication.main()] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 1122 (http)
-2020-01-23 12:28:42.201  INFO 24783 --- [lication.main()] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
-2020-01-23 12:28:42.202  INFO 24783 --- [lication.main()] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.29]
-2020-01-23 12:28:42.319  INFO 24783 --- [lication.main()] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
-2020-01-23 12:28:42.320  INFO 24783 --- [lication.main()] o.s.web.context.ContextLoader            : Root WebApplicationContext: initialization completed in 1418 ms
-2020-01-23 12:28:42.566  INFO 24783 --- [lication.main()] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
-2020-01-23 12:28:42.846  INFO 24783 --- [lication.main()] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 1122 (http) with context path ''
-2020-01-23 12:28:42.849  INFO 24783 --- [lication.main()] uAAL.SIL.client.Application              : Started Application in 3.199 seconds (JVM running for 12.954)
+2020-01-27 16:04:35.490  INFO 6262 --- [lication.main()] sna.sil.client.Application               : Starting Application on ptl01-Lenovo-Flex-2-15 with PID 6262 (/home/ptl01/dev/aiotes/bridges/Forward_Client/sna-receiver/target/classes started by ptl01 in /home/ptl01/dev/aiotes/bridges/Forward_Client/sna-receiver)
+2020-01-27 16:04:35.492  INFO 6262 --- [lication.main()] sna.sil.client.Application               : No active profile set, falling back to default profiles: default
+2020-01-27 16:04:40.269  INFO 6262 --- [lication.main()] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8084 (http)
+2020-01-27 16:04:40.538  INFO 6262 --- [lication.main()] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2020-01-27 16:04:40.538  INFO 6262 --- [lication.main()] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.29]
+2020-01-27 16:04:40.898  INFO 6262 --- [lication.main()] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2020-01-27 16:04:40.899  INFO 6262 --- [lication.main()] o.s.web.context.ContextLoader            : Root WebApplicationContext: initialization completed in 4378 ms
+2020-01-27 16:04:41.287  INFO 6262 --- [lication.main()] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
+2020-01-27 16:04:42.617  INFO 6262 --- [lication.main()] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8084 (http) with context path ''
+2020-01-27 16:04:42.620  INFO 6262 --- [lication.main()] sna.sil.client.Application               : Started Application in 13.137 seconds (JVM running for 48.493)
 
 
-        5 Test bed sensor data flow sensiNact -> AIOTES -> universAAL
-        5.1 stimulate the bed sensor 
-        5.2 check in universAAL API that htpp://sNa.de/demo/BedSensor is updated
+
+        5 Test bed sensor data flow sensiNact -> AIOTES -> sensiNact
+        5.1 click virtual bed sensor button 
+        5.2 check in sensiNact API that newBedSensor is updated
+> curl -X GET --header 'Accept: application/json' 'http://localhost:8082/sensinact/providers/newBedSensor/services/monitor/resources/state/GET'
+{"response":{"name":"state","type":"boolean","value":false,"timestamp":1579867115077},"type":"GET_RESPONSE","uri":"/newBedSensor/monitor/state","statusCode":200}
+
 
 > cd dev/aiotes/DT-AIOTES_docker/intermw-ipsm-deployment
+
 > sudo docker-compose down -v
+
 > sudo docker volume prune
+
+> ip address | grep eth0
+
+> IP_ADDRESS="10.255.3.19" | IP_ADDRESS="10.255.4.49"
+> echo $IP_ADDRESS
+
+> sudo nano environment/kafka_vars.env
+
 > sudo ./initialize-volumes.sh
+
 > sudo docker-compose up -d
+
 > sudo docker container ls
+
 > IPSM_CONTAINER_ID=""
+> echo $IPSM_CONTAINER_ID
+
+wait 45s
+
 > sudo docker cp ~/.m2/repository/eu/inter-iot/translators/syntactic-translators/1.0/syntactic-translators-1.0.jar $IPSM_CONTAINER_ID:/usr/local/tomcat/webapps/ROOT/WEB-INF/lib; sudo docker cp ../../bridges/sensiNact/src/main/resources/intermw.properties $IPSM_CONTAINER_ID:/etc/inter-iot/intermw
-> sudo docker cp ../../bridges/universAAL/target/mw.bridge.uaal-2.3.0.jar $IPSM_CONTAINER_ID:/usr/local/tomcat/webapps/ROOT/WEB-INF/lib; sudo docker cp ../../bridges/universAAL/src/main/resources/UAALBridge.properties $IPSM_CONTAINER_ID:/etc/inter-iot/intermw
+
 > sudo docker cp ../../bridges/sensiNact/target/mw.bridge.sna-2.0.0-SNAPSHOT.jar $IPSM_CONTAINER_ID:/usr/local/tomcat/webapps/ROOT/WEB-INF/lib ; sudo docker cp ../../bridges/sensiNact/src/main/resources/SensiNactBridge.properties $IPSM_CONTAINER_ID:/etc/inter-iot/intermw
+
 > sudo docker-compose restart intermw
-> sudo docker-compose logs intermw | grep "http://inter-iot.eu/UniversAAL"
+
+wait 1mn
+
 > sudo docker-compose logs intermw | grep "http://sensinact.ddns.net/sensinact"
 
+upload alignments through
+> http://localhost:8888/swagger/#!/Alignments/post_alignments
 
-> curl -X POST "http://localhost:8083/api/mw2mw/clients" -H  "accept: application/json" -H  "Client-ID: pullclient_uAAL" -H  "Content-Type: application/json" -d "{      \"clientId\": \"pullclient_uAAL\",      \"receivingCapacity\": 1,      \"responseFormat\": \"JSON_LD\",      \"responseDelivery\": \"CLIENT_PULL\"    }"
+#clients
 
-> curl -X POST "http://localhost:8083/api/mw2mw/clients" -H  "accept: application/json" -H  "Client-ID: pullclient_sNa" -H  "Content-Type: application/json" -d "{      \"clientId\": \"pullclient_sNa\",      \"receivingCapacity\": 1,      \"responseFormat\": \"JSON_LD\",      \"responseDelivery\": \"CLIENT_PULL\"    }"
+> curl -X POST "http://localhost:8083/api/mw2mw/clients" -H  "accept: application/json" -H  "Client-ID: pullclient_sNa_source" -H  "Content-Type: application/json" -d "{      \"clientId\": \"pullclient_sNa_source\",      \"receivingCapacity\": 1,      \"responseFormat\": \"JSON_LD\",      \"responseDelivery\": \"CLIENT_PULL\"    }"
 
-> curl -X POST "http://localhost:8083/api/mw2mw/clients" -H  "accept: application/json" -H  "Client-ID: forwardclient" -H  "Content-Type: application/json" -d "{      \"clientId\": \"forwardclient\",  \"callbackUrl\":\"http://10.255.3.19:8084/receiver\",        \"receivingCapacity\": 1,      \"responseFormat\": \"JSON_LD\",      \"responseDelivery\": \"SERVER_PUSH\"    }"
+> curl -X POST "http://localhost:8083/api/mw2mw/clients" -H  "accept: application/json" -H  "Client-ID: pullclient_sNa_target" -H  "Content-Type: application/json" -d "{      \"clientId\": \"pullclient_sNa_target\",      \"receivingCapacity\": 1,      \"responseFormat\": \"JSON_LD\",      \"responseDelivery\": \"CLIENT_PULL\"    }"
 
-
-
-> curl -X POST "http://localhost:8083/api/mw2mw/platforms" -H  "accept: application/json" -H  "Client-ID: pullclient_uAAL" -H  "Content-Type: application/json" -d "{      \"platformId\": \"http://uAAL_platform\",      \"type\": \"http://inter-iot.eu/UniversAAL\",      \"baseEndpoint\": \"http://10.255.1.12:9002/uaal\",      \"location\": \"http://testbed.activage-isere.eu/PTL\",      \"name\": \"uAAL_platform\",\"encryptedPassword\": \"RemoteAPI\",\"encryptionAlgorithm\": \"RemoteAPI\",    \"downstreamOutputAlignmentName\": \"\",      \"downstreamOutputAlignmentVersion\": \"\",      \"downstreamInputAlignmentName\": \"AIOTES-universAAL-Alignment\",      \"downstreamInputAlignmentVersion\": \"2.1\",      \"upstreamInputAlignmentName\": \"universAAL-AIOTES-Alignment\",      \"upstreamInputAlignmentVersion\": \"2.0\",      \"upstreamOutputAlignmentName\": \"\",      \"upstreamOutputAlignmentVersion\": \"\"}"
-
-> curl -X POST "http://localhost:8083/api/mw2mw/platforms" -H  "accept: application/json" -H  "Client-ID: pullclient_sNa" -H  "Content-Type: application/json" -d "{      \"platformId\": \"http://sNa_platform\",      \"type\": \"http://sensinact.ddns.net/sensinact\",      \"baseEndpoint\": \"http://10.255.3.19:8082\",      \"location\": \"http://testbed.activage-isere.eu/PTL\",      \"name\": \"sNa_platform\",      \"downstreamInputAlignmentName\": \"\",      \"downstreamInputAlignmentVersion\": \"\",      \"downstreamOutputAlignmentName\": \"AIoTES2SensiNact\",      \"downstreamOutputAlignmentVersion\": \"0.7.6\",      \"upstreamOutputAlignmentName\": \"SensiNact2AIoTES\",      \"upstreamOutputAlignmentVersion\": \"0.7.6\",      \"upstreamInputAlignmentName\": \"\",      \"upstreamInputAlignmentVersion\": \"\"    }"
+> curl -X POST "http://localhost:8083/api/mw2mw/clients" -H  "accept: application/json" -H  "Client-ID: forwardclient" -H  "Content-Type: application/json" -d "{      \"clientId\": \"forwardclient\",  \"callbackUrl\":\"http://$IP_ADDRESS:8084/receiver\",        \"receivingCapacity\": 1,      \"responseFormat\": \"JSON_LD\",      \"responseDelivery\": \"SERVER_PUSH\"    }"
 
 
-> curl -X POST "http://localhost:8083/api/mw2mw/devices" -H  "accept: application/json" -H  "Client-ID:pullclient_uAAL" -H  "Content-Type: application/json" -d "{   \"devices\": [     {       \"deviceId\":\"http://testbed.activage-isere.eu/PTL#wiboBS1\",       \"hostedBy\": \"http://uAAL_platform\",  \"location\":\"http://testbed.activage-isere/PTL\",       \"name\": \"BedSensor_uAAL2\"     }   ]}"
+source
 
-#> curl -X POST "http://localhost:8083/api/mw2mw/devices" -H  "accept: application/json" -H  "Client-ID:pullclient_uAAL" -H  "Content-Type: application/json" -d "{   \"devices\": [     {       \"deviceId\":\"http://woquaz.de/uspace/demoroom#wiboBS1\",       \"hostedBy\": \"http://uAAL_platform\",  \"location\":\"http://testbed.activage-isere/PTL\",       \"name\": \"BedSensor_uAAL\"     }   ]}"
+#platforms
 
-> curl -X POST "http://localhost:8083/api/mw2mw/devices" -H  "accept: application/json" -H  "Client-ID:pullclient_sNa" -H  "Content-Type: application/json" -d "{   \"devices\": [     {       \"deviceId\":\"http://sensinact.ddns.net/PTL-Day-laying/monitor/state\",       \"hostedBy\": \"http://sNa_platform\",  \"location\":\"http://testbed.activage-isere/PTL\",       \"name\": \"BedSensor_sNa\"     }   ]}"
+> curl -X POST "http://localhost:8083/api/mw2mw/platforms" -H  "accept: application/json" -H  "Client-ID: pullclient_sNa_source" -H  "Content-Type: application/json" -d "{      \"platformId\": \"http://sNa_source_platform_8\",      \"type\": \"http://sensinact.ddns.net/sensinact\",      \"baseEndpoint\": \"http://$IP_ADDRESS:8082\",      \"location\": \"http://testbed.activage-isere.eu/PTL\",      \"name\": \"sNa_source_platform\",       \"downstreamOutputAlignmentName\": \"\",      \"downstreamOutputAlignmentVersion\": \"\",      \"downstreamInputAlignmentName\": \"AIoTES2SensiNact\",      \"downstreamInputAlignmentVersion\": \"0.7.6\",      \"upstreamInputAlignmentName\": \"SensiNact2AIoTES\",      \"upstreamInputAlignmentVersion\": \"0.7.6\",      \"upstreamOutputAlignmentName\": \"\",      \"upstreamOutputAlignmentVersion\": \"\"}"
 
 
+#devices
 
-> curl -X POST "http://localhost:8083/api/mw2mw/subscriptions" -H  "accept: application/json" -H  "Client-ID: pullclient_sNa" -H  "Content-Type: application/json" -d "{  \"deviceIds\": [    \"http://sensinact.ddns.net/PTL-Day-laying/monitor/state\"  ]}"
+> curl -X POST "http://localhost:8083/api/mw2mw/devices" -H  "accept: application/json" -H  "Client-ID:pullclient_sNa_source" -H  "Content-Type: application/json" -d "{   \"devices\": [     {       \"deviceId\":\"http://sensinact.ddns.net/PTL-Day-laying/monitor/state\",       \"hostedBy\": \"http://sNa_source_platform_8\",  \"location\":\"http://testbed.activage-isere/PTL\",       \"name\": \"BedSensor_sNa_source\"     }   ]}"
 
-#> curl -X POST "http://localhost:8083/api/mw2mw/subscriptions" -H  "accept: application/json" -H  "Client-ID: forwardclient" -H  "Content-Type: application/json" -d "{  \"deviceIds\": [    \"http://woquaz.de/uspace/demoroom#wiboBS1\"  ]}"
 
-> curl -X POST "http://localhost:8083/api/mw2mw/subscriptions" -H  "accept: application/json" -H  "Client-ID: forwardclient" -H  "Content-Type: application/json" -d "{  \"deviceIds\": [    \"http://testbed.activage-isere.eu/PTL#wiboBS1\"  ]}"
+#subscriptions
+
+> curl -X POST "http://localhost:8083/api/mw2mw/subscriptions" -H  "accept: application/json" -H  "Client-ID: forwardclient" -H  "Content-Type: application/json" -d "{  \"deviceIds\": [    \"http://sensinact.ddns.net/PTL-Day-laying/monitor/state\"  ]}"
+
+
+target
+
+#platforms
+
+> curl -X POST "http://localhost:8083/api/mw2mw/platforms" -H  "accept: application/json" -H  "Client-ID: pullclient_sNa_target" -H  "Content-Type: application/json" -d "{      \"platformId\": \"http://sNa_target_platform_8\",      \"type\": \"http://sensinact.ddns.net/sensinact\",      \"baseEndpoint\": \"http://$IP_ADDRESS:8081\",      \"location\": \"http://testbed.activage-isere.eu/PTL\",      \"name\": \"sNa_target_platform\",      \"downstreamInputAlignmentName\": \"\",      \"downstreamInputAlignmentVersion\": \"\",      \"downstreamOutputAlignmentName\": \"AIoTES2SensiNact\",      \"downstreamOutputAlignmentVersion\": \"0.7.6\",      \"upstreamOutputAlignmentName\": \"SensiNact2AIoTES\",      \"upstreamOutputAlignmentVersion\": \"0.7.6\",      \"upstreamInputAlignmentName\": \"\",      \"upstreamInputAlignmentVersion\": \"\"    }"
+
+#devices
+
+> curl -X POST "http://localhost:8083/api/mw2mw/devices" -H  "accept: application/json" -H  "Client-ID:pullclient_sNa_target" -H  "Content-Type: application/json" -d "{   \"devices\": [     {       \"deviceId\":\"http://sensinact.ddns.net/PTL-Day-laying-target/monitor/state\",       \"hostedBy\": \"http://sNa_target_platform_8\",  \"location\":\"http://testbed.activage-isere/PTL\",       \"name\": \"BedSensor_sNa_target\"     }   ]}"
+
+Test data flow sensiNact source -> SIL -> sensiNact target
+
+clic button
+
+check bed sensor function state in sensiNact source platform
+> curl -X GET --header 'Accept: application/json' 'http://localhost:8082/sensinact/providers/PTL-Day-laying/services/monitor/resources/state/GET'
+{
+  "response": {
+    "name": "state",
+    "type": "boolean",
+    "value": false,
+    "timestamp": 1582025426995
+  },
+  "type": "GET_RESPONSE",
+  "uri": "/PTL-Day-laying/monitor/state",
+  "statusCode": 200
+}
+
+check bed sensor function state in sensiNact target platform
+> curl -X GET --header 'Accept: application/json' 'http://localhost:8081/sensinact/providers/PTL-Day-laying-target/services/monitor/resources/state/GET'
+{
+  "response": {
+    "name": "state",
+    "type": "boolean",
+    "value": false,
+    "timestamp": 1582025428006
+  },
+  "type": "GET_RESPONSE",
+  "uri": "/PTL-Day-laying-target/monitor/state",
+  "statusCode": 200
+}
+
+

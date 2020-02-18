@@ -44,7 +44,6 @@ public class SensinactInterfaceV1Test {
         config.setHost("sensinact.ddns.net");
         config.setHttpPort("80");
         config.setVersion("v1");
-        config.setWebSocketPort("8092");
         config.setProtocol("http");
         config.setMaxDeviceNumber("30");
         sensinact=SensinactFactory.createInstance(config);

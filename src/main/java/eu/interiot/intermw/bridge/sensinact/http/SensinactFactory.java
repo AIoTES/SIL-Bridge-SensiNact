@@ -27,22 +27,20 @@ public class SensinactFactory {
 
     private SensinactFactory(){};
 
-    public static SensinactAPI createInstance(SensinactConfig config) throws Exception{
+    public static SensinactAPI createInstance(final SensinactConfig config) throws Exception{
 
         SensinactAPI sensinact;
 
-        if(config.getVersion().equals("v1")){
-            sensinact = new SensinactCommunicationBridgeV1();
-        }else if(config.getVersion().equals("v2")){
-            sensinact = new SensinactCommunicationBridgeV2();
-        }else {
-            throw new Exception(String.format("Sensinact API version %s is invalid",config.getVersion()));
+        switch (config.getVersion()) {
+            case "v1":
+                sensinact = new SensinactCommunicationBridgeV1(config);
+                break;
+            case "v2":
+                sensinact = new SensinactCommunicationBridgeV2(config);
+                break;
+            default:
+                throw new Exception(String.format("Sensinact API version %s is invalid",config.getVersion()));
         }
-
-        sensinact.setConfig(config);
-
         return sensinact;
-
     }
-
 }

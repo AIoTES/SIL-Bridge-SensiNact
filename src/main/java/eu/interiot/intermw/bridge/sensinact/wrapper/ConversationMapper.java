@@ -26,49 +26,50 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * This mapper keeps track on what device subscription is associated with what conversation
+ * This mapper keeps track on what device subscription is associated with what
+ * conversation
  */
 public class ConversationMapper {
 
-    private Map<String,Set<String>> map=new HashMap<>();
+    private Map<String, Set<String>> map = new HashMap<>();
 
-    public void subscriptionsPut(String deviceId,String conversationId){
+    public void subscriptionsPut(String deviceId, String conversationId) {
 
-        Set<String> conversations=map.get(deviceId);
+        Set<String> conversations = map.get(deviceId);
 
-        if(conversations==null){
-            conversations=new HashSet<>();
-            map.put(deviceId,conversations);
+        if (conversations == null) {
+            conversations = new HashSet<>();
+            map.put(deviceId, conversations);
         }
 
         conversations.add(conversationId);
 
     }
 
-    public void subscriptionsPut(List<String> deviceIds, String conversationId){
+    public void subscriptionsPut(List<String> deviceIds, String conversationId) {
 
-        for(String deviceId:deviceIds){
-            subscriptionsPut(deviceId,conversationId);
+        for (String deviceId : deviceIds) {
+            subscriptionsPut(deviceId, conversationId);
         }
 
     }
 
-    public Set<String> subscriptionsGet(String deviceId){
-        Set<String> conversationId=map.get(deviceId);
+    public Set<String> subscriptionsGet(String deviceId) {
+        Set<String> conversationId = map.get(deviceId);
 
-        if(conversationId==null){
+        if (conversationId == null) {
             return Collections.emptySet();
-        }else {
+        } else {
             return conversationId;
         }
 
     }
 
-    public Set<String> subscriptionGetList(Set<String> deviceIds){
+    public Set<String> subscriptionGetList(Set<String> deviceIds) {
 
-        Set<String> conversationIds=new HashSet<String>();
+        Set<String> conversationIds = new HashSet<String>();
 
-        for(String deviceid:deviceIds){
+        for (String deviceid : deviceIds) {
             conversationIds.addAll(subscriptionsGet(deviceid));
         };
 
@@ -76,14 +77,15 @@ public class ConversationMapper {
 
     }
 
-    public void removeConversation(String conversationId){
-        for(Map.Entry<String,Set<String>> entries:map.entrySet()){
+    public void removeConversation(String conversationId) {
+        for (Map.Entry<String, Set<String>> entries : map.entrySet()) {
 
-            Set<String> removeSet=new HashSet<>();
+            Set<String> removeSet = new HashSet<>();
 
-            for(String conversation:entries.getValue()){
-                if(conversationId.equals(conversation))
+            for (String conversation : entries.getValue()) {
+                if (conversationId.equals(conversation)) {
                     removeSet.add(conversation);
+                }
             }
             map.get(entries.getKey()).removeAll(removeSet);
         }

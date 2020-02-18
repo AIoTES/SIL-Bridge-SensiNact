@@ -26,6 +26,7 @@ import eu.interiot.intermw.bridge.sensinact.fetcher.WebSocketModelRecoverListene
 import eu.interiot.intermw.bridge.sensinact.http.HTTP;
 import eu.interiot.intermw.bridge.sensinact.http.model.SensinactConfig;
 import eu.interiot.intermw.bridge.sensinact.http.ws.SensinactWebSocketConnectionManager;
+import eu.interiot.intermw.bridge.sensinact.v2.SensinactCommunicationBridgeV2;
 import eu.interiot.intermw.bridge.sensinact.wrapper.SNAResource;
 import eu.interiot.intermw.bridge.sensinact.wrapper.SensinactAPI;
 import eu.interiot.intermw.bridge.sensinact.wrapper.SubscriptionResponse;
@@ -36,6 +37,7 @@ import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -46,12 +48,13 @@ import java.util.concurrent.ScheduledExecutorService;
  * This Sensinact version is the previous Eclipse version, meaning that the only
  * the current deployment made in Japan is compatible
  */
+@Deprecated
 public class SensinactCommunicationBridgeV1 implements SensinactAPI {
 
     protected ScheduledExecutorService service = Executors.newScheduledThreadPool(1);
     private final Logger LOG = LoggerFactory.getLogger(SensinactCommunicationBridgeV1.class);
     private static final String URL = "http://%s:%s/sensinact/providers/filter?jsonpath=$..providers.%s"; //http://%s:%s/sensinact/providers/filter?jsonpath=$..providers.[0:100]
-    private SensinactConfig config;
+    private final SensinactConfig config;
     private SensinactModelRecoverListener listener;
     private SensinactSubscriptionManagerV1 sensinactSubscriptionManager;
     private SensinactWebSocketConnectionManager connectionWebSocket;
@@ -59,10 +62,14 @@ public class SensinactCommunicationBridgeV1 implements SensinactAPI {
     private static final String FUNCTION_TYPE_RESOURCE_NAME = "function-type";
     private static final String NOT_A_FUNCTION = "not-a-function";
 
+    public SensinactCommunicationBridgeV1(final SensinactConfig config) {
+        this.config = config;
+    }
+
     private void startCommunication() {
         // First polling
         //service.scheduleAtFixedRate(new SensinactJSONModelFetcherTask(),0L,5000L, TimeUnit.MILLISECONDS);
-        connectionWebSocket = new SensinactWebSocketConnectionManager(String.format("ws://%s:%d", config.getHost(), config.getWebsocketPort()).toString(), new WebSocketModelRecoverListener() {
+        connectionWebSocket = new SensinactWebSocketConnectionManager(String.format("ws://%s:%s", config.getHost(), config.getWebsocketPort()).toString(), new WebSocketModelRecoverListener() {
             @Override
             public void notify(String content) {
                 try {
@@ -206,11 +213,6 @@ public class SensinactCommunicationBridgeV1 implements SensinactAPI {
     }
 
     @Override
-    public void setConfig(SensinactConfig config) {
-        this.config = config;
-    }
-
-    @Override
     public void setListener(SensinactModelRecoverListener listener) {
         this.listener = listener;
     }
@@ -232,6 +234,16 @@ public class SensinactCommunicationBridgeV1 implements SensinactAPI {
     @Override
     public void disconnect() {
         stopCommunication();
+    }
+
+    @Override
+    public String getBaseEndpoint() {
+        return config.getBaseEndpoint();
+     }
+    
+    @Override
+    public String getName() {
+        return config.getName();
     }
 
     /**

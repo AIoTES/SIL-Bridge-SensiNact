@@ -19,7 +19,6 @@
 package eu.interiot.intermw.bridge.sensinact.wrapper;
 
 import eu.interiot.intermw.bridge.sensinact.fetcher.SensinactModelRecoverListener;
-import eu.interiot.intermw.bridge.sensinact.http.model.SensinactConfig;
 import java.text.MessageFormat;
 
 import java.util.List;
@@ -36,6 +35,18 @@ public interface SensinactAPI {
     static final String UNKNOWN_USER = "unknown user";
     static final String NO_CALLBACK = "";
     
+    /**
+     * getter for the name of this sensiNact platform instance.
+     * @return the name of this sensiNact platform instance.
+     */
+    String getName();
+    
+    /**
+     * getter for the base endpoint of this sensiNact platform instance.
+     * @return the base endpoint of this sensiNact platform instance.
+     */
+    String getBaseEndpoint();
+    
     SubscriptionResponse subscribe(String resourceURI) throws Exception;
     
     SubscriptionResponse subscribe(String provider, String service, String resource) throws Exception;
@@ -51,8 +62,6 @@ public interface SensinactAPI {
     List<SNAResource> listResources();
 
     void act(String provider, String service, String resource) throws Exception;
-
-    void setConfig(SensinactConfig config);
 
     void setListener(SensinactModelRecoverListener listener);
 

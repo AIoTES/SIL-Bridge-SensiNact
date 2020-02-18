@@ -475,14 +475,14 @@ intermw_1     |         "@id" : "http://www.w3.org/2000/01/rdf-schema#Resource"
         [
             {
             "SourceDeviceId":	  "PTL-Day-laying-monitor",  
-            "TargetDeviceId":	  "newBedSensor", 
+            "TargetDeviceId":	  "PTL-Day-laying-monitor-target", 
             "DeviceType":	  "http://purl.org/iot/vocab/m3-lite/PressureSensor",
-            "SenderPlatformId":	  "http://local-sensinact-1",
-            "ReceiverPlatformId": "http://local-sensinact-1",
+            "SenderPlatformId":	  "http://sNa_platform_8",
+            "ReceiverPlatformId": "http://sNa_platform_8",
             }
         ],
     "serverURI": "http://localhost:8083/api/mw2mw/requests",
-    "clientId":	"push"
+    "clientId":	"forwardclient"
 }
 
 > nano src/main/resources/application.properties
@@ -518,5 +518,77 @@ server.port: 8084
         5 Test bed sensor data flow sensiNact -> AIOTES -> sensiNact
         5.1 click virtual bed sensor button 
         5.2 check in sensiNact API that newBedSensor is updated
+
+
+
 > curl -X GET --header 'Accept: application/json' 'http://localhost:8082/sensinact/providers/newBedSensor/services/monitor/resources/state/GET'
-{"response":{"name":"state","type":"boolean","value":false,"timestamp":1579867115077},"type":"GET_RESPONSE","uri":"/newBedSensor/monitor/state","statusCode":200}
+{"response":{"name":"state","type":"boolean","value":false,"timestamp":1579867115077},"type":"GET_RESPONSE","uri":"/PTL-Day-laying-monitor-target/monitor/state","statusCode":200}
+
+
+> cd dev/aiotes/DT-AIOTES_docker/intermw-ipsm-deployment
+
+> sudo docker-compose down -v
+
+> sudo docker volume prune
+
+> ip address | grep eth0
+
+> IP_ADDRESS="10.255.3.19" | IP_ADDRESS="10.255.4.49"
+> echo $IP_ADDRESS
+
+> sudo nano environment/kafka_vars.env
+
+> sudo ./initialize-volumes.sh
+
+> sudo docker-compose up -d
+
+> sudo docker container ls
+
+> IPSM_CONTAINER_ID=""
+> echo $IPSM_CONTAINER_ID
+
+wait 45s
+
+> sudo docker cp ~/.m2/repository/eu/inter-iot/translators/syntactic-translators/1.0/syntactic-translators-1.0.jar $IPSM_CONTAINER_ID:/usr/local/tomcat/webapps/ROOT/WEB-INF/lib; sudo docker cp ../../bridges/sensiNact/src/main/resources/intermw.properties $IPSM_CONTAINER_ID:/etc/inter-iot/intermw
+
+> sudo docker cp ../../bridges/sensiNact/target/mw.bridge.sna-2.0.0-SNAPSHOT.jar $IPSM_CONTAINER_ID:/usr/local/tomcat/webapps/ROOT/WEB-INF/lib ; sudo docker cp ../../bridges/sensiNact/src/main/resources/SensiNactBridge.properties $IPSM_CONTAINER_ID:/etc/inter-iot/intermw
+
+> sudo docker-compose restart intermw
+
+wait 1mn
+
+> sudo docker-compose logs intermw | grep "http://sensinact.ddns.net/sensinact"
+
+upload alignments through
+> http://localhost:8888/swagger/#!/Alignments/post_alignments
+
+#clients
+
+> curl -X POST "http://localhost:8083/api/mw2mw/clients" -H  "accept: application/json" -H  "Client-ID: pullclient_sNa_source" -H  "Content-Type: application/json" -d "{      \"clientId\": \"pullclient_sNa_source\",      \"receivingCapacity\": 1,      \"responseFormat\": \"JSON_LD\",      \"responseDelivery\": \"CLIENT_PULL\"    }"
+
+> curl -X POST "http://localhost:8083/api/mw2mw/clients" -H  "accept: application/json" -H  "Client-ID: pullclient_sNa_target" -H  "Content-Type: application/json" -d "{      \"clientId\": \"pullclient_sNa_target\",      \"receivingCapacity\": 1,      \"responseFormat\": \"JSON_LD\",      \"responseDelivery\": \"CLIENT_PULL\"    }"
+
+> curl -X POST "http://localhost:8083/api/mw2mw/clients" -H  "accept: application/json" -H  "Client-ID: forwardclient" -H  "Content-Type: application/json" -d "{      \"clientId\": \"forwardclient\",  \"callbackUrl\":\"http://$IP_ADDRESS:8084/receiver\",        \"receivingCapacity\": 1,      \"responseFormat\": \"JSON_LD\",      \"responseDelivery\": \"SERVER_PUSH\"    }"
+
+
+source
+
+#platforms
+
+> curl -X POST "http://localhost:8083/api/mw2mw/platforms" -H  "accept: application/json" -H  "Client-ID: pullclient_sNa_source" -H  "Content-Type: application/json" -d "{      \"platformId\": \"http://sNa_platform_8\",      \"type\": \"http://sensinact.ddns.net/sensinact\",      \"baseEndpoint\": \"http://$IP_ADDRESS:8082\",      \"location\": \"http://testbed.activage-isere.eu/PTL\",      \"name\": \"sNa_platform\",       \"downstreamInputAlignmentName\": \"\",      \"downstreamInputAlignmentVersion\": \"\",      \"downstreamOutputAlignmentName\": \"AIoTES2SensiNact\",      \"downstreamOutputAlignmentVersion\": \"0.7.6\",      \"upstreamInputAlignmentName\": \"SensiNact2AIoTES\",      \"upstreamInputAlignmentVersion\": \"0.7.6\",      \"upstreamOutputAlignmentName\": \"\",      \"upstreamOutputAlignmentVersion\": \"\"}"
+
+
+#devices
+
+> curl -X POST "http://localhost:8083/api/mw2mw/devices" -H  "accept: application/json" -H  "Client-ID:pullclient_sNa_source" -H  "Content-Type: application/json" -d "{   \"devices\": [     {       \"deviceId\":\"http://sensinact.ddns.net/PTL-Day-laying/monitor/state\",       \"hostedBy\": \"http://sNa_platform_8\",  \"location\":\"http://testbed.activage-isere/PTL\",       \"name\": \"BedSensor_sNa_source\"     }   ]}"
+
+
+#subscriptions
+
+> curl -X POST "http://localhost:8083/api/mw2mw/subscriptions" -H  "accept: application/json" -H  "Client-ID: forwardclient" -H  "Content-Type: application/json" -d "{  \"deviceIds\": [    \"http://sensinact.ddns.net/PTL-Day-laying/monitor/state\"  ]}"
+
+
+
+#devices
+
+> curl -X POST "http://localhost:8083/api/mw2mw/devices" -H  "accept: application/json" -H  "Client-ID:pullclient_sNa_target" -H  "Content-Type: application/json" -d "{   \"devices\": [     {       \"deviceId\":\"http://sensinact.ddns.net/PTL-Day-laying-target/monitor/state\",       \"hostedBy\": \"http://sNa_platform_8\",  \"location\":\"http://testbed.activage-isere/PTL\",       \"name\": \"BedSensor_sNa_target\"     }   ]}"
