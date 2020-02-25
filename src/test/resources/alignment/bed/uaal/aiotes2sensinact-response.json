@@ -1,0 +1,195 @@
+{
+  "@graph" : [ {
+    "@graph" : [ {
+      "@id" : "msg:meta/7cc9fbc9-75c0-4fa7-b729-60da4f1de4c8",
+      "msg:ReceiverPlatformId" : {
+        "@id" : "http://sNa_target_platform_1"
+      },
+      "msg:conversationID" : "conv8407136e-7df8-4e3c-bec4-0be0c2afd965",
+      "msg:dateTimeStamp" : "2020-02-25T12:03:13.120Z",
+      "msg:messageID" : "msg2b375303-75b6-48af-af97-341a71aea3af",
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
+        "@id" : "_:b10"
+      }, {
+        "@id" : "msg:Observation"
+      }, {
+        "@id" : "msg:meta"
+      } ]
+    } ],
+    "@id" : "msg:metadata"
+  }, {
+    "@graph" : [ {
+      "@id" : "_:b2",
+      "http://sensinact.com#dateTimestamp" : "2020-01-15T17:00:04.215+01:00",
+      "http://sensinact.com#name" : "state",
+      "http://sensinact.com#provider" : "PTL-Day-laying-monitor",
+      "http://sensinact.com#service" : "monitor",
+      "http://sensinact.com#type" : "DAY_LAYING",
+      "http://sensinact.com#value" : "true",
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
+        "@id" : "http://sensinact.com#Resource"
+      }, {
+        "@id" : "http://sensinact.com#BedOccupancyResource"
+      } ]
+    }, {
+      "@id" : "http://ontology.universAAL.org/Context.owl#gauge",
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : {
+        "@id" : "http://ontology.universAAL.org/Context.owl#ContextProviderType"
+      }
+    }, {
+      "@id" : "http://ontology.universAAL.org/Location.owl#BathRoom",
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : {
+        "@id" : "http://ontology.universAAL.org/Location.owl#RoomFunction"
+      }
+    }, {
+      "@id" : "http://ontology.universAAL.org/Location.owl#SleepingRoom",
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : {
+        "@id" : "http://ontology.universAAL.org/Location.owl#RoomFunction"
+      }
+    }, {
+      "@id" : "http://org.universAAL.uSpace.woquaz.de/demoHome#BathRoom",
+      "http://ontology.universAAL.org/Location.owl#hasName" : "Badezimmer",
+      "http://ontology.universAAL.org/Location.owl#isConnectedTo" : {
+        "@list" : [ {
+          "@id" : "http://org.universAAL.uSpace.woquaz.de/demoHome#Hallway"
+        } ]
+      },
+      "http://ontology.universAAL.org/Location.owl#isContainedIn" : {
+        "@id" : "urn:org.universAAL.uSpace:woquaz.de/demoHome"
+      },
+      "http://ontology.universAAL.org/Location.owl#roomFunction" : {
+        "@id" : "http://ontology.universAAL.org/Location.owl#BathRoom"
+      },
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
+        "@id" : "http://ontology.universAAL.org/Location.owl#Place"
+      }, {
+        "@id" : "http://ontology.universAAL.org/Location.owl#Location"
+      }, {
+        "@id" : "http://ontology.universAAL.org/Location.owl#HomeArea"
+      }, {
+        "@id" : "http://ontology.universAAL.org/Location.owl#Room"
+      } ]
+    }, {
+      "@id" : "http://org.universAAL.uSpace.woquaz.de/demoHome#BedRoom",
+      "http://ontology.universAAL.org/Location.owl#hasName" : "Schlafzimmer",
+      "http://ontology.universAAL.org/Location.owl#isConnectedTo" : {
+        "@list" : [ {
+          "@id" : "http://org.universAAL.uSpace.woquaz.de/demoHome#Hallway"
+        } ]
+      },
+      "http://ontology.universAAL.org/Location.owl#isContainedIn" : {
+        "@id" : "urn:org.universAAL.uSpace:woquaz.de/demoHome"
+      },
+      "http://ontology.universAAL.org/Location.owl#roomFunction" : {
+        "@id" : "http://ontology.universAAL.org/Location.owl#SleepingRoom"
+      },
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
+        "@id" : "http://ontology.universAAL.org/Location.owl#Place"
+      }, {
+        "@id" : "http://ontology.universAAL.org/Location.owl#Location"
+      }, {
+        "@id" : "http://ontology.universAAL.org/Location.owl#HomeArea"
+      }, {
+        "@id" : "http://ontology.universAAL.org/Location.owl#Room"
+      } ]
+    }, {
+      "@id" : "http://org.universAAL.uSpace.woquaz.de/demoHome#Hallway",
+      "http://ontology.universAAL.org/Location.owl#hasName" : "Diele",
+      "http://ontology.universAAL.org/Location.owl#isConnectedTo" : {
+        "@list" : [ {
+          "@id" : "http://org.universAAL.uSpace.woquaz.de/demoHome#BathRoom"
+        }, {
+          "@id" : "http://org.universAAL.uSpace.woquaz.de/demoHome#BedRoom"
+        }, {
+          "@id" : "urn:org.universAAL.uSpace:WoQuaZ.de/Basement#Corridor"
+        } ]
+      },
+      "http://ontology.universAAL.org/Location.owl#isContainedIn" : {
+        "@id" : "urn:org.universAAL.uSpace:woquaz.de/demoHome"
+      },
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
+        "@id" : "http://ontology.universAAL.org/Location.owl#Place"
+      }, {
+        "@id" : "http://ontology.universAAL.org/Location.owl#Location"
+      }, {
+        "@id" : "http://ontology.universAAL.org/Location.owl#HomeArea"
+      }, {
+        "@id" : "http://ontology.universAAL.org/Location.owl#EntranceHall"
+      } ]
+    }, {
+      "@id" : "http://sensinact.ddns.net/PTL-Day-laying/monitor/state",
+      "http://ontology.universAAL.org/PhThing.owl#hasLocation" : {
+        "@id" : "http://org.universAAL.uSpace.woquaz.de/demoHome#BedRoom"
+      },
+      "http://ontology.universAAL_IoT.org/BedOntology.owl#occupied" : {
+        "@type" : "http://www.w3.org/2001/XMLSchema#boolean",
+        "@value" : "true"
+      },
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
+        "@id" : "http://purl.org/iot/vocab/m3-litePressureSensor"
+      }, {
+        "@id" : "http://ontology.universAAL.org/PhThing.owl#PhysicalThing"
+      }, {
+        "@id" : "http://ontology.universAAL.org/PhThing.owl#Device"
+      } ],
+      "sosa:isHostedBy" : {
+        "@id" : "java:de.fhg.igd.slbt.universAAL.ci.sensor.bed.BedSensorIntegrator:OSGI#org.universAAL.middleware.container.osgi.OSGiModuleContext@1aba007"
+      }
+    }, {
+      "@id" : "java:de.fhg.igd.slbt.universAAL.ci.sensor.bed.BedSensorIntegrator:OSGI#org.universAAL.middleware.container.osgi.OSGiModuleContext@1aba007",
+      "http://ontology.universAAL.org/Context.owl#hasType" : {
+        "@id" : "http://ontology.universAAL.org/Context.owl#gauge"
+      },
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
+        "@id" : "InterIoT:medex#Gauge"
+      }, {
+        "@id" : "sosa:Platform"
+      } ]
+    }, {
+      "@id" : "urn:org.universAAL.uSpace:WoQuaZ.de/Basement#Corridor",
+      "http://ontology.universAAL.org/Location.owl#isConnectedTo" : {
+        "@list" : [ {
+          "@id" : "http://org.universAAL.uSpace.woquaz.de/demoHome#Hallway"
+        } ]
+      },
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
+        "@id" : "http://ontology.universAAL.org/Location.owl#Place"
+      }, {
+        "@id" : "http://ontology.universAAL.org/Location.owl#Location"
+      }, {
+        "@id" : "http://ontology.universAAL.org/Location.owl#HomeArea"
+      }, {
+        "@id" : "http://ontology.universAAL.org/Location.owl#Corridor"
+      } ]
+    }, {
+      "@id" : "urn:org.universAAL.uSpace:woquaz.de/demoHome",
+      "http://ontology.universAAL.org/Location.owl#contains" : {
+        "@list" : [ {
+          "@id" : "http://org.universAAL.uSpace.woquaz.de/demoHome#BedRoom"
+        }, {
+          "@id" : "http://org.universAAL.uSpace.woquaz.de/demoHome#Hallway"
+        }, {
+          "@id" : "http://org.universAAL.uSpace.woquaz.de/demoHome#BathRoom"
+        } ]
+      },
+      "http://ontology.universAAL.org/Location.owl#hasName" : "Demo-Wohnraum",
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
+        "@id" : "http://ontology.universAAL.org/Location.owl#Place"
+      }, {
+        "@id" : "http://ontology.universAAL.org/Location.owl#Location"
+      }, {
+        "@id" : "http://ontology.universAAL.org/Location.owl#Home"
+      } ]
+    } ],
+    "@id" : "msg:payload"
+  } ],
+  "@context" : {
+    "msg" : "http://inter-iot.eu/message/",
+    "iiotex" : "http://inter-iot.eu/GOIoTPex#",
+    "geosparql" : "http://www.opengis.net/ont/geosparql#",
+    "iiot" : "http://inter-iot.eu/GOIoTP#",
+    "InterIoT" : "http://inter-iot.eu/",
+    "ssn" : "http://www.w3.org/ns/ssn/",
+    "sosa" : "http://www.w3.org/ns/sosa/"
+  }
+}
