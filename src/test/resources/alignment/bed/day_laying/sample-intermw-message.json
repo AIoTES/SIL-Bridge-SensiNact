@@ -46,7 +46,7 @@
             "@id": "_:b3"
           },
           "sosa:observedProperty": "PTL-Day-laying-monitor",
-          "sosa:phenomenomTime": {
+          "sosa:phenomenonTime": {
             "@id": "_:b0"
           },
           "ssn:hasResult": {
