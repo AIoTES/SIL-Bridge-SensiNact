@@ -524,6 +524,7 @@ server.port: 8084
 > curl -X GET --header 'Accept: application/json' 'http://localhost:8082/sensinact/providers/newBedSensor/services/monitor/resources/state/GET'
 {"response":{"name":"state","type":"boolean","value":false,"timestamp":1579867115077},"type":"GET_RESPONSE","uri":"/PTL-Day-laying-monitor-target/monitor/state","statusCode":200}
 
+Script:
 
 > cd dev/aiotes/DT-AIOTES_docker/intermw-ipsm-deployment
 
@@ -575,13 +576,17 @@ source
 
 #platforms
 
-> curl -X POST "http://localhost:8083/api/mw2mw/platforms" -H  "accept: application/json" -H  "Client-ID: pullclient_sNa_source" -H  "Content-Type: application/json" -d "{      \"platformId\": \"http://sNa_platform_8\",      \"type\": \"http://sensinact.ddns.net/sensinact\",      \"baseEndpoint\": \"http://$IP_ADDRESS:8082\",      \"location\": \"http://testbed.activage-isere.eu/PTL\",      \"name\": \"sNa_platform\",       \"downstreamInputAlignmentName\": \"\",      \"downstreamInputAlignmentVersion\": \"\",      \"downstreamOutputAlignmentName\": \"AIoTES2SensiNact\",      \"downstreamOutputAlignmentVersion\": \"0.7.6\",      \"upstreamInputAlignmentName\": \"SensiNact2AIoTES\",      \"upstreamInputAlignmentVersion\": \"0.7.6\",      \"upstreamOutputAlignmentName\": \"\",      \"upstreamOutputAlignmentVersion\": \"\"}"
+> curl -X POST "http://localhost:8083/api/mw2mw/platforms" -H  "accept: application/json" -H  "Client-ID: pullclient_sNa_source" -H  "Content-Type: application/json" -d "{      \"platformId\": \"http://sNa_platform_1\",      \"type\": \"http://sensinact.ddns.net/sensinact\",      \"baseEndpoint\": \"http://$IP_ADDRESS:8082\",      \"location\": \"http://testbed.activage-isere.eu/PTL\",      \"name\": \"sNa_platform\",       \"downstreamInputAlignmentName\": \"\",      \"downstreamInputAlignmentVersion\": \"\",      \"downstreamOutputAlignmentName\": \"AIoTES2SensiNact\",      \"downstreamOutputAlignmentVersion\": \"0.7.7\",      \"upstreamInputAlignmentName\": \"SensiNact2AIoTES\",      \"upstreamInputAlignmentVersion\": \"0.7.7\",      \"upstreamOutputAlignmentName\": \"\",      \"upstreamOutputAlignmentVersion\": \"\"}"
+
 
 
 #devices
 
-> curl -X POST "http://localhost:8083/api/mw2mw/devices" -H  "accept: application/json" -H  "Client-ID:pullclient_sNa_source" -H  "Content-Type: application/json" -d "{   \"devices\": [     {       \"deviceId\":\"http://sensinact.ddns.net/PTL-Day-laying/monitor/state\",       \"hostedBy\": \"http://sNa_platform_8\",  \"location\":\"http://testbed.activage-isere/PTL\",       \"name\": \"BedSensor_sNa_source\"     }   ]}"
+> curl -X POST "http://localhost:8083/api/mw2mw/devices" -H  "accept: application/json" -H  "Client-ID:pullclient_sNa_source" -H  "Content-Type: application/json" -d "{   \"devices\": [     {       \"deviceId\":\"http://sensinact.ddns.net/PTL-Day-laying/monitor/state\",       \"hostedBy\": \"http://sNa_platform_1\",  \"location\":\"http://testbed.activage-isere/PTL\",       \"name\": \"BedSensor_sNa_source\"     }   ]}"
 
+#receiver
+
+start sna_receiver
 
 #subscriptions
 
@@ -591,4 +596,4 @@ source
 
 #devices
 
-> curl -X POST "http://localhost:8083/api/mw2mw/devices" -H  "accept: application/json" -H  "Client-ID:pullclient_sNa_target" -H  "Content-Type: application/json" -d "{   \"devices\": [     {       \"deviceId\":\"http://sensinact.ddns.net/PTL-Day-laying-target/monitor/state\",       \"hostedBy\": \"http://sNa_platform_8\",  \"location\":\"http://testbed.activage-isere/PTL\",       \"name\": \"BedSensor_sNa_target\"     }   ]}"
+> curl -X POST "http://localhost:8083/api/mw2mw/devices" -H  "accept: application/json" -H  "Client-ID:pullclient_sNa_target" -H  "Content-Type: application/json" -d "{   \"devices\": [     {       \"deviceId\":\"http://sensinact.ddns.net/PTL-Day-laying-target/monitor/state\",       \"hostedBy\": \"http://sNa_platform_1\",  \"location\":\"http://testbed.activage-isere/PTL\",       \"name\": \"BedSensor_sNa_target\"     }   ]}"
