@@ -161,7 +161,7 @@ intermw_1     | 14:24:30.459 [localhost-startStop-1] DEBUG eu.interiot.intermw.b
           check result:
           web-browser> Response Body=
 {
-  "message": "Alignment with AlignmentID(SensiNact2AIoTES,0.7.5) uploaded successfully"
+  "message": "Alignment with AlignmentID(SensiNact2AIoTES,0.7.7) uploaded successfully"
 }
           web-browser> Response Code= 201
 
@@ -173,7 +173,7 @@ intermw_1     | 14:24:30.459 [localhost-startStop-1] DEBUG eu.interiot.intermw.b
           check result:
           web-browser> Response Body=
 {
-  "message": "Alignment with AlignmentID(AIoTES2SensiNact,0.7.5) uploaded successfully"
+  "message": "Alignment with AlignmentID(AIoTES2SensiNact,0.7.7) uploaded successfully"
 }
           web-browser> Response Code= 201
 
@@ -250,9 +250,9 @@ intermw_1     | 14:24:30.459 [localhost-startStop-1] DEBUG eu.interiot.intermw.b
       "downstreamInputAlignmentName": "",
       "downstreamInputAlignmentVersion": "",
       "downstreamOutputAlignmentName": "AIoTES2SensiNact",
-      "downstreamOutputAlignmentVersion": "0.7.5",
+      "downstreamOutputAlignmentVersion": "0.7.7",
       "upstreamInputAlignmentName": "SensiNact2AIoTES",
-      "upstreamInputAlignmentVersion": "0.7.5",
+      "upstreamInputAlignmentVersion": "0.7.7",
       "upstreamOutputAlignmentName": "",
       "upstreamOutputAlignmentVersion": ""
     }
