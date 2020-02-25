@@ -116,7 +116,7 @@ intermw_1     | 14:24:30.459 [localhost-startStop-1] DEBUG eu.interiot.intermw.b
           check result:
           web-browser> Response Body=
 {
-  "message": "Alignment with AlignmentID(AIOTES2SensiNact,0.7.5) uploaded successfully"
+  "message": "Alignment with AlignmentID(AIOTES2SensiNact,0.7.7) uploaded successfully"
 }
           web-browser> Response Code=    201
 
@@ -129,7 +129,7 @@ intermw_1     | 14:24:30.459 [localhost-startStop-1] DEBUG eu.interiot.intermw.b
           check result:
           web-browser> Response Body=
 {
-  "message": "Alignment with AlignmentID(SensiNact2AIOTES,0.7.5) uploaded successfully"
+  "message": "Alignment with AlignmentID(SensiNact2AIOTES,0.7.7) uploaded successfully"
 }
           web-browser> Response Code=    201
           check alignments:
@@ -147,10 +147,10 @@ intermw_1     | 14:24:30.459 [localhost-startStop-1] DEBUG eu.interiot.intermw.b
     "description": "Downstream Alignment between ACTIVAGE ontology and sensiNact AHA ontology",
     "creator": "CEA Stephane Bergeon",
     "targetOntologyURI": "http://sensinact.com#",
-    "version": "0.7.5",
+    "version": "0.7.7",
     "id": 1,
     "date": 1579861818618,
-    "descId": "[AIoTES2SensiNact] [0.7.5] : http://inter-iot.eu/GOIoTPex# -> http://sensinact.com#"
+    "descId": "[AIoTES2SensiNact] [0.7.7] : http://inter-iot.eu/GOIoTPex# -> http://sensinact.com#"
   },
   {
     "name": "SensiNact2AIoTES",
@@ -158,10 +158,10 @@ intermw_1     | 14:24:30.459 [localhost-startStop-1] DEBUG eu.interiot.intermw.b
     "description": "Upstream alignment between sensiNact AHA ontology and ACTIVAGE ontology.",
     "creator": "CEA Stephane Bergeon",
     "targetOntologyURI": "http://inter-iot.eu/GOIoTPex#",
-    "version": "0.7.5",
+    "version": "0.7.7",
     "id": 2,
     "date": 1579861827552,
-    "descId": "[SensiNact2AIoTES] [0.7.5] : http://sensinact.com# -> http://inter-iot.eu/GOIoTPex#"
+    "descId": "[SensiNact2AIoTES] [0.7.7] : http://sensinact.com# -> http://inter-iot.eu/GOIoTPex#"
   }
 ]
           web-browser> Response Code=   200
@@ -203,7 +203,7 @@ intermw_1     | 14:24:30.459 [localhost-startStop-1] DEBUG eu.interiot.intermw.b
     ]
 
        3.3 Register platform
-> curl -X POST "http://localhost:8083/api/mw2mw/platforms" -H  "accept: application/json" -H  "Client-ID: client" -H  "Content-Type: application/json" -d "{      \"platformId\": \"http://local-sensinact-1\",      \"type\": \"http://sensinact.ddns.net/sensinact\",      \"baseEndpoint\": \"http://10.255.4.49:8082\",      \"location\": \"http://local-1\",      \"name\": \"local-sensinact-1\",      \"downstreamInputAlignmentName\": \"\",      \"downstreamInputAlignmentVersion\": \"\",      \"downstreamOutputAlignmentName\": \"AIoTES2SensiNact\",      \"downstreamOutputAlignmentVersion\": \"0.7.5\",      \"upstreamInputAlignmentName\": \"SensiNact2AIoTES\",      \"upstreamInputAlignmentVersion\": \"0.7.5\",      \"upstreamOutputAlignmentName\": \"\",      \"upstreamOutputAlignmentVersion\": \"\"    }"
+> curl -X POST "http://localhost:8083/api/mw2mw/platforms" -H  "accept: application/json" -H  "Client-ID: client" -H  "Content-Type: application/json" -d "{      \"platformId\": \"http://local-sensinact-1\",      \"type\": \"http://sensinact.ddns.net/sensinact\",      \"baseEndpoint\": \"http://10.255.4.49:8082\",      \"location\": \"http://local-1\",      \"name\": \"local-sensinact-1\",      \"downstreamInputAlignmentName\": \"\",      \"downstreamInputAlignmentVersion\": \"\",      \"downstreamOutputAlignmentName\": \"AIoTES2SensiNact\",      \"downstreamOutputAlignmentVersion\": \"0.7.7\",      \"upstreamInputAlignmentName\": \"SensiNact2AIoTES\",      \"upstreamInputAlignmentVersion\": \"0.7.7\",      \"upstreamOutputAlignmentName\": \"\",      \"upstreamOutputAlignmentVersion\": \"\"    }"
 
           web-browser> http://localhost:8083/swagger/#/Platforms/registerPlatform
           web-browser> Try it out
@@ -218,9 +218,9 @@ intermw_1     | 14:24:30.459 [localhost-startStop-1] DEBUG eu.interiot.intermw.b
       "downstreamInputAlignmentName": "",
       "downstreamInputAlignmentVersion": "",
       "downstreamOutputAlignmentName": "AIoTES2SensiNact",
-      "downstreamOutputAlignmentVersion": "0.7.5",
+      "downstreamOutputAlignmentVersion": "0.7.7",
       "upstreamInputAlignmentName": "SensiNact2AIoTES",
-      "upstreamInputAlignmentVersion": "0.7.5",
+      "upstreamInputAlignmentVersion": "0.7.7",
       "upstreamOutputAlignmentName": "",
       "upstreamOutputAlignmentVersion": ""
     }
@@ -255,9 +255,9 @@ intermw_1     | 14:24:30.459 [localhost-startStop-1] DEBUG eu.interiot.intermw.b
     "downstreamInputAlignmentName": "",
     "downstreamInputAlignmentVersion": "",
     "downstreamOutputAlignmentName": "AIoTES2SensiNact",
-    "downstreamOutputAlignmentVersion": "0.7.5",
+    "downstreamOutputAlignmentVersion": "0.7.7",
     "upstreamInputAlignmentName": "SensiNact2AIoTES",
-    "upstreamInputAlignmentVersion": "0.7.5",
+    "upstreamInputAlignmentVersion": "0.7.7",
     "upstreamOutputAlignmentName": "",
     "upstreamOutputAlignmentVersion": ""
   }
@@ -572,7 +572,7 @@ source
 
 #platforms
 
-> curl -X POST "http://localhost:8083/api/mw2mw/platforms" -H  "accept: application/json" -H  "Client-ID: pullclient_sNa_source" -H  "Content-Type: application/json" -d "{      \"platformId\": \"http://sNa_source_platform_8\",      \"type\": \"http://sensinact.ddns.net/sensinact\",      \"baseEndpoint\": \"http://$IP_ADDRESS:8082\",      \"location\": \"http://testbed.activage-isere.eu/PTL\",      \"name\": \"sNa_source_platform\",       \"downstreamOutputAlignmentName\": \"\",      \"downstreamOutputAlignmentVersion\": \"\",      \"downstreamInputAlignmentName\": \"AIoTES2SensiNact\",      \"downstreamInputAlignmentVersion\": \"0.7.6\",      \"upstreamInputAlignmentName\": \"SensiNact2AIoTES\",      \"upstreamInputAlignmentVersion\": \"0.7.6\",      \"upstreamOutputAlignmentName\": \"\",      \"upstreamOutputAlignmentVersion\": \"\"}"
+> curl -X POST "http://localhost:8083/api/mw2mw/platforms" -H  "accept: application/json" -H  "Client-ID: pullclient_sNa_source" -H  "Content-Type: application/json" -d "{      \"platformId\": \"http://sNa_source_platform_8\",      \"type\": \"http://sensinact.ddns.net/sensinact\",      \"baseEndpoint\": \"http://$IP_ADDRESS:8082\",      \"location\": \"http://testbed.activage-isere.eu/PTL\",      \"name\": \"sNa_source_platform\",       \"downstreamOutputAlignmentName\": \"\",      \"downstreamOutputAlignmentVersion\": \"\",      \"downstreamInputAlignmentName\": \"AIoTES2SensiNact\",      \"downstreamInputAlignmentVersion\": \"0.7.7\",      \"upstreamInputAlignmentName\": \"SensiNact2AIoTES\",      \"upstreamInputAlignmentVersion\": \"0.7.7\",      \"upstreamOutputAlignmentName\": \"\",      \"upstreamOutputAlignmentVersion\": \"\"}"
 
 
 #devices
@@ -589,7 +589,7 @@ target
 
 #platforms
 
-> curl -X POST "http://localhost:8083/api/mw2mw/platforms" -H  "accept: application/json" -H  "Client-ID: pullclient_sNa_target" -H  "Content-Type: application/json" -d "{      \"platformId\": \"http://sNa_target_platform_8\",      \"type\": \"http://sensinact.ddns.net/sensinact\",      \"baseEndpoint\": \"http://$IP_ADDRESS:8081\",      \"location\": \"http://testbed.activage-isere.eu/PTL\",      \"name\": \"sNa_target_platform\",      \"downstreamInputAlignmentName\": \"\",      \"downstreamInputAlignmentVersion\": \"\",      \"downstreamOutputAlignmentName\": \"AIoTES2SensiNact\",      \"downstreamOutputAlignmentVersion\": \"0.7.6\",      \"upstreamOutputAlignmentName\": \"SensiNact2AIoTES\",      \"upstreamOutputAlignmentVersion\": \"0.7.6\",      \"upstreamInputAlignmentName\": \"\",      \"upstreamInputAlignmentVersion\": \"\"    }"
+> curl -X POST "http://localhost:8083/api/mw2mw/platforms" -H  "accept: application/json" -H  "Client-ID: pullclient_sNa_target" -H  "Content-Type: application/json" -d "{      \"platformId\": \"http://sNa_target_platform_8\",      \"type\": \"http://sensinact.ddns.net/sensinact\",      \"baseEndpoint\": \"http://$IP_ADDRESS:8081\",      \"location\": \"http://testbed.activage-isere.eu/PTL\",      \"name\": \"sNa_target_platform\",      \"downstreamInputAlignmentName\": \"\",      \"downstreamInputAlignmentVersion\": \"\",      \"downstreamOutputAlignmentName\": \"AIoTES2SensiNact\",      \"downstreamOutputAlignmentVersion\": \"0.7.7\",      \"upstreamOutputAlignmentName\": \"SensiNact2AIoTES\",      \"upstreamOutputAlignmentVersion\": \"0.7.7\",      \"upstreamInputAlignmentName\": \"\",      \"upstreamInputAlignmentVersion\": \"\"    }"
 
 #devices
 
