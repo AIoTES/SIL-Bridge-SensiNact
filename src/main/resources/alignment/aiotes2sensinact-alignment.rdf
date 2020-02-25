@@ -25,10 +25,10 @@
       
     <align:Alignment>
         <dcelem:title>AIoTES2SensiNact</dcelem:title>
-        <exmo:version>0.7.6</exmo:version>
+        <exmo:version>0.7.7</exmo:version>
         <dcelem:creator>CEA Stephane Bergeon</dcelem:creator>
         <dcelem:description>Downstream Alignment between ACTIVAGE ontology and sensiNact AHA ontology</dcelem:description>
-        <dcelem:date>23 January 2020</dcelem:date>
+        <dcelem:date>25 February 2020</dcelem:date>
         
         <align:onto1>
             <align:Ontology rdf:about="http://inter-iot.eu/GOIoTPex#">
@@ -249,13 +249,13 @@
                         <sosa:observedProperty>
                             <sripas:provider/>
                         </sosa:observedProperty>
-                        <sosa:phenomenomTime>
+                        <sosa:phenomenonTime>
                             <time:Instant>
                                 <time:inTimePosition>
                                     <sripas:timestamp/>
                                 </time:inTimePosition>
                             </time:Instant>
-                        </sosa:phenomenomTime>
+                        </sosa:phenomenonTime>
                     </sosa:Observation>
                 </align:entity1>
                 <align:entity2 rdf:parseType="Literal">
