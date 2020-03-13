@@ -1,35 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE RDF>
+    <!DOCTYPE RDF>
 <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" 
-         xmlns:sripas="http://www.inter-iot.eu/sripas#" 
-         xmlns:var="http://www.inter-iot.eu/sripas#node_" 
-         xmlns:align="http://knowledgeweb.semanticweb.org/heterogeneity/alignment#" 
-         xmlns:dcelem="http://purl.org/dc/elements/1.1/" 
-         xmlns:exmo="http://exmo.inrialpes.fr/align/ext/1.0/#" 
-         xmlns="http://www.inter-iot.eu/sripas#" 
-         xmlns:sosa="http://www.w3.org/ns/sosa/" 
-         xmlns:iiot="http://inter-iot.eu/GOIoTP#" 
-         xmlns:iiotex="http://inter-iot.eu/GOIoTPex#" 
-         xmlns:time="http://www.w3.org/2006/time#" 
-         xmlns:sweet_units="http://sweet.jpl.nasa.gov/2.3/reprSciUnits.owl#" 
-         xmlns:medex="http://inter-iot.eu/medex#" 
-         xmlns:ssn="http://www.w3.org/ns/ssn/" 
-         xmlns:aha="http://ontologies.activageproject.eu/aha-ontology#" 
-         xmlns:m3="http://purl.org/iot/vocab/m3-lite#" 
-         xmlns:fw="http://inter-iot.eu/syntax/FIWAREv2#" 
-         xmlns:geosparql="http://www.opengis.net/ont/geosparql#" 
-         xmlns:sna="http://sensinact.com#"
-         xmlns:kpi="http://www.semanticweb.org/activage/ontologies/2018/4/activage-core#"
-         xmlns:kpiowl="http://khaos.uma.es/ontologies/lucentia/KPIOWL#"
+             xmlns:sripas="http://www.inter-iot.eu/sripas#" 
+             xmlns:var="http://www.inter-iot.eu/sripas#node_" 
+             xmlns:align="http://knowledgeweb.semanticweb.org/heterogeneity/alignment#" 
+             xmlns:dcelem="http://purl.org/dc/elements/1.1/" 
+             xmlns:exmo="http://exmo.inrialpes.fr/align/ext/1.0/#" 
+             xmlns="http://www.inter-iot.eu/sripas#" 
+             xmlns:sosa="http://www.w3.org/ns/sosa/" 
+             xmlns:iiot="http://inter-iot.eu/GOIoTP#" 
+             xmlns:iiotex="http://inter-iot.eu/GOIoTPex#" 
+             xmlns:time="http://www.w3.org/2006/time#" 
+             xmlns:sweet_units="http://sweet.jpl.nasa.gov/2.3/reprSciUnits.owl#" 
+             xmlns:medex="http://inter-iot.eu/medex#" 
+             xmlns:ssn="http://www.w3.org/ns/ssn/" 
+             xmlns:aha="http://ontologies.activageproject.eu/aha-ontology#" 
+             xmlns:m3="http://purl.org/iot/vocab/m3-lite#" 
+             xmlns:fw="http://inter-iot.eu/syntax/FIWAREv2#" 
+             xmlns:geosparql="http://www.opengis.net/ont/geosparql#" 
+             xmlns:sna="http://sensinact.com#"
+             xmlns:kpi="http://www.semanticweb.org/activage/ontologies/2018/4/activage-core#"
+             xmlns:kpiowl="http://khaos.uma.es/ontologies/lucentia/KPIOWL#"
 >    
-      
+          
     <align:Alignment>
         <dcelem:title>SensiNact2AIoTES</dcelem:title>
-        <exmo:version>0.7.7</exmo:version>
+        <exmo:version>0.7.8</exmo:version>
         <dcelem:creator>CEA Stephane Bergeon</dcelem:creator>
         <dcelem:description>Upstream alignment between sensiNact AHA ontology and ACTIVAGE ontology.</dcelem:description>
-        <dcelem:date>25 February 2020</dcelem:date>
-        
+        <dcelem:date>13 March 2020</dcelem:date>
+            
         <align:onto1>
             <align:Ontology rdf:about="http://sensinact.com#">
                 <align:formalism>
@@ -37,7 +37,7 @@
                 </align:formalism>
             </align:Ontology>
         </align:onto1>
-        
+            
         <align:onto2>
             <align:Ontology rdf:about="http://inter-iot.eu/GOIoTPex#">
                 <align:formalism>
@@ -45,20 +45,20 @@
                 </align:formalism>
             </align:Ontology>
         </align:onto2>
-        
+            
         <sripas:steps rdf:parseType="Literal">
             <sripas:step sripas:order="1" sripas:cell="http://www.inter-iot.eu/sripas#1_temperature"/>  
             <sripas:step sripas:order="2" sripas:cell="http://www.inter-iot.eu/sripas#2_weight"/>  
             <sripas:step sripas:order="3" sripas:cell="http://www.inter-iot.eu/sripas#3_pedometer"/>  
             <sripas:step sripas:order="4" sripas:cell="http://www.inter-iot.eu/sripas#4_bed"/>  
-            <sripas:step sripas:order="5" sripas:cell="http://www.inter-iot.eu/sripas#5_kpi"/>  
+            <sripas:step sripas:order="5" sripas:cell="http://www.inter-iot.eu/sripas#5_kpi"/> 
             <sripas:step sripas:order="6" sripas:cell="http://www.inter-iot.eu/sripas#6_clean_unregistered_resource"/>  
         </sripas:steps>
-        		
+            		
         <sripas:cellFormat>
             <iiot:DataFormat rdf:about="http://inter-iot.eu/sripas#rdfxml"/>
         </sripas:cellFormat>
-
+         
         <align:map>
             <align:Cell rdf:about="http://www.inter-iot.eu/sripas#1_temperature">
                 <align:entity1 rdf:parseType="Literal">
@@ -178,7 +178,7 @@
                 </sripas:typings>
             </align:Cell>
         </align:map>
-      	      	
+          	      	
         <align:map>
             <align:Cell rdf:about="http://www.inter-iot.eu/sripas#3_pedometer">
                 <align:entity1 rdf:parseType="Literal">
@@ -239,7 +239,7 @@
                 </sripas:typings>
             </align:Cell>
         </align:map>
-      	      	
+          
         <align:map>
             <align:Cell rdf:about="http://www.inter-iot.eu/sripas#4_bed">
                 <align:entity1 rdf:parseType="Literal">
@@ -253,9 +253,9 @@
                         <sna:service>
                             <sripas:service/>
                         </sna:service>
-                        <sna:dateTimestamp>
+                        <sna:timestamp>
                             <sripas:timestamp/>
-                        </sna:dateTimestamp>
+                        </sna:timestamp>
                         <sna:type>
                             <sripas:type/>
                         </sna:type>
@@ -296,7 +296,9 @@
                         <sosa:phenomenonTime>
                             <time:Instant>
                                 <time:inTimePosition>
-                                    <sripas:timestamp/>
+                                    <time:numericPosition>
+                                        <sripas:timestamp/>   
+                                    </time:numericPosition>
                                 </time:inTimePosition>
                             </time:Instant>
                         </sosa:phenomenonTime>
@@ -311,7 +313,7 @@
                 </sripas:typings>
             </align:Cell>
         </align:map>
-      	      	
+          
         <align:map>
             <align:Cell rdf:about="http://www.inter-iot.eu/sripas#5_kpi">
                 <align:entity1 rdf:parseType="Literal">
@@ -365,7 +367,7 @@
                 </sripas:typings>
             </align:Cell>
         </align:map>
-      	      	
+          	     
         <align:map>
             <align:Cell rdf:about="http://www.inter-iot.eu/sripas#6_clean_unregistered_resource">
                 <align:entity1 rdf:parseType="Literal">
@@ -402,6 +404,6 @@
                 </sripas:typings>
             </align:Cell>
         </align:map>
-      	      	
+          	      		
     </align:Alignment>
 </rdf:RDF>
