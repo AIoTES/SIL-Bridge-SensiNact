@@ -1,0 +1,1053 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE Alignment [
+  <!ENTITY rdf "http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+  <!ENTITY exmo "http://exmo.inrialpes.fr/align/ext/1.0/#">
+  <!ENTITY unit "http://ontology.universAAL.org/Unit.owl#">
+  <!ENTITY context "http://ontology.universAAL.org/Context.owl#">
+  <!ENTITY device "http://ontology.universAAL.org/Device.owl#">
+  <!ENTITY uaal "http://ontology.universAAL.org/">
+  <!ENTITY healthMeasurement "http://ontology.universaal.org/HealthMeasurement.owl#">
+  <!ENTITY measurement "http://ontology.universaal.org/Measurement.owl#">
+  <!ENTITY sripas "http://www.inter-iot.eu/sripas#">
+  <!ENTITY sosa "http://www.w3.org/ns/sosa/">
+  <!ENTITY xsd "http://www.w3.org/2001/XMLSchema#">
+  <!ENTITY ssn "http://www.w3.org/ns/ssn/">
+  <!ENTITY iiotex "http://inter-iot.eu/GOIoTPex#">
+  <!ENTITY medex "http://inter-iot.eu/medex#">
+  <!ENTITY iiot "http://inter-iot.eu/GOIoTP#">
+  <!ENTITY time "http://www.w3.org/2006/time#">
+  <!ENTITY s2 "http://inter-iot.eu/syntax/SOFIA2#">
+  <!ENTITY s2mod "http://inter-iot.eu/SOFIA2mod#">
+  <!ENTITY sweet_units "http://sweet.jpl.nasa.gov/2.3/reprSciUnits.owl#">
+  <!ENTITY aha "http://ontologies.activageproject.eu/aha-ontology#">
+  <!ENTITY m3 "http://purl.org/iot/vocab/m3-lite#">
+  <!ENTITY light "http://ont.ontology.universAAL_IoT.org/lighting.owl#">
+  <!ENTITY switchable "http://ontology.universAAL_IoT.org/switchable.owl#">
+  <!ENTITY bed "http://ontology.universAAL_IoT.org/BedOntology.owl#">
+  <!ENTITY msensor "http://ontology.universAAL_IoT.org/msensor.owl#">
+  <!ENTITY iotLite "http://purl.oclc.org/NET/UNIS/fiware/iot-lite#">
+  <!ENTITY msensor "http://ontology.universAAL_IoT.org/OutletOntology.owl#">
+  <!ENTITY door "http://ontology.universAAL.org/ont.door.owl#">
+]>
+<rdf:RDF
+	xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+	xmlns:ssn="http://www.w3.org/ns/ssn/"
+	xmlns="http://www.inter-iot.eu/sripas#"
+	xmlns:align="http://knowledgeweb.semanticweb.org/heterogeneity/alignment#"
+	xmlns:co="http://inter-iot.eu/central"
+	xmlns:context="http://ontology.universAAL.org/Context.owl#"
+	xmlns:dcelem="http://purl.org/dc/elements/1.1/"
+	xmlns:device="http://ontology.universAAL.org/Device.owl#"
+	xmlns:exmo="http://exmo.inrialpes.fr/align/ext/1.0/#"
+	xmlns:geo-sf="http://www.opengis.net/def/sf/"
+	xmlns:geosparql="http://www.opengis.net/ont/geosparql#"
+	xmlns:healthMeasurement="http://ontology.universaal.org/HealthMeasurement.owl#"
+	xmlns:iiotex="http://inter-iot.eu/GOIoTPex#"
+	xmlns:iiot="http://inter-iot.eu/GOIoTP#"
+	xmlns:m3="http://purl.org/iot/vocab/m3-lite#"
+	xmlns:measurement="http://ontology.universaal.org/Measurement.owl#"
+	xmlns:saref="https://w3id.org/saref#"
+	xmlns:saref-ps="http://ontology.tno.nl/saref/positionsensor#"
+	xmlns:sosa="http://www.w3.org/ns/sosa/"
+	xmlns:sripas="http://www.inter-iot.eu/sripas#"
+	xmlns:sweet="http://sweetontology.net/reprSciUnits/"
+	xmlns:time="http://www.w3.org/2006/time#"
+	xmlns:uaal="http://ontology.universAAL.org/"
+	xmlns:unit="http://ontology.universAAL.org/Unit.owl#"
+	xmlns:wgs84_pos="http://www.w3.org/2003/01/geo/wgs84_pos#"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+	xmlns:light="http://ont.ontology.universAAL_IoT.org/lighting.owl#"
+	xmlns:switchable="http://ontology.universAAL_IoT.org/switchable.owl#"
+	xmlns:bed="http://ontology.universAAL_IoT.org/BedOntology.owl#"
+	xmlns:msensor="http://ontology.universAAL_IoT.org/msensor.owl#"
+	xmlns:iotLite="http://purl.oclc.org/NET/UNIS/fiware/iot-lite#"
+    xmlns:outlte="http://ontology.universAAL_IoT.org/OutletOntology.owl#"
+	xmlns:door="http://ontology.universAAL.org/ont.door.owl#"
+	>
+	<align:Alignment>
+		<dcelem:title>universAAL-AIOTES-Alignment</dcelem:title>
+		<exmo:version>2.0.1</exmo:version>
+		<dcelem:creator>AMEDRANO/regel/andre/Fadi</dcelem:creator>
+		<dcelem:description>Alignment between universAAL Core Ontologies and AIOTES Datamodel</dcelem:description>
+		<dcelem:date>Wed Jun 02 11:29:56 GMT 2019</dcelem:date>
+		<align:onto1>
+			<align:Ontology rdf:about="http://ontology.universaal.org/PhThing.owl#">
+				<align:formalism>
+					<align:Formalism align:name="OWL2.0" align:uri="http://www.w3.org/2002/07/owl#" />
+				</align:formalism>
+			</align:Ontology>
+		</align:onto1>
+		<align:onto2>
+			<align:Ontology rdf:about="http://www.inter-iot.eu/central">
+				<align:formalism>
+					<align:Formalism align:name="OWL2.0" align:uri="http://www.w3.org/2002/07/owl#" />
+				</align:formalism>
+			</align:Ontology>
+		</align:onto2>
+    <sripas:steps rdf:parseType="Literal">
+      <sripas:step sripas:order="1" sripas:cell="http://www.inter-iot.eu/sripas#kilometerUnit" />
+      <sripas:step sripas:order="2" sripas:cell="http://www.inter-iot.eu/sripas#megahertzUnit" />
+      <sripas:step sripas:order="3" sripas:cell="http://www.inter-iot.eu/sripas#kilohertzUnit" />
+      <sripas:step sripas:order="4" sripas:cell="http://www.inter-iot.eu/sripas#gigahertzUnit" />
+      <sripas:step sripas:order="5" sripas:cell="http://www.inter-iot.eu/sripas#terahertzUnit" />
+      <sripas:step sripas:order="6" sripas:cell="http://www.inter-iot.eu/sripas#centimeterUnit" />
+      <sripas:step sripas:order="7" sripas:cell="http://www.inter-iot.eu/sripas#micrometerUnit" />
+      <sripas:step sripas:order="8" sripas:cell="http://www.inter-iot.eu/sripas#millimeterUnit" />
+      <sripas:step sripas:order="9" sripas:cell="http://www.inter-iot.eu/sripas#nanometerUnit" />
+      <sripas:step sripas:order="10" sripas:cell="http://www.inter-iot.eu/sripas#ampereUnit" />
+      <sripas:step sripas:order="11" sripas:cell="http://www.inter-iot.eu/sripas#candelaUnit" />
+      <sripas:step sripas:order="12" sripas:cell="http://www.inter-iot.eu/sripas#centuryUnit" />
+      <sripas:step sripas:order="13" sripas:cell="http://www.inter-iot.eu/sripas#dayUnit" />
+      <sripas:step sripas:order="14" sripas:cell="http://www.inter-iot.eu/sripas#decadeUnit" />
+      <sripas:step sripas:order="15" sripas:cell="http://www.inter-iot.eu/sripas#hertzUnit" />
+      <sripas:step sripas:order="16" sripas:cell="http://www.inter-iot.eu/sripas#hourUnit" />
+      <sripas:step sripas:order="17" sripas:cell="http://www.inter-iot.eu/sripas#kelvinUnit" />
+      <sripas:step sripas:order="18" sripas:cell="http://www.inter-iot.eu/sripas#milleniumUnit" />
+      <sripas:step sripas:order="19" sripas:cell="http://www.inter-iot.eu/sripas#meterUnit" />
+      <sripas:step sripas:order="20" sripas:cell="http://www.inter-iot.eu/sripas#minuteUnit" />
+      <sripas:step sripas:order="21" sripas:cell="http://www.inter-iot.eu/sripas#moleUnit" />
+      <sripas:step sripas:order="22" sripas:cell="http://www.inter-iot.eu/sripas#monthUnit" />
+      <sripas:step sripas:order="23" sripas:cell="http://www.inter-iot.eu/sripas#percentUnit" />
+      <sripas:step sripas:order="24" sripas:cell="http://www.inter-iot.eu/sripas#secondUnit" />
+      <sripas:step sripas:order="25" sripas:cell="http://www.inter-iot.eu/sripas#voltUnit" />
+      <sripas:step sripas:order="26" sripas:cell="http://www.inter-iot.eu/sripas#weekUnit" />
+      <sripas:step sripas:order="27" sripas:cell="http://www.inter-iot.eu/sripas#yearUnit" />
+      <sripas:step sripas:order="28" sripas:cell="http://www.inter-iot.eu/sripas#PresenceSensor" />
+      <sripas:step sripas:order="29" sripas:cell="http://www.inter-iot.eu/sripas#COSensor" />
+      <sripas:step sripas:order="30" sripas:cell="http://www.inter-iot.eu/sripas#SmokeSensor" />
+      <sripas:step sripas:order="31" sripas:cell="http://www.inter-iot.eu/sripas#FallSensor" />
+      <sripas:step sripas:order="32" sripas:cell="http://www.inter-iot.eu/sripas#ContactSensor" />
+      <sripas:step sripas:order="33" sripas:cell="http://www.inter-iot.eu/sripas#TemperatureSensor" />
+      <sripas:step sripas:order="34" sripas:cell="http://www.inter-iot.eu/sripas#HumiditySensor" />
+      <sripas:step sripas:order="35" sripas:cell="http://www.inter-iot.eu/sripas#LightSensor" />
+      <sripas:step sripas:order="36" sripas:cell="http://www.inter-iot.eu/sripas#AdaptContextProvider" />
+      <sripas:step sripas:order="37" sripas:cell="http://www.inter-iot.eu/sripas#CreateObservationFromDeviceCE" />
+      <sripas:step sripas:order="38" sripas:cell="http://www.inter-iot.eu/sripas#bloodPreassureMeasurement" />
+      <sripas:step sripas:order="39" sripas:cell="http://www.inter-iot.eu/sripas#changeUser" />
+      <sripas:step sripas:order="40" sripas:cell="http://www.inter-iot.eu/sripas#changeUserProp" />
+	  <sripas:step sripas:order="41" sripas:cell="http://www.inter-iot.eu/sripas#DimmableLight" />
+	  <sripas:step sripas:order="42" sripas:cell="http://www.inter-iot.eu/sripas#CreateObservationFromModulatoryDevice" />
+	  <sripas:step sripas:order="43" sripas:cell="http://www.inter-iot.eu/sripas#BedSensor" />
+	  <sripas:step sripas:order="44" sripas:cell="http://www.inter-iot.eu/sripas#CreateObservationFromBedSensor" />
+	  <sripas:step sripas:order="45" sripas:cell="http://www.inter-iot.eu/sripas#WQZHumiditySensor" />
+	  <sripas:step sripas:order="46" sripas:cell="http://www.inter-iot.eu/sripas#WQZSwitchableLight" />
+	  <sripas:step sripas:order="47" sripas:cell="http://www.inter-iot.eu/sripas#WQZCO2Sensor" />
+	  <sripas:step sripas:order="48" sripas:cell="http://www.inter-iot.eu/sripas#WQZLuminositySensor" />
+	  <sripas:step sripas:order="49" sripas:cell="http://www.inter-iot.eu/sripas#WQZThermometer" />
+	  <sripas:step sripas:order="50" sripas:cell="http://www.inter-iot.eu/sripas#WQZSwitchableDevice" />
+	  <sripas:step sripas:order="51" sripas:cell="http://www.inter-iot.eu/sripas#WQZMSensor" />
+	  <sripas:step sripas:order="52" sripas:cell="http://www.inter-iot.eu/sripas#CreateObservationFromOnStatus" />
+	  <sripas:step sripas:order="53" sripas:cell="http://www.inter-iot.eu/sripas#WQZSwitch" />
+	  <sripas:step sripas:order="54" sripas:cell="http://www.inter-iot.eu/sripas#WQZModulatoryDevice" />
+	  <sripas:step sripas:order="55" sripas:cell="http://www.inter-iot.eu/sripas#WQZModulator" />
+	  <sripas:step sripas:order="56" sripas:cell="http://www.inter-iot.eu/sripas#WQZCentralSwitch" />
+	  <sripas:step sripas:order="57" sripas:cell="http://www.inter-iot.eu/sripas#WQZLightSwitch" />
+	  <sripas:step sripas:order="58" sripas:cell="http://www.inter-iot.eu/sripas#WQZDimmerSwitch" />
+	  <sripas:step sripas:order="59" sripas:cell="http://www.inter-iot.eu/sripas#WQZDimmableLight" />
+	  <sripas:step sripas:order="60" sripas:cell="http://www.inter-iot.eu/sripas#WQZOutlet" />
+	  <sripas:step sripas:order="61" sripas:cell="http://www.inter-iot.eu/sripas#WQZDoor" />
+	  <sripas:step sripas:order="62" sripas:cell="http://www.inter-iot.eu/sripas#WQZContactSensor" />
+	  <sripas:step sripas:order="63" sripas:cell="http://www.inter-iot.eu/sripas#WQZOpeningStatus" />
+	  <sripas:step sripas:order="64" sripas:cell="http://www.inter-iot.eu/sripas#CreateObservationFromDoor" />
+    </sripas:steps>
+    <sripas:cellFormat>
+      <iiot:DataFormat rdf:about="http://inter-iot.eu/sripas#turtle" />
+    </sripas:cellFormat>
+	
+	
+   
+
+    <!-- Incorporated Units -->
+    <align:map>
+      <align:Cell rdf:about="http://www.inter-iot.eu/sripas#kilometerUnit">
+        <align:entity1 rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+          [ a       measurement:Measurement ;
+        measurement:hasUnit unit:meter ;
+        measurement:hasPrefix unit:kilo ;
+        measurement:value    [a sripas:value]] .
+      </align:entity1>
+        <align:entity2 rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+          [ a       sosa:Result ;
+        sosa:hasResultValue [a sripas:value] ;
+        sosa:hasUnit  sweet:kilometer] .
+      </align:entity2>
+        <align:relation>=</align:relation>
+      </align:Cell>
+    </align:map>
+
+    <align:map>
+      <align:Cell rdf:about="http://www.inter-iot.eu/sripas#megahertzUnit">
+        <align:entity1 rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+          [ a       measurement:Measurement ;
+        measurement:hasUnit unit:hertz ;
+        measurement:hasPrefix unit:mega ;
+        measurement:value    [a sripas:value]] .</align:entity1>
+        <align:entity2 rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+          [ a       sosa:Result ;
+        sosa:hasResultValue [a sripas:value] ;
+        sosa:hasUnit  sweet:megahertz] .
+      </align:entity2>
+        <align:relation>=</align:relation>
+      </align:Cell>
+    </align:map>
+
+    <align:map>
+      <align:Cell rdf:about="http://www.inter-iot.eu/sripas#kilohertzUnit">
+        <align:entity1 rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+          [ a       measurement:Measurement ;
+        measurement:hasUnit unit:hertz ;
+        measurement:hasPrefix unit:kilo ;
+        measurement:value    [a sripas:value]] .</align:entity1>
+        <align:entity2 rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+          [ a       sosa:Result ;
+        sosa:hasResultValue [a sripas:value] ;
+        sosa:hasUnit  sweet:kilohertz] .
+      </align:entity2>
+        <align:relation>=</align:relation>
+      </align:Cell>
+    </align:map>
+
+    <align:map>
+      <align:Cell rdf:about="http://www.inter-iot.eu/sripas#gigahertzUnit">
+        <align:entity1 rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+          [ a       measurement:Measurement ;
+        measurement:hasUnit unit:hertz ;
+        measurement:hasPrefix unit:giga ;
+        measurement:value    [a sripas:value]] .</align:entity1>
+        <align:entity2 rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+          [ a       sosa:Result ;
+        sosa:hasResultValue [a sripas:value] ;
+        sosa:hasUnit  sweet:gigahertz] .
+      </align:entity2>
+        <align:relation>=</align:relation>
+      </align:Cell>
+    </align:map>
+
+    <align:map>
+      <align:Cell rdf:about="http://www.inter-iot.eu/sripas#terahertzUnit">
+        <align:entity1 rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+          [ a       measurement:Measurement ;
+        measurement:hasUnit unit:hertz ;
+        measurement:hasPrefix unit:tera ;
+        measurement:value    [a sripas:value]] .</align:entity1>
+        <align:entity2 rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+          [ a       sosa:Result ;
+        sosa:hasResultValue [a sripas:value] ;
+        sosa:hasUnit  sweet:terahertz] .
+      </align:entity2>
+        <align:relation>=</align:relation>
+      </align:Cell>
+    </align:map>
+
+    <align:map>
+      <align:Cell rdf:about="http://www.inter-iot.eu/sripas#centimeterUnit">
+        <align:entity1 rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+          [ a       measurement:Measurement ;
+        measurement:hasUnit unit:meter ;
+        measurement:hasPrefix unit:centi ;
+        measurement:value    [a sripas:value]] .</align:entity1>
+        <align:entity2 rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+          [ a       sosa:Result ;
+        sosa:hasResultValue [a sripas:value] ;
+        sosa:hasUnit  sweet:centimeter] .
+      </align:entity2>
+        <align:relation>=</align:relation>
+      </align:Cell>
+    </align:map>
+
+    <align:map>
+      <align:Cell rdf:about="http://www.inter-iot.eu/sripas#micrometerUnit">
+        <align:entity1 rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+          [ a       measurement:Measurement ;
+        measurement:hasUnit unit:meter ;
+        measurement:hasPrefix unit:micro ;
+        measurement:value    [a sripas:value]] .</align:entity1>
+        <align:entity2 rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+          [ a       sosa:Result ;
+        sosa:hasResultValue [a sripas:value] ;
+        sosa:hasUnit  sweet:micrometer] .
+      </align:entity2>
+        <align:relation>=</align:relation>
+      </align:Cell>
+    </align:map>
+
+    <align:map>
+      <align:Cell rdf:about="http://www.inter-iot.eu/sripas#millimeterUnit">
+        <align:entity1 rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+          [ a       measurement:Measurement ;
+        measurement:hasUnit unit:meter ;
+        measurement:hasPrefix unit:mili ;
+        measurement:value    [a sripas:value]] .</align:entity1>
+        <align:entity2 rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+          [ a       sosa:Result ;
+        sosa:hasResultValue [a sripas:value] ;
+        sosa:hasUnit  sweet:millimeter] .
+      </align:entity2>
+        <align:relation>=</align:relation>
+      </align:Cell>
+    </align:map>
+
+    <align:map>
+      <align:Cell rdf:about="http://www.inter-iot.eu/sripas#nanometerUnit">
+        <align:entity1 rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+          [ a       measurement:Measurement ;
+        measurement:hasUnit unit:meter ;
+        measurement:hasPrefix unit:nano ;
+        measurement:value    [a sripas:value]] .</align:entity1>
+        <align:entity2 rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+          [ a       sosa:Result ;
+        sosa:hasResultValue [a sripas:value] ;
+        sosa:hasUnit  sweet:nanometer] .
+      </align:entity2>
+        <align:relation>=</align:relation>
+      </align:Cell>
+    </align:map>
+
+    <!-- Regular Units -->
+
+    <align:map>
+      <align:Cell rdf:about="http://www.inter-iot.eu/sripas#ampereUnit">
+        <align:entity1 rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+          [ a       measurement:Measurement ;
+        measurement:hasUnit unit:amp ;
+        measurement:value    [a sripas:value]] .</align:entity1>
+        <align:entity2 rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+          [ a       sosa:Result ;
+        sosa:hasResultValue [a sripas:value] ;
+        sosa:hasUnit  sweet:ampere] .
+      </align:entity2>
+        <align:relation>=</align:relation>
+      </align:Cell>
+    </align:map>
+
+    <align:map>
+      <align:Cell rdf:about="http://www.inter-iot.eu/sripas#candelaUnit">
+        <align:entity1 rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+          [ a       measurement:Measurement ;
+        measurement:hasUnit unit:candela ;
+        measurement:value    [a sripas:value]] .</align:entity1>
+        <align:entity2 rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+          [ a       sosa:Result ;
+        sosa:hasResultValue [a sripas:value] ;
+        sosa:hasUnit  sweet:candela] .
+      </align:entity2>
+        <align:relation>=</align:relation>
+      </align:Cell>
+    </align:map>
+
+    <align:map>
+      <align:Cell rdf:about="http://www.inter-iot.eu/sripas#centuryUnit">
+        <align:entity1 rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+          [ a       measurement:Measurement ;
+        measurement:hasUnit unit:century ;
+        measurement:value    [a sripas:value]] .</align:entity1>
+        <align:entity2 rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+          [ a       sosa:Result ;
+        sosa:hasResultValue [a sripas:value] ;
+        sosa:hasUnit  sweet:century] .
+      </align:entity2>
+        <align:relation>=</align:relation>
+      </align:Cell>
+    </align:map>
+
+    <align:map>
+      <align:Cell rdf:about="http://www.inter-iot.eu/sripas#dayUnit">
+        <align:entity1 rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+          [ a       measurement:Measurement ;
+        measurement:hasUnit unit:day ;
+        measurement:value    [a sripas:value]] .</align:entity1>
+        <align:entity2 rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+          [ a       sosa:Result ;
+        sosa:hasResultValue [a sripas:value] ;
+        sosa:hasUnit  sweet:day] .
+      </align:entity2>
+        <align:relation>=</align:relation>
+      </align:Cell>
+    </align:map>
+
+    <align:map>
+      <align:Cell rdf:about="http://www.inter-iot.eu/sripas#decadeUnit">
+        <align:entity1 rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+          [ a       measurement:Measurement ;
+        measurement:hasUnit unit:decade ;
+        measurement:value    [a sripas:value]] .</align:entity1>
+        <align:entity2 rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+          [ a       sosa:Result ;
+        sosa:hasResultValue [a sripas:value] ;
+        sosa:hasUnit  sweet:decade] .
+      </align:entity2>
+        <align:relation>=</align:relation>
+      </align:Cell>
+    </align:map>
+
+    <align:map>
+      <align:Cell rdf:about="http://www.inter-iot.eu/sripas#hertzUnit">
+        <align:entity1 rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+          [ a       measurement:Measurement ;
+        measurement:hasUnit unit:hertz ;
+        measurement:value    [a sripas:value]] .</align:entity1>
+        <align:entity2 rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+          [ a       sosa:Result ;
+        sosa:hasResultValue [a sripas:value] ;
+        sosa:hasUnit  sweet:hertz] .
+      </align:entity2>
+        <align:relation>=</align:relation>
+      </align:Cell>
+    </align:map>
+
+    <align:map>
+      <align:Cell rdf:about="http://www.inter-iot.eu/sripas#hourUnit">
+        <align:entity1 rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+          [ a       measurement:Measurement ;
+        measurement:hasUnit unit:hour ;
+        measurement:value    [a sripas:value]] .</align:entity1>
+        <align:entity2 rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+          [ a       sosa:Result ;
+        sosa:hasResultValue [a sripas:value] ;
+        sosa:hasUnit  sweet:hour] .
+      </align:entity2>
+        <align:relation>=</align:relation>
+      </align:Cell>
+    </align:map>
+
+    <align:map>
+      <align:Cell rdf:about="http://www.inter-iot.eu/sripas#kelvinUnit">
+        <align:entity1 rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+          [ a       measurement:Measurement ;
+        measurement:hasUnit unit:kelvin ;
+        measurement:value    [a sripas:value]] .</align:entity1>
+        <align:entity2 rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+          [ a       sosa:Result ;
+        sosa:hasResultValue [a sripas:value] ;
+        sosa:hasUnit  sweet:kelvin] .
+      </align:entity2>
+        <align:relation>=</align:relation>
+      </align:Cell>
+    </align:map>
+
+    <align:map>
+      <align:Cell rdf:about="http://www.inter-iot.eu/sripas#milleniumUnit">
+        <align:entity1 rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+          [ a       measurement:Measurement ;
+        measurement:hasUnit unit:melenium ;
+        measurement:value    [a sripas:value]] .</align:entity1>
+        <align:entity2 rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+          [ a       sosa:Result ;
+        sosa:hasResultValue [a sripas:value] ;
+        sosa:hasUnit  sweet:millenium] .
+      </align:entity2>
+        <align:relation>=</align:relation>
+      </align:Cell>
+    </align:map>
+
+    <align:map>
+      <align:Cell rdf:about="http://www.inter-iot.eu/sripas#meterUnit">
+        <align:entity1 rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+          [ a       measurement:Measurement ;
+        measurement:hasUnit unit:meter ;
+        measurement:value    [a sripas:value]] .</align:entity1>
+        <align:entity2 rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+          [ a       sosa:Result ;
+        sosa:hasResultValue [a sripas:value] ;
+        sosa:hasUnit  sweet:meter] .
+      </align:entity2>
+        <align:relation>=</align:relation>
+      </align:Cell>
+    </align:map>
+
+    <align:map>
+      <align:Cell rdf:about="http://www.inter-iot.eu/sripas#minuteUnit">
+        <align:entity1 rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+          [ a       measurement:Measurement ;
+        measurement:hasUnit unit:minute ;
+        measurement:value    [a sripas:value]] .</align:entity1>
+        <align:entity2 rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+          [ a       sosa:Result ;
+        sosa:hasResultValue [a sripas:value] ;
+        sosa:hasUnit  sweet:minute] .
+      </align:entity2>
+        <align:relation>=</align:relation>
+      </align:Cell>
+    </align:map>
+
+    <align:map>
+      <align:Cell rdf:about="http://www.inter-iot.eu/sripas#moleUnit">
+        <align:entity1 rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+          [ a       measurement:Measurement ;
+        measurement:hasUnit unit:mole ;
+        measurement:value    [a sripas:value]] .</align:entity1>
+        <align:entity2 rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+          [ a       sosa:Result ;
+        sosa:hasResultValue [a sripas:value] ;
+        sosa:hasUnit  sweet:mole] .
+      </align:entity2>
+        <align:relation>=</align:relation>
+      </align:Cell>
+    </align:map>
+
+    <align:map>
+      <align:Cell rdf:about="http://www.inter-iot.eu/sripas#monthUnit">
+        <align:entity1 rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+          [ a       measurement:Measurement ;
+        measurement:hasUnit unit:month ;
+        measurement:value    [a sripas:value]] .</align:entity1>
+        <align:entity2 rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+          [ a       sosa:Result ;
+        sosa:hasResultValue [a sripas:value] ;
+        sosa:hasUnit  sweet:month] .
+      </align:entity2>
+        <align:relation>=</align:relation>
+      </align:Cell>
+    </align:map>
+
+    <align:map>
+      <align:Cell rdf:about="http://www.inter-iot.eu/sripas#percentUnit">
+        <align:entity1 rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+          [ a       measurement:Measurement ;
+        measurement:hasUnit unit:percent ;
+        measurement:value    [a sripas:value]] .</align:entity1>
+        <align:entity2 rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+          [ a       sosa:Result ;
+        sosa:hasResultValue [a sripas:value] ;
+        sosa:hasUnit  sweet:percent] .
+      </align:entity2>
+        <align:relation>=</align:relation>
+      </align:Cell>
+    </align:map>
+
+    <align:map>
+      <align:Cell rdf:about="http://www.inter-iot.eu/sripas#secondUnit">
+        <align:entity1 rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+          [ a       measurement:Measurement ;
+        measurement:hasUnit unit:sec ;
+        measurement:value    [a sripas:value]] .</align:entity1>
+        <align:entity2 rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+          [ a       sosa:Result ;
+        sosa:hasResultValue [a sripas:value] ;
+        sosa:hasUnit  sweet:second] .
+      </align:entity2>
+        <align:relation>=</align:relation>
+      </align:Cell>
+    </align:map>
+
+    <align:map>
+      <align:Cell rdf:about="http://www.inter-iot.eu/sripas#voltUnit">
+        <align:entity1 rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+          [ a       measurement:Measurement ;
+        measurement:hasUnit unit:volt ;
+        measurement:value    [a sripas:value]] .</align:entity1>
+        <align:entity2 rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+          [ a       sosa:Result ;
+        sosa:hasResultValue [a sripas:value] ;
+        sosa:hasUnit  sweet:volt] .
+      </align:entity2>
+        <align:relation>=</align:relation>
+      </align:Cell>
+    </align:map>
+
+    <align:map>
+      <align:Cell rdf:about="http://www.inter-iot.eu/sripas#weekUnit">
+        <align:entity1 rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+          [ a       measurement:Measurement ;
+        measurement:hasUnit unit:week ;
+        measurement:value    [a sripas:value]] .</align:entity1>
+        <align:entity2 rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+          [ a       sosa:Result ;
+        sosa:hasResultValue [a sripas:value] ;
+        sosa:hasUnit  sweet:week] .
+      </align:entity2>
+        <align:relation>=</align:relation>
+      </align:Cell>
+    </align:map>
+
+    <align:map>
+      <align:Cell rdf:about="http://www.inter-iot.eu/sripas#yearUnit">
+        <align:entity1 rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+          [ a       measurement:Measurement ;
+        measurement:hasUnit unit:year ;
+        measurement:value    [a sripas:value]] .</align:entity1>
+        <align:entity2 rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+          [ a       sosa:Result ;
+        sosa:hasResultValue [a sripas:value] ;
+        sosa:hasUnit  sweet:year] .
+      </align:entity2>
+        <align:relation>=</align:relation>
+      </align:Cell>
+    </align:map>
+
+
+		<!--align:map>
+            <align:Cell rdf:about="http://www.inter-iot.eu/sripas#unitWithoutPrefix">
+
+                <align:entity1 rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+          [ a       measurement:Measurement;
+	    measurement:hasUnit [a unit:Unit;
+				 unit:name [a sripas:unit_name];
+				 unit:symbol [a sripas:unit_symbol]];
+	    measurement:value	[a sripas:value]] .
+       		 </align:entity1>
+
+                <align:entity2 rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+          [ a       sosa:Result;
+	    sosa:hasResultValue sripas:value;
+	    sosa:hasUnit  sripas:baseUnitURI ].
+	    sripas:baseUnitURI a sweet:BaseUnit ;
+		  sweet:hasSymbol sripas:unit_symbol.
+        	</align:entity2>
+                <align:relation>=</align:relation>
+		<sripas:transformation rdf:parseType="Literal">
+			<sripas:function sripas:about="lcase">
+				<sripas:param sripas:order="1" sripas:val="&sripas;unit_name"/>
+				<sripas:return sripas:about="&sripas;l_unit_name"/>
+			</sripas:function>
+			<sripas:function sripas:about="concat">
+				<sripas:param sripas:order="1" sripas:val="http://sweetontology.net/reprSciUnits/"/>
+				<sripas:param sripas:order="2" sripas:val="&sripas;l_unit_name"/>
+				<sripas:return sripas:about="&sripas;baseUnitURISTR"/>
+			</sripas:function>
+			<sripas:function sripas:about="IRI">
+			 	<sripas:param sripas:order="1" sripas:about="&sripas;baseUnitURISTR"/>
+			  	<return sripas:about="&sripas;baseUnitURI"/>
+			</sripas:function>
+		</sripas:transformation>
+	    <sripas:filters rdf:parseType="Literal">
+	                  <filter sripas:about="&sripas;l_unit_name" datatype="http://www.w3.org/2001/XMLSchema#string"/>
+	                  <filter sripas:about="&sripas;baseUnitURISTR" datatype="http://www.w3.org/2001/XMLSchema#string"/>
+	    </sripas:filters>
+
+	    <sripas:typings rdf:parseType="Literal">
+	                  <typing about="&sripas;baseUnitURI" datatype="&xsd;anyURI"/>
+	    </sripas:typings>
+            </align:Cell>
+        </align:map-->
+		<align:map>
+			<align:Cell rdf:about="http://www.inter-iot.eu/sripas#PresenceSensor">
+				<align:entity1 rdf:datatype="http://www.w3.org/2001/XMLSchema#string">[ a  device:PresenceSensor , sripas:node_CTY ] .</align:entity1>
+				<align:entity2 rdf:datatype="http://www.w3.org/2001/XMLSchema#string">[  a  m3:PresenceDetector , sripas:node_CTY] .</align:entity2>
+				<align:relation>=</align:relation>
+			</align:Cell>
+		</align:map>
+		<align:map>
+			<align:Cell rdf:about="http://www.inter-iot.eu/sripas#COSensor">
+				<align:entity1 rdf:datatype="http://www.w3.org/2001/XMLSchema#string">[ a  device:COSensor , sripas:node_CTY ] .</align:entity1>
+				<align:entity2 rdf:datatype="http://www.w3.org/2001/XMLSchema#string">[  a  m3:GaseousPollutantSensor , sripas:node_CTY] .</align:entity2>
+				<align:relation>=</align:relation>
+			</align:Cell>
+		</align:map>
+		<align:map>
+			<align:Cell rdf:about="http://www.inter-iot.eu/sripas#SmokeSensor">
+				<align:entity1 rdf:datatype="http://www.w3.org/2001/XMLSchema#string">[ a  device:SmokeSensor , sripas:node_CTY ] .</align:entity1>
+				<align:entity2 rdf:datatype="http://www.w3.org/2001/XMLSchema#string">[  a  &lt;http://casas.wsu.edu/owl/cose.owl#SmokeAlarm&gt; , sripas:node_CTY] .</align:entity2>
+				<align:relation>=</align:relation>
+			</align:Cell>
+		</align:map>
+		<align:map>
+			<align:Cell rdf:about="http://www.inter-iot.eu/sripas#FallSensor">
+				<align:entity1 rdf:datatype="http://www.w3.org/2001/XMLSchema#string">[ a  device:FallSensor , sripas:node_CTY ] .</align:entity1>
+				<align:entity2 rdf:datatype="http://www.w3.org/2001/XMLSchema#string">[  a  m3:FallDetector , sripas:node_CTY] .</align:entity2>
+				<align:relation>=</align:relation>
+			</align:Cell>
+		</align:map>
+		<align:map>
+			<align:Cell rdf:about="http://www.inter-iot.eu/sripas#ContactSensor">
+				<align:entity1 rdf:datatype="http://www.w3.org/2001/XMLSchema#string">[ a  device:ContactSensor , sripas:node_CTY ] .</align:entity1>
+				<align:entity2 rdf:datatype="http://www.w3.org/2001/XMLSchema#string">[  a  m3:DoorStateSensor , sripas:node_CTY] .</align:entity2>
+				<align:relation>=</align:relation>
+			</align:Cell>
+		</align:map>
+		<align:map>
+			<align:Cell rdf:about="http://www.inter-iot.eu/sripas#HumiditySensor">
+				<align:entity1 rdf:datatype="http://www.w3.org/2001/XMLSchema#string">[ a  device:HumiditySensor , sripas:node_CTY ] .</align:entity1>
+				<align:entity2 rdf:datatype="http://www.w3.org/2001/XMLSchema#string">[  a  &lt;http://purl.oclc.org/NET/ssnx/meteo/aws#HumiditySensor&gt; , sripas:node_CTY] .</align:entity2>
+				<align:relation>=</align:relation>
+			</align:Cell>
+		</align:map>
+		<align:map>
+			<align:Cell rdf:about="http://www.inter-iot.eu/sripas#TemperatureSensor">
+				<align:entity1 rdf:datatype="http://www.w3.org/2001/XMLSchema#string">[ a  device:TemperatureSensor , sripas:node_CTY ] .</align:entity1>
+				<align:entity2 rdf:datatype="http://www.w3.org/2001/XMLSchema#string">[  a  m3:AirThermometer , sripas:node_CTY] .</align:entity2>
+				<align:relation>=</align:relation>
+			</align:Cell>
+		</align:map>
+		<align:map>
+			<align:Cell rdf:about="http://www.inter-iot.eu/sripas#LightSensor">
+				<align:entity1 rdf:datatype="http://www.w3.org/2001/XMLSchema#string">[ a  device:LightSensor , sripas:node_CTY ] .</align:entity1>
+				<align:entity2 rdf:datatype="http://www.w3.org/2001/XMLSchema#string">[  a  m3:LightSensor , sripas:node_CTY] .</align:entity2>
+				<align:relation>=</align:relation>
+			</align:Cell>
+		</align:map>
+		<align:map>
+			<align:Cell rdf:about="http://www.inter-iot.eu/sripas#DimmableLight">
+				<align:entity1 rdf:datatype="http://www.w3.org/2001/XMLSchema#string">[ a  light:DimmableLight , sripas:node_CTY ] .</align:entity1>
+				<align:entity2 rdf:datatype="http://www.w3.org/2001/XMLSchema#string">[  a  m3:ActuatingDevice , sripas:node_CTY] .</align:entity2>
+				<align:relation>=</align:relation>
+			</align:Cell>
+		</align:map>
+		<align:map>
+			<align:Cell rdf:about="http://www.inter-iot.eu/sripas#BedSensor">
+				<align:entity1 rdf:datatype="http://www.w3.org/2001/XMLSchema#string">[ a  bed:BedSensor , sripas:node_CTY ] .</align:entity1>
+				<align:entity2 rdf:datatype="http://www.w3.org/2001/XMLSchema#string">[  a  sosa:Sensor, m3:PressureSensor ; iiotex:hasLocalId [ a sripas:node_CTY] ] .</align:entity2>
+				<align:relation>=</align:relation>
+			</align:Cell>
+		</align:map>
+		<align:map>
+			<align:Cell rdf:about="http://www.inter-iot.eu/sripas#WQZHumiditySensor">
+				<align:entity1 rdf:datatype="http://www.w3.org/2001/XMLSchema#string">[ a  msensor:HumiditySensor , sripas:node_CTY ] .</align:entity1>
+				<align:entity2 rdf:datatype="http://www.w3.org/2001/XMLSchema#string">[  a  m3:HumiditySensor , sripas:node_CTY] .</align:entity2>
+				<align:relation>=</align:relation>
+			</align:Cell>
+		</align:map>
+		
+		<align:map>
+			<align:Cell rdf:about="http://www.inter-iot.eu/sripas#WQZSwitchableLight">
+				<align:entity1 rdf:datatype="http://www.w3.org/2001/XMLSchema#string">[ a  light:SwitchableLight , sripas:node_CTY ] .</align:entity1>
+				<align:entity2 rdf:datatype="http://www.w3.org/2001/XMLSchema#string">[  a  m3:Lamp , sripas:node_CTY] .</align:entity2>
+				<align:relation>=</align:relation>
+			</align:Cell>
+		</align:map>
+		
+		<align:map>
+			<align:Cell rdf:about="http://www.inter-iot.eu/sripas#WQZCO2Sensor">
+				<align:entity1 rdf:datatype="http://www.w3.org/2001/XMLSchema#string">[ a  msensor:COSensor , sripas:node_CTY ] .</align:entity1>
+				<align:entity2 rdf:datatype="http://www.w3.org/2001/XMLSchema#string">[  a  m3:CO2Sensor , sripas:node_CTY] .</align:entity2>
+				<align:relation>=</align:relation>
+			</align:Cell>
+		</align:map>
+		<align:map>
+			<align:Cell rdf:about="http://www.inter-iot.eu/sripas#WQZLuminositySensor">
+				<align:entity1 rdf:datatype="http://www.w3.org/2001/XMLSchema#string">[ a  msensor:LuminositySensor , sripas:node_CTY ] .</align:entity1>
+				<align:entity2 rdf:datatype="http://www.w3.org/2001/XMLSchema#string">[  a  m3:LightSensor , sripas:node_CTY] .</align:entity2>
+				<align:relation>=</align:relation>
+			</align:Cell>
+		</align:map>
+			<align:map>
+			<align:Cell rdf:about="http://www.inter-iot.eu/sripas#WQZThermometer">
+				<align:entity1 rdf:datatype="http://www.w3.org/2001/XMLSchema#string">[ a  msensor:Thermometer , sripas:node_CTY ] .</align:entity1>
+				<align:entity2 rdf:datatype="http://www.w3.org/2001/XMLSchema#string">[  a  m3:AirThermometer , sripas:node_CTY] .</align:entity2>
+				<align:relation>=</align:relation>
+			</align:Cell>
+		</align:map>	
+			<align:map>
+			<align:Cell rdf:about="http://www.inter-iot.eu/sripas#WQZSwitchableDevice">
+				<align:entity1 rdf:datatype="http://www.w3.org/2001/XMLSchema#string">[ a  switchable:SwitchableDevice , sripas:node_CTY ] .</align:entity1>
+				<align:entity2 rdf:datatype="http://www.w3.org/2001/XMLSchema#string">[  a  iotLite:ActuatingDevice , sripas:node_CTY] .</align:entity2>
+				<align:relation>=</align:relation>
+			</align:Cell>
+		</align:map>
+			<align:map>
+			<align:Cell rdf:about="http://www.inter-iot.eu/sripas#WQZSwitch">
+				<align:entity1 rdf:datatype="http://www.w3.org/2001/XMLSchema#string">[ a  switchable:Switch , sripas:node_CTY ] .</align:entity1>
+				<align:entity2 rdf:datatype="http://www.w3.org/2001/XMLSchema#string">[  a  iotLite:ActuatingDevice , sripas:node_CTY] .</align:entity2>
+				<align:relation>=</align:relation>
+			</align:Cell>
+		</align:map>
+		
+		<align:map>
+			<align:Cell rdf:about="http://www.inter-iot.eu/sripas#WQZModulatoryDevice">
+				<align:entity1 rdf:datatype="http://www.w3.org/2001/XMLSchema#string">[ a  switchable:ModulatoryDevice , sripas:node_CTY ] .</align:entity1>
+				<align:entity2 rdf:datatype="http://www.w3.org/2001/XMLSchema#string">[  a  iotLite:ActuatingDevice , sripas:node_CTY] .</align:entity2>
+				<align:relation>=</align:relation>
+			</align:Cell>
+		</align:map>
+		<align:map>
+			<align:Cell rdf:about="http://www.inter-iot.eu/sripas#WQZModulator">
+				<align:entity1 rdf:datatype="http://www.w3.org/2001/XMLSchema#string">[ a  switchable:Modulator , sripas:node_CTY ] .</align:entity1>
+				<align:entity2 rdf:datatype="http://www.w3.org/2001/XMLSchema#string">[  a  iotLite:ActuatingDevice , sripas:node_CTY] .</align:entity2>
+				<align:relation>=</align:relation>
+			</align:Cell>
+		</align:map>
+		<align:map>
+			<align:Cell rdf:about="http://www.inter-iot.eu/sripas#WQZCentralSwitch">
+				<align:entity1 rdf:datatype="http://www.w3.org/2001/XMLSchema#string">[ a  switchable:CentralSwitch , sripas:node_CTY ] .</align:entity1>
+				<align:entity2 rdf:datatype="http://www.w3.org/2001/XMLSchema#string">[  a  iotLite:ActuatingDevice , sripas:node_CTY] .</align:entity2>
+				<align:relation>=</align:relation>
+			</align:Cell>
+		</align:map>
+		<align:map>
+			<align:Cell rdf:about="http://www.inter-iot.eu/sripas#WQZLightSwitch">
+				<align:entity1 rdf:datatype="http://www.w3.org/2001/XMLSchema#string">[ a  switchable:LightSwitch , sripas:node_CTY ] .</align:entity1>
+				<align:entity2 rdf:datatype="http://www.w3.org/2001/XMLSchema#string">[  a  iotLite:ActuatingDevice , sripas:node_CTY] .</align:entity2>
+				<align:relation>=</align:relation>
+			</align:Cell>
+		</align:map>
+		<align:map>
+			<align:Cell rdf:about="http://www.inter-iot.eu/sripas#WQZDimmerSwitch">
+				<align:entity1 rdf:datatype="http://www.w3.org/2001/XMLSchema#string">[ a  switchable:DimmerSwitch , sripas:node_CTY ] .</align:entity1>
+				<align:entity2 rdf:datatype="http://www.w3.org/2001/XMLSchema#string">[  a  iotLite:ActuatingDevice , sripas:node_CTY] .</align:entity2>
+				<align:relation>=</align:relation>
+			</align:Cell>
+		</align:map>
+		<align:map>
+			<align:Cell rdf:about="http://www.inter-iot.eu/sripas#WQZDimmableLight">
+				<align:entity1 rdf:datatype="http://www.w3.org/2001/XMLSchema#string">[ a  switchable:DimmableLight , sripas:node_CTY ] .</align:entity1>
+				<align:entity2 rdf:datatype="http://www.w3.org/2001/XMLSchema#string">[  a  m3:Lamp , sripas:node_CTY] .</align:entity2>
+				<align:relation>=</align:relation>
+			</align:Cell>
+		</align:map>
+		
+		<align:map>
+			<align:Cell rdf:about="http://www.inter-iot.eu/sripas#WQZOutlet">
+				<align:entity1 rdf:datatype="http://www.w3.org/2001/XMLSchema#string">[ a  outlte:Outlet , sripas:node_CTY ] .</align:entity1>
+				<align:entity2 rdf:datatype="http://www.w3.org/2001/XMLSchema#string">[  a  iotLite:ActuatingDevice , sripas:node_CTY] .</align:entity2>
+				<align:relation>=</align:relation>
+			</align:Cell>
+		</align:map>
+		<align:map>
+			<align:Cell rdf:about="http://www.inter-iot.eu/sripas#WQZMSensor">
+				<align:entity1 rdf:datatype="http://www.w3.org/2001/XMLSchema#string">[ a       msensor:Msensor , sripas:node_CTY ] .</align:entity1>
+				<align:entity2 rdf:datatype="http://www.w3.org/2001/XMLSchema#string">[ a       &lt; http://purl.oclc.org/NET/ssnx/ssn#SensingDevice&gt;  , sripas:node_CTY ] .</align:entity2>
+				<align:relation>=</align:relation>
+			</align:Cell>
+		</align:map> 
+		<align:map>
+			<align:Cell rdf:about="http://www.inter-iot.eu/sripas#WQZDoor">
+				<align:entity1 rdf:datatype="http://www.w3.org/2001/XMLSchema#string">[ a  door:Door , sripas:node_CTY ] .</align:entity1>
+				<align:entity2 rdf:datatype="http://www.w3.org/2001/XMLSchema#string">[  a  m3:Door , sripas:node_CTY] .</align:entity2>
+				<align:relation>=</align:relation>
+			</align:Cell>
+		</align:map>
+		<align:map>
+			<align:Cell rdf:about="http://www.inter-iot.eu/sripas#WQZOpeningStatus">
+				<align:entity1 rdf:datatype="http://www.w3.org/2001/XMLSchema#string">[ a  door:OpeningStatus , sripas:node_CTY ] .</align:entity1>
+				<align:entity2 rdf:datatype="http://www.w3.org/2001/XMLSchema#string">[  a  m3:DoorStatus , sripas:node_CTY] .</align:entity2>
+				<align:relation>=</align:relation>
+			</align:Cell>
+		</align:map>
+		<align:map>
+			<align:Cell rdf:about="http://www.inter-iot.eu/sripas#WQZContactSensor">
+				<align:entity1 rdf:datatype="http://www.w3.org/2001/XMLSchema#string">[ a  door:ContactSensor , sripas:node_CTY ] .</align:entity1>
+				<align:entity2 rdf:datatype="http://www.w3.org/2001/XMLSchema#string">[  a  m3:DoorStateSensor , sripas:node_CTY] .</align:entity2>
+				<align:relation>=</align:relation>
+			</align:Cell>
+		</align:map>
+		<align:map>
+			<align:Cell rdf:about="http://www.inter-iot.eu/sripas#AdaptContextProvider">
+				<align:entity1 rdf:datatype="http://www.w3.org/2001/XMLSchema#string">[ a       context:ContextProvider , sripas:node_CTZ ] .</align:entity1>
+				<align:entity2 rdf:datatype="http://www.w3.org/2001/XMLSchema#string">[ a       &lt;http://inter-iot.eu/medex#Gauge&gt; , sosa:Platform , sripas:node_CTZ ] .</align:entity2>
+				<align:relation>=</align:relation>
+			</align:Cell>
+		</align:map>   
+		<align:map>
+			<align:Cell rdf:about="http://www.inter-iot.eu/sripas#CreateObservationFromModulatoryDevice">
+				<align:entity1 rdf:datatype="http://www.w3.org/2001/XMLSchema#string">[ a                     sripas:node_CTX ;
+            rdf:object            [ a  sripas:node_CTZ ] ;
+            rdf:predicate         switchable:percentageValue ;
+            rdf:subject           [ a  sripas:node_CTY ] ;
+            context:hasProvider   [ a  sripas:node_CTP ] ;
+            context:hasTimestamp  [ a  sripas:node_time ]
+          ] .</align:entity1>
+				<align:entity2 rdf:datatype="http://www.w3.org/2001/XMLSchema#string">[ a                    sripas:node_CTX ;
+           sosa:hosts[a sosa:Actuator; sosa:isHostedBy [ a  sripas:node_CTP  ]; 
+			            ssn:forProperty[a  sosa:ActuatableProperty,ssn:Property; iiot:hasDescription "The percentage value of device status has changed"^^xsd:string ]];
+			 sosa:isHostedBy [a  sripas:node_CTP]; 
+			 sosa:madeActuation [a sosa:Actuation;  
+			                    sosa:resultTime  [ a    time:Instant ;
+                                time:inTimePosition  [ a time:TimePosition ;
+                                                          time:numericPosition  [ a  sripas:node_time ] ]];
+							    sosa:hasResult [ a  sosa:Result;iiot:hasResultValue [a  sripas:node_CTZ]  ]; 
+								ssn:forProperty  switchable:percentageValue]   
+          ] .</align:entity2>
+				<align:relation>=</align:relation>
+				<sripas:typings rdf:parseType="Literal">
+					<typing about="http://www.inter-iot.eu/sripas#node_time" datatype="http://www.w3.org/2001/XMLSchema#decimal" />
+				</sripas:typings>
+			</align:Cell>
+		</align:map>
+		<align:map>
+		<align:Cell rdf:about="http://www.inter-iot.eu/sripas#CreateObservationFromOnStatus">
+				<align:entity1 rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+				 sripas:node_CTX  a context:ContextEvent;
+            rdf:object          [a   sripas:node_CTZ  ];  
+            rdf:predicate         switchable:onOffStatus ;
+            rdf:subject           [ a  sripas:node_CTY ] ;
+            context:hasProvider   [ a  sripas:node_CTP ] ;
+            context:hasTimestamp  [ a  sripas:node_time ]
+           .</align:entity1>
+				<align:entity2 rdf:datatype="http://www.w3.org/2001/XMLSchema#string">                sripas:node_CTX  a sosa:Observation;
+			 sosa:hosts[a sosa:Actuator; sosa:isHostedBy [ a  sripas:node_CTP  ]; 
+			            ssn:forProperty[a  sosa:ActuatableProperty,ssn:Property; iiot:hasDescription "The switchable device status has changed"^^xsd:string ]]; 
+			 sosa:madeActuation [a sosa:Actuation;  
+			                    sosa:resultTime  [ a    time:Instant ;
+                                time:inTimePosition  [ a time:TimePosition ;
+                                                          time:numericPosition  [ a  sripas:node_time ] ]];
+							    sosa:hasResult [ a  sosa:Result; sosa:hasResultValue  [a  sripas:node_CTZ]  ]; 
+								ssn:forProperty  switchable:onOffStatus]   
+			<!--  sosa:isHostedBy  [ a  sripas:node_CTP ; ]
+            sosa:hasResult        [ a  sripas:node_CTZ ] ;
+			
+            sosa:madeByActuator    [ a                sripas:node_CTY ;
+                                   sosa:isHostedBy  [ a  sripas:node_CTP ]
+                                 ] ;
+            sosa:phenomenonTime  [ a                    time:Instant ;
+                                   time:inTimePosition  [ a                     time:TimePosition ;
+                                                          time:numericPosition  [ a  sripas:node_time ]
+                                                        ]
+                                 ]-->
+           .</align:entity2>
+				<align:relation>=</align:relation>
+
+				<sripas:typings rdf:parseType="Literal">
+					<typing about="http://www.inter-iot.eu/sripas#node_time" datatype="http://www.w3.org/2001/XMLSchema#decimal" />
+				</sripas:typings>			   
+			</align:Cell>
+			
+		</align:map>
+
+		<!-- <align:map>
+			<align:Cell rdf:about="http://www.inter-iot.eu/sripas#CreateObservationFromOffStatus">
+				<align:entity1 rdf:datatype="http://www.w3.org/2001/XMLSchema#string">[ a                     sripas:node_CTX ;
+            rdf:object           switchable:on ;
+            rdf:predicate         switchable:onOffStatus ;
+            rdf:subject           [ a  sripas:node_CTY ] ;
+            context:hasProvider   [ a  sripas:node_CTP ] ;
+            context:hasTimestamp  [ a  sripas:node_time ]
+          ] .</align:entity1>
+				<align:entity2 rdf:datatype="http://www.w3.org/2001/XMLSchema#string">[ a                    sripas:node_CTX ;
+            sosa:hasResult      "true"^^xsd:boolean ;
+            sosa:madeByActuator    [ a                sripas:node_CTY ;
+                                   sosa:isHostedBy  [ a  sripas:node_CTP ]
+                                 ] ;
+            sosa:phenomenonTime  [ a                    time:Instant ;
+                                   time:inTimePosition  [ a                     time:TimePosition ;
+                                                          time:numericPosition  [ a  sripas:node_time ]
+                                                        ]
+                                 ]
+          ] .</align:entity2>
+				<align:relation>=</align:relation>
+				<sripas:typings rdf:parseType="Literal">
+					<typing about="http://www.inter-iot.eu/sripas#node_time" datatype="http://www.w3.org/2001/XMLSchema#decimal" />
+				</sripas:typings>
+			</align:Cell>
+		</align:map>
+		-->
+		<align:map>
+			<align:Cell rdf:about="http://www.inter-iot.eu/sripas#CreateObservationFromBedSensor">
+				<align:entity1 rdf:datatype="http://www.w3.org/2001/XMLSchema#string">[ a           context:ContextEvent,             sripas:node_CTX ;
+            rdf:object            [ a  sripas:node_CTZ ] ;
+            rdf:predicate         bed:occupied ;
+            rdf:subject           [ a  sripas:node_CTY ] ;
+            context:hasProvider   [ a  sripas:node_CTP ] ;
+            context:hasTimestamp  [ a  sripas:node_time ]
+          ] .</align:entity1>
+				<align:entity2 rdf:datatype="http://www.w3.org/2001/XMLSchema#string">[ a         sosa:Observation ,            sripas:node_CTX ;
+            sosa:hasResult       [ a    sosa:Result; iiot:hasResultValue [a sripas:node_CTZ]  ] ;
+			sosa:observedProperty [a sosa:ObservableProperty; ssn:hasProperty m3:occupied];
+            sosa:madeBySensor    [ a       sripas:node_CTY  
+                                  
+                                 ] ;
+            sosa:phenomenonTime  [ a                    time:Instant ;
+                                   time:inTimePosition  [ a                     time:TimePosition ;
+                                                          time:numericPosition  [ a  sripas:node_time ]
+                                                        ]
+                                 ]
+          ] .</align:entity2>
+				<align:relation>=</align:relation>
+				<sripas:typings rdf:parseType="Literal">
+					<typing about="http://www.inter-iot.eu/sripas#node_time" datatype="http://www.w3.org/2001/XMLSchema#decimal" />
+				</sripas:typings>
+			</align:Cell>
+		</align:map>
+		
+		<align:map>
+			<align:Cell rdf:about="http://www.inter-iot.eu/sripas#CreateObservationFromDoor">
+				<align:entity1 rdf:datatype="http://www.w3.org/2001/XMLSchema#string">[ a                     sripas:node_CTX ;
+            rdf:object            [ a  sripas:node_CTZ ] ;
+            rdf:predicate         door:doorStatus ;
+            rdf:subject           [ a  sripas:node_CTY ] ;
+            context:hasProvider   [ a  sripas:node_CTP ] ;
+            context:hasTimestamp  [ a  sripas:node_time ]
+          ] .</align:entity1>
+				<align:entity2 rdf:datatype="http://www.w3.org/2001/XMLSchema#string">[ a                    sripas:node_CTX ;
+            sosa:hasResult       [ a  sripas:node_CTZ ] ;
+            sosa:madeBySensor    [ a                sripas:node_CTY ;
+                                   sosa:isHostedBy  [ a  sripas:node_CTP ]
+                                 ] ;
+            sosa:phenomenonTime  [ a                    time:Instant ;
+                                   time:inTimePosition  [ a                     time:TimePosition ;
+                                                          time:numericPosition  [ a  sripas:node_time ]
+                                                        ]
+                                 ]
+          ] .</align:entity2>
+				<align:relation>=</align:relation>
+				<sripas:typings rdf:parseType="Literal">
+					<typing about="http://www.inter-iot.eu/sripas#node_time" datatype="http://www.w3.org/2001/XMLSchema#decimal" />
+				</sripas:typings>
+			</align:Cell>
+		</align:map>
+		
+		
+		<align:map>
+			<align:Cell rdf:about="http://www.inter-iot.eu/sripas#CreateObservationFromDeviceCE">
+				<align:entity1 rdf:datatype="http://www.w3.org/2001/XMLSchema#string">[ a      context:ContextEvent,               sripas:node_CTX ;
+            rdf:object            [ a  sripas:node_CTZ ] ;
+            rdf:predicate         device:hasValue ;
+            rdf:subject           [ a  sripas:node_CTY ] ;
+            context:hasProvider   [ a  sripas:node_CTP ] ;
+            context:hasTimestamp  [ a  sripas:node_time ]
+          ] .</align:entity1>
+				<align:entity2 rdf:datatype="http://www.w3.org/2001/XMLSchema#string">[ a           sosa:Observation ,           sripas:node_CTX ;
+            sosa:hasResult       [ a  sripas:node_CTZ ] ;
+			 			sosa:ObservableProperty [a ssn:Property; ssn:hasProperty "hasValue"^^xsd:string];
+
+            sosa:madeBySensor    [ a                sripas:node_CTY ;
+                                   sosa:isHostedBy  [ a  sripas:node_CTP ]
+                                 ] ;
+            sosa:phenomenonTime  [ a                    time:Instant ;
+                                   time:inTimePosition  [ a                     time:TimePosition ;
+                                                          time:numericPosition  [ a  sripas:node_time ]
+                                                        ]
+                                 ]
+          ] .</align:entity2>
+				<align:relation>=</align:relation>
+				<sripas:typings rdf:parseType="Literal">
+					<typing about="http://www.inter-iot.eu/sripas#node_time" datatype="http://www.w3.org/2001/XMLSchema#decimal" />
+				</sripas:typings>
+			</align:Cell>
+		</align:map>
+		<align:map>
+			<align:Cell rdf:about="http://www.inter-iot.eu/sripas#bloodPreassureMeasurement">
+				<align:entity1 rdf:datatype="http://www.w3.org/2001/XMLSchema#string">[ a               sripas:node_CTO ;
+            sosa:hasResult  [ a       healthMeasurement:BloodPressure , sripas:node_CTX ;
+                              healthMeasurement:diastolicBloodPreassure
+                                      [ a                  sripas:node_CTY ;
+                                        measurement:value  [ a  sripas:node_dias ]
+                                      ] ;
+                              healthMeasurement:systolicBloodPreassure
+                                      [ a                  sripas:node_CTZ ;
+                                        measurement:value  [ a  sripas:node_sys ]
+                                      ]
+                            ]
+          ] .</align:entity1>
+				<align:entity2 rdf:datatype="http://www.w3.org/2001/XMLSchema#string">[ a  sosa:Observation  ;
+            sosa:hasResult  [ a              sosa:Result , &lt;http://inter-iot.eu/medex#SystolicBloodPressure&gt; , sripas:node_CTZ ;
+                              iiot:hasValue  [ a  sripas:node_sys ]
+                            ] ,
+			    [ a              sosa:Result , &lt;http://inter-iot.eu/medex#DiastolicBloodPressure&gt; , sripas:node_CTY ;
+                              iiot:hasValue  [ a  sripas:node_dias ]
+                            ]
+          ] .</align:entity2>
+				<align:relation>=</align:relation>
+			</align:Cell>
+		</align:map>
+		<align:map>
+			<align:Cell rdf:about="http://www.inter-iot.eu/sripas#changeUser">
+				<!-- Change User Class; REVIEW after DM is updated with different User types -->
+				<align:entity1 rdf:datatype="http://www.w3.org/2001/XMLSchema#string">[ a  &lt;http://ontology.universAAL.org/Profile.owl#User&gt; , sripas:node_CTY ] .</align:entity1>
+				<align:entity2 rdf:datatype="http://www.w3.org/2001/XMLSchema#string">[  a  iiot:User , &lt;http://ontology.universAAL.org/Profile.owl#User&gt; , sripas:node_CTY] .</align:entity2>
+				<align:relation>=</align:relation>
+			</align:Cell>
+		</align:map>
+		<align:map>
+			<align:Cell rdf:about="http://www.inter-iot.eu/sripas#changeUserProp">
+				<!-- Change User Class -->
+				<align:entity1 rdf:datatype="http://www.w3.org/2001/XMLSchema#string">[ a       sripas:node_CTX ;
+            uaal:theInvolvedHumanUser  [ a  sripas:node_CTY ]
+          ] .</align:entity1>
+				<align:entity2 rdf:datatype="http://www.w3.org/2001/XMLSchema#string">[ a        sripas:node_CTX ;
+            iiot:orderedByUser  [ a  sripas:node_CTY ]
+          ] .</align:entity2>
+				<align:relation>=</align:relation>
+			</align:Cell>
+		</align:map>
+	</align:Alignment>
+</rdf:RDF>

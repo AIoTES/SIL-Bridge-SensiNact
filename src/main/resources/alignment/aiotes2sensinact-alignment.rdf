@@ -25,10 +25,10 @@
       
     <align:Alignment>
         <dcelem:title>AIoTES2SensiNact</dcelem:title>
-        <exmo:version>0.7.7</exmo:version>
+        <exmo:version>1.0.2</exmo:version>
         <dcelem:creator>CEA Stephane Bergeon</dcelem:creator>
         <dcelem:description>Downstream Alignment between ACTIVAGE ontology and sensiNact AHA ontology</dcelem:description>
-        <dcelem:date>25 February 2020</dcelem:date>
+        <dcelem:date>20 March 2020</dcelem:date>
         
         <align:onto1>
             <align:Ontology rdf:about="http://inter-iot.eu/GOIoTPex#">
@@ -223,16 +223,13 @@
             <align:Cell rdf:about="http://www.inter-iot.eu/sripas#4_bed">
                 <align:entity1 rdf:parseType="Literal">
                     <sosa:Observation>
-                        <sosa:ObservableProperty>
-                            <ssn:Property>
-                                <ssn:hasProperty>occupied</ssn:hasProperty>                            
-                            </ssn:Property>
-                        </sosa:ObservableProperty>
+                        <sosa:observedProperty>
+                            <sosa:observableProperty>
+                                <ssn:hasProperty>pressure??occupied?</ssn:hasProperty>                            
+                            </sosa:observableProperty>
+                        </sosa:observedProperty>
                         <ssn:hasResult>
                             <sosa:Result>
-                                <iiot:hasName>
-                                    <sripas:name/>
-                                </iiot:hasName>
                                 <iiot:hasResultValue>
                                     <sripas:value/>
                                 </iiot:hasResultValue>
@@ -241,18 +238,19 @@
                         <sosa:madeBySensor>
                             <sosa:Sensor>
                                 <rdf:type rdf:resource="http://purl.org/iot/vocab/m3-lite#PressureSensor"/>
-                                <sosa:observes>
-                                    <sripas:provider1/>
-                                </sosa:observes>
+                                <iiotex:hasLocalId>
+                                    <sripas:provider/>
+                                </iiotex:hasLocalId>
                             </sosa:Sensor>
                         </sosa:madeBySensor>
-                        <sosa:observedProperty>
-                            <sripas:provider/>
-                        </sosa:observedProperty>
                         <sosa:phenomenonTime>
                             <time:Instant>
                                 <time:inTimePosition>
-                                    <sripas:timestamp/>
+                                    <time:TimePosition>
+                                        <time:numericPosition>
+                                            <sripas:timestamp/>
+                                        </time:numericPosition>
+                                    </time:TimePosition>
                                 </time:inTimePosition>
                             </time:Instant>
                         </sosa:phenomenonTime>
@@ -265,9 +263,9 @@
                             <sripas:provider/>
                         </sna:provider>
                         <sna:service>monitor</sna:service>
-                        <sna:dateTimestamp>
+                        <sna:timestamp>
                             <sripas:timestamp/>
-                        </sna:dateTimestamp>
+                        </sna:timestamp>
                         <sna:type>DAY_LAYING</sna:type>
                         <sna:value>
                             <sripas:value/>

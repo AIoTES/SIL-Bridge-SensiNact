@@ -1,0 +1,86 @@
+{
+  "@graph" : [ {
+    "@graph" : [ {
+      "@id" : "msg:meta/4dc3e75a-28f7-4c7f-894c-7f1ece96ca93",
+      "msg:SenderPlatformId" : {
+        "@id" : "http://sna.com/model#"
+      },
+      "msg:conversationID" : "conve58a195e-2da5-435e-8f02-ee14f0aab29f",
+      "msg:dateTimeStamp" : "2020-01-15T17:00:04.435+01:00",
+      "msg:messageID" : "msge2b19c25-b270-4ffa-8c44-da5838120ee4",
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
+        "@id" : "msg:meta"
+      }, {
+        "@id" : "msg:Observation"
+      }, {
+        "@id" : "msg:Response"
+      } ]
+    } ],
+    "@id" : "msg:metadata"
+  }, {
+    "@graph" : [ {
+      "@id" : "_:b0",
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : {
+        "@id" : "http://www.w3.org/2006/time#Instant"
+      },
+      "http://www.w3.org/2006/time#inTimePosition" : {
+       "@id" : "_:b9"
+     }
+   }, {
+     "@id" : "_:b9",
+     "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : {
+       "@id" : "http://www.w3.org/2006/time#TimePosition"
+     },
+     "http://www.w3.org/2006/time#numericPosition" : {
+       "@type" : "http://www.w3.org/2001/XMLSchema#decimal",
+       "@value" : "1582632192611"
+     }, {
+      "@id" : "_:b1",
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : {
+        "@id" : "sosa:observableProperty"
+      },
+      "ssn:hasProperty" : "pressure??occupied?"
+    }, {
+      "@id" : "_:b2",
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : {
+        "@id" : "sosa:Observation"
+      }, 
+      "sosa:madeBySensor" : {
+        "@id" : "_:b4"
+      },
+      "sosa:observedProperty" : {
+        "@id" : "_:b1"
+      },
+      "sosa:phenomenonTime" : {
+        "@id" : "_:b0"
+      },
+      "sosa:hasResult" : {
+        "@id" : "_:b3"
+      }
+    }, {
+      "@id" : "_:b3",
+      "iiot:hasResultValue" : "true",
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : {
+        "@id" : "sosa:Result"
+      }
+    }, {
+      "@id" : "_:b4",
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
+        "@id" : "sosa:Sensor"
+      }, {
+        "@id" : "http://purl.org/iot/vocab/m3-lite#PressureSensor"
+      } ],
+      "iiotex:hasLocalId" : "PTL-Day-laying-monitor"
+    } ],
+    "@id" : "msg:payload"
+  } ],
+  "@context" : {
+    "msg" : "http://inter-iot.eu/message/",
+    "iiotex" : "http://inter-iot.eu/GOIoTPex#",
+    "geosparql" : "http://www.opengis.net/ont/geosparql#",
+    "iiot" : "http://inter-iot.eu/GOIoTP#",
+    "InterIoT" : "http://inter-iot.eu/",
+    "ssn" : "http://www.w3.org/ns/ssn/",
+    "sosa" : "http://www.w3.org/ns/sosa/"
+  }
+}

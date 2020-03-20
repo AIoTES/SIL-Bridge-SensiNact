@@ -25,10 +25,10 @@
       
     <align:Alignment>
         <dcelem:title>SensiNact2AIoTES</dcelem:title>
-        <exmo:version>0.7.7</exmo:version>
+        <exmo:version>1.0.2</exmo:version>
         <dcelem:creator>CEA Stephane Bergeon</dcelem:creator>
         <dcelem:description>Upstream alignment between sensiNact AHA ontology and ACTIVAGE ontology.</dcelem:description>
-        <dcelem:date>25 February 2020</dcelem:date>
+        <dcelem:date>20 March 2020</dcelem:date>
         
         <align:onto1>
             <align:Ontology rdf:about="http://sensinact.com#">
@@ -253,9 +253,12 @@
                         <sna:service>
                             <sripas:service/>
                         </sna:service>
-                        <sna:dateTimestamp>
+                        <sna:timestamp>
                             <sripas:timestamp/>
-                        </sna:dateTimestamp>
+                        </sna:timestamp>
+                        <sna:timestamp>
+                            <sripas:timestamp/>
+                        </sna:timestamp>
                         <sna:type>
                             <sripas:type/>
                         </sna:type>
@@ -267,16 +270,8 @@
                 </align:entity1>
                 <align:entity2 rdf:parseType="Literal">
                     <sosa:Observation>
-                        <sosa:ObservableProperty>
-                            <ssn:Property>
-                                <ssn:hasProperty>occupied</ssn:hasProperty>                            
-                            </ssn:Property>
-                        </sosa:ObservableProperty>
                         <ssn:hasResult>
                             <sosa:Result>
-                                <iiot:hasName>
-                                    <sripas:name/>
-                                </iiot:hasName>
                                 <iiot:hasResultValue>
                                     <sripas:value/>
                                 </iiot:hasResultValue>
@@ -285,18 +280,24 @@
                         <sosa:madeBySensor>
                             <sosa:Sensor>
                                 <rdf:type rdf:resource="http://purl.org/iot/vocab/m3-lite#PressureSensor"/>
-                                <sosa:observes>
+                                <iiotex:hasLocalId>
                                     <sripas:provider/>
-                                </sosa:observes>
+                                </iiotex:hasLocalId>
                             </sosa:Sensor>
                         </sosa:madeBySensor>
                         <sosa:observedProperty>
-                            <sripas:provider/>
+                            <sosa:observableProperty>
+                                <ssn:hasProperty>pressure??occupied?</ssn:hasProperty>                            
+                            </sosa:observableProperty>
                         </sosa:observedProperty>
                         <sosa:phenomenonTime>
                             <time:Instant>
                                 <time:inTimePosition>
-                                    <sripas:timestamp/>
+                                    <time:TimePosition>
+                                        <time:numericPosition>
+                                            <sripas:timestamp/>
+                                        </time:numericPosition>
+                                    </time:TimePosition>
                                 </time:inTimePosition>
                             </time:Instant>
                         </sosa:phenomenonTime>

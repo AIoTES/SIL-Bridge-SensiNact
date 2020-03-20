@@ -21,20 +21,22 @@
     "@graph" : [ {
       "@id" : "_:b0",
       "http://sensinact.com#dateTimestamp" : "2020-01-15T17:00:04.215+01:00",
-      "http://sensinact.com#name" : "state",
-      "http://sensinact.com#provider" : "PTL-Day-laying-monitor",
-      "http://sensinact.com#service" : "monitor",
-      "http://sensinact.com#type" : "DAY_LAYING",
-      "http://sensinact.com#value" : "true",
-      "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : {
-        "@id" : "http://sensinact.com#BedOccupancyResource"
-      }
-    }, {
-      "@id" : "_:b1",
-      "http://sensinact.com#timestamp" : "1579104004215",
       "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : {
         "@id" : "http://sensinact.com#Resource"
       }
+    }, {
+      "@id" : "_:b1",
+      "http://sensinact.com#name" : "state",
+      "http://sensinact.com#provider" : "PTL-Day-laying-monitor",
+      "http://sensinact.com#service" : "monitor",
+      "http://sensinact.com#timestamp" : "1579104004215",
+      "http://sensinact.com#type" : "DAY_LAYING",
+      "http://sensinact.com#value" : "true",
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
+        "@id" : "http://sensinact.com#Resource"
+      }, {
+        "@id" : "http://sensinact.com#BedOccupancyResource"
+      } ]
     }, {
       "@id" : "http://sensinact.com#BedOccupancyResource",
       "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {

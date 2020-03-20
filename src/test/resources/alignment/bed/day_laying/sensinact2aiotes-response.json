@@ -20,52 +20,58 @@
   }, {
     "@graph" : [ {
       "@id" : "_:b0",
-      "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : {
-        "@id" : "http://www.w3.org/2006/time#Instant"
-      },
-      "http://www.w3.org/2006/time#inTimePosition" : "2020-01-15T17:00:04.215+01:00"
+      "iiotex:hasLocalId" : "PTL-Day-laying-monitor",
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
+        "@id" : "sosa:Sensor"
+      }, {
+        "@id" : "http://purl.org/iot/vocab/m3-lite#PressureSensor"
+      } ]
     }, {
       "@id" : "_:b1",
       "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : {
-        "@id" : "ssn:Property"
+        "@id" : "http://www.w3.org/2006/time#TimePosition"
       },
-      "ssn:hasProperty" : "occupied"
+      "http://www.w3.org/2006/time#numericPosition" : "1579104004215"
     }, {
       "@id" : "_:b2",
       "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : {
         "@id" : "sosa:Observation"
       },
-      "sosa:ObservableProperty" : {
-        "@id" : "_:b1"
-      },
       "sosa:madeBySensor" : {
+        "@id" : "_:b0"
+      },
+      "sosa:observedProperty" : {
         "@id" : "_:b4"
       },
-      "sosa:observedProperty" : "PTL-Day-laying-monitor",
       "sosa:phenomenonTime" : {
-        "@id" : "_:b0"
+        "@id" : "_:b5"
       },
       "ssn:hasResult" : {
         "@id" : "_:b3"
       }
     }, {
       "@id" : "_:b3",
-      "iiot:hasName" : "state",
       "iiot:hasResultValue" : "true",
       "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : {
         "@id" : "sosa:Result"
       }
     }, {
       "@id" : "_:b4",
-      "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
-        "@id" : "sosa:Sensor"
-      }, {
-        "@id" : "http://purl.org/iot/vocab/m3-lite#PressureSensor"
-      } ],
-      "sosa:observes" : "PTL-Day-laying-monitor"
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : {
+        "@id" : "sosa:observableProperty"
+      },
+      "ssn:hasProperty" : "pressure??occupied?"
     }, {
       "@id" : "_:b5",
-      "http://sensinact.com#timestamp" : "1579104004215",
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : {
+        "@id" : "http://www.w3.org/2006/time#Instant"
+      },
+      "http://www.w3.org/2006/time#inTimePosition" : {
+        "@id" : "_:b1"
+      }
+    }, {
+      "@id" : "_:b6",
+      "http://sensinact.com#dateTimestamp" : "2020-01-15T17:00:04.215+01:00",
       "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : {
         "@id" : "http://sensinact.com#Resource"
       }
