@@ -13,7 +13,7 @@
 
 > ip address | grep eth0
 
-> IP_ADDRESS="10.255.3.19"
+> IP_ADDRESS="10.255.3.19" IP_ADDRESS="10.255.4.49"
 > echo $IP_ADDRESS
 
 > sudo nano environment/kafka_vars.env
@@ -50,18 +50,15 @@ upload alignments through
 
 #clients
 
-> curl -X POST "http://localhost:8083/api/mw2mw/clients" -H  "accept: application/json" -H  "Client-ID: pullclient_uAAL_source" -H  "Content-Type: application/json" -d "{      \"clientId\": \"pullclient_uAAL_source\",      \"receivingCapacity\": 1,      \"responseFormat\": \"JSON_LD\",      \"responseDelivery\": \"CLIENT_PULL\"    }"
+> curl -X POST "http://localhost:8083/api/mw2mw/clients" -H  "accept: application/json" -H  "Client-ID: pullclient_uAAL" -H  "Content-Type: application/json" -d "{      \"clientId\": \"pullclient_uAAL\",      \"receivingCapacity\": 1,      \"responseFormat\": \"JSON_LD\",      \"responseDelivery\": \"CLIENT_PULL\"    }"
 
-> curl -X POST "http://localhost:8083/api/mw2mw/clients" -H  "accept: application/json" -H  "Client-ID: pullclient_sNa_target" -H  "Content-Type: application/json" -d "{      \"clientId\": \"pullclient_sNa_target\",      \"receivingCapacity\": 1,      \"responseFormat\": \"JSON_LD\",      \"responseDelivery\": \"CLIENT_PULL\"    }"
-
-> curl -X POST "http://localhost:8083/api/mw2mw/clients" -H  "accept: application/json" -H  "Client-ID: forwardclient" -H  "Content-Type: application/json" -d "{      \"clientId\": \"forwardclient\",  \"callbackUrl\":\"http://$IP_ADDRESS:8084/receiver\",        \"receivingCapacity\": 1,      \"responseFormat\": \"JSON_LD\",      \"responseDelivery\": \"SERVER_PUSH\"    }"
 
 
 source
 
 #platforms
 
-> curl -X POST "http://localhost:8083/api/mw2mw/platforms" -H  "accept: application/json" -H  "Client-ID: pullclient_uAAL_source" -H  "Content-Type: application/json" -d "{      \"platformId\": \"http://uAAL_source_platform_1\",      \"type\": \"http://inter-iot.eu/UniversAAL\",      \"baseEndpoint\": \"http://10.255.1.12:9002/uaal\",      \"location\": \"http://woquaz.de/uspace/demoroom/\",      \"name\": \"uAAL_source_platform_1\",       \"downstreamOutputAlignmentName\": \"\", \"encryptedPassword\": \"RemoteAPI\", \"encryptionAlgorithm\": \"RemoteAPI\",      \"downstreamOutputAlignmentVersion\": \"\",      \"downstreamInputAlignmentName\": \"AIOTES-universAAL-Alignment\",      \"downstreamInputAlignmentVersion\": \"2.1\",      \"upstreamInputAlignmentName\": \"universAAL-AIOTES-Alignment\",      \"upstreamInputAlignmentVersion\": \"2.0\",      \"upstreamOutputAlignmentName\": \"\",      \"upstreamOutputAlignmentVersion\": \"\"}"
+> curl -X POST "http://localhost:8083/api/mw2mw/platforms" -H  "accept: application/json" -H  "Client-ID: pullclient_uAAL" -H  "Content-Type: application/json" -d "{      \"platformId\": \"http://uAAL_platform_2\",      \"type\": \"http://inter-iot.eu/UniversAAL\",      \"baseEndpoint\": \"http://10.255.1.12:9002/uaal\",      \"location\": \"http://tesbed.activage-isere.eu/PTL\",      \"name\": \"uAAL_platform_2\",\"downstreamOutputAlignmentName\": \"\",      \"downstreamOutputAlignmentVersion\": \"\",      \"downstreamInputAlignmentName\": \"AIOTES-universAAL-Alignment\",      \"downstreamInputAlignmentVersion\": \"2.1\",      \"upstreamInputAlignmentName\": \"universAAL-AIOTES-Alignment\",      \"upstreamInputAlignmentVersion\": \"2.0\",      \"upstreamOutputAlignmentName\": \"\",      \"upstreamOutputAlignmentVersion\": \"\"    }"
 
 > curl -u interiot:interiot -X GET --header 'Accept: application/json' 'http://10.255.1.12:9002/uaal/spaces'
 
@@ -70,17 +67,24 @@ expected response:
 
 #devices
 
-> curl -X POST "http://localhost:8083/api/mw2mw/devices" -H  "accept: application/json" -H  "Client-ID:pullclient_uAAL_source" -H  "Content-Type: application/json" -d "{   \"devices\": [     {       \"deviceId\":\"http://org.universAAL.uSpace.woquaz.de/demoHome#wiboBS1\",       \"hostedBy\": \"http://uAAL_source_platform_1\",  \"location\":\"http://woquaz.de/uspace/demoroom#BedRoom\",       \"name\": \"BedSensor_uAAL_source_1\"     }   ]}"
-curl -u interiot:interiot -X GET --header 'Accept: application/json' 'http://10.255.1.12:9002/uaal/spaces/interiot/context/publishers'
-curl -u interiot:interiot -X GET --header 'Accept: application/json' 'http://10.255.1.12:9002/uaal/spaces/interiot/context/subscribers'
+> curl -X POST "http://localhost:8083/api/mw2mw/devices" -H  "accept: application/json" -H  "Client-ID:pullclient_uAAL" -H  "Content-Type: application/json" -d "{   \"devices\": [     {       \"deviceId\":\"http://org.universAAL.uSpace.woquaz.de/demoHome#wiboBS1\",       \"hostedBy\": \"http://uAAL_platform_2\",  \"location\":\"http://tesbed.activage-isere.eu/PTL\",       \"name\": \"BedSensor_uAAL\"     }   ]}"
+> curl -u interiot:interiot -X GET --header 'Accept: application/json' 'http://10.255.1.12:9002/uaal/spaces/interiot/context/publishers'
+> curl -u interiot:interiot -X GET --header 'Accept: application/json' 'http://10.255.1.12:9002/uaal/spaces/interiot/context/subscribers'
 
 
 #subscriptions
 
 > curl -X POST "http://localhost:8083/api/mw2mw/subscriptions" -H  "accept: application/json" -H  "Client-ID: forwardclient" -H  "Content-Type: application/json" -d "{  \"deviceIds\": [    \"http://org.universAAL.uSpace.woquaz.de/demoHome#wiboBS1\"  ]}"
+curl -X POST "http://localhost:8083/api/mw2mw/subscriptions" -H  "accept: application/json" -H  "Client-ID: pullclient_uAAL" -H  "Content-Type: application/json" -d "{  \"deviceIds\": [    \"http://org.universAAL.uSpace.woquaz.de/demoHome#wiboBS1\"  ]}"
 
 
 target
+
+# clients
+
+> curl -X POST "http://localhost:8083/api/mw2mw/clients" -H  "accept: application/json" -H  "Client-ID: pullclient_sNa_target" -H  "Content-Type: application/json" -d "{      \"clientId\": \"pullclient_sNa_target\",      \"receivingCapacity\": 1,      \"responseFormat\": \"JSON_LD\",      \"responseDelivery\": \"CLIENT_PULL\"    }"
+
+> curl -X POST "http://localhost:8083/api/mw2mw/clients" -H  "accept: application/json" -H  "Client-ID: forwardclient" -H  "Content-Type: application/json" -d "{      \"clientId\": \"forwardclient\",  \"callbackUrl\":\"http://$IP_ADDRESS:8084/receiver\",        \"receivingCapacity\": 1,      \"responseFormat\": \"JSON_LD\",      \"responseDelivery\": \"SERVER_PUSH\"    }"
 
 #platforms
 
@@ -101,6 +105,14 @@ check bed sensor function state in uAAL source platform
 >>>>>>>>>>>>>>>>> BedSensor::wiboBS1@BedRoom->occupied = true
 >>>>>>>>>>>>>>>>> BedSensor::wiboBS1@BedRoom->occupied = false
 
+
+
+Message sent to intermw
+
+> sudo docker-compose logs -f intermw | grep -A 40 "After publish."
+
+Message received by intermw after upstream alignment
+> curl -X POST "http://$IP_ADDRESS:8083/api/mw2mw/responses" -H  "accept: application/ld+json" -H  "Client-ID: pullclient_uAAL" | grep "iiot:hasResultValue"
 
 
 check bed sensor function state in sensiNact target platform
