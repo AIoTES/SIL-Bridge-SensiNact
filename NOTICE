@@ -4,76 +4,27 @@ FIWARE bridge
 This project has received funding from the European Union's Horizon 2020
 research and innovation programme under grant agreement No 687283.
 
-Copyright 2016-2018 Universitat Politècnica de València
-
-Copyright 2016-2018 Università della Calabria
-
-Copyright 2016-2018 Prodevelop, SL
-
-Copyright 2016-2018 Technische Universiteit Eindhoven
-
-Copyright 2016-2018 Fundación de la Comunidad Valenciana para la
-Investigación, Promoción y Estudios Comerciales de Valenciaport
-
-Copyright 2016-2018 Rinicom Ltd
-
-Copyright 2016-2018 Association pour le développement de la formation
-professionnelle dans le transport
-
-Copyright 2016-2018 Noatum Ports Valenciana, S.A.U.
-
-Copyright 2016-2018 XLAB razvoj programske opreme in svetovanje d.o.o.
-
-Copyright 2016-2018 Systems Research Institute Polish Academy of Sciences
-
-Copyright 2016-2018 Azienda Sanitaria Locale TO5
-
-Copyright 2016-2018 Alessandro Bassi Consulting SARL
-
-Copyright 2016-2018 Neways Technologies B.V.
-
 Copyright 2016-2020 CEA
 
 I. Used Software
 
 This product uses the following software with corresponding licenses:
 
-        Jackson-annotations (com.fasterxml.jackson.core:jackson-annotations:2.9.0 - http://github.com/FasterXML/jackson) distributed under Apache License, Version 2.0
-        Jackson-core (com.fasterxml.jackson.core:jackson-core:2.6.0 - https://github.com/FasterXML/jackson-core) distributed under Apache License, Version 2.0
-        jackson-databind (com.fasterxml.jackson.core:jackson-databind:2.6.0 - http://github.com/FasterXML/jackson) distributed under Apache License, Version 2.0
-        dexx (com.github.andrewoma.dexx:collection:0.7 - https://github.com/andrewoma/dexx) distributed under MIT License
-        JSONLD Java :: Core (com.github.jsonld-java:jsonld-java:0.11.1 - http://github.com/jsonld-java/jsonld-java/jsonld-java/) distributed under BSD 3-clause
-        Spark Core (com.sparkjava:2.5.2 - http://sparkjava.com/) distributed under Apache License, Version 2.0
-        Apache Commons CLI (commons-cli:commons-cli:1.4 - http://commons.apache.org/proper/commons-cli/) distributed under Apache License, Version 2.0
-        Apache Commons Codec (commons-codec:commons-codec:1.9 - http://commons.apache.org/proper/commons-codec/) distributed under Apache License, Version 2.0
-        Apache Commons IO (commons-io:commons-io:2.5 - http://commons.apache.org/proper/commons-io/) distributed under Apache License, Version 2.0
-        Message (eu.inter-iot.message:Message:0.9-SNAPSHOT - no url defined) distributed under Apache License, Version 2.0
-        Interfaces and abstract classes for the INTER-IoT Bridges (eu.interiot.intermw:mw.bridges.api:2.3.0 - no url defined) distributed under Eclipse Public License - Version 1.0
-        Swagger annotations (io.swagger:1.5.19- https://github.com/swagger-api/swagger-core/modules/swagger-annotations) distributed under Apache License, Version 2.0
-        JUnit (junit:junit:4.12 - http://junit.org) distributed under Eclipse Public License - Version 1.0
-        Apache Commons CSV (org.apache.commons:commons-csv:1.4 - http://commons.apache.org/proper/commons-csv/) distributed under Apache License, Version 2.0
-        Apache Common Lang (org.apache.commons:3.5 - http://commons.apache.org/proper/commons-lang/) distributed under Apache License, Version 2.0
-        Apache HttpClient (org.apache.httpcomponents:httpclient:4.5 - http://hc.apache.org/httpcomponents-client) distributed under Apache License, Version 2.0
-        Apache HttpClient Cache (org.apache.httpcomponents:httpclient-cache:4.5.3 - http://hc.apache.org/httpcomponents-client) distributed under Apache License, Version 2.0
-        Apache HttpCore (org.apache.httpcomponents:httpcore:4.4.6 - http://hc.apache.org/httpcomponents-core-ga) distributed under Apache License, Version 2.0
-        Apache Jena - ARQ (SPARQL 1.1 Query Engine) (org.apache.jena:jena-arq:3.5.0 - http://jena.apache.org/jena-arq/) distributed under Apache License, Version 2.0
-        Apache Jena - Base Common Environment (org.apache.jena:jena-base:3.5.0 - http://jena.apache.org/jena-base/) distributed under Apache License, Version 2.0
-        Apache Jena - Core (org.apache.jena:jena-core:3.5.0 - http://jena.apache.org/jena-core/) distributed under Apache License, Version 2.0
-        Apache Jena - DBOE Base (org.apache.jena:jena-dboe-base:3.5.0 - http://jena.apache.org/jena-dboe-base/) distributed under Apache License, Version 2.0
-        Apache Jena - DBOE Indexes (org.apache.jena:jena-dboe-index:3.5.0 - http://jena.apache.org/jena-dboe-index/) distributed under Apache License, Version 2.0
-        Apache Jena - DBOE Transactional Datastructures (org.apache.jena:jena-dboe-trans-data:3.5.0 - http://jena.apache.org/jena-dboe-trans-data/) distributed under Apache License, Version 2.0
-        Apache Jena - DBOE Transactions (org.apache.jena:jena-dboe-transaction:3.5.0 - http://jena.apache.org/jena-dboe-transaction/) distributed under Apache License, Version 2.0
-        Apache Jena - IRI (org.apache.jena:jena-iri:3.5.0 - http://jena.apache.org/jena-iri/) distributed under Apache License, Version 2.0
-        Apache Jena - RDF Connection (org.apache.jena:jena-rdfconnection:3.5.0 - http://jena.apache.org/jena-rdfconnection/) distributed under Apache License, Version 2.0
-        Apache Jena - Shadowed external libraries (org.apache.jena:jena-shaded-guava:3.5.0 - http://jena.apache.org/jena-shaded-guava/) distributed under Apache License, Version 2.0
-        Apache Jena - TDB (Native Triple Store) (org.apache.jena:jena-tdb:3.5.0 - http://jena.apache.org/jena-tdb/) distributed under Apache License, Version 2.0
-        Apache Jena - TDB2 (org.apache.jena:jena-tdb2:3.5.0 - http://jena.apache.org/jena-tdb2/) distributed under Apache License, Version 2.0
-        Apache Thrift (org.apache.thrift:libthrift:0.9.3 - http://thrift.apache.org) distributed under Apache License, Version 2.0
-        Hamcrest Core (org.hamcrest:hamcrest-core:1.3 - https://github.com/hamcrest/JavaHamcrest/hamcrest-core) distributed under BSD 3-clause
-        websocket (org.eclipse.jetty.websocket:9.3.6.v20151106 - https://www.eclipse.org/jetty/) distributed under Apache License, Version 2.0
-        Javassist (org.javassist:3.19.0-GA - http://www.javassist.org/) distributed under Mozilla Public License Version 1.1
-        Reflections (org.reflections:0.9.10 - http://github.com/ronmamo/reflections) distributed under Do What The Fuck You Want to Public License
-        JCL 1.2 implemented over SLF4J (org.slf4j:jcl-over-slf4j:1.7.25 - http://www.slf4j.org) distributed under MIT License
-        SLF4J API Module (org.slf4j:slf4j-api:1.7.25 - http://www.slf4j.org) distributed under MIT License
-        Xerces2-j (xerces:xercesImpl:2.11.0 - https://xerces.apache.org/xerces2-j/) distributed under Apache License, Version 2.0
-        XML Commons External Components XML APIs (xml-apis:xml-apis:1.4.01 - http://xml.apache.org/commons/components/external/) distributed under Apache License, Version 2.0 or The SAX License or The W3C License
+		
+com.fasterxml.jackson.core	jackson-annotations	2.9.0	distributed under The Apache Software License, Version 2.0
+com.fasterxml.jackson.core	jackson-core	2.9.0	distributed under The Apache Software License, Version 2.0
+com.fasterxml.jackson.core	jackson-databind	2.9.0	distributed under The Apache Software License, Version 2.0
+com.github.andrewoma.dexx	collection	0.7	distributed under MIT License
+com.github.jsonld-java	jsonld-java	0.11.1	distributed under Revised BSD License
+com.google.code.findbugs	annotations	2.0.1	distributed under GNU Lesser Public License
+com.google.guava	guava	15.0	distributed under The Apache Software License, Version 2.0
+com.sparkjava	spark-core	2.5.2	distributed under The Apache Software License, Version 2.0
+commons-cli	commons-cli	1.4	distributed under Apache License, Version 2.0
+commons-codec	commons-codec	1.9	distributed under The Apache Software License, Version 2.0
+commons-io	commons-io	2.5	distributed under Apache License, Version 2.0
+eu.inter-iot.message	Message	0.9-20190313.152551-1	distributed under Apache Software License, Version 2.0
+eu.interiot.intermw	comm.commons.api	2.3.1	distributed under Apache Software License, Version 2.0
+
+II. License Summary
+
+ - Apache License 2.0 (http://www.apache.org/licenses/LICENSE-2.0.txt)
