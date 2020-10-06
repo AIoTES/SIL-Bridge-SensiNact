@@ -1,5 +1,5 @@
 INTER-IoT Interoperability of Heterogeneous IoT Platforms
-FIWARE bridge
+sensiNact bridge
 
 This project has received funding from the European Union's Horizon 2020
 research and innovation programme under grant agreement No 687283.
@@ -28,3 +28,4 @@ eu.interiot.intermw	comm.commons.api	2.3.1	distributed under Apache Software Lic
 II. License Summary
 
  - Apache License 2.0 (http://www.apache.org/licenses/LICENSE-2.0.txt)
+ 
